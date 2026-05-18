@@ -33,6 +33,8 @@ import sys
 from pathlib import Path
 
 DEFAULT_DLLS = [
+    # Classic "fat" DLLs — what every Win32 program has linked against
+    # since the 1990s. Most exports live here.
     "KERNEL32.dll",
     "USER32.dll",
     "GDI32.dll",
@@ -45,6 +47,12 @@ DEFAULT_DLLS = [
     "WINMM.dll",
     "WS2_32.dll",
     "NTDLL.dll",
+    # API-set forwarders for post-Win10 APIs that never got back-
+    # forwarded into kernel32.dll. Add new api-ms-* names here as
+    # consumers need them — each one is small (1-30 functions) and
+    # ABI-stable; Windows's loader maps them to whatever physical
+    # DLL actually implements the function. Targeting Win10 1803+.
+    "api-ms-win-core-memory-l1-1-6.dll",   # VirtualAlloc2, VirtualAlloc2FromApp
 ]
 
 # ── Win64 ABI helpers ────────────────────────────────────────────────
