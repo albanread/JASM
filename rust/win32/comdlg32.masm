@@ -1,0 +1,132 @@
+; ---------------------------------------------------------------------
+; Generated from windows_api.db -- DLL: COMDLG32.dll
+; v2: @extern declarations + invoke-style wrapper macros.
+; DO NOT EDIT BY HAND. Regenerate via:
+;     python scripts/win32_gen.py --dll COMDLG32.dll
+;
+; Each function gets two definitions:
+;
+;   @extern "COMDLG32.dll" NAME(N)
+;     The declaration the host pairs with LoadLibraryW + GetProcAddress.
+;
+;   @macro NAME(arg0, arg1, ...)
+;     Win64-ABI-aware wrapper. Each arg goes in its register or stack
+;     slot per the parameter's type; shadow space and 16-byte RSP
+;     alignment are handled. Functions whose signatures cannot be
+;     modelled (struct-by-value params, variadics) get only the
+;     @extern -- call those by hand.
+;
+; Function count: 11 wrapped, 0 extern-only
+; Source of truth: E:\windows_api\windows_api.db
+; ---------------------------------------------------------------------
+
+@extern "COMDLG32.dll" ChooseColorW(1)
+@macro ChooseColorW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ChooseColorW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMDLG32.dll" ChooseFontW(1)
+@macro ChooseFontW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ChooseFontW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMDLG32.dll" CommDlgExtendedError(0)
+@macro CommDlgExtendedError()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CommDlgExtendedError
+    mov     rsp, r12
+@endmacro
+
+@extern "COMDLG32.dll" FindTextW(1)
+@macro FindTextW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FindTextW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMDLG32.dll" GetFileTitleW(3)
+@macro GetFileTitleW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8w, &arg2
+    call    GetFileTitleW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMDLG32.dll" GetOpenFileNameW(1)
+@macro GetOpenFileNameW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetOpenFileNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMDLG32.dll" GetSaveFileNameW(1)
+@macro GetSaveFileNameW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetSaveFileNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMDLG32.dll" PageSetupDlgW(1)
+@macro PageSetupDlgW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PageSetupDlgW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMDLG32.dll" PrintDlgExW(1)
+@macro PrintDlgExW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PrintDlgExW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMDLG32.dll" PrintDlgW(1)
+@macro PrintDlgW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PrintDlgW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMDLG32.dll" ReplaceTextW(1)
+@macro ReplaceTextW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ReplaceTextW
+    mov     rsp, r12
+@endmacro

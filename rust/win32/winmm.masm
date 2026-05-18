@@ -1,0 +1,928 @@
+; ---------------------------------------------------------------------
+; Generated from windows_api.db -- DLL: WINMM.dll
+; v2: @extern declarations + invoke-style wrapper macros.
+; DO NOT EDIT BY HAND. Regenerate via:
+;     python scripts/win32_gen.py --dll WINMM.dll
+;
+; Each function gets two definitions:
+;
+;   @extern "WINMM.dll" NAME(N)
+;     The declaration the host pairs with LoadLibraryW + GetProcAddress.
+;
+;   @macro NAME(arg0, arg1, ...)
+;     Win64-ABI-aware wrapper. Each arg goes in its register or stack
+;     slot per the parameter's type; shadow space and 16-byte RSP
+;     alignment are handled. Functions whose signatures cannot be
+;     modelled (struct-by-value params, variadics) get only the
+;     @extern -- call those by hand.
+;
+; Function count: 65 wrapped, 86 extern-only
+; Source of truth: E:\windows_api\windows_api.db
+; ---------------------------------------------------------------------
+
+@extern "WINMM.dll" CloseDriver(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" DefDriverProc(5)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" DriverCallback(7)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" DrvGetModuleHandle(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" GetDriverModuleHandle(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" OpenDriver(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" PlaySoundW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" SendDriverMessage(4)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" auxGetDevCapsW(3)
+@macro auxGetDevCapsW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    auxGetDevCapsW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" auxGetNumDevs(0)
+@macro auxGetNumDevs()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    auxGetNumDevs
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" auxGetVolume(2)
+@macro auxGetVolume(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    auxGetVolume
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" auxOutMessage(4)
+@macro auxOutMessage(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    auxOutMessage
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" auxSetVolume(2)
+@macro auxSetVolume(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    auxSetVolume
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" joyConfigChanged(1)
+@macro joyConfigChanged(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    joyConfigChanged
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" joyGetDevCapsW(3)
+@macro joyGetDevCapsW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    joyGetDevCapsW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" joyGetNumDevs(0)
+@macro joyGetNumDevs()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    joyGetNumDevs
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" joyGetPos(2)
+@macro joyGetPos(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    joyGetPos
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" joyGetPosEx(2)
+@macro joyGetPosEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    joyGetPosEx
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" joyGetThreshold(2)
+@macro joyGetThreshold(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    joyGetThreshold
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" joyReleaseCapture(1)
+@macro joyReleaseCapture(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    joyReleaseCapture
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" joySetCapture(4)
+@macro joySetCapture(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    joySetCapture
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" joySetThreshold(2)
+@macro joySetThreshold(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    joySetThreshold
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciDriverNotify(3)
+@macro mciDriverNotify(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    mciDriverNotify
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciDriverYield(1)
+@macro mciDriverYield(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    mciDriverYield
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciFreeCommandResource(1)
+@macro mciFreeCommandResource(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    mciFreeCommandResource
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciGetCreatorTask(1)
+@macro mciGetCreatorTask(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    mciGetCreatorTask
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciGetDeviceIDFromElementIDW(2)
+@macro mciGetDeviceIDFromElementIDW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    mciGetDeviceIDFromElementIDW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciGetDeviceIDW(1)
+@macro mciGetDeviceIDW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    mciGetDeviceIDW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciGetDriverData(1)
+@macro mciGetDriverData(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    mciGetDriverData
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciGetErrorStringW(3)
+@macro mciGetErrorStringW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    mciGetErrorStringW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciGetYieldProc(2)
+@macro mciGetYieldProc(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    mciGetYieldProc
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciLoadCommandResource(3)
+@macro mciLoadCommandResource(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    mciLoadCommandResource
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciSendCommandW(4)
+@macro mciSendCommandW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    mciSendCommandW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciSendStringW(4)
+@macro mciSendStringW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    mciSendStringW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciSetDriverData(2)
+@macro mciSetDriverData(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    mciSetDriverData
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mciSetYieldProc(3)
+@macro mciSetYieldProc(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    mciSetYieldProc
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" midiConnect(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiDisconnect(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiInAddBuffer(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiInClose(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiInGetDevCapsW(3)
+@macro midiInGetDevCapsW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    midiInGetDevCapsW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" midiInGetErrorTextW(3)
+@macro midiInGetErrorTextW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    midiInGetErrorTextW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" midiInGetID(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiInGetNumDevs(0)
+@macro midiInGetNumDevs()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    midiInGetNumDevs
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" midiInMessage(4)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiInOpen(5)
+@macro midiInOpen(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    midiInOpen
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" midiInPrepareHeader(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiInReset(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiInStart(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiInStop(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiInUnprepareHeader(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiOutCacheDrumPatches(4)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiOutCachePatches(4)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiOutClose(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiOutGetDevCapsW(3)
+@macro midiOutGetDevCapsW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    midiOutGetDevCapsW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" midiOutGetErrorTextW(3)
+@macro midiOutGetErrorTextW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    midiOutGetErrorTextW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" midiOutGetID(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiOutGetNumDevs(0)
+@macro midiOutGetNumDevs()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    midiOutGetNumDevs
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" midiOutGetVolume(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiOutLongMsg(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiOutMessage(4)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiOutOpen(5)
+@macro midiOutOpen(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    midiOutOpen
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" midiOutPrepareHeader(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiOutReset(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiOutSetVolume(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiOutShortMsg(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiOutUnprepareHeader(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiStreamClose(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiStreamOpen(6)
+@macro midiStreamOpen(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    midiStreamOpen
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" midiStreamOut(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiStreamPause(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiStreamPosition(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiStreamProperty(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiStreamRestart(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" midiStreamStop(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mixerClose(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mixerGetControlDetailsW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mixerGetDevCapsW(3)
+@macro mixerGetDevCapsW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    mixerGetDevCapsW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mixerGetID(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mixerGetLineControlsW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mixerGetLineInfoW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mixerGetNumDevs(0)
+@macro mixerGetNumDevs()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    mixerGetNumDevs
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mixerMessage(4)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mixerOpen(5)
+@macro mixerOpen(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    mixerOpen
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mixerSetControlDetails(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmDrvInstall(4)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmGetCurrentTask(0)
+@macro mmGetCurrentTask()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    mmGetCurrentTask
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mmTaskBlock(1)
+@macro mmTaskBlock(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    mmTaskBlock
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mmTaskCreate(3)
+@macro mmTaskCreate(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    mmTaskCreate
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mmTaskSignal(1)
+@macro mmTaskSignal(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    mmTaskSignal
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mmTaskYield(0)
+@macro mmTaskYield()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    mmTaskYield
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mmioAdvance(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmioAscend(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmioClose(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmioCreateChunk(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmioDescend(4)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmioFlush(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmioGetInfo(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmioInstallIOProcW(3)
+@macro mmioInstallIOProcW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    mmioInstallIOProcW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mmioOpenW(3)
+@macro mmioOpenW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    mmioOpenW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mmioRead(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmioRenameW(4)
+@macro mmioRenameW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    mmioRenameW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mmioSeek(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmioSendMessage(4)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmioSetBuffer(4)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmioSetInfo(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" mmioStringToFOURCCW(2)
+@macro mmioStringToFOURCCW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    mmioStringToFOURCCW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" mmioWrite(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" sndPlaySoundW(2)
+@macro sndPlaySoundW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    sndPlaySoundW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" timeBeginPeriod(1)
+@macro timeBeginPeriod(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    timeBeginPeriod
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" timeEndPeriod(1)
+@macro timeEndPeriod(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    timeEndPeriod
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" timeGetDevCaps(2)
+@macro timeGetDevCaps(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    timeGetDevCaps
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" timeGetSystemTime(2)
+@macro timeGetSystemTime(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    timeGetSystemTime
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" timeGetTime(0)
+@macro timeGetTime()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    timeGetTime
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" timeKillEvent(1)
+@macro timeKillEvent(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    timeKillEvent
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" timeSetEvent(5)
+@macro timeSetEvent(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    timeSetEvent
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" waveInAddBuffer(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveInClose(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveInGetDevCapsW(3)
+@macro waveInGetDevCapsW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    waveInGetDevCapsW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" waveInGetErrorTextW(3)
+@macro waveInGetErrorTextW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    waveInGetErrorTextW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" waveInGetID(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveInGetNumDevs(0)
+@macro waveInGetNumDevs()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    waveInGetNumDevs
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" waveInGetPosition(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveInMessage(4)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveInOpen(6)
+@macro waveInOpen(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    waveInOpen
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" waveInPrepareHeader(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveInReset(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveInStart(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveInStop(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveInUnprepareHeader(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutBreakLoop(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutClose(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutGetDevCapsW(3)
+@macro waveOutGetDevCapsW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    waveOutGetDevCapsW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" waveOutGetErrorTextW(3)
+@macro waveOutGetErrorTextW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    waveOutGetErrorTextW
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" waveOutGetID(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutGetNumDevs(0)
+@macro waveOutGetNumDevs()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    waveOutGetNumDevs
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" waveOutGetPitch(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutGetPlaybackRate(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutGetPosition(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutGetVolume(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutMessage(4)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutOpen(6)
+@macro waveOutOpen(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    waveOutOpen
+    mov     rsp, r12
+@endmacro
+
+@extern "WINMM.dll" waveOutPause(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutPrepareHeader(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutReset(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutRestart(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutSetPitch(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutSetPlaybackRate(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutSetVolume(2)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutUnprepareHeader(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WINMM.dll" waveOutWrite(3)  ; (no wrapper -- unsupported signature)

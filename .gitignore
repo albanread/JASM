@@ -1,0 +1,26 @@
+# Cargo build output — 300+ MB of debug binaries, PDBs, dep artifacts.
+/rust/target/
+
+# PDBs / debug info that escape target/ for any reason.
+*.pdb
+*.idb
+
+# Python cache from scripts/.
+__pycache__/
+*.pyc
+*.pyo
+
+# Editor scratch.
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+
+# Windows file-explorer junk.
+desktop.ini
+Thumbs.db
+
+# The LLVM redistributable that build.rs copies next to binaries
+# (lives under target/ anyway, but called out for clarity).
+LLVM-C.dll

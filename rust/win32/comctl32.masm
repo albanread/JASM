@@ -1,0 +1,674 @@
+; ---------------------------------------------------------------------
+; Generated from windows_api.db -- DLL: COMCTL32.dll
+; v2: @extern declarations + invoke-style wrapper macros.
+; DO NOT EDIT BY HAND. Regenerate via:
+;     python scripts/win32_gen.py --dll COMCTL32.dll
+;
+; Each function gets two definitions:
+;
+;   @extern "COMCTL32.dll" NAME(N)
+;     The declaration the host pairs with LoadLibraryW + GetProcAddress.
+;
+;   @macro NAME(arg0, arg1, ...)
+;     Win64-ABI-aware wrapper. Each arg goes in its register or stack
+;     slot per the parameter's type; shadow space and 16-byte RSP
+;     alignment are handled. Functions whose signatures cannot be
+;     modelled (struct-by-value params, variadics) get only the
+;     @extern -- call those by hand.
+;
+; Function count: 46 wrapped, 64 extern-only
+; Source of truth: E:\windows_api\windows_api.db
+; ---------------------------------------------------------------------
+
+@extern "COMCTL32.dll" CreateMappedBitmap(5)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" CreatePropertySheetPageW(1)
+@macro CreatePropertySheetPageW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreatePropertySheetPageW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" CreateStatusWindowW(4)
+@macro CreateStatusWindowW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CreateStatusWindowW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" CreateToolbarEx(13)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" CreateUpDownControl(12)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_Clone(2)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_Create(1)
+@macro DPA_Create(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    DPA_Create
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" DPA_CreateEx(2)
+@macro DPA_CreateEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    DPA_CreateEx
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" DPA_DeleteAllPtrs(1)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_DeletePtr(2)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_Destroy(1)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_DestroyCallback(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_EnumCallback(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_GetPtr(2)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_GetPtrIndex(2)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_GetSize(1)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_Grow(2)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_InsertPtr(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_LoadStream(4)
+@macro DPA_LoadStream(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    DPA_LoadStream
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" DPA_Merge(6)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_SaveStream(4)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_Search(6)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_SetPtr(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DPA_Sort(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DSA_Clone(1)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DSA_Create(2)
+@macro DSA_Create(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    DSA_Create
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" DSA_DeleteAllItems(1)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DSA_DeleteItem(2)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DSA_Destroy(1)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DSA_DestroyCallback(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DSA_EnumCallback(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DSA_GetItem(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DSA_GetItemPtr(2)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DSA_GetSize(1)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DSA_InsertItem(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DSA_SetItem(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DSA_Sort(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DefSubclassProc(4)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DestroyPropertySheetPage(1)
+@macro DestroyPropertySheetPage(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DestroyPropertySheetPage
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" DrawInsert(3)
+@macro DrawInsert(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    DrawInsert
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" DrawShadowText(9)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" DrawStatusTextW(4)
+@macro DrawStatusTextW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    DrawStatusTextW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" FlatSB_EnableScrollBar(3)
+@macro FlatSB_EnableScrollBar(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    FlatSB_EnableScrollBar
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" FlatSB_GetScrollInfo(3)
+@macro FlatSB_GetScrollInfo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    FlatSB_GetScrollInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" FlatSB_GetScrollPos(2)
+@macro FlatSB_GetScrollPos(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    FlatSB_GetScrollPos
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" FlatSB_GetScrollProp(3)
+@macro FlatSB_GetScrollProp(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    FlatSB_GetScrollProp
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" FlatSB_GetScrollRange(4)
+@macro FlatSB_GetScrollRange(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    FlatSB_GetScrollRange
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" FlatSB_SetScrollInfo(4)
+@macro FlatSB_SetScrollInfo(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    FlatSB_SetScrollInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" FlatSB_SetScrollPos(4)
+@macro FlatSB_SetScrollPos(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    FlatSB_SetScrollPos
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" FlatSB_SetScrollProp(4)
+@macro FlatSB_SetScrollProp(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    FlatSB_SetScrollProp
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" FlatSB_SetScrollRange(5)
+@macro FlatSB_SetScrollRange(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    FlatSB_SetScrollRange
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" FlatSB_ShowScrollBar(3)
+@macro FlatSB_ShowScrollBar(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    FlatSB_ShowScrollBar
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" GetEffectiveClientRect(3)
+@macro GetEffectiveClientRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetEffectiveClientRect
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" GetMUILanguage(0)
+@macro GetMUILanguage()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetMUILanguage
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" GetWindowSubclass(4)
+@macro GetWindowSubclass(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetWindowSubclass
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" HIMAGELIST_QueryInterface(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_Add(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_AddMasked(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_BeginDrag(4)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_CoCreateInstance(4)
+@macro ImageList_CoCreateInstance(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ImageList_CoCreateInstance
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" ImageList_Copy(5)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_Create(5)
+@macro ImageList_Create(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    ImageList_Create
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" ImageList_Destroy(1)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_DragEnter(3)
+@macro ImageList_DragEnter(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    ImageList_DragEnter
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" ImageList_DragLeave(1)
+@macro ImageList_DragLeave(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ImageList_DragLeave
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" ImageList_DragMove(2)
+@macro ImageList_DragMove(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    ImageList_DragMove
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" ImageList_DragShowNolock(1)
+@macro ImageList_DragShowNolock(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ImageList_DragShowNolock
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" ImageList_Draw(6)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_DrawEx(10)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_DrawIndirect(1)
+@macro ImageList_DrawIndirect(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ImageList_DrawIndirect
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" ImageList_Duplicate(1)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_EndDrag(0)
+@macro ImageList_EndDrag()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    ImageList_EndDrag
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" ImageList_GetBkColor(1)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_GetDragImage(2)
+@macro ImageList_GetDragImage(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ImageList_GetDragImage
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" ImageList_GetIcon(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_GetIconSize(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_GetImageCount(1)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_GetImageInfo(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_LoadImageW(7)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_Merge(6)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_Read(1)
+@macro ImageList_Read(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ImageList_Read
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" ImageList_ReadEx(4)
+@macro ImageList_ReadEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ImageList_ReadEx
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" ImageList_Remove(2)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_Replace(4)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_ReplaceIcon(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_SetBkColor(2)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_SetDragCursorImage(4)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_SetIconSize(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_SetImageCount(2)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_SetOverlayImage(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_Write(2)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" ImageList_WriteEx(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" InitCommonControls(0)
+@macro InitCommonControls()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    InitCommonControls
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" InitCommonControlsEx(1)
+@macro InitCommonControlsEx(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    InitCommonControlsEx
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" InitMUILanguage(1)
+@macro InitMUILanguage(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cx, &arg0
+    call    InitMUILanguage
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" InitializeFlatSB(1)
+@macro InitializeFlatSB(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    InitializeFlatSB
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" LBItemFromPt(3)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" LoadIconMetric(4)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" LoadIconWithScaleDown(5)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" MakeDragList(1)
+@macro MakeDragList(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    MakeDragList
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" MenuHelp(7)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" PropertySheetW(1)
+@macro PropertySheetW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PropertySheetW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" RemoveWindowSubclass(3)
+@macro RemoveWindowSubclass(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    RemoveWindowSubclass
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" SetWindowSubclass(4)
+@macro SetWindowSubclass(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SetWindowSubclass
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" ShowHideMenuCtl(3)
+@macro ShowHideMenuCtl(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    ShowHideMenuCtl
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" Str_SetPtrW(2)
+@macro Str_SetPtrW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    Str_SetPtrW
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" TaskDialog(8)  ; (no wrapper -- unsupported signature)
+
+@extern "COMCTL32.dll" TaskDialogIndirect(4)
+@macro TaskDialogIndirect(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    TaskDialogIndirect
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" UninitializeFlatSB(1)
+@macro UninitializeFlatSB(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    UninitializeFlatSB
+    mov     rsp, r12
+@endmacro
+
+@extern "COMCTL32.dll" _TrackMouseEvent(1)
+@macro _TrackMouseEvent(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    _TrackMouseEvent
+    mov     rsp, r12
+@endmacro

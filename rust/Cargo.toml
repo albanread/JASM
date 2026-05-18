@@ -1,0 +1,35 @@
+[package]
+name = "wfasm"
+version = "0.1.0"
+edition = "2021"
+description = "MASM-style x86-64 macro assembler + LLVM ORC JIT for a 64-bit Forth"
+
+[dependencies]
+anyhow = "1"
+
+[lib]
+name = "wfasm"
+path = "src/lib.rs"
+
+[[bin]]
+name = "hello-jit"
+path = "src/bin/hello_jit.rs"
+
+[[bin]]
+name = "hello-runtime"
+path = "src/bin/hello_runtime.rs"
+
+[[bin]]
+name = "hello-win32"
+path = "src/bin/hello_win32.rs"
+
+[[bin]]
+name = "hello-seh"
+path = "src/bin/hello_seh.rs"
+
+[profile.dev]
+# Debuginfo is slow on Windows; keep it small for fast iteration.
+debug = 1
+
+[profile.release]
+lto = "thin"

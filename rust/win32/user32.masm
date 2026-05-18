@@ -1,0 +1,6027 @@
+; ---------------------------------------------------------------------
+; Generated from windows_api.db -- DLL: USER32.dll
+; v2: @extern declarations + invoke-style wrapper macros.
+; DO NOT EDIT BY HAND. Regenerate via:
+;     python scripts/win32_gen.py --dll USER32.dll
+;
+; Each function gets two definitions:
+;
+;   @extern "USER32.dll" NAME(N)
+;     The declaration the host pairs with LoadLibraryW + GetProcAddress.
+;
+;   @macro NAME(arg0, arg1, ...)
+;     Win64-ABI-aware wrapper. Each arg goes in its register or stack
+;     slot per the parameter's type; shadow space and 16-byte RSP
+;     alignment are handled. Functions whose signatures cannot be
+;     modelled (struct-by-value params, variadics) get only the
+;     @extern -- call those by hand.
+;
+; Function count: 511 wrapped, 114 extern-only
+; Source of truth: E:\windows_api\windows_api.db
+; ---------------------------------------------------------------------
+
+@extern "USER32.dll" ActivateKeyboardLayout(2)
+@macro ActivateKeyboardLayout(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    ActivateKeyboardLayout
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" AddClipboardFormatListener(1)
+@macro AddClipboardFormatListener(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    AddClipboardFormatListener
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" AdjustWindowRect(3)
+@macro AdjustWindowRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    AdjustWindowRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" AdjustWindowRectEx(4)
+@macro AdjustWindowRectEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    AdjustWindowRectEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" AdjustWindowRectExForDpi(5)
+@macro AdjustWindowRectExForDpi(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    AdjustWindowRectExForDpi
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" AllowSetForegroundWindow(1)
+@macro AllowSetForegroundWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    AllowSetForegroundWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" AnimateWindow(3)
+@macro AnimateWindow(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    AnimateWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" AnyPopup(0)
+@macro AnyPopup()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    AnyPopup
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" AppendMenuW(4)
+@macro AppendMenuW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    AppendMenuW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ApplyWindowAction(2)
+@macro ApplyWindowAction(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ApplyWindowAction
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" AreDpiAwarenessContextsEqual(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" ArrangeIconicWindows(1)
+@macro ArrangeIconicWindows(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ArrangeIconicWindows
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" AttachThreadInput(3)
+@macro AttachThreadInput(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    AttachThreadInput
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" BeginDeferWindowPos(1)
+@macro BeginDeferWindowPos(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    BeginDeferWindowPos
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" BeginPaint(2)
+@macro BeginPaint(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    BeginPaint
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" BlockInput(1)
+@macro BlockInput(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    BlockInput
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" BringWindowToTop(1)
+@macro BringWindowToTop(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    BringWindowToTop
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" BroadcastSystemMessageExW(6)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" BroadcastSystemMessageW(5)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" CalculatePopupWindowPosition(5)
+@macro CalculatePopupWindowPosition(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CalculatePopupWindowPosition
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CallMsgFilterW(2)
+@macro CallMsgFilterW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    CallMsgFilterW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CallNextHookEx(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" CallWindowProcW(5)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" CancelShutdown(0)
+@macro CancelShutdown()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CancelShutdown
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CascadeWindows(5)
+@macro CascadeWindows(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CascadeWindows
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ChangeClipboardChain(2)
+@macro ChangeClipboardChain(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ChangeClipboardChain
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ChangeDisplaySettingsExW(5)
+@macro ChangeDisplaySettingsExW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    ChangeDisplaySettingsExW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ChangeDisplaySettingsW(2)
+@macro ChangeDisplaySettingsW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    ChangeDisplaySettingsW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ChangeMenuW(5)
+@macro ChangeMenuW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    ChangeMenuW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ChangeWindowMessageFilter(2)
+@macro ChangeWindowMessageFilter(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    ChangeWindowMessageFilter
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ChangeWindowMessageFilterEx(4)
+@macro ChangeWindowMessageFilterEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    ChangeWindowMessageFilterEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CharLowerBuffW(2)
+@macro CharLowerBuffW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    CharLowerBuffW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CharLowerW(1)
+@macro CharLowerW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CharLowerW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CharNextExA(3)
+@macro CharNextExA(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    CharNextExA
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CharNextW(1)
+@macro CharNextW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CharNextW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CharPrevExA(4)
+@macro CharPrevExA(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CharPrevExA
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CharPrevW(2)
+@macro CharPrevW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CharPrevW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CharToOemBuffW(3)
+@macro CharToOemBuffW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    CharToOemBuffW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CharToOemW(2)
+@macro CharToOemW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CharToOemW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CharUpperBuffW(2)
+@macro CharUpperBuffW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    CharUpperBuffW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CharUpperW(1)
+@macro CharUpperW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CharUpperW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CheckDlgButton(3)
+@macro CheckDlgButton(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    CheckDlgButton
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CheckMenuItem(3)
+@macro CheckMenuItem(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    CheckMenuItem
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CheckMenuRadioItem(5)
+@macro CheckMenuRadioItem(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CheckMenuRadioItem
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CheckRadioButton(4)
+@macro CheckRadioButton(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CheckRadioButton
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ChildWindowFromPoint(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" ChildWindowFromPointEx(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" ClientToScreen(2)
+@macro ClientToScreen(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ClientToScreen
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ClipCursor(1)
+@macro ClipCursor(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ClipCursor
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CloseClipboard(0)
+@macro CloseClipboard()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CloseClipboard
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CloseDesktop(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" CloseGestureInfoHandle(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" CloseTouchInputHandle(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" CloseWindow(1)
+@macro CloseWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CloseWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CloseWindowStation(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" ConsoleControl(3)
+@macro ConsoleControl(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    ConsoleControl
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ConvertPrimaryPointerToMouseDrag(0)
+@macro ConvertPrimaryPointerToMouseDrag()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    ConvertPrimaryPointerToMouseDrag
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ConvertToInterceptWindow(1)
+@macro ConvertToInterceptWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ConvertToInterceptWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CopyAcceleratorTableW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" CopyIcon(1)
+@macro CopyIcon(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CopyIcon
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CopyImage(5)
+@macro CopyImage(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CopyImage
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CopyRect(2)
+@macro CopyRect(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CopyRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CountClipboardFormats(0)
+@macro CountClipboardFormats()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CountClipboardFormats
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CreateAcceleratorTableW(2)
+@macro CreateAcceleratorTableW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    CreateAcceleratorTableW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CreateCaret(4)
+@macro CreateCaret(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CreateCaret
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CreateCursor(7)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" CreateDesktopExW(8)
+@macro CreateDesktopExW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CreateDesktopExW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CreateDesktopW(6)
+@macro CreateDesktopW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CreateDesktopW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CreateDialogIndirectParamW(5)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" CreateDialogParamW(5)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" CreateIcon(7)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" CreateIconFromResource(4)
+@macro CreateIconFromResource(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CreateIconFromResource
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CreateIconFromResourceEx(7)
+@macro CreateIconFromResourceEx(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CreateIconFromResourceEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CreateIconIndirect(1)
+@macro CreateIconIndirect(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateIconIndirect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CreateMDIWindowW(10)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" CreateMenu(0)
+@macro CreateMenu()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CreateMenu
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CreatePopupMenu(0)
+@macro CreatePopupMenu()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CreatePopupMenu
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CreateSyntheticPointerDevice(3)
+@macro CreateSyntheticPointerDevice(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    CreateSyntheticPointerDevice
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" CreateWindowExW(12)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" CreateWindowStationW(4)
+@macro CreateWindowStationW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CreateWindowStationW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DdeAbandonTransaction(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeAccessData(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeAddData(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeClientTransaction(8)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeCmpStringHandles(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeConnect(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeConnectList(5)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeCreateDataHandle(7)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeCreateStringHandleW(3)
+@macro DdeCreateStringHandleW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    DdeCreateStringHandleW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DdeDisconnect(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeDisconnectList(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeEnableCallback(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeFreeDataHandle(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeFreeStringHandle(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeGetData(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeGetLastError(1)
+@macro DdeGetLastError(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    DdeGetLastError
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DdeImpersonateClient(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeInitializeW(4)
+@macro DdeInitializeW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    DdeInitializeW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DdeKeepStringHandle(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeNameService(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdePostAdvise(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeQueryConvInfo(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeQueryNextServer(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeQueryStringW(5)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeReconnect(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeSetQualityOfService(3)
+@macro DdeSetQualityOfService(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    DdeSetQualityOfService
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DdeSetUserHandle(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeUnaccessData(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DdeUninitialize(1)
+@macro DdeUninitialize(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    DdeUninitialize
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DefDlgProcW(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DefFrameProcW(5)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DefMDIChildProcW(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DefRawInputProc(3)
+@macro DefRawInputProc(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    DefRawInputProc
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DefWindowProcW(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DeferWindowPos(8)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DeleteMenu(3)
+@macro DeleteMenu(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    DeleteMenu
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DeregisterShellHookWindow(1)
+@macro DeregisterShellHookWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DeregisterShellHookWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DestroyAcceleratorTable(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DestroyCaret(0)
+@macro DestroyCaret()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    DestroyCaret
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DestroyCursor(1)
+@macro DestroyCursor(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DestroyCursor
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DestroyIcon(1)
+@macro DestroyIcon(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DestroyIcon
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DestroyMenu(1)
+@macro DestroyMenu(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DestroyMenu
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DestroySyntheticPointerDevice(1)
+@macro DestroySyntheticPointerDevice(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DestroySyntheticPointerDevice
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DestroyWindow(1)
+@macro DestroyWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DestroyWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DialogBoxIndirectParamW(5)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DialogBoxParamW(5)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DisableProcessWindowsGhosting(0)
+@macro DisableProcessWindowsGhosting()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    DisableProcessWindowsGhosting
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DispatchMessageW(1)
+@macro DispatchMessageW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DispatchMessageW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DisplayConfigGetDeviceInfo(1)
+@macro DisplayConfigGetDeviceInfo(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DisplayConfigGetDeviceInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DisplayConfigSetDeviceInfo(1)
+@macro DisplayConfigSetDeviceInfo(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DisplayConfigSetDeviceInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DlgDirListComboBoxW(5)
+@macro DlgDirListComboBoxW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    DlgDirListComboBoxW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DlgDirListW(5)
+@macro DlgDirListW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    DlgDirListW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DlgDirSelectComboBoxExW(4)
+@macro DlgDirSelectComboBoxExW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    DlgDirSelectComboBoxExW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DlgDirSelectExW(4)
+@macro DlgDirSelectExW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    DlgDirSelectExW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DragDetect(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DragObject(5)
+@macro DragObject(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    DragObject
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DrawAnimatedRects(4)
+@macro DrawAnimatedRects(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    DrawAnimatedRects
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DrawCaption(4)
+@macro DrawCaption(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    DrawCaption
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DrawEdge(4)
+@macro DrawEdge(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    DrawEdge
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DrawFocusRect(2)
+@macro DrawFocusRect(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    DrawFocusRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DrawFrameControl(4)
+@macro DrawFrameControl(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    DrawFrameControl
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DrawIcon(4)
+@macro DrawIcon(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    DrawIcon
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DrawIconEx(9)
+@macro DrawIconEx(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    DrawIconEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DrawMenuBar(1)
+@macro DrawMenuBar(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DrawMenuBar
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DrawStateW(10)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" DrawTextExW(6)
+@macro DrawTextExW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    DrawTextExW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" DrawTextW(5)
+@macro DrawTextW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    DrawTextW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EmptyClipboard(0)
+@macro EmptyClipboard()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    EmptyClipboard
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EnableMenuItem(3)
+@macro EnableMenuItem(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    EnableMenuItem
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EnableMouseInPointer(1)
+@macro EnableMouseInPointer(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EnableMouseInPointer
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EnableNonClientDpiScaling(1)
+@macro EnableNonClientDpiScaling(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EnableNonClientDpiScaling
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EnableScrollBar(3)
+@macro EnableScrollBar(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    EnableScrollBar
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EnableWindow(2)
+@macro EnableWindow(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    EnableWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EndDeferWindowPos(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" EndDialog(2)
+@macro EndDialog(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    EndDialog
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EndMenu(0)
+@macro EndMenu()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    EndMenu
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EndPaint(2)
+@macro EndPaint(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    EndPaint
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EnterMoveSizeLoop(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" EnumChildWindows(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" EnumClipboardFormats(1)
+@macro EnumClipboardFormats(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    EnumClipboardFormats
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EnumDesktopWindows(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" EnumDesktopsW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" EnumDisplayDevicesW(4)
+@macro EnumDisplayDevicesW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    EnumDisplayDevicesW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EnumDisplayMonitors(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" EnumDisplaySettingsExW(4)
+@macro EnumDisplaySettingsExW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    EnumDisplaySettingsExW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EnumDisplaySettingsW(3)
+@macro EnumDisplaySettingsW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    EnumDisplaySettingsW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EnumPropsExW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" EnumPropsW(2)
+@macro EnumPropsW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    EnumPropsW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EnumThreadWindows(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" EnumWindowStationsW(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" EnumWindows(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" EqualRect(2)
+@macro EqualRect(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    EqualRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EvaluateProximityToPolygon(4)
+@macro EvaluateProximityToPolygon(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EvaluateProximityToPolygon
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" EvaluateProximityToRect(3)
+@macro EvaluateProximityToRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    EvaluateProximityToRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ExcludeUpdateRgn(2)
+@macro ExcludeUpdateRgn(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ExcludeUpdateRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ExitWindowsEx(2)
+@macro ExitWindowsEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    ExitWindowsEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" FillRect(3)
+@macro FillRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    FillRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" FindWindowExW(4)
+@macro FindWindowExW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    FindWindowExW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" FindWindowW(2)
+@macro FindWindowW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    FindWindowW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" FlashWindow(2)
+@macro FlashWindow(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    FlashWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" FlashWindowEx(1)
+@macro FlashWindowEx(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FlashWindowEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" FrameRect(3)
+@macro FrameRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    FrameRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" FreeDDElParam(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" GetActiveWindow(0)
+@macro GetActiveWindow()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetActiveWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetAltTabInfoW(5)
+@macro GetAltTabInfoW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetAltTabInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetAncestor(2)
+@macro GetAncestor(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetAncestor
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetAsyncKeyState(1)
+@macro GetAsyncKeyState(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    GetAsyncKeyState
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetAutoRotationState(1)
+@macro GetAutoRotationState(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetAutoRotationState
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetAwarenessFromDpiAwarenessContext(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" GetCIMSSM(1)
+@macro GetCIMSSM(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetCIMSSM
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetCapture(0)
+@macro GetCapture()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetCapture
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetCaretBlinkTime(0)
+@macro GetCaretBlinkTime()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetCaretBlinkTime
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetCaretPos(1)
+@macro GetCaretPos(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetCaretPos
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetClassInfoExW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" GetClassInfoW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" GetClassLongPtrW(2)
+@macro GetClassLongPtrW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetClassLongPtrW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetClassLongW(2)
+@macro GetClassLongW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetClassLongW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetClassNameW(3)
+@macro GetClassNameW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    GetClassNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetClassWord(2)
+@macro GetClassWord(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetClassWord
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetClientRect(2)
+@macro GetClientRect(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetClientRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetClipCursor(1)
+@macro GetClipCursor(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetClipCursor
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetClipboardData(1)
+@macro GetClipboardData(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    GetClipboardData
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetClipboardFormatNameW(3)
+@macro GetClipboardFormatNameW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    GetClipboardFormatNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetClipboardOwner(0)
+@macro GetClipboardOwner()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetClipboardOwner
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetClipboardSequenceNumber(0)
+@macro GetClipboardSequenceNumber()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetClipboardSequenceNumber
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetClipboardViewer(0)
+@macro GetClipboardViewer()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetClipboardViewer
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetComboBoxInfo(2)
+@macro GetComboBoxInfo(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetComboBoxInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetCurrentInputMessageSource(1)
+@macro GetCurrentInputMessageSource(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetCurrentInputMessageSource
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetCurrentMonitorTopologyId(0)
+@macro GetCurrentMonitorTopologyId()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetCurrentMonitorTopologyId
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetCursor(0)
+@macro GetCursor()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetCursor
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetCursorInfo(1)
+@macro GetCursorInfo(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetCursorInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetCursorPos(1)
+@macro GetCursorPos(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetCursorPos
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDC(1)
+@macro GetDC(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetDC
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDCEx(3)
+@macro GetDCEx(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    GetDCEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDesktopWindow(0)
+@macro GetDesktopWindow()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetDesktopWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDialogBaseUnits(0)
+@macro GetDialogBaseUnits()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetDialogBaseUnits
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDialogControlDpiChangeBehavior(1)
+@macro GetDialogControlDpiChangeBehavior(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetDialogControlDpiChangeBehavior
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDialogDpiChangeBehavior(1)
+@macro GetDialogDpiChangeBehavior(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetDialogDpiChangeBehavior
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDisplayAutoRotationPreferences(1)
+@macro GetDisplayAutoRotationPreferences(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetDisplayAutoRotationPreferences
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDisplayConfigBufferSizes(3)
+@macro GetDisplayConfigBufferSizes(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetDisplayConfigBufferSizes
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDlgCtrlID(1)
+@macro GetDlgCtrlID(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetDlgCtrlID
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDlgItem(2)
+@macro GetDlgItem(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetDlgItem
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDlgItemInt(4)
+@macro GetDlgItemInt(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetDlgItemInt
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDlgItemTextW(4)
+@macro GetDlgItemTextW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    GetDlgItemTextW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDoubleClickTime(0)
+@macro GetDoubleClickTime()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetDoubleClickTime
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDpiAwarenessContextForProcess(1)
+@macro GetDpiAwarenessContextForProcess(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetDpiAwarenessContextForProcess
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDpiForSystem(0)
+@macro GetDpiForSystem()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetDpiForSystem
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDpiForWindow(1)
+@macro GetDpiForWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetDpiForWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetDpiFromDpiAwarenessContext(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" GetFocus(0)
+@macro GetFocus()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetFocus
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetForegroundWindow(0)
+@macro GetForegroundWindow()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetForegroundWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetGUIThreadInfo(2)
+@macro GetGUIThreadInfo(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    GetGUIThreadInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetGestureConfig(6)
+@macro GetGestureConfig(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetGestureConfig
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetGestureExtraArgs(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" GetGestureInfo(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" GetGuiResources(2)
+@macro GetGuiResources(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetGuiResources
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetIconInfo(2)
+@macro GetIconInfo(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetIconInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetIconInfoExW(2)
+@macro GetIconInfoExW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetIconInfoExW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetInputState(0)
+@macro GetInputState()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetInputState
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetKBCodePage(0)
+@macro GetKBCodePage()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetKBCodePage
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetKeyNameTextW(3)
+@macro GetKeyNameTextW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    GetKeyNameTextW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetKeyState(1)
+@macro GetKeyState(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    GetKeyState
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetKeyboardLayout(1)
+@macro GetKeyboardLayout(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    GetKeyboardLayout
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetKeyboardLayoutList(2)
+@macro GetKeyboardLayoutList(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    GetKeyboardLayoutList
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetKeyboardLayoutNameW(1)
+@macro GetKeyboardLayoutNameW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetKeyboardLayoutNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetKeyboardState(1)
+@macro GetKeyboardState(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetKeyboardState
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetKeyboardType(1)
+@macro GetKeyboardType(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    GetKeyboardType
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetLastActivePopup(1)
+@macro GetLastActivePopup(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetLastActivePopup
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetLastInputInfo(1)
+@macro GetLastInputInfo(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetLastInputInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetLayeredWindowAttributes(4)
+@macro GetLayeredWindowAttributes(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetLayeredWindowAttributes
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetListBoxInfo(1)
+@macro GetListBoxInfo(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetListBoxInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMenu(1)
+@macro GetMenu(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetMenu
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMenuBarInfo(4)
+@macro GetMenuBarInfo(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetMenuBarInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMenuCheckMarkDimensions(0)
+@macro GetMenuCheckMarkDimensions()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetMenuCheckMarkDimensions
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMenuContextHelpId(1)
+@macro GetMenuContextHelpId(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetMenuContextHelpId
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMenuDefaultItem(3)
+@macro GetMenuDefaultItem(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    GetMenuDefaultItem
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMenuInfo(2)
+@macro GetMenuInfo(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetMenuInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMenuItemCount(1)
+@macro GetMenuItemCount(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetMenuItemCount
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMenuItemID(2)
+@macro GetMenuItemID(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetMenuItemID
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMenuItemInfoW(4)
+@macro GetMenuItemInfoW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetMenuItemInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMenuItemRect(4)
+@macro GetMenuItemRect(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetMenuItemRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMenuState(3)
+@macro GetMenuState(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    GetMenuState
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMenuStringW(5)
+@macro GetMenuStringW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    GetMenuStringW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMessageExtraInfo(0)
+@macro GetMessageExtraInfo()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetMessageExtraInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMessagePos(0)
+@macro GetMessagePos()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetMessagePos
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMessageTime(0)
+@macro GetMessageTime()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetMessageTime
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMessageW(4)
+@macro GetMessageW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    GetMessageW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMonitorInfoW(2)
+@macro GetMonitorInfoW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetMonitorInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetMouseMovePointsEx(5)
+@macro GetMouseMovePointsEx(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    GetMouseMovePointsEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetNextDlgGroupItem(3)
+@macro GetNextDlgGroupItem(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetNextDlgGroupItem
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetNextDlgTabItem(3)
+@macro GetNextDlgTabItem(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetNextDlgTabItem
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetOpenClipboardWindow(0)
+@macro GetOpenClipboardWindow()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetOpenClipboardWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetParent(1)
+@macro GetParent(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetParent
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPhysicalCursorPos(1)
+@macro GetPhysicalCursorPos(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetPhysicalCursorPos
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerCursorId(2)
+@macro GetPointerCursorId(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    GetPointerCursorId
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerDevice(2)
+@macro GetPointerDevice(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetPointerDevice
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerDeviceCursors(3)
+@macro GetPointerDeviceCursors(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetPointerDeviceCursors
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerDeviceProperties(3)
+@macro GetPointerDeviceProperties(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetPointerDeviceProperties
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerDeviceRects(3)
+@macro GetPointerDeviceRects(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetPointerDeviceRects
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerDevices(2)
+@macro GetPointerDevices(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetPointerDevices
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerFrameInfo(3)
+@macro GetPointerFrameInfo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetPointerFrameInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerFrameInfoHistory(4)
+@macro GetPointerFrameInfoHistory(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetPointerFrameInfoHistory
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerFramePenInfo(3)
+@macro GetPointerFramePenInfo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetPointerFramePenInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerFramePenInfoHistory(4)
+@macro GetPointerFramePenInfoHistory(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetPointerFramePenInfoHistory
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerFrameTouchInfo(3)
+@macro GetPointerFrameTouchInfo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetPointerFrameTouchInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerFrameTouchInfoHistory(4)
+@macro GetPointerFrameTouchInfoHistory(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetPointerFrameTouchInfoHistory
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerInfo(2)
+@macro GetPointerInfo(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    GetPointerInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerInfoHistory(3)
+@macro GetPointerInfoHistory(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetPointerInfoHistory
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerInputTransform(3)
+@macro GetPointerInputTransform(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    GetPointerInputTransform
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerPenInfo(2)
+@macro GetPointerPenInfo(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    GetPointerPenInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerPenInfoHistory(3)
+@macro GetPointerPenInfoHistory(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetPointerPenInfoHistory
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerTouchInfo(2)
+@macro GetPointerTouchInfo(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    GetPointerTouchInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerTouchInfoHistory(3)
+@macro GetPointerTouchInfoHistory(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetPointerTouchInfoHistory
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPointerType(2)
+@macro GetPointerType(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    GetPointerType
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPriorityClipboardFormat(2)
+@macro GetPriorityClipboardFormat(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetPriorityClipboardFormat
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetProcessDefaultLayout(1)
+@macro GetProcessDefaultLayout(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetProcessDefaultLayout
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetProcessWindowStation(0)
+@macro GetProcessWindowStation()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetProcessWindowStation
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetPropW(2)
+@macro GetPropW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetPropW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetQueueStatus(1)
+@macro GetQueueStatus(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    GetQueueStatus
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetRawInputBuffer(3)
+@macro GetRawInputBuffer(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    GetRawInputBuffer
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetRawInputData(5)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" GetRawInputDeviceInfoW(4)
+@macro GetRawInputDeviceInfoW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetRawInputDeviceInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetRawInputDeviceList(3)
+@macro GetRawInputDeviceList(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    GetRawInputDeviceList
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetRawPointerDeviceData(5)
+@macro GetRawPointerDeviceData(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetRawPointerDeviceData
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetRegisteredRawInputDevices(3)
+@macro GetRegisteredRawInputDevices(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    GetRegisteredRawInputDevices
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetScrollBarInfo(3)
+@macro GetScrollBarInfo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    GetScrollBarInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetScrollInfo(3)
+@macro GetScrollInfo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    GetScrollInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetScrollPos(2)
+@macro GetScrollPos(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetScrollPos
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetScrollRange(4)
+@macro GetScrollRange(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetScrollRange
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetShellWindow(0)
+@macro GetShellWindow()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetShellWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetSubMenu(2)
+@macro GetSubMenu(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetSubMenu
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetSysColor(1)
+@macro GetSysColor(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    GetSysColor
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetSysColorBrush(1)
+@macro GetSysColorBrush(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    GetSysColorBrush
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetSystemDpiForProcess(1)
+@macro GetSystemDpiForProcess(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetSystemDpiForProcess
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetSystemMenu(2)
+@macro GetSystemMenu(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetSystemMenu
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetSystemMetrics(1)
+@macro GetSystemMetrics(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    GetSystemMetrics
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetSystemMetricsForDpi(2)
+@macro GetSystemMetricsForDpi(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    GetSystemMetricsForDpi
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetTabbedTextExtentW(5)
+@macro GetTabbedTextExtentW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    GetTabbedTextExtentW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetThreadDesktop(1)
+@macro GetThreadDesktop(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    GetThreadDesktop
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetThreadDpiAwarenessContext(0)
+@macro GetThreadDpiAwarenessContext()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetThreadDpiAwarenessContext
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetThreadDpiHostingBehavior(0)
+@macro GetThreadDpiHostingBehavior()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetThreadDpiHostingBehavior
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetTitleBarInfo(2)
+@macro GetTitleBarInfo(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetTitleBarInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetTopWindow(1)
+@macro GetTopWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetTopWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetTouchInputInfo(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" GetUnpredictedMessagePos(0)
+@macro GetUnpredictedMessagePos()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GetUnpredictedMessagePos
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetUpdateRect(3)
+@macro GetUpdateRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetUpdateRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetUpdateRgn(3)
+@macro GetUpdateRgn(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetUpdateRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetUpdatedClipboardFormats(3)
+@macro GetUpdatedClipboardFormats(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    GetUpdatedClipboardFormats
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetUserObjectInformationW(5)
+@macro GetUserObjectInformationW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    GetUserObjectInformationW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetUserObjectSecurity(5)
+@macro GetUserObjectSecurity(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    GetUserObjectSecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindow(2)
+@macro GetWindow(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowContextHelpId(1)
+@macro GetWindowContextHelpId(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetWindowContextHelpId
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowDC(1)
+@macro GetWindowDC(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetWindowDC
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowDisplayAffinity(2)
+@macro GetWindowDisplayAffinity(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetWindowDisplayAffinity
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowDpiAwarenessContext(1)
+@macro GetWindowDpiAwarenessContext(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetWindowDpiAwarenessContext
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowDpiHostingBehavior(1)
+@macro GetWindowDpiHostingBehavior(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetWindowDpiHostingBehavior
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowFeedbackSetting(5)
+@macro GetWindowFeedbackSetting(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetWindowFeedbackSetting
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowInfo(2)
+@macro GetWindowInfo(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetWindowInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowLongPtrW(2)
+@macro GetWindowLongPtrW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetWindowLongPtrW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowLongW(2)
+@macro GetWindowLongW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetWindowLongW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowModuleFileNameW(3)
+@macro GetWindowModuleFileNameW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    GetWindowModuleFileNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowPlacement(2)
+@macro GetWindowPlacement(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetWindowPlacement
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowRect(2)
+@macro GetWindowRect(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetWindowRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowRgn(2)
+@macro GetWindowRgn(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetWindowRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowRgnBox(2)
+@macro GetWindowRgnBox(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetWindowRgnBox
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowTextLengthW(1)
+@macro GetWindowTextLengthW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetWindowTextLengthW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowTextW(3)
+@macro GetWindowTextW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    GetWindowTextW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowThreadProcessId(2)
+@macro GetWindowThreadProcessId(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetWindowThreadProcessId
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GetWindowWord(2)
+@macro GetWindowWord(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetWindowWord
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" GrayStringW(9)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" HideCaret(1)
+@macro HideCaret(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    HideCaret
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" HiliteMenuItem(4)
+@macro HiliteMenuItem(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    HiliteMenuItem
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IMPGetIMEW(2)
+@macro IMPGetIMEW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IMPGetIMEW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IMPQueryIMEW(1)
+@macro IMPQueryIMEW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IMPQueryIMEW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IMPSetIMEW(2)
+@macro IMPSetIMEW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IMPSetIMEW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ImpersonateDdeClientWindow(2)
+@macro ImpersonateDdeClientWindow(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ImpersonateDdeClientWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" InSendMessage(0)
+@macro InSendMessage()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    InSendMessage
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" InSendMessageEx(1)
+@macro InSendMessageEx(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    InSendMessageEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" InflateRect(3)
+@macro InflateRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    InflateRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" InheritWindowMonitor(2)
+@macro InheritWindowMonitor(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    InheritWindowMonitor
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" InitializeTouchInjection(2)
+@macro InitializeTouchInjection(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    InitializeTouchInjection
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" InjectSyntheticPointerInput(3)
+@macro InjectSyntheticPointerInput(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    InjectSyntheticPointerInput
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" InjectTouchInput(2)
+@macro InjectTouchInput(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    InjectTouchInput
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" InsertMenuItemW(4)
+@macro InsertMenuItemW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    InsertMenuItemW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" InsertMenuW(5)
+@macro InsertMenuW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    InsertMenuW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" InternalGetWindowText(3)
+@macro InternalGetWindowText(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    InternalGetWindowText
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IntersectRect(3)
+@macro IntersectRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    IntersectRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" InvalidateRect(3)
+@macro InvalidateRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    InvalidateRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" InvalidateRgn(3)
+@macro InvalidateRgn(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    InvalidateRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" InvertRect(2)
+@macro InvertRect(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    InvertRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsCharAlphaNumericW(1)
+@macro IsCharAlphaNumericW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cl, &arg0
+    call    IsCharAlphaNumericW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsCharAlphaW(1)
+@macro IsCharAlphaW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cl, &arg0
+    call    IsCharAlphaW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsCharLowerW(1)
+@macro IsCharLowerW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cl, &arg0
+    call    IsCharLowerW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsCharUpperW(1)
+@macro IsCharUpperW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cl, &arg0
+    call    IsCharUpperW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsChild(2)
+@macro IsChild(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IsChild
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsClipboardFormatAvailable(1)
+@macro IsClipboardFormatAvailable(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    IsClipboardFormatAvailable
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsDialogMessageW(2)
+@macro IsDialogMessageW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IsDialogMessageW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsDlgButtonChecked(2)
+@macro IsDlgButtonChecked(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    IsDlgButtonChecked
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsGUIThread(1)
+@macro IsGUIThread(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsGUIThread
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsHungAppWindow(1)
+@macro IsHungAppWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsHungAppWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsIconic(1)
+@macro IsIconic(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsIconic
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsImmersiveProcess(1)
+@macro IsImmersiveProcess(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsImmersiveProcess
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsInterceptWindow(2)
+@macro IsInterceptWindow(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IsInterceptWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsMenu(1)
+@macro IsMenu(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsMenu
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsMouseInPointerEnabled(0)
+@macro IsMouseInPointerEnabled()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    IsMouseInPointerEnabled
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsProcessDPIAware(0)
+@macro IsProcessDPIAware()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    IsProcessDPIAware
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsRectEmpty(1)
+@macro IsRectEmpty(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsRectEmpty
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsTouchWindow(2)
+@macro IsTouchWindow(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IsTouchWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsValidDpiAwarenessContext(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" IsWinEventHookInstalled(1)
+@macro IsWinEventHookInstalled(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    IsWinEventHookInstalled
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsWindow(1)
+@macro IsWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsWindowArranged(1)
+@macro IsWindowArranged(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsWindowArranged
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsWindowEnabled(1)
+@macro IsWindowEnabled(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsWindowEnabled
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsWindowUnicode(1)
+@macro IsWindowUnicode(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsWindowUnicode
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsWindowVisible(1)
+@macro IsWindowVisible(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsWindowVisible
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsWow64Message(0)
+@macro IsWow64Message()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    IsWow64Message
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" IsZoomed(1)
+@macro IsZoomed(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsZoomed
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" KillTimer(2)
+@macro KillTimer(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    KillTimer
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" LoadAcceleratorsW(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" LoadBitmapW(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" LoadCursorFromFileW(1)
+@macro LoadCursorFromFileW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    LoadCursorFromFileW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" LoadCursorW(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" LoadIconW(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" LoadImageW(6)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" LoadKeyboardLayoutW(2)
+@macro LoadKeyboardLayoutW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    LoadKeyboardLayoutW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" LoadMenuIndirectW(1)
+@macro LoadMenuIndirectW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    LoadMenuIndirectW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" LoadMenuW(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" LoadStringW(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" LockSetForegroundWindow(1)
+@macro LockSetForegroundWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    LockSetForegroundWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" LockWindowUpdate(1)
+@macro LockWindowUpdate(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    LockWindowUpdate
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" LockWorkStation(0)
+@macro LockWorkStation()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    LockWorkStation
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" LogicalToPhysicalPoint(2)
+@macro LogicalToPhysicalPoint(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    LogicalToPhysicalPoint
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" LogicalToPhysicalPointForPerMonitorDPI(2)
+@macro LogicalToPhysicalPointForPerMonitorDPI(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    LogicalToPhysicalPointForPerMonitorDPI
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" LookupIconIdFromDirectory(2)
+@macro LookupIconIdFromDirectory(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    LookupIconIdFromDirectory
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" LookupIconIdFromDirectoryEx(5)
+@macro LookupIconIdFromDirectoryEx(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    LookupIconIdFromDirectoryEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" MapDialogRect(2)
+@macro MapDialogRect(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    MapDialogRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" MapVirtualKeyExW(3)
+@macro MapVirtualKeyExW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    MapVirtualKeyExW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" MapVirtualKeyW(2)
+@macro MapVirtualKeyW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    MapVirtualKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" MapWindowPoints(4)
+@macro MapWindowPoints(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    MapWindowPoints
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" MenuItemFromPoint(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" MessageBeep(1)
+@macro MessageBeep(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    MessageBeep
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" MessageBoxExW(5)
+@macro MessageBoxExW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    MessageBoxExW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" MessageBoxIndirectW(1)
+@macro MessageBoxIndirectW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    MessageBoxIndirectW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" MessageBoxW(4)
+@macro MessageBoxW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    MessageBoxW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ModifyMenuW(5)
+@macro ModifyMenuW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    ModifyMenuW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" MonitorFromPoint(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" MonitorFromRect(2)
+@macro MonitorFromRect(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    MonitorFromRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" MonitorFromWindow(2)
+@macro MonitorFromWindow(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    MonitorFromWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" MoveWindow(6)
+@macro MoveWindow(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    MoveWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" MsgWaitForMultipleObjects(5)
+@macro MsgWaitForMultipleObjects(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    MsgWaitForMultipleObjects
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" MsgWaitForMultipleObjectsEx(5)
+@macro MsgWaitForMultipleObjectsEx(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    MsgWaitForMultipleObjectsEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" NotifyWinEvent(4)
+@macro NotifyWinEvent(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    NotifyWinEvent
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" OemKeyScan(1)
+@macro OemKeyScan(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cx, &arg0
+    call    OemKeyScan
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" OemToCharBuffW(3)
+@macro OemToCharBuffW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    OemToCharBuffW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" OemToCharW(2)
+@macro OemToCharW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    OemToCharW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" OffsetRect(3)
+@macro OffsetRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    OffsetRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" OpenClipboard(1)
+@macro OpenClipboard(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    OpenClipboard
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" OpenDesktopW(4)
+@macro OpenDesktopW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    OpenDesktopW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" OpenIcon(1)
+@macro OpenIcon(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    OpenIcon
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" OpenInputDesktop(3)
+@macro OpenInputDesktop(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    OpenInputDesktop
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" OpenWindowStationW(3)
+@macro OpenWindowStationW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    OpenWindowStationW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" PackDDElParam(3)
+@macro PackDDElParam(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    PackDDElParam
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" PackTouchHitTestingProximityEvaluation(2)
+@macro PackTouchHitTestingProximityEvaluation(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PackTouchHitTestingProximityEvaluation
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" PaintDesktop(1)
+@macro PaintDesktop(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PaintDesktop
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" PeekMessageW(5)
+@macro PeekMessageW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    PeekMessageW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" PhysicalToLogicalPoint(2)
+@macro PhysicalToLogicalPoint(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PhysicalToLogicalPoint
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" PhysicalToLogicalPointForPerMonitorDPI(2)
+@macro PhysicalToLogicalPointForPerMonitorDPI(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PhysicalToLogicalPointForPerMonitorDPI
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" PostMessageW(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" PostQuitMessage(1)
+@macro PostQuitMessage(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    PostQuitMessage
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" PostThreadMessageW(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" PrintWindow(3)
+@macro PrintWindow(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PrintWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" PrivateExtractIconsW(8)
+@macro PrivateExtractIconsW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    PrivateExtractIconsW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" PtInRect(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" QueryDisplayConfig(6)
+@macro QueryDisplayConfig(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    QueryDisplayConfig
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RealChildWindowFromPoint(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" RealGetWindowClassW(3)
+@macro RealGetWindowClassW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    RealGetWindowClassW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RedrawWindow(4)
+@macro RedrawWindow(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    RedrawWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterClassExW(1)
+@macro RegisterClassExW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RegisterClassExW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterClassW(1)
+@macro RegisterClassW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RegisterClassW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterClipboardFormatW(1)
+@macro RegisterClipboardFormatW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RegisterClipboardFormatW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterCloakedNotification(2)
+@macro RegisterCloakedNotification(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RegisterCloakedNotification
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterDeviceNotificationW(3)
+@macro RegisterDeviceNotificationW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    RegisterDeviceNotificationW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterForTooltipDismissNotification(2)
+@macro RegisterForTooltipDismissNotification(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    RegisterForTooltipDismissNotification
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterHotKey(4)
+@macro RegisterHotKey(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    RegisterHotKey
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterPointerDeviceNotifications(2)
+@macro RegisterPointerDeviceNotifications(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RegisterPointerDeviceNotifications
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterPointerInputTarget(2)
+@macro RegisterPointerInputTarget(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    RegisterPointerInputTarget
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterPointerInputTargetEx(3)
+@macro RegisterPointerInputTargetEx(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    RegisterPointerInputTargetEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterPowerSettingNotification(3)
+@macro RegisterPowerSettingNotification(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    RegisterPowerSettingNotification
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterRawInputDevices(3)
+@macro RegisterRawInputDevices(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    RegisterRawInputDevices
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterShellHookWindow(1)
+@macro RegisterShellHookWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RegisterShellHookWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterSuspendResumeNotification(2)
+@macro RegisterSuspendResumeNotification(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    RegisterSuspendResumeNotification
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterTouchHitTestingWindow(2)
+@macro RegisterTouchHitTestingWindow(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    RegisterTouchHitTestingWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterTouchWindow(2)
+@macro RegisterTouchWindow(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    RegisterTouchWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RegisterWindowMessageW(1)
+@macro RegisterWindowMessageW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RegisterWindowMessageW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ReleaseCapture(0)
+@macro ReleaseCapture()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    ReleaseCapture
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ReleaseDC(2)
+@macro ReleaseDC(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ReleaseDC
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RemoveClipboardFormatListener(1)
+@macro RemoveClipboardFormatListener(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RemoveClipboardFormatListener
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RemoveMenu(3)
+@macro RemoveMenu(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    RemoveMenu
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" RemovePropW(2)
+@macro RemovePropW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RemovePropW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ReplyMessage(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" ReuseDDElParam(5)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" ScreenToClient(2)
+@macro ScreenToClient(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ScreenToClient
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ScrollDC(7)
+@macro ScrollDC(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    ScrollDC
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ScrollWindow(5)
+@macro ScrollWindow(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    ScrollWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ScrollWindowEx(8)
+@macro ScrollWindowEx(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    ScrollWindowEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SendDlgItemMessageW(5)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SendIMEMessageExW(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SendInput(3)
+@macro SendInput(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SendInput
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SendMessageCallbackW(6)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SendMessageTimeoutW(7)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SendMessageW(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SendNotifyMessageW(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SetActiveWindow(1)
+@macro SetActiveWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SetActiveWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetAdditionalForegroundBoostProcesses(3)
+@macro SetAdditionalForegroundBoostProcesses(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SetAdditionalForegroundBoostProcesses
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetCapture(1)
+@macro SetCapture(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SetCapture
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetCaretBlinkTime(1)
+@macro SetCaretBlinkTime(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SetCaretBlinkTime
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetCaretPos(2)
+@macro SetCaretPos(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    SetCaretPos
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetClassLongPtrW(3)
+@macro SetClassLongPtrW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SetClassLongPtrW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetClassLongW(3)
+@macro SetClassLongW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    SetClassLongW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetClassWord(3)
+@macro SetClassWord(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8w, &arg2
+    call    SetClassWord
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetClipboardData(2)
+@macro SetClipboardData(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    SetClipboardData
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetClipboardViewer(1)
+@macro SetClipboardViewer(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SetClipboardViewer
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetCoalescableTimer(5)
+@macro SetCoalescableTimer(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetCoalescableTimer
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetCursor(1)
+@macro SetCursor(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SetCursor
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetCursorPos(2)
+@macro SetCursorPos(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    SetCursorPos
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetDebugErrorLevel(1)
+@macro SetDebugErrorLevel(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SetDebugErrorLevel
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetDialogControlDpiChangeBehavior(3)
+@macro SetDialogControlDpiChangeBehavior(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    SetDialogControlDpiChangeBehavior
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetDialogDpiChangeBehavior(3)
+@macro SetDialogDpiChangeBehavior(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    SetDialogDpiChangeBehavior
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetDisplayAutoRotationPreferences(1)
+@macro SetDisplayAutoRotationPreferences(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SetDisplayAutoRotationPreferences
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetDisplayConfig(5)
+@macro SetDisplayConfig(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetDisplayConfig
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetDlgItemInt(4)
+@macro SetDlgItemInt(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetDlgItemInt
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetDlgItemTextW(3)
+@macro SetDlgItemTextW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SetDlgItemTextW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetDoubleClickTime(1)
+@macro SetDoubleClickTime(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SetDoubleClickTime
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetFocus(1)
+@macro SetFocus(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SetFocus
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetForegroundWindow(1)
+@macro SetForegroundWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SetForegroundWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetGestureConfig(5)
+@macro SetGestureConfig(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetGestureConfig
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetKeyboardState(1)
+@macro SetKeyboardState(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SetKeyboardState
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetLastErrorEx(2)
+@macro SetLastErrorEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    SetLastErrorEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetLayeredWindowAttributes(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SetMenu(2)
+@macro SetMenu(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetMenu
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetMenuContextHelpId(2)
+@macro SetMenuContextHelpId(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetMenuContextHelpId
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetMenuDefaultItem(3)
+@macro SetMenuDefaultItem(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    SetMenuDefaultItem
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetMenuInfo(2)
+@macro SetMenuInfo(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetMenuInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetMenuItemBitmaps(5)
+@macro SetMenuItemBitmaps(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetMenuItemBitmaps
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetMenuItemInfoW(4)
+@macro SetMenuItemInfoW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SetMenuItemInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetMessageExtraInfo(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SetMessageQueue(1)
+@macro SetMessageQueue(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SetMessageQueue
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetParent(2)
+@macro SetParent(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetParent
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetPhysicalCursorPos(2)
+@macro SetPhysicalCursorPos(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    SetPhysicalCursorPos
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetProcessDPIAware(0)
+@macro SetProcessDPIAware()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    SetProcessDPIAware
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetProcessDefaultLayout(1)
+@macro SetProcessDefaultLayout(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SetProcessDefaultLayout
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetProcessDpiAwarenessContext(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SetProcessRestrictionExemption(1)
+@macro SetProcessRestrictionExemption(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SetProcessRestrictionExemption
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetProcessWindowStation(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SetPropW(3)
+@macro SetPropW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SetPropW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetRect(5)
+@macro SetRect(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    SetRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetRectEmpty(1)
+@macro SetRectEmpty(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SetRectEmpty
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetScrollInfo(4)
+@macro SetScrollInfo(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SetScrollInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetScrollPos(4)
+@macro SetScrollPos(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetScrollPos
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetScrollRange(5)
+@macro SetScrollRange(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    SetScrollRange
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetSysColors(3)
+@macro SetSysColors(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SetSysColors
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetSystemCursor(2)
+@macro SetSystemCursor(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetSystemCursor
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetThreadDesktop(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SetThreadDpiAwarenessContext(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SetThreadDpiHostingBehavior(1)
+@macro SetThreadDpiHostingBehavior(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SetThreadDpiHostingBehavior
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetTimer(4)
+@macro SetTimer(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetTimer
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetUserObjectInformationW(4)
+@macro SetUserObjectInformationW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SetUserObjectInformationW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetUserObjectSecurity(3)
+@macro SetUserObjectSecurity(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SetUserObjectSecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetWinEventHook(7)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SetWindowContextHelpId(2)
+@macro SetWindowContextHelpId(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetWindowContextHelpId
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetWindowDisplayAffinity(2)
+@macro SetWindowDisplayAffinity(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetWindowDisplayAffinity
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetWindowFeedbackSetting(5)
+@macro SetWindowFeedbackSetting(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    SetWindowFeedbackSetting
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetWindowLongPtrW(3)
+@macro SetWindowLongPtrW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SetWindowLongPtrW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetWindowLongW(3)
+@macro SetWindowLongW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    SetWindowLongW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetWindowPlacement(2)
+@macro SetWindowPlacement(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetWindowPlacement
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetWindowPos(7)
+@macro SetWindowPos(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    SetWindowPos
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetWindowRgn(3)
+@macro SetWindowRgn(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SetWindowRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetWindowTextW(2)
+@macro SetWindowTextW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetWindowTextW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetWindowWord(3)
+@macro SetWindowWord(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8w, &arg2
+    call    SetWindowWord
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SetWindowsHookExW(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SetWindowsHookW(2)
+@macro SetWindowsHookW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    SetWindowsHookW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ShowCaret(1)
+@macro ShowCaret(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ShowCaret
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ShowCursor(1)
+@macro ShowCursor(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ShowCursor
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ShowOwnedPopups(2)
+@macro ShowOwnedPopups(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ShowOwnedPopups
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ShowScrollBar(3)
+@macro ShowScrollBar(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    ShowScrollBar
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ShowWindow(2)
+@macro ShowWindow(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    ShowWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ShowWindowAsync(2)
+@macro ShowWindowAsync(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    ShowWindowAsync
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ShutdownBlockReasonCreate(2)
+@macro ShutdownBlockReasonCreate(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ShutdownBlockReasonCreate
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ShutdownBlockReasonDestroy(1)
+@macro ShutdownBlockReasonDestroy(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ShutdownBlockReasonDestroy
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ShutdownBlockReasonQuery(3)
+@macro ShutdownBlockReasonQuery(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    ShutdownBlockReasonQuery
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SkipPointerFrameMessages(1)
+@macro SkipPointerFrameMessages(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SkipPointerFrameMessages
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SoundSentry(0)
+@macro SoundSentry()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    SoundSentry
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SubtractRect(3)
+@macro SubtractRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SubtractRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SwapMouseButton(1)
+@macro SwapMouseButton(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SwapMouseButton
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SwitchDesktop(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" SwitchToThisWindow(2)
+@macro SwitchToThisWindow(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SwitchToThisWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SystemParametersInfoForDpi(5)
+@macro SystemParametersInfoForDpi(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SystemParametersInfoForDpi
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" SystemParametersInfoW(4)
+@macro SystemParametersInfoW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SystemParametersInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" TabbedTextOutW(8)
+@macro TabbedTextOutW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    TabbedTextOutW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" TileWindows(5)
+@macro TileWindows(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    TileWindows
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ToAscii(5)
+@macro ToAscii(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ToAscii
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ToAsciiEx(6)
+@macro ToAsciiEx(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ToAsciiEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ToUnicode(6)
+@macro ToUnicode(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ToUnicode
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ToUnicodeEx(7)
+@macro ToUnicodeEx(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ToUnicodeEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" TrackMouseEvent(1)
+@macro TrackMouseEvent(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    TrackMouseEvent
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" TrackPopupMenu(7)
+@macro TrackPopupMenu(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    TrackPopupMenu
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" TrackPopupMenuEx(6)
+@macro TrackPopupMenuEx(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    TrackPopupMenuEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" TranslateAcceleratorW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" TranslateMDISysAccel(2)
+@macro TranslateMDISysAccel(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    TranslateMDISysAccel
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" TranslateMessage(1)
+@macro TranslateMessage(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    TranslateMessage
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" UnhookWinEvent(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" UnhookWindowsHook(2)
+@macro UnhookWindowsHook(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    UnhookWindowsHook
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" UnhookWindowsHookEx(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" UnionRect(3)
+@macro UnionRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    UnionRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" UnloadKeyboardLayout(1)
+@macro UnloadKeyboardLayout(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    UnloadKeyboardLayout
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" UnpackDDElParam(4)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" UnregisterClassW(2)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" UnregisterDeviceNotification(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" UnregisterHotKey(2)
+@macro UnregisterHotKey(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    UnregisterHotKey
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" UnregisterPointerInputTarget(2)
+@macro UnregisterPointerInputTarget(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    UnregisterPointerInputTarget
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" UnregisterPointerInputTargetEx(2)
+@macro UnregisterPointerInputTargetEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    UnregisterPointerInputTargetEx
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" UnregisterPowerSettingNotification(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" UnregisterSuspendResumeNotification(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" UnregisterTouchWindow(1)
+@macro UnregisterTouchWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    UnregisterTouchWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" UpdateLayeredWindow(9)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" UpdateLayeredWindowIndirect(2)
+@macro UpdateLayeredWindowIndirect(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    UpdateLayeredWindowIndirect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" UpdateWindow(1)
+@macro UpdateWindow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    UpdateWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" UserHandleGrantAccess(3)
+@macro UserHandleGrantAccess(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    UserHandleGrantAccess
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ValidateRect(2)
+@macro ValidateRect(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ValidateRect
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" ValidateRgn(2)
+@macro ValidateRgn(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ValidateRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" VkKeyScanExW(2)
+@macro VkKeyScanExW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cl, &arg0
+    mov     rdx, &arg1
+    call    VkKeyScanExW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" VkKeyScanW(1)
+@macro VkKeyScanW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cl, &arg0
+    call    VkKeyScanW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" WINNLSEnableIME(2)
+@macro WINNLSEnableIME(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WINNLSEnableIME
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" WINNLSGetEnableStatus(1)
+@macro WINNLSGetEnableStatus(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    WINNLSGetEnableStatus
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" WINNLSGetIMEHotkey(1)
+@macro WINNLSGetIMEHotkey(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    WINNLSGetIMEHotkey
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" WaitForInputIdle(2)
+@macro WaitForInputIdle(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    WaitForInputIdle
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" WaitMessage(0)
+@macro WaitMessage()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    WaitMessage
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" WinHelpW(4)
+@macro WinHelpW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    WinHelpW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" WindowFromDC(1)
+@macro WindowFromDC(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    WindowFromDC
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" WindowFromPhysicalPoint(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" WindowFromPoint(1)  ; (no wrapper -- unsupported signature)
+
+@extern "USER32.dll" keybd_event(4)
+@macro keybd_event(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cl, &arg0
+    mov     dl, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    keybd_event
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" mouse_event(5)
+@macro mouse_event(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    mouse_event
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" wsprintfW(2)
+@macro wsprintfW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    wsprintfW
+    mov     rsp, r12
+@endmacro
+
+@extern "USER32.dll" wvsprintfW(3)
+@macro wvsprintfW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    wvsprintfW
+    mov     rsp, r12
+@endmacro

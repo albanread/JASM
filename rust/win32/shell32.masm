@@ -1,0 +1,2058 @@
+; ---------------------------------------------------------------------
+; Generated from windows_api.db -- DLL: SHELL32.dll
+; v2: @extern declarations + invoke-style wrapper macros.
+; DO NOT EDIT BY HAND. Regenerate via:
+;     python scripts/win32_gen.py --dll SHELL32.dll
+;
+; Each function gets two definitions:
+;
+;   @extern "SHELL32.dll" NAME(N)
+;     The declaration the host pairs with LoadLibraryW + GetProcAddress.
+;
+;   @macro NAME(arg0, arg1, ...)
+;     Win64-ABI-aware wrapper. Each arg goes in its register or stack
+;     slot per the parameter's type; shadow space and 16-byte RSP
+;     alignment are handled. Functions whose signatures cannot be
+;     modelled (struct-by-value params, variadics) get only the
+;     @extern -- call those by hand.
+;
+; Function count: 167 wrapped, 43 extern-only
+; Source of truth: E:\windows_api\windows_api.db
+; ---------------------------------------------------------------------
+
+@extern "SHELL32.dll" AssocCreateForClasses(4)
+@macro AssocCreateForClasses(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    AssocCreateForClasses
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" AssocGetDetailsOfPropKey(5)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" CDefFolderMenu_Create2(9)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" CIDLData_CreateFromIDArray(4)
+@macro CIDLData_CreateFromIDArray(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CIDLData_CreateFromIDArray
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" CommandLineToArgvW(2)
+@macro CommandLineToArgvW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CommandLineToArgvW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" DAD_AutoScroll(3)
+@macro DAD_AutoScroll(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    DAD_AutoScroll
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" DAD_DragEnterEx(2)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" DAD_DragEnterEx2(3)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" DAD_DragLeave(0)
+@macro DAD_DragLeave()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    DAD_DragLeave
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" DAD_DragMove(1)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" DAD_SetDragImage(2)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" DAD_ShowDragImage(1)
+@macro DAD_ShowDragImage(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DAD_ShowDragImage
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" DoEnvironmentSubstW(2)
+@macro DoEnvironmentSubstW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    DoEnvironmentSubstW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" DragAcceptFiles(2)
+@macro DragAcceptFiles(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    DragAcceptFiles
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" DragFinish(1)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" DragQueryFileW(4)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" DragQueryPoint(2)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" DriveType(1)
+@macro DriveType(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    DriveType
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" DuplicateIcon(2)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" ExtractAssociatedIconExW(4)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" ExtractAssociatedIconW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" ExtractIconExW(5)
+@macro ExtractIconExW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ExtractIconExW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ExtractIconW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" FileIconInit(1)
+@macro FileIconInit(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FileIconInit
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" FindExecutableW(3)
+@macro FindExecutableW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    FindExecutableW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" GetCurrentProcessExplicitAppUserModelID(1)
+@macro GetCurrentProcessExplicitAppUserModelID(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetCurrentProcessExplicitAppUserModelID
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" GetFileNameFromBrowse(7)
+@macro GetFileNameFromBrowse(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetFileNameFromBrowse
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILAppendID(3)
+@macro ILAppendID(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    ILAppendID
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILClone(1)
+@macro ILClone(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ILClone
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILCloneFirst(1)
+@macro ILCloneFirst(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ILCloneFirst
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILCombine(2)
+@macro ILCombine(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ILCombine
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILCreateFromPathW(1)
+@macro ILCreateFromPathW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ILCreateFromPathW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILFindChild(2)
+@macro ILFindChild(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ILFindChild
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILFindLastID(1)
+@macro ILFindLastID(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ILFindLastID
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILFree(1)
+@macro ILFree(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ILFree
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILGetNext(1)
+@macro ILGetNext(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ILGetNext
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILGetSize(1)
+@macro ILGetSize(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ILGetSize
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILIsEqual(2)
+@macro ILIsEqual(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ILIsEqual
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILIsParent(3)
+@macro ILIsParent(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    ILIsParent
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILLoadFromStreamEx(2)
+@macro ILLoadFromStreamEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ILLoadFromStreamEx
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILRemoveLastID(1)
+@macro ILRemoveLastID(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ILRemoveLastID
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ILSaveToStream(2)
+@macro ILSaveToStream(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ILSaveToStream
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" InitNetworkAddressControl(0)
+@macro InitNetworkAddressControl()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    InitNetworkAddressControl
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" IsLFNDriveW(1)
+@macro IsLFNDriveW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsLFNDriveW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" IsNetDrive(1)
+@macro IsNetDrive(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    IsNetDrive
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" IsUserAnAdmin(0)
+@macro IsUserAnAdmin()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    IsUserAnAdmin
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" OpenRegStream(4)
+@macro OpenRegStream(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    OpenRegStream
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" PathCleanupSpec(2)
+@macro PathCleanupSpec(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PathCleanupSpec
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" PathGetShortPath(1)
+@macro PathGetShortPath(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathGetShortPath
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" PathIsExe(1)
+@macro PathIsExe(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathIsExe
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" PathIsSlowW(2)
+@macro PathIsSlowW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    PathIsSlowW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" PathMakeUniqueName(5)
+@macro PathMakeUniqueName(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    PathMakeUniqueName
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" PathQualify(1)
+@macro PathQualify(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathQualify
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" PathResolve(3)
+@macro PathResolve(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PathResolve
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" PathYetAnotherMakeUniqueName(4)
+@macro PathYetAnotherMakeUniqueName(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    PathYetAnotherMakeUniqueName
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" PickIconDlg(4)
+@macro PickIconDlg(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    PickIconDlg
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" PifMgr_CloseProperties(2)
+@macro PifMgr_CloseProperties(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    PifMgr_CloseProperties
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" PifMgr_GetProperties(5)
+@macro PifMgr_GetProperties(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    PifMgr_GetProperties
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" PifMgr_OpenProperties(4)
+@macro PifMgr_OpenProperties(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    PifMgr_OpenProperties
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" PifMgr_SetProperties(5)
+@macro PifMgr_SetProperties(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    PifMgr_SetProperties
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ReadCabinetState(2)
+@macro ReadCabinetState(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    ReadCabinetState
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" RealDriveType(2)
+@macro RealDriveType(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    RealDriveType
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" RestartDialog(3)
+@macro RestartDialog(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    RestartDialog
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" RestartDialogEx(4)
+@macro RestartDialogEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    RestartDialogEx
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHAddDefaultPropertiesByExt(2)
+@macro SHAddDefaultPropertiesByExt(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHAddDefaultPropertiesByExt
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHAddFromPropSheetExtArray(3)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHAddToRecentDocs(2)
+@macro SHAddToRecentDocs(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    SHAddToRecentDocs
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHAlloc(1)
+@macro SHAlloc(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHAlloc
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHAppBarMessage(2)
+@macro SHAppBarMessage(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    SHAppBarMessage
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHAssocEnumHandlers(3)
+@macro SHAssocEnumHandlers(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SHAssocEnumHandlers
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHAssocEnumHandlersForProtocolByApplication(3)
+@macro SHAssocEnumHandlersForProtocolByApplication(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SHAssocEnumHandlersForProtocolByApplication
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHBindToFolderIDListParent(5)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHBindToFolderIDListParentEx(6)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHBindToObject(5)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHBindToParent(4)
+@macro SHBindToParent(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHBindToParent
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHBrowseForFolderW(1)
+@macro SHBrowseForFolderW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHBrowseForFolderW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCLSIDFromString(2)
+@macro SHCLSIDFromString(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHCLSIDFromString
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHChangeNotification_Lock(4)
+@macro SHChangeNotification_Lock(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHChangeNotification_Lock
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHChangeNotification_Unlock(1)
+@macro SHChangeNotification_Unlock(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHChangeNotification_Unlock
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHChangeNotify(4)
+@macro SHChangeNotify(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHChangeNotify
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHChangeNotifyDeregister(1)
+@macro SHChangeNotifyDeregister(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SHChangeNotifyDeregister
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHChangeNotifyRegister(6)
+@macro SHChangeNotifyRegister(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    SHChangeNotifyRegister
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHChangeNotifyRegisterThread(1)
+@macro SHChangeNotifyRegisterThread(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SHChangeNotifyRegisterThread
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCloneSpecialIDList(3)
+@macro SHCloneSpecialIDList(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SHCloneSpecialIDList
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCoCreateInstance(5)
+@macro SHCoCreateInstance(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHCoCreateInstance
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateAssociationRegistration(2)
+@macro SHCreateAssociationRegistration(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHCreateAssociationRegistration
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateDataObject(6)
+@macro SHCreateDataObject(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHCreateDataObject
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateDefaultContextMenu(3)
+@macro SHCreateDefaultContextMenu(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SHCreateDefaultContextMenu
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateDefaultExtractIcon(2)
+@macro SHCreateDefaultExtractIcon(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHCreateDefaultExtractIcon
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateDefaultPropertiesOp(2)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHCreateDirectory(2)
+@macro SHCreateDirectory(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHCreateDirectory
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateDirectoryExW(3)
+@macro SHCreateDirectoryExW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SHCreateDirectoryExW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateFileExtractIconW(4)
+@macro SHCreateFileExtractIconW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHCreateFileExtractIconW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateItemFromIDList(3)
+@macro SHCreateItemFromIDList(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SHCreateItemFromIDList
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateItemFromParsingName(4)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHCreateItemFromRelativeName(5)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHCreateItemInKnownFolder(5)
+@macro SHCreateItemInKnownFolder(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHCreateItemInKnownFolder
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateItemWithParent(5)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHCreateProcessAsUserW(1)
+@macro SHCreateProcessAsUserW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHCreateProcessAsUserW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreatePropSheetExtArray(3)
+@macro SHCreatePropSheetExtArray(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SHCreatePropSheetExtArray
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateQueryCancelAutoPlayMoniker(1)
+@macro SHCreateQueryCancelAutoPlayMoniker(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHCreateQueryCancelAutoPlayMoniker
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateShellFolderView(2)
+@macro SHCreateShellFolderView(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHCreateShellFolderView
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateShellFolderViewEx(2)
+@macro SHCreateShellFolderViewEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHCreateShellFolderViewEx
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateShellItem(4)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHCreateShellItemArray(5)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHCreateShellItemArrayFromDataObject(3)
+@macro SHCreateShellItemArrayFromDataObject(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SHCreateShellItemArrayFromDataObject
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateShellItemArrayFromIDLists(3)
+@macro SHCreateShellItemArrayFromIDLists(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SHCreateShellItemArrayFromIDLists
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHCreateShellItemArrayFromShellItem(3)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHCreateStdEnumFmtEtc(3)
+@macro SHCreateStdEnumFmtEtc(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SHCreateStdEnumFmtEtc
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHDefExtractIconW(6)
+@macro SHDefExtractIconW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SHDefExtractIconW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHDestroyPropSheetExtArray(1)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHDoDragDrop(5)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHEmptyRecycleBinW(3)
+@macro SHEmptyRecycleBinW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SHEmptyRecycleBinW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHEnumerateUnreadMailAccountsW(4)
+@macro SHEnumerateUnreadMailAccountsW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHEnumerateUnreadMailAccountsW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHEvaluateSystemCommandTemplate(4)
+@macro SHEvaluateSystemCommandTemplate(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHEvaluateSystemCommandTemplate
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHFileOperationW(1)
+@macro SHFileOperationW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHFileOperationW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHFindFiles(2)
+@macro SHFindFiles(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHFindFiles
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHFind_InitMenuPopup(4)
+@macro SHFind_InitMenuPopup(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    SHFind_InitMenuPopup
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHFlushSFCache(0)
+@macro SHFlushSFCache()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    SHFlushSFCache
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHFormatDrive(4)
+@macro SHFormatDrive(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    SHFormatDrive
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHFree(1)
+@macro SHFree(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHFree
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHFreeNameMappings(1)
+@macro SHFreeNameMappings(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHFreeNameMappings
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetAttributesFromDataObject(4)
+@macro SHGetAttributesFromDataObject(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHGetAttributesFromDataObject
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetDataFromIDListW(5)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHGetDesktopFolder(1)
+@macro SHGetDesktopFolder(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHGetDesktopFolder
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetDiskFreeSpaceExW(4)
+@macro SHGetDiskFreeSpaceExW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHGetDiskFreeSpaceExW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetDriveMedia(2)
+@macro SHGetDriveMedia(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHGetDriveMedia
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetFileInfoW(5)
+@macro SHGetFileInfoW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHGetFileInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetFolderLocation(5)
+@macro SHGetFolderLocation(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHGetFolderLocation
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetFolderPathAndSubDirW(6)
+@macro SHGetFolderPathAndSubDirW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHGetFolderPathAndSubDirW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetFolderPathW(5)
+@macro SHGetFolderPathW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHGetFolderPathW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetIDListFromObject(2)
+@macro SHGetIDListFromObject(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHGetIDListFromObject
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetIconOverlayIndexW(2)
+@macro SHGetIconOverlayIndexW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SHGetIconOverlayIndexW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetImageList(3)
+@macro SHGetImageList(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SHGetImageList
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetInstanceExplorer(1)
+@macro SHGetInstanceExplorer(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHGetInstanceExplorer
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetItemFromDataObject(4)
+@macro SHGetItemFromDataObject(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHGetItemFromDataObject
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetItemFromObject(3)
+@macro SHGetItemFromObject(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SHGetItemFromObject
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetKnownFolderIDList(4)
+@macro SHGetKnownFolderIDList(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHGetKnownFolderIDList
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetKnownFolderItem(5)
+@macro SHGetKnownFolderItem(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHGetKnownFolderItem
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetKnownFolderPath(4)
+@macro SHGetKnownFolderPath(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHGetKnownFolderPath
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetLocalizedName(4)
+@macro SHGetLocalizedName(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SHGetLocalizedName
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetMalloc(1)
+@macro SHGetMalloc(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHGetMalloc
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetNameFromIDList(3)
+@macro SHGetNameFromIDList(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SHGetNameFromIDList
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetNewLinkInfoW(5)
+@macro SHGetNewLinkInfoW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHGetNewLinkInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetPathFromIDListEx(4)
+@macro SHGetPathFromIDListEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    SHGetPathFromIDListEx
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetPathFromIDListW(2)
+@macro SHGetPathFromIDListW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHGetPathFromIDListW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetPropertyStoreForWindow(3)
+@macro SHGetPropertyStoreForWindow(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SHGetPropertyStoreForWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetPropertyStoreFromIDList(4)
+@macro SHGetPropertyStoreFromIDList(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHGetPropertyStoreFromIDList
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetPropertyStoreFromParsingName(5)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHGetRealIDL(3)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHGetSetFolderCustomSettings(3)
+@macro SHGetSetFolderCustomSettings(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SHGetSetFolderCustomSettings
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetSetSettings(3)
+@macro SHGetSetSettings(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SHGetSetSettings
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetSettings(2)
+@macro SHGetSettings(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SHGetSettings
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetSpecialFolderLocation(3)
+@macro SHGetSpecialFolderLocation(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SHGetSpecialFolderLocation
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetSpecialFolderPathW(4)
+@macro SHGetSpecialFolderPathW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SHGetSpecialFolderPathW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetStockIconInfo(3)
+@macro SHGetStockIconInfo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SHGetStockIconInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHGetTemporaryPropertyForItem(3)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHGetUnreadMailCountW(6)
+@macro SHGetUnreadMailCountW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHGetUnreadMailCountW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHHandleUpdateImage(1)
+@macro SHHandleUpdateImage(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHHandleUpdateImage
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHILCreateFromPath(3)
+@macro SHILCreateFromPath(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SHILCreateFromPath
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHInvokePrinterCommandW(5)
+@macro SHInvokePrinterCommandW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHInvokePrinterCommandW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHIsFileAvailableOffline(2)
+@macro SHIsFileAvailableOffline(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHIsFileAvailableOffline
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHLimitInputEdit(2)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHLoadInProc(1)
+@macro SHLoadInProc(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHLoadInProc
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHLoadNonloadedIconOverlayIdentifiers(0)
+@macro SHLoadNonloadedIconOverlayIdentifiers()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    SHLoadNonloadedIconOverlayIdentifiers
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHMapPIDLToSystemImageListIndex(3)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHMultiFileProperties(2)
+@macro SHMultiFileProperties(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SHMultiFileProperties
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHObjectProperties(4)
+@macro SHObjectProperties(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHObjectProperties
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHOpenFolderAndSelectItems(4)
+@macro SHOpenFolderAndSelectItems(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHOpenFolderAndSelectItems
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHOpenPropSheetW(7)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHOpenWithDialog(2)
+@macro SHOpenWithDialog(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHOpenWithDialog
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHParseDisplayName(5)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHPathPrepareForWriteW(4)
+@macro SHPathPrepareForWriteW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHPathPrepareForWriteW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHPropStgCreate(8)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHPropStgReadMultiple(5)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHPropStgWriteMultiple(6)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHQueryRecycleBinW(2)
+@macro SHQueryRecycleBinW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHQueryRecycleBinW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHQueryUserNotificationState(1)
+@macro SHQueryUserNotificationState(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHQueryUserNotificationState
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHRemoveLocalizedName(1)
+@macro SHRemoveLocalizedName(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHRemoveLocalizedName
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHReplaceFromPropSheetExtArray(4)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHResolveLibrary(1)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHRestricted(1)
+@macro SHRestricted(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SHRestricted
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHSetDefaultProperties(4)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHSetFolderPathW(4)
+@macro SHSetFolderPathW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SHSetFolderPathW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHSetInstanceExplorer(1)
+@macro SHSetInstanceExplorer(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHSetInstanceExplorer
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHSetKnownFolderPath(4)
+@macro SHSetKnownFolderPath(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHSetKnownFolderPath
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHSetLocalizedName(3)
+@macro SHSetLocalizedName(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SHSetLocalizedName
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHSetTemporaryPropertyForItem(3)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHSetUnreadMailCountW(3)
+@macro SHSetUnreadMailCountW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SHSetUnreadMailCountW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHShellFolderView_Message(3)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHShowManageLibraryUI(5)  ; (no wrapper -- unsupported signature)
+
+@extern "SHELL32.dll" SHSimpleIDListFromPath(1)
+@macro SHSimpleIDListFromPath(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHSimpleIDListFromPath
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHStartNetConnectionDialogW(3)
+@macro SHStartNetConnectionDialogW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SHStartNetConnectionDialogW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHTestTokenMembership(2)
+@macro SHTestTokenMembership(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SHTestTokenMembership
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHUpdateImageW(4)
+@macro SHUpdateImageW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    SHUpdateImageW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SHValidateUNC(3)
+@macro SHValidateUNC(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SHValidateUNC
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SetCurrentProcessExplicitAppUserModelID(1)
+@macro SetCurrentProcessExplicitAppUserModelID(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SetCurrentProcessExplicitAppUserModelID
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ShellAboutW(4)
+@macro ShellAboutW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ShellAboutW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ShellExecuteExW(1)
+@macro ShellExecuteExW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ShellExecuteExW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" ShellExecuteW(6)
+@macro ShellExecuteW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ShellExecuteW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" Shell_GetCachedImageIndex(3)
+@macro Shell_GetCachedImageIndex(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    Shell_GetCachedImageIndex
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" Shell_GetCachedImageIndexW(3)
+@macro Shell_GetCachedImageIndexW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    Shell_GetCachedImageIndexW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" Shell_GetImageLists(2)
+@macro Shell_GetImageLists(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    Shell_GetImageLists
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" Shell_MergeMenus(6)
+@macro Shell_MergeMenus(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    Shell_MergeMenus
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" Shell_NotifyIconGetRect(2)
+@macro Shell_NotifyIconGetRect(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    Shell_NotifyIconGetRect
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" Shell_NotifyIconW(2)
+@macro Shell_NotifyIconW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    Shell_NotifyIconW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" SignalFileOpen(1)
+@macro SignalFileOpen(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SignalFileOpen
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" StgMakeUniqueName(5)
+@macro StgMakeUniqueName(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    StgMakeUniqueName
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" Win32DeleteFile(1)
+@macro Win32DeleteFile(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    Win32DeleteFile
+    mov     rsp, r12
+@endmacro
+
+@extern "SHELL32.dll" WriteCabinetState(1)
+@macro WriteCabinetState(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    WriteCabinetState
+    mov     rsp, r12
+@endmacro

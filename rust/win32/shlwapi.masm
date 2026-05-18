@@ -1,0 +1,2516 @@
+; ---------------------------------------------------------------------
+; Generated from windows_api.db -- DLL: SHLWAPI.dll
+; v2: @extern declarations + invoke-style wrapper macros.
+; DO NOT EDIT BY HAND. Regenerate via:
+;     python scripts/win32_gen.py --dll SHLWAPI.dll
+;
+; Each function gets two definitions:
+;
+;   @extern "SHLWAPI.dll" NAME(N)
+;     The declaration the host pairs with LoadLibraryW + GetProcAddress.
+;
+;   @macro NAME(arg0, arg1, ...)
+;     Win64-ABI-aware wrapper. Each arg goes in its register or stack
+;     slot per the parameter's type; shadow space and 16-byte RSP
+;     alignment are handled. Functions whose signatures cannot be
+;     modelled (struct-by-value params, variadics) get only the
+;     @extern -- call those by hand.
+;
+; Function count: 212 wrapped, 5 extern-only
+; Source of truth: E:\windows_api\windows_api.db
+; ---------------------------------------------------------------------
+
+@extern "SHLWAPI.dll" AssocCreate(3)
+@macro AssocCreate(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    AssocCreate
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" AssocGetPerceivedType(4)
+@macro AssocGetPerceivedType(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    AssocGetPerceivedType
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" AssocIsDangerous(1)
+@macro AssocIsDangerous(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    AssocIsDangerous
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" AssocQueryKeyW(5)
+@macro AssocQueryKeyW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    AssocQueryKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" AssocQueryStringByKeyW(6)
+@macro AssocQueryStringByKeyW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    AssocQueryStringByKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" AssocQueryStringW(6)
+@macro AssocQueryStringW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    AssocQueryStringW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" ChrCmpIW(2)
+@macro ChrCmpIW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cl, &arg0
+    mov     dl, &arg1
+    call    ChrCmpIW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" ColorAdjustLuma(3)  ; (no wrapper -- unsupported signature)
+
+@extern "SHLWAPI.dll" ColorHLSToRGB(3)
+@macro ColorHLSToRGB(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cx, &arg0
+    mov     dx, &arg1
+    mov     r8w, &arg2
+    call    ColorHLSToRGB
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" ColorRGBToHLS(4)  ; (no wrapper -- unsupported signature)
+
+@extern "SHLWAPI.dll" ConnectToConnectionPoint(6)
+@macro ConnectToConnectionPoint(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ConnectToConnectionPoint
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" GetAcceptLanguagesW(2)
+@macro GetAcceptLanguagesW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetAcceptLanguagesW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" GetMenuPosFromID(2)
+@macro GetMenuPosFromID(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetMenuPosFromID
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" HashData(4)
+@macro HashData(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    HashData
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IStream_Copy(3)
+@macro IStream_Copy(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    IStream_Copy
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IStream_Read(3)
+@macro IStream_Read(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    IStream_Read
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IStream_ReadPidl(2)
+@macro IStream_ReadPidl(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IStream_ReadPidl
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IStream_ReadStr(2)
+@macro IStream_ReadStr(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IStream_ReadStr
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IStream_Reset(1)
+@macro IStream_Reset(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IStream_Reset
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IStream_Size(2)
+@macro IStream_Size(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IStream_Size
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IStream_Write(3)
+@macro IStream_Write(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    IStream_Write
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IStream_WritePidl(2)
+@macro IStream_WritePidl(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IStream_WritePidl
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IStream_WriteStr(2)
+@macro IStream_WriteStr(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IStream_WriteStr
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IUnknown_AtomicRelease(1)
+@macro IUnknown_AtomicRelease(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IUnknown_AtomicRelease
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IUnknown_GetSite(3)
+@macro IUnknown_GetSite(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    IUnknown_GetSite
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IUnknown_GetWindow(2)
+@macro IUnknown_GetWindow(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IUnknown_GetWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IUnknown_QueryService(4)
+@macro IUnknown_QueryService(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    IUnknown_QueryService
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IUnknown_Set(2)
+@macro IUnknown_Set(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IUnknown_Set
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IUnknown_SetSite(2)
+@macro IUnknown_SetSite(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IUnknown_SetSite
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IntlStrEqWorkerW(4)
+@macro IntlStrEqWorkerW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    IntlStrEqWorkerW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IsCharSpaceW(1)
+@macro IsCharSpaceW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cl, &arg0
+    call    IsCharSpaceW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IsInternetESCEnabled(0)
+@macro IsInternetESCEnabled()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    IsInternetESCEnabled
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" IsOS(1)
+@macro IsOS(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    IsOS
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" ParseURLW(2)
+@macro ParseURLW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ParseURLW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathAddBackslashW(1)
+@macro PathAddBackslashW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathAddBackslashW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathAddExtensionW(2)
+@macro PathAddExtensionW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PathAddExtensionW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathAppendW(2)
+@macro PathAppendW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PathAppendW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathBuildRootW(2)
+@macro PathBuildRootW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    PathBuildRootW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathCanonicalizeW(2)
+@macro PathCanonicalizeW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PathCanonicalizeW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathCombineW(3)
+@macro PathCombineW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    PathCombineW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathCommonPrefixW(3)
+@macro PathCommonPrefixW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    PathCommonPrefixW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathCompactPathExW(4)
+@macro PathCompactPathExW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    PathCompactPathExW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathCompactPathW(3)
+@macro PathCompactPathW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PathCompactPathW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathCreateFromUrlAlloc(3)
+@macro PathCreateFromUrlAlloc(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PathCreateFromUrlAlloc
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathCreateFromUrlW(4)
+@macro PathCreateFromUrlW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    PathCreateFromUrlW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathFileExistsW(1)
+@macro PathFileExistsW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathFileExistsW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathFindExtensionW(1)
+@macro PathFindExtensionW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathFindExtensionW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathFindFileNameW(1)
+@macro PathFindFileNameW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathFindFileNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathFindNextComponentW(1)
+@macro PathFindNextComponentW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathFindNextComponentW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathFindOnPathW(2)
+@macro PathFindOnPathW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PathFindOnPathW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathFindSuffixArrayW(3)
+@macro PathFindSuffixArrayW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PathFindSuffixArrayW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathGetArgsW(1)
+@macro PathGetArgsW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathGetArgsW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathGetCharTypeW(1)
+@macro PathGetCharTypeW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cl, &arg0
+    call    PathGetCharTypeW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathGetDriveNumberW(1)
+@macro PathGetDriveNumberW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathGetDriveNumberW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsContentTypeW(2)
+@macro PathIsContentTypeW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PathIsContentTypeW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsDirectoryEmptyW(1)
+@macro PathIsDirectoryEmptyW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathIsDirectoryEmptyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsDirectoryW(1)
+@macro PathIsDirectoryW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathIsDirectoryW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsFileSpecW(1)
+@macro PathIsFileSpecW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathIsFileSpecW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsLFNFileSpecW(1)
+@macro PathIsLFNFileSpecW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathIsLFNFileSpecW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsNetworkPathW(1)
+@macro PathIsNetworkPathW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathIsNetworkPathW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsPrefixW(2)
+@macro PathIsPrefixW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PathIsPrefixW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsRelativeW(1)
+@macro PathIsRelativeW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathIsRelativeW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsRootW(1)
+@macro PathIsRootW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathIsRootW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsSameRootW(2)
+@macro PathIsSameRootW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PathIsSameRootW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsSystemFolderW(2)
+@macro PathIsSystemFolderW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    PathIsSystemFolderW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsUNCServerShareW(1)
+@macro PathIsUNCServerShareW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathIsUNCServerShareW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsUNCServerW(1)
+@macro PathIsUNCServerW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathIsUNCServerW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsUNCW(1)
+@macro PathIsUNCW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathIsUNCW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathIsURLW(1)
+@macro PathIsURLW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathIsURLW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathMakePrettyW(1)
+@macro PathMakePrettyW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathMakePrettyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathMakeSystemFolderW(1)
+@macro PathMakeSystemFolderW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathMakeSystemFolderW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathMatchSpecExW(3)
+@macro PathMatchSpecExW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PathMatchSpecExW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathMatchSpecW(2)
+@macro PathMatchSpecW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PathMatchSpecW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathParseIconLocationW(1)
+@macro PathParseIconLocationW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathParseIconLocationW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathQuoteSpacesW(1)
+@macro PathQuoteSpacesW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathQuoteSpacesW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathRelativePathToW(5)
+@macro PathRelativePathToW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    PathRelativePathToW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathRemoveArgsW(1)
+@macro PathRemoveArgsW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathRemoveArgsW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathRemoveBackslashW(1)
+@macro PathRemoveBackslashW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathRemoveBackslashW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathRemoveBlanksW(1)
+@macro PathRemoveBlanksW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathRemoveBlanksW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathRemoveExtensionW(1)
+@macro PathRemoveExtensionW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathRemoveExtensionW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathRemoveFileSpecW(1)
+@macro PathRemoveFileSpecW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathRemoveFileSpecW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathRenameExtensionW(2)
+@macro PathRenameExtensionW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PathRenameExtensionW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathSearchAndQualifyW(3)
+@macro PathSearchAndQualifyW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PathSearchAndQualifyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathSetDlgItemPathW(3)
+@macro PathSetDlgItemPathW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    PathSetDlgItemPathW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathSkipRootW(1)
+@macro PathSkipRootW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathSkipRootW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathStripPathW(1)
+@macro PathStripPathW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathStripPathW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathStripToRootW(1)
+@macro PathStripToRootW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathStripToRootW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathUnExpandEnvStringsW(3)
+@macro PathUnExpandEnvStringsW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PathUnExpandEnvStringsW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathUndecorateW(1)
+@macro PathUndecorateW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathUndecorateW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathUnmakeSystemFolderW(1)
+@macro PathUnmakeSystemFolderW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathUnmakeSystemFolderW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" PathUnquoteSpacesW(1)
+@macro PathUnquoteSpacesW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathUnquoteSpacesW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" QISearch(4)
+@macro QISearch(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    QISearch
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHAllocShared(3)
+@macro SHAllocShared(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    SHAllocShared
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHAnsiToAnsi(3)
+@macro SHAnsiToAnsi(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SHAnsiToAnsi
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHAnsiToUnicode(3)
+@macro SHAnsiToUnicode(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SHAnsiToUnicode
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHAutoComplete(2)
+@macro SHAutoComplete(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SHAutoComplete
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHCopyKeyW(4)
+@macro SHCopyKeyW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHCopyKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHCreateMemStream(2)
+@macro SHCreateMemStream(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SHCreateMemStream
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHCreateShellPalette(1)
+@macro SHCreateShellPalette(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHCreateShellPalette
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHCreateStreamOnFileEx(6)
+@macro SHCreateStreamOnFileEx(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SHCreateStreamOnFileEx
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHCreateStreamOnFileW(3)
+@macro SHCreateStreamOnFileW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SHCreateStreamOnFileW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHCreateThread(4)
+@macro SHCreateThread(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SHCreateThread
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHCreateThreadRef(2)
+@macro SHCreateThreadRef(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHCreateThreadRef
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHCreateThreadWithHandle(5)
+@macro SHCreateThreadWithHandle(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SHCreateThreadWithHandle
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHDeleteEmptyKeyW(2)
+@macro SHDeleteEmptyKeyW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHDeleteEmptyKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHDeleteKeyW(2)
+@macro SHDeleteKeyW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHDeleteKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHDeleteValueW(3)
+@macro SHDeleteValueW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SHDeleteValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHEnumKeyExW(4)
+@macro SHEnumKeyExW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHEnumKeyExW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHEnumValueW(7)
+@macro SHEnumValueW(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHEnumValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHFormatDateTimeW(4)
+@macro SHFormatDateTimeW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHFormatDateTimeW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHFreeShared(2)
+@macro SHFreeShared(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SHFreeShared
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHGetInverseCMAP(2)
+@macro SHGetInverseCMAP(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SHGetInverseCMAP
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHGetThreadRef(1)
+@macro SHGetThreadRef(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHGetThreadRef
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHGetValueW(6)
+@macro SHGetValueW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHGetValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHGetViewStatePropertyBag(5)
+@macro SHGetViewStatePropertyBag(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SHGetViewStatePropertyBag
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHGlobalCounterDecrement(1)
+@macro SHGlobalCounterDecrement(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SHGlobalCounterDecrement
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHGlobalCounterGetValue(1)
+@macro SHGlobalCounterGetValue(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SHGlobalCounterGetValue
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHGlobalCounterIncrement(1)
+@macro SHGlobalCounterIncrement(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SHGlobalCounterIncrement
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHIsLowMemoryMachine(1)
+@macro SHIsLowMemoryMachine(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    SHIsLowMemoryMachine
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHLoadIndirectString(4)
+@macro SHLoadIndirectString(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SHLoadIndirectString
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHLockShared(2)
+@macro SHLockShared(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SHLockShared
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHMessageBoxCheckW(6)
+@macro SHMessageBoxCheckW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHMessageBoxCheckW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHOpenRegStream2W(4)
+@macro SHOpenRegStream2W(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHOpenRegStream2W
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHOpenRegStreamW(4)
+@macro SHOpenRegStreamW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHOpenRegStreamW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHQueryInfoKeyW(5)
+@macro SHQueryInfoKeyW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHQueryInfoKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHQueryValueExW(6)
+@macro SHQueryValueExW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHQueryValueExW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegCloseUSKey(1)
+@macro SHRegCloseUSKey(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHRegCloseUSKey
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegCreateUSKeyW(5)
+@macro SHRegCreateUSKeyW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHRegCreateUSKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegDeleteEmptyUSKeyW(3)
+@macro SHRegDeleteEmptyUSKeyW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SHRegDeleteEmptyUSKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegDeleteUSValueW(3)
+@macro SHRegDeleteUSValueW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SHRegDeleteUSValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegDuplicateHKey(1)
+@macro SHRegDuplicateHKey(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHRegDuplicateHKey
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegEnumUSKeyW(5)
+@macro SHRegEnumUSKeyW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHRegEnumUSKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegEnumUSValueW(8)
+@macro SHRegEnumUSValueW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHRegEnumUSValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegGetBoolUSValueW(4)
+@macro SHRegGetBoolUSValueW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHRegGetBoolUSValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegGetIntW(3)
+@macro SHRegGetIntW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SHRegGetIntW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegGetPathW(5)
+@macro SHRegGetPathW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHRegGetPathW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegGetUSValueW(8)
+@macro SHRegGetUSValueW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHRegGetUSValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegGetValueFromHKCUHKLM(6)
+@macro SHRegGetValueFromHKCUHKLM(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SHRegGetValueFromHKCUHKLM
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegGetValueW(7)
+@macro SHRegGetValueW(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHRegGetValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegOpenUSKeyW(5)
+@macro SHRegOpenUSKeyW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHRegOpenUSKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegQueryInfoUSKeyW(6)
+@macro SHRegQueryInfoUSKeyW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHRegQueryInfoUSKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegQueryUSValueW(8)
+@macro SHRegQueryUSValueW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHRegQueryUSValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegSetPathW(5)
+@macro SHRegSetPathW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SHRegSetPathW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegSetUSValueW(6)
+@macro SHRegSetUSValueW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SHRegSetUSValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHRegWriteUSValueW(6)
+@macro SHRegWriteUSValueW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SHRegWriteUSValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHReleaseThreadRef(0)
+@macro SHReleaseThreadRef()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    SHReleaseThreadRef
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHSendMessageBroadcastW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "SHLWAPI.dll" SHSetThreadRef(1)
+@macro SHSetThreadRef(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHSetThreadRef
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHSetValueW(6)
+@macro SHSetValueW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SHSetValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHSkipJunction(2)  ; (no wrapper -- unsupported signature)
+
+@extern "SHLWAPI.dll" SHStrDupW(2)
+@macro SHStrDupW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SHStrDupW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHStripMneumonicW(1)
+@macro SHStripMneumonicW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHStripMneumonicW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHUnicodeToAnsi(3)
+@macro SHUnicodeToAnsi(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SHUnicodeToAnsi
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHUnicodeToUnicode(3)
+@macro SHUnicodeToUnicode(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SHUnicodeToUnicode
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" SHUnlockShared(1)
+@macro SHUnlockShared(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SHUnlockShared
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" ShellMessageBoxW(5)  ; (no wrapper -- unsupported signature)
+
+@extern "SHLWAPI.dll" StrCSpnIW(2)
+@macro StrCSpnIW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrCSpnIW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCSpnW(2)
+@macro StrCSpnW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrCSpnW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCatBuffW(3)
+@macro StrCatBuffW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    StrCatBuffW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCatChainW(4)
+@macro StrCatChainW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    StrCatChainW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCatW(2)
+@macro StrCatW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrCatW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrChrIW(2)
+@macro StrChrIW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     dl, &arg1
+    call    StrChrIW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrChrNIW(3)
+@macro StrChrNIW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     dl, &arg1
+    mov     r8d, &arg2
+    call    StrChrNIW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrChrNW(3)
+@macro StrChrNW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     dl, &arg1
+    mov     r8d, &arg2
+    call    StrChrNW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrChrW(2)
+@macro StrChrW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     dl, &arg1
+    call    StrChrW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCmpCW(2)
+@macro StrCmpCW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrCmpCW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCmpICW(2)
+@macro StrCmpICW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrCmpICW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCmpIW(2)
+@macro StrCmpIW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrCmpIW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCmpLogicalW(2)
+@macro StrCmpLogicalW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrCmpLogicalW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCmpNCW(3)
+@macro StrCmpNCW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    StrCmpNCW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCmpNICW(3)
+@macro StrCmpNICW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    StrCmpNICW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCmpNIW(3)
+@macro StrCmpNIW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    StrCmpNIW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCmpNW(3)
+@macro StrCmpNW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    StrCmpNW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCmpW(2)
+@macro StrCmpW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrCmpW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCpyNW(3)
+@macro StrCpyNW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    StrCpyNW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrCpyW(2)
+@macro StrCpyW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrCpyW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrDupW(1)
+@macro StrDupW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    StrDupW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrFormatByteSize64A(3)
+@macro StrFormatByteSize64A(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    StrFormatByteSize64A
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrFormatByteSizeEx(4)
+@macro StrFormatByteSizeEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    StrFormatByteSizeEx
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrFormatByteSizeW(3)
+@macro StrFormatByteSizeW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    StrFormatByteSizeW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrFormatKBSizeW(3)
+@macro StrFormatKBSizeW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    StrFormatKBSizeW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrFromTimeIntervalW(4)
+@macro StrFromTimeIntervalW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    StrFromTimeIntervalW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrIsIntlEqualW(4)
+@macro StrIsIntlEqualW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    StrIsIntlEqualW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrNCatW(3)
+@macro StrNCatW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    StrNCatW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrPBrkW(2)
+@macro StrPBrkW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrPBrkW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrRChrIW(3)
+@macro StrRChrIW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8b, &arg2
+    call    StrRChrIW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrRChrW(3)
+@macro StrRChrW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8b, &arg2
+    call    StrRChrW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrRStrIW(3)
+@macro StrRStrIW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    StrRStrIW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrRetToBSTR(3)
+@macro StrRetToBSTR(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    StrRetToBSTR
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrRetToBufW(4)
+@macro StrRetToBufW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    StrRetToBufW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrRetToStrW(3)
+@macro StrRetToStrW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    StrRetToStrW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrSpnW(2)
+@macro StrSpnW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrSpnW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrStrIW(2)
+@macro StrStrIW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrStrIW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrStrNIW(3)
+@macro StrStrNIW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    StrStrNIW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrStrNW(3)
+@macro StrStrNW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    StrStrNW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrStrW(2)
+@macro StrStrW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrStrW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrToInt64ExW(3)
+@macro StrToInt64ExW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    StrToInt64ExW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrToIntExW(3)
+@macro StrToIntExW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    StrToIntExW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrToIntW(1)
+@macro StrToIntW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    StrToIntW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" StrTrimW(2)
+@macro StrTrimW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StrTrimW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlApplySchemeW(4)
+@macro UrlApplySchemeW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    UrlApplySchemeW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlCanonicalizeW(4)
+@macro UrlCanonicalizeW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    UrlCanonicalizeW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlCombineW(5)
+@macro UrlCombineW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    UrlCombineW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlCompareW(3)
+@macro UrlCompareW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    UrlCompareW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlCreateFromPathW(4)
+@macro UrlCreateFromPathW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    UrlCreateFromPathW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlEscapeW(4)
+@macro UrlEscapeW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    UrlEscapeW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlFixupW(3)
+@macro UrlFixupW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    UrlFixupW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlGetLocationW(1)
+@macro UrlGetLocationW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    UrlGetLocationW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlGetPartW(5)
+@macro UrlGetPartW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    UrlGetPartW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlHashW(3)
+@macro UrlHashW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    UrlHashW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlIsNoHistoryW(1)
+@macro UrlIsNoHistoryW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    UrlIsNoHistoryW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlIsOpaqueW(1)
+@macro UrlIsOpaqueW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    UrlIsOpaqueW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlIsW(2)
+@macro UrlIsW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    UrlIsW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" UrlUnescapeW(4)
+@macro UrlUnescapeW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    UrlUnescapeW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" WhichPlatform(0)
+@macro WhichPlatform()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    WhichPlatform
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" wnsprintfW(3)
+@macro wnsprintfW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    wnsprintfW
+    mov     rsp, r12
+@endmacro
+
+@extern "SHLWAPI.dll" wvnsprintfW(4)
+@macro wvnsprintfW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    wvnsprintfW
+    mov     rsp, r12
+@endmacro

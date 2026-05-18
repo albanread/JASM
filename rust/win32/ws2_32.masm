@@ -1,0 +1,1752 @@
+; ---------------------------------------------------------------------
+; Generated from windows_api.db -- DLL: WS2_32.dll
+; v2: @extern declarations + invoke-style wrapper macros.
+; DO NOT EDIT BY HAND. Regenerate via:
+;     python scripts/win32_gen.py --dll WS2_32.dll
+;
+; Each function gets two definitions:
+;
+;   @extern "WS2_32.dll" NAME(N)
+;     The declaration the host pairs with LoadLibraryW + GetProcAddress.
+;
+;   @macro NAME(arg0, arg1, ...)
+;     Win64-ABI-aware wrapper. Each arg goes in its register or stack
+;     slot per the parameter's type; shadow space and 16-byte RSP
+;     alignment are handled. Functions whose signatures cannot be
+;     modelled (struct-by-value params, variadics) get only the
+;     @extern -- call those by hand.
+;
+; Function count: 136 wrapped, 8 extern-only
+; Source of truth: E:\windows_api\windows_api.db
+; ---------------------------------------------------------------------
+
+@extern "WS2_32.dll" FreeAddrInfoEx(1)
+@macro FreeAddrInfoEx(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FreeAddrInfoEx
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" FreeAddrInfoExW(1)
+@macro FreeAddrInfoExW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FreeAddrInfoExW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" FreeAddrInfoW(1)
+@macro FreeAddrInfoW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FreeAddrInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" GetAddrInfoExCancel(1)
+@macro GetAddrInfoExCancel(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetAddrInfoExCancel
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" GetAddrInfoExOverlappedResult(1)
+@macro GetAddrInfoExOverlappedResult(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetAddrInfoExOverlappedResult
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" GetAddrInfoExW(10)
+@macro GetAddrInfoExW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetAddrInfoExW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" GetAddrInfoW(4)
+@macro GetAddrInfoW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetAddrInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" GetHostNameW(2)
+@macro GetHostNameW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetHostNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" GetNameInfoW(7)  ; (no wrapper -- unsupported signature)
+
+@extern "WS2_32.dll" InetNtopW(4)
+@macro InetNtopW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    InetNtopW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" InetPtonW(3)
+@macro InetPtonW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    InetPtonW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" ProcessSocketNotifications(7)
+@macro ProcessSocketNotifications(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    ProcessSocketNotifications
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" SetAddrInfoExW(12)
+@macro SetAddrInfoExW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     qword ptr [rsp + 88], &arg11
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SetAddrInfoExW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WPUCompleteOverlappedRequest(5)
+@macro WPUCompleteOverlappedRequest(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    WPUCompleteOverlappedRequest
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAAccept(5)
+@macro WSAAccept(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSAAccept
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAAddressToStringW(5)
+@macro WSAAddressToStringW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSAAddressToStringW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAAdvertiseProvider(2)
+@macro WSAAdvertiseProvider(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WSAAdvertiseProvider
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAAsyncGetHostByAddr(7)
+@macro WSAAsyncGetHostByAddr(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    WSAAsyncGetHostByAddr
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAAsyncGetHostByName(5)
+@macro WSAAsyncGetHostByName(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSAAsyncGetHostByName
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAAsyncGetProtoByName(5)
+@macro WSAAsyncGetProtoByName(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSAAsyncGetProtoByName
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAAsyncGetProtoByNumber(5)
+@macro WSAAsyncGetProtoByNumber(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    WSAAsyncGetProtoByNumber
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAAsyncGetServByName(6)
+@macro WSAAsyncGetServByName(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSAAsyncGetServByName
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAAsyncGetServByPort(6)
+@macro WSAAsyncGetServByPort(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    WSAAsyncGetServByPort
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAAsyncSelect(4)
+@macro WSAAsyncSelect(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    WSAAsyncSelect
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSACancelAsyncRequest(1)
+@macro WSACancelAsyncRequest(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    WSACancelAsyncRequest
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSACancelBlockingCall(0)
+@macro WSACancelBlockingCall()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    WSACancelBlockingCall
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSACleanup(0)
+@macro WSACleanup()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    WSACleanup
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSACloseEvent(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WS2_32.dll" WSAConnect(7)
+@macro WSAConnect(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    WSAConnect
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAConnectByList(8)
+@macro WSAConnectByList(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSAConnectByList
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAConnectByNameW(9)
+@macro WSAConnectByNameW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSAConnectByNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSACreateEvent(0)
+@macro WSACreateEvent()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    WSACreateEvent
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSADuplicateSocketW(3)
+@macro WSADuplicateSocketW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    WSADuplicateSocketW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAEnumNameSpaceProvidersExW(2)
+@macro WSAEnumNameSpaceProvidersExW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WSAEnumNameSpaceProvidersExW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAEnumNameSpaceProvidersW(2)
+@macro WSAEnumNameSpaceProvidersW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WSAEnumNameSpaceProvidersW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAEnumNetworkEvents(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WS2_32.dll" WSAEnumProtocolsW(3)
+@macro WSAEnumProtocolsW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    WSAEnumProtocolsW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAEventSelect(3)  ; (no wrapper -- unsupported signature)
+
+@extern "WS2_32.dll" WSAGetLastError(0)
+@macro WSAGetLastError()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    WSAGetLastError
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAGetOverlappedResult(5)
+@macro WSAGetOverlappedResult(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSAGetOverlappedResult
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAGetQOSByName(3)
+@macro WSAGetQOSByName(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    WSAGetQOSByName
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAGetServiceClassInfoW(4)
+@macro WSAGetServiceClassInfoW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSAGetServiceClassInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAGetServiceClassNameByClassIdW(3)
+@macro WSAGetServiceClassNameByClassIdW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    WSAGetServiceClassNameByClassIdW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAHtonl(3)
+@macro WSAHtonl(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    WSAHtonl
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAHtons(3)
+@macro WSAHtons(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     dx, &arg1
+    mov     r8, &arg2
+    call    WSAHtons
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAInstallServiceClassW(1)
+@macro WSAInstallServiceClassW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    WSAInstallServiceClassW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAIoctl(9)
+@macro WSAIoctl(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    WSAIoctl
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAIsBlocking(0)
+@macro WSAIsBlocking()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    WSAIsBlocking
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAJoinLeaf(8)
+@macro WSAJoinLeaf(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    WSAJoinLeaf
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSALookupServiceBeginW(3)
+@macro WSALookupServiceBeginW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    WSALookupServiceBeginW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSALookupServiceEnd(1)
+@macro WSALookupServiceEnd(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    WSALookupServiceEnd
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSALookupServiceNextW(4)
+@macro WSALookupServiceNextW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSALookupServiceNextW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSANSPIoctl(8)
+@macro WSANSPIoctl(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    WSANSPIoctl
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSANtohl(3)
+@macro WSANtohl(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    WSANtohl
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSANtohs(3)
+@macro WSANtohs(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     dx, &arg1
+    mov     r8, &arg2
+    call    WSANtohs
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAPoll(3)
+@macro WSAPoll(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    WSAPoll
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAProviderCompleteAsyncCall(2)
+@macro WSAProviderCompleteAsyncCall(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    WSAProviderCompleteAsyncCall
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAProviderConfigChange(3)
+@macro WSAProviderConfigChange(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    WSAProviderConfigChange
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSARecv(7)
+@macro WSARecv(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    WSARecv
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSARecvDisconnect(2)
+@macro WSARecvDisconnect(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WSARecvDisconnect
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSARecvFrom(9)
+@macro WSARecvFrom(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    WSARecvFrom
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSARemoveServiceClass(1)
+@macro WSARemoveServiceClass(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    WSARemoveServiceClass
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAResetEvent(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WS2_32.dll" WSASend(7)
+@macro WSASend(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    WSASend
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSASendDisconnect(2)
+@macro WSASendDisconnect(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WSASendDisconnect
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSASendMsg(6)
+@macro WSASendMsg(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    WSASendMsg
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSASendTo(9)
+@macro WSASendTo(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    WSASendTo
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSASetBlockingHook(1)
+@macro WSASetBlockingHook(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    WSASetBlockingHook
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSASetEvent(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WS2_32.dll" WSASetLastError(1)
+@macro WSASetLastError(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    WSASetLastError
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSASetServiceW(3)
+@macro WSASetServiceW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    WSASetServiceW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSASocketW(6)
+@macro WSASocketW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    WSASocketW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAStartup(2)
+@macro WSAStartup(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cx, &arg0
+    mov     rdx, &arg1
+    call    WSAStartup
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAStringToAddressW(5)
+@macro WSAStringToAddressW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSAStringToAddressW
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAUnadvertiseProvider(1)
+@macro WSAUnadvertiseProvider(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    WSAUnadvertiseProvider
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAUnhookBlockingHook(0)
+@macro WSAUnhookBlockingHook()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    WSAUnhookBlockingHook
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSAWaitForMultipleEvents(5)
+@macro WSAWaitForMultipleEvents(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    WSAWaitForMultipleEvents
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCDeinstallProvider(2)
+@macro WSCDeinstallProvider(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WSCDeinstallProvider
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCDeinstallProvider32(2)
+@macro WSCDeinstallProvider32(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WSCDeinstallProvider32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCEnableNSProvider(2)
+@macro WSCEnableNSProvider(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WSCEnableNSProvider
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCEnableNSProvider32(2)
+@macro WSCEnableNSProvider32(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WSCEnableNSProvider32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCEnumNameSpaceProviders32(2)
+@macro WSCEnumNameSpaceProviders32(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WSCEnumNameSpaceProviders32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCEnumNameSpaceProvidersEx32(2)
+@macro WSCEnumNameSpaceProvidersEx32(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WSCEnumNameSpaceProvidersEx32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCEnumProtocols(4)
+@macro WSCEnumProtocols(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSCEnumProtocols
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCEnumProtocols32(4)
+@macro WSCEnumProtocols32(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSCEnumProtocols32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCGetApplicationCategory(6)
+@macro WSCGetApplicationCategory(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    WSCGetApplicationCategory
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCGetProviderInfo(6)
+@macro WSCGetProviderInfo(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSCGetProviderInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCGetProviderInfo32(6)
+@macro WSCGetProviderInfo32(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSCGetProviderInfo32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCGetProviderPath(4)
+@macro WSCGetProviderPath(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSCGetProviderPath
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCGetProviderPath32(4)
+@macro WSCGetProviderPath32(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSCGetProviderPath32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCInstallNameSpace(5)
+@macro WSCInstallNameSpace(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    WSCInstallNameSpace
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCInstallNameSpace32(5)
+@macro WSCInstallNameSpace32(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    WSCInstallNameSpace32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCInstallNameSpaceEx(6)
+@macro WSCInstallNameSpaceEx(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    WSCInstallNameSpaceEx
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCInstallNameSpaceEx32(6)
+@macro WSCInstallNameSpaceEx32(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    WSCInstallNameSpaceEx32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCInstallProvider(5)
+@macro WSCInstallProvider(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    WSCInstallProvider
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCInstallProvider64_32(5)
+@macro WSCInstallProvider64_32(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    WSCInstallProvider64_32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCInstallProviderAndChains64_32(9)
+@macro WSCInstallProviderAndChains64_32(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSCInstallProviderAndChains64_32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCSetApplicationCategory(7)
+@macro WSCSetApplicationCategory(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    WSCSetApplicationCategory
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCSetProviderInfo(6)
+@macro WSCSetProviderInfo(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSCSetProviderInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCSetProviderInfo32(6)
+@macro WSCSetProviderInfo32(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    WSCSetProviderInfo32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCUnInstallNameSpace(1)
+@macro WSCUnInstallNameSpace(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    WSCUnInstallNameSpace
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCUnInstallNameSpace32(1)
+@macro WSCUnInstallNameSpace32(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    WSCUnInstallNameSpace32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCUpdateProvider(5)
+@macro WSCUpdateProvider(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    WSCUpdateProvider
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCUpdateProvider32(5)
+@macro WSCUpdateProvider32(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    WSCUpdateProvider32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCWriteNameSpaceOrder(2)
+@macro WSCWriteNameSpaceOrder(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    WSCWriteNameSpaceOrder
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCWriteNameSpaceOrder32(2)
+@macro WSCWriteNameSpaceOrder32(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    WSCWriteNameSpaceOrder32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCWriteProviderOrder(2)
+@macro WSCWriteProviderOrder(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    WSCWriteProviderOrder
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" WSCWriteProviderOrder32(2)
+@macro WSCWriteProviderOrder32(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    WSCWriteProviderOrder32
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" __WSAFDIsSet(2)
+@macro __WSAFDIsSet(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    __WSAFDIsSet
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" accept(3)
+@macro accept(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    accept
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" bind(3)
+@macro bind(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    bind
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" closesocket(1)
+@macro closesocket(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    closesocket
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" connect(3)
+@macro connect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    connect
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" freeaddrinfo(1)
+@macro freeaddrinfo(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    freeaddrinfo
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" getaddrinfo(4)
+@macro getaddrinfo(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    getaddrinfo
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" gethostbyaddr(3)
+@macro gethostbyaddr(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    gethostbyaddr
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" gethostbyname(1)
+@macro gethostbyname(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    gethostbyname
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" gethostname(2)
+@macro gethostname(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    gethostname
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" getnameinfo(7)  ; (no wrapper -- unsupported signature)
+
+@extern "WS2_32.dll" getpeername(3)
+@macro getpeername(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    getpeername
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" getprotobyname(1)
+@macro getprotobyname(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    getprotobyname
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" getprotobynumber(1)
+@macro getprotobynumber(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    getprotobynumber
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" getservbyname(2)
+@macro getservbyname(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    getservbyname
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" getservbyport(2)
+@macro getservbyport(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    getservbyport
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" getsockname(3)
+@macro getsockname(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    getsockname
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" getsockopt(5)
+@macro getsockopt(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    getsockopt
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" htonl(1)
+@macro htonl(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    htonl
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" htons(1)
+@macro htons(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cx, &arg0
+    call    htons
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" inet_addr(1)
+@macro inet_addr(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    inet_addr
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" inet_ntoa(1)  ; (no wrapper -- unsupported signature)
+
+@extern "WS2_32.dll" inet_ntop(4)
+@macro inet_ntop(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    inet_ntop
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" inet_pton(3)
+@macro inet_pton(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    inet_pton
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" ioctlsocket(3)
+@macro ioctlsocket(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    ioctlsocket
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" listen(2)
+@macro listen(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    listen
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" ntohl(1)
+@macro ntohl(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    ntohl
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" ntohs(1)
+@macro ntohs(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cx, &arg0
+    call    ntohs
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" recv(4)
+@macro recv(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    recv
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" recvfrom(6)
+@macro recvfrom(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    recvfrom
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" select(5)
+@macro select(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    select
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" send(4)
+@macro send(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    send
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" sendto(6)
+@macro sendto(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    sendto
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" setsockopt(5)
+@macro setsockopt(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    setsockopt
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" shutdown(2)
+@macro shutdown(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    shutdown
+    mov     rsp, r12
+@endmacro
+
+@extern "WS2_32.dll" socket(3)
+@macro socket(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    socket
+    mov     rsp, r12
+@endmacro

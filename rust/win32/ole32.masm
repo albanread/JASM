@@ -1,0 +1,2872 @@
+; ---------------------------------------------------------------------
+; Generated from windows_api.db -- DLL: OLE32.dll
+; v2: @extern declarations + invoke-style wrapper macros.
+; DO NOT EDIT BY HAND. Regenerate via:
+;     python scripts/win32_gen.py --dll OLE32.dll
+;
+; Each function gets two definitions:
+;
+;   @extern "OLE32.dll" NAME(N)
+;     The declaration the host pairs with LoadLibraryW + GetProcAddress.
+;
+;   @macro NAME(arg0, arg1, ...)
+;     Win64-ABI-aware wrapper. Each arg goes in its register or stack
+;     slot per the parameter's type; shadow space and 16-byte RSP
+;     alignment are handled. Functions whose signatures cannot be
+;     modelled (struct-by-value params, variadics) get only the
+;     @extern -- call those by hand.
+;
+; Function count: 241 wrapped, 32 extern-only
+; Source of truth: E:\windows_api\windows_api.db
+; ---------------------------------------------------------------------
+
+@extern "OLE32.dll" BindMoniker(4)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" CLIPFORMAT_UserFree(2)
+@macro CLIPFORMAT_UserFree(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CLIPFORMAT_UserFree
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CLIPFORMAT_UserFree64(2)
+@macro CLIPFORMAT_UserFree64(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CLIPFORMAT_UserFree64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CLIPFORMAT_UserMarshal(3)
+@macro CLIPFORMAT_UserMarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CLIPFORMAT_UserMarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CLIPFORMAT_UserMarshal64(3)
+@macro CLIPFORMAT_UserMarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CLIPFORMAT_UserMarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CLIPFORMAT_UserSize(3)
+@macro CLIPFORMAT_UserSize(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    CLIPFORMAT_UserSize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CLIPFORMAT_UserSize64(3)
+@macro CLIPFORMAT_UserSize64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    CLIPFORMAT_UserSize64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CLIPFORMAT_UserUnmarshal(3)
+@macro CLIPFORMAT_UserUnmarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CLIPFORMAT_UserUnmarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CLIPFORMAT_UserUnmarshal64(3)
+@macro CLIPFORMAT_UserUnmarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CLIPFORMAT_UserUnmarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CLSIDFromProgID(2)
+@macro CLSIDFromProgID(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CLSIDFromProgID
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CLSIDFromProgIDEx(2)
+@macro CLSIDFromProgIDEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CLSIDFromProgIDEx
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CLSIDFromString(2)
+@macro CLSIDFromString(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CLSIDFromString
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoAddRefServerProcess(0)
+@macro CoAddRefServerProcess()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CoAddRefServerProcess
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoAllowSetForegroundWindow(2)
+@macro CoAllowSetForegroundWindow(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoAllowSetForegroundWindow
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoAllowUnmarshalerCLSID(1)
+@macro CoAllowUnmarshalerCLSID(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoAllowUnmarshalerCLSID
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoCancelCall(2)
+@macro CoCancelCall(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    CoCancelCall
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoCopyProxy(2)
+@macro CoCopyProxy(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoCopyProxy
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoCreateFreeThreadedMarshaler(2)
+@macro CoCreateFreeThreadedMarshaler(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoCreateFreeThreadedMarshaler
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoCreateGuid(1)
+@macro CoCreateGuid(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoCreateGuid
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoCreateInstance(5)
+@macro CoCreateInstance(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CoCreateInstance
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoCreateInstanceEx(6)
+@macro CoCreateInstanceEx(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CoCreateInstanceEx
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoCreateInstanceFromApp(6)
+@macro CoCreateInstanceFromApp(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CoCreateInstanceFromApp
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoDecodeProxy(3)
+@macro CoDecodeProxy(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CoDecodeProxy
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoDecrementMTAUsage(1)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" CoDisableCallCancellation(1)
+@macro CoDisableCallCancellation(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoDisableCallCancellation
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoDisconnectContext(1)
+@macro CoDisconnectContext(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    CoDisconnectContext
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoDisconnectObject(2)
+@macro CoDisconnectObject(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    CoDisconnectObject
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoDosDateTimeToFileTime(3)
+@macro CoDosDateTimeToFileTime(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cx, &arg0
+    mov     dx, &arg1
+    mov     r8, &arg2
+    call    CoDosDateTimeToFileTime
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoEnableCallCancellation(1)
+@macro CoEnableCallCancellation(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoEnableCallCancellation
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoFileTimeNow(1)
+@macro CoFileTimeNow(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoFileTimeNow
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoFileTimeToDosDateTime(3)
+@macro CoFileTimeToDosDateTime(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CoFileTimeToDosDateTime
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoFreeAllLibraries(0)
+@macro CoFreeAllLibraries()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CoFreeAllLibraries
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoFreeLibrary(1)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" CoFreeUnusedLibraries(0)
+@macro CoFreeUnusedLibraries()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CoFreeUnusedLibraries
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoFreeUnusedLibrariesEx(2)
+@macro CoFreeUnusedLibrariesEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    CoFreeUnusedLibrariesEx
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetApartmentType(2)
+@macro CoGetApartmentType(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoGetApartmentType
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetCallContext(2)
+@macro CoGetCallContext(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoGetCallContext
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetCallerTID(1)
+@macro CoGetCallerTID(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoGetCallerTID
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetCancelObject(3)
+@macro CoGetCancelObject(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CoGetCancelObject
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetClassObject(5)
+@macro CoGetClassObject(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CoGetClassObject
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetContextToken(1)
+@macro CoGetContextToken(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoGetContextToken
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetCurrentLogicalThreadId(1)
+@macro CoGetCurrentLogicalThreadId(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoGetCurrentLogicalThreadId
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetCurrentProcess(0)
+@macro CoGetCurrentProcess()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CoGetCurrentProcess
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetDefaultContext(3)
+@macro CoGetDefaultContext(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CoGetDefaultContext
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetInstanceFromFile(8)
+@macro CoGetInstanceFromFile(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CoGetInstanceFromFile
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetInstanceFromIStorage(7)
+@macro CoGetInstanceFromIStorage(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CoGetInstanceFromIStorage
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetInterfaceAndReleaseStream(3)
+@macro CoGetInterfaceAndReleaseStream(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CoGetInterfaceAndReleaseStream
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetMalloc(2)
+@macro CoGetMalloc(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    CoGetMalloc
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetMarshalSizeMax(6)
+@macro CoGetMarshalSizeMax(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CoGetMarshalSizeMax
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetObject(4)
+@macro CoGetObject(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CoGetObject
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetObjectContext(2)
+@macro CoGetObjectContext(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoGetObjectContext
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetPSClsid(2)
+@macro CoGetPSClsid(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoGetPSClsid
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetStandardMarshal(6)
+@macro CoGetStandardMarshal(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CoGetStandardMarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetStdMarshalEx(3)
+@macro CoGetStdMarshalEx(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    CoGetStdMarshalEx
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetSystemSecurityPermissions(2)
+@macro CoGetSystemSecurityPermissions(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    CoGetSystemSecurityPermissions
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoGetTreatAsClass(2)
+@macro CoGetTreatAsClass(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoGetTreatAsClass
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoImpersonateClient(0)
+@macro CoImpersonateClient()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CoImpersonateClient
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoIncrementMTAUsage(1)
+@macro CoIncrementMTAUsage(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoIncrementMTAUsage
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoInitialize(1)
+@macro CoInitialize(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoInitialize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoInitializeEx(2)
+@macro CoInitializeEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    CoInitializeEx
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoInitializeSecurity(9)
+@macro CoInitializeSecurity(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CoInitializeSecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoInvalidateRemoteMachineBindings(1)
+@macro CoInvalidateRemoteMachineBindings(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoInvalidateRemoteMachineBindings
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoIsHandlerConnected(1)
+@macro CoIsHandlerConnected(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoIsHandlerConnected
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoLoadLibrary(2)
+@macro CoLoadLibrary(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoLoadLibrary
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoLockObjectExternal(3)
+@macro CoLockObjectExternal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CoLockObjectExternal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoMarshalHresult(2)
+@macro CoMarshalHresult(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoMarshalHresult
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoMarshalInterThreadInterfaceInStream(3)
+@macro CoMarshalInterThreadInterfaceInStream(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CoMarshalInterThreadInterfaceInStream
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoMarshalInterface(6)
+@macro CoMarshalInterface(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CoMarshalInterface
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoQueryAuthenticationServices(2)
+@macro CoQueryAuthenticationServices(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoQueryAuthenticationServices
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoQueryClientBlanket(7)
+@macro CoQueryClientBlanket(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CoQueryClientBlanket
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoQueryProxyBlanket(8)
+@macro CoQueryProxyBlanket(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CoQueryProxyBlanket
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoRegisterActivationFilter(1)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" CoRegisterClassObject(5)
+@macro CoRegisterClassObject(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CoRegisterClassObject
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoRegisterDeviceCatalog(2)
+@macro CoRegisterDeviceCatalog(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoRegisterDeviceCatalog
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoRegisterInitializeSpy(2)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" CoRegisterMallocSpy(1)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" CoRegisterMessageFilter(2)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" CoRegisterPSClsid(2)
+@macro CoRegisterPSClsid(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoRegisterPSClsid
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoRegisterSurrogate(1)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" CoReleaseMarshalData(1)
+@macro CoReleaseMarshalData(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoReleaseMarshalData
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoReleaseServerProcess(0)
+@macro CoReleaseServerProcess()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CoReleaseServerProcess
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoResumeClassObjects(0)
+@macro CoResumeClassObjects()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CoResumeClassObjects
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoRevertToSelf(0)
+@macro CoRevertToSelf()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CoRevertToSelf
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoRevokeClassObject(1)
+@macro CoRevokeClassObject(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    CoRevokeClassObject
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoRevokeDeviceCatalog(1)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" CoRevokeInitializeSpy(1)
+@macro CoRevokeInitializeSpy(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoRevokeInitializeSpy
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoRevokeMallocSpy(0)
+@macro CoRevokeMallocSpy()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CoRevokeMallocSpy
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoSetCancelObject(1)
+@macro CoSetCancelObject(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoSetCancelObject
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoSetProxyBlanket(8)
+@macro CoSetProxyBlanket(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CoSetProxyBlanket
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoSuspendClassObjects(0)
+@macro CoSuspendClassObjects()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CoSuspendClassObjects
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoSwitchCallContext(2)
+@macro CoSwitchCallContext(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoSwitchCallContext
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoTaskMemAlloc(1)
+@macro CoTaskMemAlloc(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoTaskMemAlloc
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoTaskMemFree(1)
+@macro CoTaskMemFree(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CoTaskMemFree
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoTaskMemRealloc(2)
+@macro CoTaskMemRealloc(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoTaskMemRealloc
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoTestCancel(0)
+@macro CoTestCancel()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CoTestCancel
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoTreatAsClass(2)
+@macro CoTreatAsClass(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoTreatAsClass
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoUninitialize(0)
+@macro CoUninitialize()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    CoUninitialize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoUnmarshalHresult(2)
+@macro CoUnmarshalHresult(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CoUnmarshalHresult
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoUnmarshalInterface(3)
+@macro CoUnmarshalInterface(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CoUnmarshalInterface
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoWaitForMultipleHandles(5)
+@macro CoWaitForMultipleHandles(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CoWaitForMultipleHandles
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CoWaitForMultipleObjects(5)
+@macro CoWaitForMultipleObjects(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CoWaitForMultipleObjects
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CreateAntiMoniker(1)
+@macro CreateAntiMoniker(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateAntiMoniker
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CreateBindCtx(2)
+@macro CreateBindCtx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    CreateBindCtx
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CreateClassMoniker(2)
+@macro CreateClassMoniker(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CreateClassMoniker
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CreateDataAdviseHolder(1)
+@macro CreateDataAdviseHolder(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateDataAdviseHolder
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CreateDataCache(4)
+@macro CreateDataCache(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CreateDataCache
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CreateFileMoniker(2)
+@macro CreateFileMoniker(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CreateFileMoniker
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CreateGenericComposite(3)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" CreateILockBytesOnHGlobal(3)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" CreateItemMoniker(3)
+@macro CreateItemMoniker(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CreateItemMoniker
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CreateObjrefMoniker(2)
+@macro CreateObjrefMoniker(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CreateObjrefMoniker
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CreateOleAdviseHolder(1)
+@macro CreateOleAdviseHolder(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateOleAdviseHolder
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CreatePointerMoniker(2)
+@macro CreatePointerMoniker(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CreatePointerMoniker
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" CreateStreamOnHGlobal(3)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" DoDragDrop(4)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" FmtIdToPropStgName(2)
+@macro FmtIdToPropStgName(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    FmtIdToPropStgName
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" FreePropVariantArray(2)
+@macro FreePropVariantArray(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    FreePropVariantArray
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" GetClassFile(2)
+@macro GetClassFile(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetClassFile
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" GetConvertStg(1)
+@macro GetConvertStg(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetConvertStg
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" GetHGlobalFromILockBytes(2)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" GetHGlobalFromStream(2)
+@macro GetHGlobalFromStream(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetHGlobalFromStream
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" GetRunningObjectTable(2)
+@macro GetRunningObjectTable(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    GetRunningObjectTable
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HACCEL_UserFree(2)
+@macro HACCEL_UserFree(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HACCEL_UserFree
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HACCEL_UserFree64(2)
+@macro HACCEL_UserFree64(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HACCEL_UserFree64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HACCEL_UserMarshal(3)
+@macro HACCEL_UserMarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HACCEL_UserMarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HACCEL_UserMarshal64(3)
+@macro HACCEL_UserMarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HACCEL_UserMarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HACCEL_UserSize(3)
+@macro HACCEL_UserSize(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HACCEL_UserSize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HACCEL_UserSize64(3)
+@macro HACCEL_UserSize64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HACCEL_UserSize64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HACCEL_UserUnmarshal(3)
+@macro HACCEL_UserUnmarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HACCEL_UserUnmarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HACCEL_UserUnmarshal64(3)
+@macro HACCEL_UserUnmarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HACCEL_UserUnmarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HBITMAP_UserFree(2)
+@macro HBITMAP_UserFree(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HBITMAP_UserFree
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HBITMAP_UserFree64(2)
+@macro HBITMAP_UserFree64(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HBITMAP_UserFree64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HBITMAP_UserMarshal(3)
+@macro HBITMAP_UserMarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HBITMAP_UserMarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HBITMAP_UserMarshal64(3)
+@macro HBITMAP_UserMarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HBITMAP_UserMarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HBITMAP_UserSize(3)
+@macro HBITMAP_UserSize(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HBITMAP_UserSize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HBITMAP_UserSize64(3)
+@macro HBITMAP_UserSize64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HBITMAP_UserSize64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HBITMAP_UserUnmarshal(3)
+@macro HBITMAP_UserUnmarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HBITMAP_UserUnmarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HBITMAP_UserUnmarshal64(3)
+@macro HBITMAP_UserUnmarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HBITMAP_UserUnmarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HDC_UserFree(2)
+@macro HDC_UserFree(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HDC_UserFree
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HDC_UserFree64(2)
+@macro HDC_UserFree64(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HDC_UserFree64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HDC_UserMarshal(3)
+@macro HDC_UserMarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HDC_UserMarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HDC_UserMarshal64(3)
+@macro HDC_UserMarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HDC_UserMarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HDC_UserSize(3)
+@macro HDC_UserSize(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HDC_UserSize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HDC_UserSize64(3)
+@macro HDC_UserSize64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HDC_UserSize64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HDC_UserUnmarshal(3)
+@macro HDC_UserUnmarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HDC_UserUnmarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HDC_UserUnmarshal64(3)
+@macro HDC_UserUnmarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HDC_UserUnmarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HGLOBAL_UserFree(2)
+@macro HGLOBAL_UserFree(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HGLOBAL_UserFree
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HGLOBAL_UserFree64(2)
+@macro HGLOBAL_UserFree64(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HGLOBAL_UserFree64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HGLOBAL_UserMarshal(3)
+@macro HGLOBAL_UserMarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HGLOBAL_UserMarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HGLOBAL_UserMarshal64(3)
+@macro HGLOBAL_UserMarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HGLOBAL_UserMarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HGLOBAL_UserSize(3)
+@macro HGLOBAL_UserSize(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HGLOBAL_UserSize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HGLOBAL_UserSize64(3)
+@macro HGLOBAL_UserSize64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HGLOBAL_UserSize64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HGLOBAL_UserUnmarshal(3)
+@macro HGLOBAL_UserUnmarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HGLOBAL_UserUnmarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HGLOBAL_UserUnmarshal64(3)
+@macro HGLOBAL_UserUnmarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HGLOBAL_UserUnmarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HICON_UserFree(2)
+@macro HICON_UserFree(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HICON_UserFree
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HICON_UserFree64(2)
+@macro HICON_UserFree64(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HICON_UserFree64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HICON_UserMarshal(3)
+@macro HICON_UserMarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HICON_UserMarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HICON_UserMarshal64(3)
+@macro HICON_UserMarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HICON_UserMarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HICON_UserSize(3)
+@macro HICON_UserSize(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HICON_UserSize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HICON_UserSize64(3)
+@macro HICON_UserSize64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HICON_UserSize64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HICON_UserUnmarshal(3)
+@macro HICON_UserUnmarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HICON_UserUnmarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HICON_UserUnmarshal64(3)
+@macro HICON_UserUnmarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HICON_UserUnmarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMENU_UserFree(2)
+@macro HMENU_UserFree(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HMENU_UserFree
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMENU_UserFree64(2)
+@macro HMENU_UserFree64(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HMENU_UserFree64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMENU_UserMarshal(3)
+@macro HMENU_UserMarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HMENU_UserMarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMENU_UserMarshal64(3)
+@macro HMENU_UserMarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HMENU_UserMarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMENU_UserSize(3)
+@macro HMENU_UserSize(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HMENU_UserSize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMENU_UserSize64(3)
+@macro HMENU_UserSize64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HMENU_UserSize64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMENU_UserUnmarshal(3)
+@macro HMENU_UserUnmarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HMENU_UserUnmarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMENU_UserUnmarshal64(3)
+@macro HMENU_UserUnmarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HMENU_UserUnmarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMONITOR_UserFree(2)
+@macro HMONITOR_UserFree(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HMONITOR_UserFree
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMONITOR_UserFree64(2)
+@macro HMONITOR_UserFree64(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HMONITOR_UserFree64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMONITOR_UserMarshal(3)
+@macro HMONITOR_UserMarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HMONITOR_UserMarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMONITOR_UserMarshal64(3)
+@macro HMONITOR_UserMarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HMONITOR_UserMarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMONITOR_UserSize(3)
+@macro HMONITOR_UserSize(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HMONITOR_UserSize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMONITOR_UserSize64(3)
+@macro HMONITOR_UserSize64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HMONITOR_UserSize64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMONITOR_UserUnmarshal(3)
+@macro HMONITOR_UserUnmarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HMONITOR_UserUnmarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HMONITOR_UserUnmarshal64(3)
+@macro HMONITOR_UserUnmarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HMONITOR_UserUnmarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HPALETTE_UserFree(2)
+@macro HPALETTE_UserFree(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HPALETTE_UserFree
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HPALETTE_UserFree64(2)
+@macro HPALETTE_UserFree64(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HPALETTE_UserFree64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HPALETTE_UserMarshal(3)
+@macro HPALETTE_UserMarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HPALETTE_UserMarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HPALETTE_UserMarshal64(3)
+@macro HPALETTE_UserMarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HPALETTE_UserMarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HPALETTE_UserSize(3)
+@macro HPALETTE_UserSize(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HPALETTE_UserSize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HPALETTE_UserSize64(3)
+@macro HPALETTE_UserSize64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HPALETTE_UserSize64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HPALETTE_UserUnmarshal(3)
+@macro HPALETTE_UserUnmarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HPALETTE_UserUnmarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HPALETTE_UserUnmarshal64(3)
+@macro HPALETTE_UserUnmarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HPALETTE_UserUnmarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HRGN_UserFree(2)
+@macro HRGN_UserFree(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HRGN_UserFree
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HRGN_UserMarshal(3)
+@macro HRGN_UserMarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HRGN_UserMarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HRGN_UserSize(3)
+@macro HRGN_UserSize(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HRGN_UserSize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HRGN_UserUnmarshal(3)
+@macro HRGN_UserUnmarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HRGN_UserUnmarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HWND_UserFree(2)
+@macro HWND_UserFree(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HWND_UserFree
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HWND_UserFree64(2)
+@macro HWND_UserFree64(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    HWND_UserFree64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HWND_UserMarshal(3)
+@macro HWND_UserMarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HWND_UserMarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HWND_UserMarshal64(3)
+@macro HWND_UserMarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HWND_UserMarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HWND_UserSize(3)
+@macro HWND_UserSize(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HWND_UserSize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HWND_UserSize64(3)
+@macro HWND_UserSize64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    HWND_UserSize64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HWND_UserUnmarshal(3)
+@macro HWND_UserUnmarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HWND_UserUnmarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" HWND_UserUnmarshal64(3)
+@macro HWND_UserUnmarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    HWND_UserUnmarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" IIDFromString(2)
+@macro IIDFromString(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    IIDFromString
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" IsAccelerator(4)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" MkParseDisplayName(4)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" OleCreate(7)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" OleCreateEmbeddingHelper(6)
+@macro OleCreateEmbeddingHelper(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    OleCreateEmbeddingHelper
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleCreateFromData(7)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" OleCreateFromFile(8)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" OleCreateLinkFromData(7)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" OleCreateLinkToFile(7)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" OleCreateMenuDescriptor(2)
+@macro OleCreateMenuDescriptor(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    OleCreateMenuDescriptor
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleCreateStaticFromData(7)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" OleDestroyMenuDescriptor(1)
+@macro OleDestroyMenuDescriptor(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    OleDestroyMenuDescriptor
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleDraw(4)
+@macro OleDraw(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    OleDraw
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleDuplicateData(3)
+@macro OleDuplicateData(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    OleDuplicateData
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleFlushClipboard(0)
+@macro OleFlushClipboard()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    OleFlushClipboard
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleGetAutoConvert(2)
+@macro OleGetAutoConvert(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    OleGetAutoConvert
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleGetClipboard(1)
+@macro OleGetClipboard(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    OleGetClipboard
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleGetIconOfClass(3)
+@macro OleGetIconOfClass(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    OleGetIconOfClass
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleInitialize(1)
+@macro OleInitialize(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    OleInitialize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleIsCurrentClipboard(1)
+@macro OleIsCurrentClipboard(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    OleIsCurrentClipboard
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleIsRunning(1)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" OleLoad(4)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" OleLoadFromStream(3)
+@macro OleLoadFromStream(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    OleLoadFromStream
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleLockRunning(3)
+@macro OleLockRunning(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    OleLockRunning
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleQueryCreateFromData(1)
+@macro OleQueryCreateFromData(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    OleQueryCreateFromData
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleQueryLinkFromData(1)
+@macro OleQueryLinkFromData(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    OleQueryLinkFromData
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleRegEnumVerbs(2)
+@macro OleRegEnumVerbs(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    OleRegEnumVerbs
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleRegGetMiscStatus(3)
+@macro OleRegGetMiscStatus(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    OleRegGetMiscStatus
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleRegGetUserType(3)
+@macro OleRegGetUserType(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    OleRegGetUserType
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleRun(1)
+@macro OleRun(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    OleRun
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleSave(3)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" OleSaveToStream(2)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" OleSetClipboard(1)
+@macro OleSetClipboard(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    OleSetClipboard
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleSetContainedObject(2)
+@macro OleSetContainedObject(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    OleSetContainedObject
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" OleSetMenuDescriptor(5)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" OleTranslateAccelerator(3)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" OleUninitialize(0)
+@macro OleUninitialize()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    OleUninitialize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" ProgIDFromCLSID(2)
+@macro ProgIDFromCLSID(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ProgIDFromCLSID
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" PropStgNameToFmtId(2)
+@macro PropStgNameToFmtId(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PropStgNameToFmtId
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" PropVariantClear(1)
+@macro PropVariantClear(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PropVariantClear
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" PropVariantCopy(2)
+@macro PropVariantCopy(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PropVariantCopy
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" ReadClassStg(2)
+@macro ReadClassStg(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ReadClassStg
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" ReadClassStm(2)
+@macro ReadClassStm(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ReadClassStm
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" ReadFmtUserTypeStg(3)
+@macro ReadFmtUserTypeStg(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    ReadFmtUserTypeStg
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" RegisterDragDrop(2)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" ReleaseStgMedium(1)
+@macro ReleaseStgMedium(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ReleaseStgMedium
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" RevokeDragDrop(1)
+@macro RevokeDragDrop(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RevokeDragDrop
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" RoGetAgileReference(4)
+@macro RoGetAgileReference(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    RoGetAgileReference
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" STGMEDIUM_UserFree(2)
+@macro STGMEDIUM_UserFree(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    STGMEDIUM_UserFree
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" STGMEDIUM_UserFree64(2)
+@macro STGMEDIUM_UserFree64(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    STGMEDIUM_UserFree64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" STGMEDIUM_UserMarshal(3)
+@macro STGMEDIUM_UserMarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    STGMEDIUM_UserMarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" STGMEDIUM_UserMarshal64(3)
+@macro STGMEDIUM_UserMarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    STGMEDIUM_UserMarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" STGMEDIUM_UserSize(3)
+@macro STGMEDIUM_UserSize(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    STGMEDIUM_UserSize
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" STGMEDIUM_UserSize64(3)
+@macro STGMEDIUM_UserSize64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    STGMEDIUM_UserSize64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" STGMEDIUM_UserUnmarshal(3)
+@macro STGMEDIUM_UserUnmarshal(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    STGMEDIUM_UserUnmarshal
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" STGMEDIUM_UserUnmarshal64(3)
+@macro STGMEDIUM_UserUnmarshal64(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    STGMEDIUM_UserUnmarshal64
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" SetConvertStg(2)
+@macro SetConvertStg(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetConvertStg
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" StgCreateDocfile(4)
+@macro StgCreateDocfile(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    StgCreateDocfile
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" StgCreateDocfileOnILockBytes(4)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" StgCreatePropSetStg(3)
+@macro StgCreatePropSetStg(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    StgCreatePropSetStg
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" StgCreatePropStg(6)
+@macro StgCreatePropStg(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    StgCreatePropStg
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" StgCreateStorageEx(8)
+@macro StgCreateStorageEx(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    StgCreateStorageEx
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" StgIsStorageFile(1)
+@macro StgIsStorageFile(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    StgIsStorageFile
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" StgIsStorageILockBytes(1)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" StgOpenPropStg(5)
+@macro StgOpenPropStg(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    StgOpenPropStg
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" StgOpenStorage(6)
+@macro StgOpenStorage(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    StgOpenStorage
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" StgOpenStorageEx(8)
+@macro StgOpenStorageEx(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    StgOpenStorageEx
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" StgOpenStorageOnILockBytes(6)  ; (no wrapper -- unsupported signature)
+
+@extern "OLE32.dll" StgSetTimes(4)
+@macro StgSetTimes(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    StgSetTimes
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" StringFromCLSID(2)
+@macro StringFromCLSID(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StringFromCLSID
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" StringFromGUID2(3)
+@macro StringFromGUID2(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    StringFromGUID2
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" StringFromIID(2)
+@macro StringFromIID(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StringFromIID
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" WriteClassStg(2)
+@macro WriteClassStg(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WriteClassStg
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" WriteClassStm(2)
+@macro WriteClassStm(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    WriteClassStm
+    mov     rsp, r12
+@endmacro
+
+@extern "OLE32.dll" WriteFmtUserTypeStg(3)
+@macro WriteFmtUserTypeStg(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     dx, &arg1
+    mov     r8, &arg2
+    call    WriteFmtUserTypeStg
+    mov     rsp, r12
+@endmacro

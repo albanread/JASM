@@ -1,0 +1,5435 @@
+; ---------------------------------------------------------------------
+; Generated from windows_api.db -- DLL: ADVAPI32.dll
+; v2: @extern declarations + invoke-style wrapper macros.
+; DO NOT EDIT BY HAND. Regenerate via:
+;     python scripts/win32_gen.py --dll ADVAPI32.dll
+;
+; Each function gets two definitions:
+;
+;   @extern "ADVAPI32.dll" NAME(N)
+;     The declaration the host pairs with LoadLibraryW + GetProcAddress.
+;
+;   @macro NAME(arg0, arg1, ...)
+;     Win64-ABI-aware wrapper. Each arg goes in its register or stack
+;     slot per the parameter's type; shadow space and 16-byte RSP
+;     alignment are handled. Functions whose signatures cannot be
+;     modelled (struct-by-value params, variadics) get only the
+;     @extern -- call those by hand.
+;
+; Function count: 412 wrapped, 55 extern-only
+; Source of truth: E:\windows_api\windows_api.db
+; ---------------------------------------------------------------------
+
+@extern "ADVAPI32.dll" AbortSystemShutdownW(1)
+@macro AbortSystemShutdownW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    AbortSystemShutdownW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AccessCheck(8)
+@macro AccessCheck(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    AccessCheck
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AccessCheckAndAuditAlarmW(11)
+@macro AccessCheckAndAuditAlarmW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    AccessCheckAndAuditAlarmW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AccessCheckByType(11)
+@macro AccessCheckByType(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    AccessCheckByType
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AccessCheckByTypeAndAuditAlarmW(16)
+@macro AccessCheckByTypeAndAuditAlarmW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 128
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     qword ptr [rsp + 88], &arg11
+    mov     qword ptr [rsp + 96], &arg12
+    mov     qword ptr [rsp + 104], &arg13
+    mov     qword ptr [rsp + 112], &arg14
+    mov     qword ptr [rsp + 120], &arg15
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    AccessCheckByTypeAndAuditAlarmW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AccessCheckByTypeResultList(11)
+@macro AccessCheckByTypeResultList(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    AccessCheckByTypeResultList
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AccessCheckByTypeResultListAndAuditAlarmByHandleW(17)
+@macro AccessCheckByTypeResultListAndAuditAlarmByHandleW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 144
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     qword ptr [rsp + 88], &arg11
+    mov     qword ptr [rsp + 96], &arg12
+    mov     qword ptr [rsp + 104], &arg13
+    mov     qword ptr [rsp + 112], &arg14
+    mov     qword ptr [rsp + 120], &arg15
+    mov     qword ptr [rsp + 128], &arg16
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    AccessCheckByTypeResultListAndAuditAlarmByHandleW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AccessCheckByTypeResultListAndAuditAlarmW(16)
+@macro AccessCheckByTypeResultListAndAuditAlarmW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 128
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     qword ptr [rsp + 88], &arg11
+    mov     qword ptr [rsp + 96], &arg12
+    mov     qword ptr [rsp + 104], &arg13
+    mov     qword ptr [rsp + 112], &arg14
+    mov     qword ptr [rsp + 120], &arg15
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    AccessCheckByTypeResultListAndAuditAlarmW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AddAccessAllowedAce(4)
+@macro AddAccessAllowedAce(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    AddAccessAllowedAce
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AddAccessAllowedAceEx(5)
+@macro AddAccessAllowedAceEx(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    AddAccessAllowedAceEx
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AddAccessAllowedObjectAce(7)
+@macro AddAccessAllowedObjectAce(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    AddAccessAllowedObjectAce
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AddAccessDeniedAce(4)
+@macro AddAccessDeniedAce(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    AddAccessDeniedAce
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AddAccessDeniedAceEx(5)
+@macro AddAccessDeniedAceEx(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    AddAccessDeniedAceEx
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AddAccessDeniedObjectAce(7)
+@macro AddAccessDeniedObjectAce(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    AddAccessDeniedObjectAce
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AddAce(5)
+@macro AddAce(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    AddAce
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AddAuditAccessAce(6)
+@macro AddAuditAccessAce(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    AddAuditAccessAce
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AddAuditAccessAceEx(7)
+@macro AddAuditAccessAceEx(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    AddAuditAccessAceEx
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AddAuditAccessObjectAce(9)
+@macro AddAuditAccessObjectAce(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    AddAuditAccessObjectAce
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AddConditionalAce(8)
+@macro AddConditionalAce(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9b, &arg3
+    call    AddConditionalAce
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AddMandatoryAce(5)
+@macro AddMandatoryAce(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    AddMandatoryAce
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AddUsersToEncryptedFile(2)
+@macro AddUsersToEncryptedFile(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    AddUsersToEncryptedFile
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AdjustTokenGroups(6)
+@macro AdjustTokenGroups(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    AdjustTokenGroups
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AdjustTokenPrivileges(6)
+@macro AdjustTokenPrivileges(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    AdjustTokenPrivileges
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AllocateAndInitializeSid(11)
+@macro AllocateAndInitializeSid(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     dl, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    AllocateAndInitializeSid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AllocateLocallyUniqueId(1)
+@macro AllocateLocallyUniqueId(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    AllocateLocallyUniqueId
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AreAllAccessesGranted(2)
+@macro AreAllAccessesGranted(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    AreAllAccessesGranted
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AreAnyAccessesGranted(2)
+@macro AreAnyAccessesGranted(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    call    AreAnyAccessesGranted
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditComputeEffectivePolicyBySid(4)
+@macro AuditComputeEffectivePolicyBySid(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    AuditComputeEffectivePolicyBySid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditComputeEffectivePolicyByToken(4)
+@macro AuditComputeEffectivePolicyByToken(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    AuditComputeEffectivePolicyByToken
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditEnumerateCategories(2)
+@macro AuditEnumerateCategories(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    AuditEnumerateCategories
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditEnumeratePerUserPolicy(1)
+@macro AuditEnumeratePerUserPolicy(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    AuditEnumeratePerUserPolicy
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditEnumerateSubCategories(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" AuditFree(1)
+@macro AuditFree(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    AuditFree
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditLookupCategoryGuidFromCategoryId(2)
+@macro AuditLookupCategoryGuidFromCategoryId(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    AuditLookupCategoryGuidFromCategoryId
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditLookupCategoryIdFromCategoryGuid(2)
+@macro AuditLookupCategoryIdFromCategoryGuid(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    AuditLookupCategoryIdFromCategoryGuid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditLookupCategoryNameW(2)
+@macro AuditLookupCategoryNameW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    AuditLookupCategoryNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditLookupSubCategoryNameW(2)
+@macro AuditLookupSubCategoryNameW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    AuditLookupSubCategoryNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditQueryGlobalSaclW(2)
+@macro AuditQueryGlobalSaclW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    AuditQueryGlobalSaclW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditQueryPerUserPolicy(4)
+@macro AuditQueryPerUserPolicy(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    AuditQueryPerUserPolicy
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditQuerySecurity(2)
+@macro AuditQuerySecurity(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    AuditQuerySecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditQuerySystemPolicy(3)
+@macro AuditQuerySystemPolicy(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    AuditQuerySystemPolicy
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditSetGlobalSaclW(2)
+@macro AuditSetGlobalSaclW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    AuditSetGlobalSaclW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditSetPerUserPolicy(3)
+@macro AuditSetPerUserPolicy(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    AuditSetPerUserPolicy
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditSetSecurity(2)
+@macro AuditSetSecurity(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    AuditSetSecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" AuditSetSystemPolicy(2)
+@macro AuditSetSystemPolicy(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    AuditSetSystemPolicy
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" BackupEventLogW(2)
+@macro BackupEventLogW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    BackupEventLogW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" BuildExplicitAccessWithNameW(5)
+@macro BuildExplicitAccessWithNameW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    BuildExplicitAccessWithNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" BuildImpersonateExplicitAccessWithNameW(6)
+@macro BuildImpersonateExplicitAccessWithNameW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    BuildImpersonateExplicitAccessWithNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" BuildImpersonateTrusteeW(2)
+@macro BuildImpersonateTrusteeW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    BuildImpersonateTrusteeW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" BuildSecurityDescriptorW(9)
+@macro BuildSecurityDescriptorW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    BuildSecurityDescriptorW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" BuildTrusteeWithNameW(2)
+@macro BuildTrusteeWithNameW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    BuildTrusteeWithNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" BuildTrusteeWithObjectsAndNameW(6)
+@macro BuildTrusteeWithObjectsAndNameW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    BuildTrusteeWithObjectsAndNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" BuildTrusteeWithObjectsAndSidW(5)
+@macro BuildTrusteeWithObjectsAndSidW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    BuildTrusteeWithObjectsAndSidW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" BuildTrusteeWithSidW(2)
+@macro BuildTrusteeWithSidW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    BuildTrusteeWithSidW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ChangeServiceConfig2W(3)
+@macro ChangeServiceConfig2W(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    ChangeServiceConfig2W
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ChangeServiceConfigW(11)
+@macro ChangeServiceConfigW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    ChangeServiceConfigW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CheckForHiberboot(2)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" CheckTokenMembership(3)
+@macro CheckTokenMembership(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CheckTokenMembership
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ClearEventLogW(2)
+@macro ClearEventLogW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ClearEventLogW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CloseEncryptedFileRaw(1)
+@macro CloseEncryptedFileRaw(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CloseEncryptedFileRaw
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CloseEventLog(1)
+@macro CloseEventLog(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CloseEventLog
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CloseServiceHandle(1)
+@macro CloseServiceHandle(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CloseServiceHandle
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CloseThreadWaitChainSession(1)
+@macro CloseThreadWaitChainSession(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CloseThreadWaitChainSession
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CloseTrace(1)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" CommandLineFromMsiDescriptor(3)
+@macro CommandLineFromMsiDescriptor(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CommandLineFromMsiDescriptor
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ControlService(3)
+@macro ControlService(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    ControlService
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ControlServiceExW(4)
+@macro ControlServiceExW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    ControlServiceExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ControlTraceW(4)
+@macro ControlTraceW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    ControlTraceW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ConvertSecurityDescriptorToStringSecurityDescriptorW(5)
+@macro ConvertSecurityDescriptorToStringSecurityDescriptorW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ConvertSecurityDescriptorToStringSecurityDescriptorW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ConvertSidToStringSidW(2)
+@macro ConvertSidToStringSidW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ConvertSidToStringSidW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ConvertStringSecurityDescriptorToSecurityDescriptorW(4)
+@macro ConvertStringSecurityDescriptorToSecurityDescriptorW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ConvertStringSecurityDescriptorToSecurityDescriptorW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ConvertStringSidToSidW(2)
+@macro ConvertStringSidToSidW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ConvertStringSidToSidW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ConvertToAutoInheritPrivateObjectSecurity(6)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" CopySid(3)
+@macro CopySid(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CopySid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CreatePrivateObjectSecurity(6)
+@macro CreatePrivateObjectSecurity(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CreatePrivateObjectSecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CreatePrivateObjectSecurityEx(8)
+@macro CreatePrivateObjectSecurityEx(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CreatePrivateObjectSecurityEx
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CreatePrivateObjectSecurityWithMultipleInheritance(9)
+@macro CreatePrivateObjectSecurityWithMultipleInheritance(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CreatePrivateObjectSecurityWithMultipleInheritance
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CreateProcessAsUserW(11)
+@macro CreateProcessAsUserW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CreateProcessAsUserW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CreateProcessWithLogonW(11)
+@macro CreateProcessWithLogonW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CreateProcessWithLogonW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CreateProcessWithTokenW(9)
+@macro CreateProcessWithTokenW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CreateProcessWithTokenW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CreateRestrictedToken(9)
+@macro CreateRestrictedToken(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CreateRestrictedToken
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CreateServiceW(13)
+@macro CreateServiceW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 112
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     qword ptr [rsp + 88], &arg11
+    mov     qword ptr [rsp + 96], &arg12
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CreateServiceW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CreateTraceInstanceId(2)
+@macro CreateTraceInstanceId(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CreateTraceInstanceId
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CreateWellKnownSid(4)
+@macro CreateWellKnownSid(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CreateWellKnownSid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredDeleteW(3)
+@macro CredDeleteW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    CredDeleteW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredEnumerateW(4)
+@macro CredEnumerateW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CredEnumerateW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredFindBestCredentialW(4)
+@macro CredFindBestCredentialW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CredFindBestCredentialW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredFree(1)
+@macro CredFree(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CredFree
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredGetSessionTypes(2)
+@macro CredGetSessionTypes(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    CredGetSessionTypes
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredGetTargetInfoW(3)
+@macro CredGetTargetInfoW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    CredGetTargetInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredIsMarshaledCredentialW(1)
+@macro CredIsMarshaledCredentialW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CredIsMarshaledCredentialW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredIsProtectedW(2)
+@macro CredIsProtectedW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CredIsProtectedW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredMarshalCredentialW(3)
+@macro CredMarshalCredentialW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CredMarshalCredentialW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredProtectW(6)
+@macro CredProtectW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CredProtectW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredReadDomainCredentialsW(4)
+@macro CredReadDomainCredentialsW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CredReadDomainCredentialsW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredReadW(4)
+@macro CredReadW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CredReadW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredRenameW(4)
+@macro CredRenameW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CredRenameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredUnmarshalCredentialW(3)
+@macro CredUnmarshalCredentialW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CredUnmarshalCredentialW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredUnprotectW(5)
+@macro CredUnprotectW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CredUnprotectW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredWriteDomainCredentialsW(3)
+@macro CredWriteDomainCredentialsW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    CredWriteDomainCredentialsW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CredWriteW(2)
+@macro CredWriteW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    CredWriteW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptAcquireContextW(5)
+@macro CryptAcquireContextW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CryptAcquireContextW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptContextAddRef(3)
+@macro CryptContextAddRef(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    CryptContextAddRef
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptCreateHash(5)
+@macro CryptCreateHash(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CryptCreateHash
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptDecrypt(6)
+@macro CryptDecrypt(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CryptDecrypt
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptDeriveKey(5)
+@macro CryptDeriveKey(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CryptDeriveKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptDestroyHash(1)
+@macro CryptDestroyHash(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CryptDestroyHash
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptDestroyKey(1)
+@macro CryptDestroyKey(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CryptDestroyKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptDuplicateHash(4)
+@macro CryptDuplicateHash(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CryptDuplicateHash
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptDuplicateKey(4)
+@macro CryptDuplicateKey(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CryptDuplicateKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptEncrypt(7)
+@macro CryptEncrypt(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CryptEncrypt
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptEnumProviderTypesW(6)
+@macro CryptEnumProviderTypesW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CryptEnumProviderTypesW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptEnumProvidersW(6)
+@macro CryptEnumProvidersW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CryptEnumProvidersW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptExportKey(6)
+@macro CryptExportKey(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CryptExportKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptGenKey(4)
+@macro CryptGenKey(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CryptGenKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptGenRandom(3)
+@macro CryptGenRandom(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    CryptGenRandom
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptGetDefaultProviderW(5)
+@macro CryptGetDefaultProviderW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CryptGetDefaultProviderW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptGetHashParam(5)
+@macro CryptGetHashParam(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CryptGetHashParam
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptGetKeyParam(5)
+@macro CryptGetKeyParam(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CryptGetKeyParam
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptGetProvParam(5)
+@macro CryptGetProvParam(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CryptGetProvParam
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptGetUserKey(3)
+@macro CryptGetUserKey(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    CryptGetUserKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptHashData(4)
+@macro CryptHashData(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CryptHashData
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptHashSessionKey(3)
+@macro CryptHashSessionKey(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    CryptHashSessionKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptImportKey(6)
+@macro CryptImportKey(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CryptImportKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptReleaseContext(2)
+@macro CryptReleaseContext(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    CryptReleaseContext
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptSetHashParam(4)
+@macro CryptSetHashParam(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CryptSetHashParam
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptSetKeyParam(4)
+@macro CryptSetKeyParam(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CryptSetKeyParam
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptSetProvParam(4)
+@macro CryptSetProvParam(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CryptSetProvParam
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptSetProviderExW(4)
+@macro CryptSetProviderExW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CryptSetProviderExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptSetProviderW(2)
+@macro CryptSetProviderW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    CryptSetProviderW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptSignHashW(6)
+@macro CryptSignHashW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CryptSignHashW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CryptVerifySignatureW(6)
+@macro CryptVerifySignatureW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CryptVerifySignatureW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" CveEventWrite(2)
+@macro CveEventWrite(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    CveEventWrite
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" DecryptFileW(2)
+@macro DecryptFileW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    DecryptFileW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" DeleteAce(2)
+@macro DeleteAce(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    DeleteAce
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" DeleteService(1)
+@macro DeleteService(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DeleteService
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" DeregisterEventSource(1)
+@macro DeregisterEventSource(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DeregisterEventSource
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" DestroyPrivateObjectSecurity(1)
+@macro DestroyPrivateObjectSecurity(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DestroyPrivateObjectSecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" DuplicateEncryptionInfoFile(5)
+@macro DuplicateEncryptionInfoFile(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    DuplicateEncryptionInfoFile
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" DuplicateToken(3)
+@macro DuplicateToken(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    DuplicateToken
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" DuplicateTokenEx(6)
+@macro DuplicateTokenEx(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    DuplicateTokenEx
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EnableTrace(5)
+@macro EnableTrace(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    EnableTrace
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EnableTraceEx(9)
+@macro EnableTraceEx(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    EnableTraceEx
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EnableTraceEx2(8)
+@macro EnableTraceEx2(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9b, &arg3
+    call    EnableTraceEx2
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EncryptFileW(1)
+@macro EncryptFileW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EncryptFileW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EncryptionDisable(2)
+@macro EncryptionDisable(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    EncryptionDisable
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EnumDependentServicesW(6)
+@macro EnumDependentServicesW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    EnumDependentServicesW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EnumDynamicTimeZoneInformation(2)
+@macro EnumDynamicTimeZoneInformation(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    EnumDynamicTimeZoneInformation
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EnumServicesStatusExW(10)
+@macro EnumServicesStatusExW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    EnumServicesStatusExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EnumServicesStatusW(8)
+@macro EnumServicesStatusW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    EnumServicesStatusW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EnumerateTraceGuids(3)
+@macro EnumerateTraceGuids(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    EnumerateTraceGuids
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EnumerateTraceGuidsEx(6)
+@macro EnumerateTraceGuidsEx(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    EnumerateTraceGuidsEx
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EqualDomainSid(3)
+@macro EqualDomainSid(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    EqualDomainSid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EqualPrefixSid(2)
+@macro EqualPrefixSid(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    EqualPrefixSid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EqualSid(2)
+@macro EqualSid(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    EqualSid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EventAccessControl(5)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" EventAccessQuery(3)
+@macro EventAccessQuery(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    EventAccessQuery
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EventAccessRemove(1)
+@macro EventAccessRemove(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EventAccessRemove
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EventActivityIdControl(2)
+@macro EventActivityIdControl(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    EventActivityIdControl
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EventEnabled(2)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" EventProviderEnabled(3)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" EventRegister(4)
+@macro EventRegister(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EventRegister
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" EventSetInformation(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" EventUnregister(1)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" EventWrite(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" EventWriteEx(8)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" EventWriteString(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" EventWriteTransfer(6)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" FileEncryptionStatusW(2)
+@macro FileEncryptionStatusW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    FileEncryptionStatusW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" FindFirstFreeAce(2)
+@macro FindFirstFreeAce(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    FindFirstFreeAce
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" FlushTraceW(3)
+@macro FlushTraceW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    FlushTraceW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" FreeEncryptedFileMetadata(1)
+@macro FreeEncryptedFileMetadata(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FreeEncryptedFileMetadata
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" FreeEncryptionCertificateHashList(1)
+@macro FreeEncryptionCertificateHashList(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FreeEncryptionCertificateHashList
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" FreeInheritedFromArray(3)
+@macro FreeInheritedFromArray(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     dx, &arg1
+    mov     r8, &arg2
+    call    FreeInheritedFromArray
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" FreeSid(1)
+@macro FreeSid(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FreeSid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetAce(3)
+@macro GetAce(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    GetAce
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetAclInformation(4)
+@macro GetAclInformation(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    GetAclInformation
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetAuditedPermissionsFromAclW(4)
+@macro GetAuditedPermissionsFromAclW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetAuditedPermissionsFromAclW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetCurrentHwProfileW(1)
+@macro GetCurrentHwProfileW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetCurrentHwProfileW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetDynamicTimeZoneInformationEffectiveYears(3)
+@macro GetDynamicTimeZoneInformationEffectiveYears(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetDynamicTimeZoneInformationEffectiveYears
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetEffectiveRightsFromAclW(3)
+@macro GetEffectiveRightsFromAclW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetEffectiveRightsFromAclW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetEncryptedFileMetadata(3)
+@macro GetEncryptedFileMetadata(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetEncryptedFileMetadata
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetEventLogInformation(5)
+@macro GetEventLogInformation(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    GetEventLogInformation
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetExplicitEntriesFromAclW(3)
+@macro GetExplicitEntriesFromAclW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetExplicitEntriesFromAclW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetFileSecurityW(5)
+@macro GetFileSecurityW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    GetFileSecurityW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetInheritanceSourceW(10)
+@macro GetInheritanceSourceW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetInheritanceSourceW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetKernelObjectSecurity(5)
+@macro GetKernelObjectSecurity(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    GetKernelObjectSecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetLengthSid(1)
+@macro GetLengthSid(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetLengthSid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetLocalManagedApplicationData(3)
+@macro GetLocalManagedApplicationData(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetLocalManagedApplicationData
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetLocalManagedApplications(3)
+@macro GetLocalManagedApplications(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetLocalManagedApplications
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetManagedApplicationCategories(2)
+@macro GetManagedApplicationCategories(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    GetManagedApplicationCategories
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetManagedApplications(5)
+@macro GetManagedApplications(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetManagedApplications
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetMultipleTrusteeOperationW(1)
+@macro GetMultipleTrusteeOperationW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetMultipleTrusteeOperationW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetMultipleTrusteeW(1)
+@macro GetMultipleTrusteeW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetMultipleTrusteeW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetNamedSecurityInfoW(8)
+@macro GetNamedSecurityInfoW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetNamedSecurityInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetNumberOfEventLogRecords(2)
+@macro GetNumberOfEventLogRecords(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetNumberOfEventLogRecords
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetOldestEventLogRecord(2)
+@macro GetOldestEventLogRecord(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetOldestEventLogRecord
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetPrivateObjectSecurity(5)
+@macro GetPrivateObjectSecurity(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    GetPrivateObjectSecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetSecurityDescriptorControl(3)
+@macro GetSecurityDescriptorControl(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetSecurityDescriptorControl
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetSecurityDescriptorDacl(4)
+@macro GetSecurityDescriptorDacl(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetSecurityDescriptorDacl
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetSecurityDescriptorGroup(3)
+@macro GetSecurityDescriptorGroup(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetSecurityDescriptorGroup
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetSecurityDescriptorLength(1)
+@macro GetSecurityDescriptorLength(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetSecurityDescriptorLength
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetSecurityDescriptorOwner(3)
+@macro GetSecurityDescriptorOwner(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetSecurityDescriptorOwner
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetSecurityDescriptorRMControl(2)
+@macro GetSecurityDescriptorRMControl(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetSecurityDescriptorRMControl
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetSecurityDescriptorSacl(4)
+@macro GetSecurityDescriptorSacl(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetSecurityDescriptorSacl
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetSecurityInfo(8)
+@macro GetSecurityInfo(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetSecurityInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetServiceDisplayNameW(4)
+@macro GetServiceDisplayNameW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetServiceDisplayNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetServiceKeyNameW(4)
+@macro GetServiceKeyNameW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GetServiceKeyNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetSidIdentifierAuthority(1)
+@macro GetSidIdentifierAuthority(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetSidIdentifierAuthority
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetSidLengthRequired(1)
+@macro GetSidLengthRequired(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     cl, &arg0
+    call    GetSidLengthRequired
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetSidSubAuthority(2)
+@macro GetSidSubAuthority(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetSidSubAuthority
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetSidSubAuthorityCount(1)
+@macro GetSidSubAuthorityCount(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetSidSubAuthorityCount
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetThreadWaitChain(7)
+@macro GetThreadWaitChain(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    GetThreadWaitChain
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetTokenInformation(5)
+@macro GetTokenInformation(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    GetTokenInformation
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetTraceEnableFlags(1)
+@macro GetTraceEnableFlags(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetTraceEnableFlags
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetTraceEnableLevel(1)
+@macro GetTraceEnableLevel(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetTraceEnableLevel
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetTraceLoggerHandle(1)
+@macro GetTraceLoggerHandle(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetTraceLoggerHandle
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetTrusteeFormW(1)
+@macro GetTrusteeFormW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetTrusteeFormW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetTrusteeNameW(1)
+@macro GetTrusteeNameW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetTrusteeNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetTrusteeTypeW(1)
+@macro GetTrusteeTypeW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetTrusteeTypeW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetUserNameW(2)
+@macro GetUserNameW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetUserNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" GetWindowsAccountDomainSid(3)
+@macro GetWindowsAccountDomainSid(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetWindowsAccountDomainSid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ImpersonateAnonymousToken(1)
+@macro ImpersonateAnonymousToken(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ImpersonateAnonymousToken
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ImpersonateLoggedOnUser(1)
+@macro ImpersonateLoggedOnUser(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ImpersonateLoggedOnUser
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ImpersonateNamedPipeClient(1)
+@macro ImpersonateNamedPipeClient(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ImpersonateNamedPipeClient
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ImpersonateSelf(1)
+@macro ImpersonateSelf(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    ImpersonateSelf
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" InitializeAcl(3)
+@macro InitializeAcl(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    InitializeAcl
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" InitializeSecurityDescriptor(2)
+@macro InitializeSecurityDescriptor(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    InitializeSecurityDescriptor
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" InitializeSid(3)
+@macro InitializeSid(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8b, &arg2
+    call    InitializeSid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" InitiateShutdownW(5)
+@macro InitiateShutdownW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    InitiateShutdownW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" InitiateSystemShutdownExW(6)
+@macro InitiateSystemShutdownExW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    InitiateSystemShutdownExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" InitiateSystemShutdownW(5)
+@macro InitiateSystemShutdownW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    InitiateSystemShutdownW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" InstallApplication(1)
+@macro InstallApplication(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    InstallApplication
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" IsTextUnicode(3)
+@macro IsTextUnicode(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    IsTextUnicode
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" IsTokenRestricted(1)
+@macro IsTokenRestricted(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsTokenRestricted
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" IsTokenUntrusted(1)
+@macro IsTokenUntrusted(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsTokenUntrusted
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" IsValidAcl(1)
+@macro IsValidAcl(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsValidAcl
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" IsValidSecurityDescriptor(1)
+@macro IsValidSecurityDescriptor(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsValidSecurityDescriptor
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" IsValidSid(1)
+@macro IsValidSid(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    IsValidSid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" IsWellKnownSid(2)
+@macro IsWellKnownSid(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    IsWellKnownSid
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LockServiceDatabase(1)
+@macro LockServiceDatabase(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    LockServiceDatabase
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LogonUserExW(10)
+@macro LogonUserExW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    LogonUserExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LogonUserW(6)
+@macro LogonUserW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    LogonUserW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LookupAccountNameW(7)
+@macro LookupAccountNameW(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    LookupAccountNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LookupAccountSidW(7)
+@macro LookupAccountSidW(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    LookupAccountSidW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LookupPrivilegeDisplayNameW(5)
+@macro LookupPrivilegeDisplayNameW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    LookupPrivilegeDisplayNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LookupPrivilegeNameW(4)
+@macro LookupPrivilegeNameW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    LookupPrivilegeNameW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LookupPrivilegeValueW(3)
+@macro LookupPrivilegeValueW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    LookupPrivilegeValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LookupSecurityDescriptorPartsW(7)
+@macro LookupSecurityDescriptorPartsW(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    LookupSecurityDescriptorPartsW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LsaAddAccountRights(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaClose(1)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaCreateTrustedDomainEx(5)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaDeleteTrustedDomain(2)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaEnumerateAccountRights(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaEnumerateAccountsWithUserRight(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaEnumerateTrustedDomains(5)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaEnumerateTrustedDomainsEx(5)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaFreeMemory(1)
+@macro LsaFreeMemory(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    LsaFreeMemory
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LsaGetAppliedCAPIDs(3)
+@macro LsaGetAppliedCAPIDs(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    LsaGetAppliedCAPIDs
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LsaLookupNames(5)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaLookupNames2(6)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaLookupSids(5)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaLookupSids2(6)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaNtStatusToWinError(1)
+@macro LsaNtStatusToWinError(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    LsaNtStatusToWinError
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LsaOpenPolicy(4)
+@macro LsaOpenPolicy(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    LsaOpenPolicy
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LsaOpenTrustedDomainByName(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaQueryCAPs(4)
+@macro LsaQueryCAPs(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    LsaQueryCAPs
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LsaQueryDomainInformationPolicy(3)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaQueryForestTrustInformation(3)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaQueryForestTrustInformation2(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaQueryInformationPolicy(3)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaQueryTrustedDomainInfo(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaQueryTrustedDomainInfoByName(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaRemoveAccountRights(5)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaRetrievePrivateData(3)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaSetCAPs(3)
+@macro LsaSetCAPs(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    LsaSetCAPs
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" LsaSetDomainInformationPolicy(3)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaSetForestTrustInformation(5)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaSetForestTrustInformation2(6)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaSetInformationPolicy(3)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaSetTrustedDomainInfoByName(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaSetTrustedDomainInformation(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" LsaStorePrivateData(3)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" MSChapSrvChangePassword(7)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" MSChapSrvChangePassword2(7)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" MakeAbsoluteSD(11)
+@macro MakeAbsoluteSD(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    MakeAbsoluteSD
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" MakeSelfRelativeSD(3)
+@macro MakeSelfRelativeSD(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    MakeSelfRelativeSD
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" MapGenericMask(2)
+@macro MapGenericMask(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    MapGenericMask
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" NotifyBootConfigStatus(1)
+@macro NotifyBootConfigStatus(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    NotifyBootConfigStatus
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" NotifyChangeEventLog(2)
+@macro NotifyChangeEventLog(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    NotifyChangeEventLog
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" NotifyServiceStatusChangeW(3)
+@macro NotifyServiceStatusChangeW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    NotifyServiceStatusChangeW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ObjectCloseAuditAlarmW(3)
+@macro ObjectCloseAuditAlarmW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    ObjectCloseAuditAlarmW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ObjectDeleteAuditAlarmW(3)
+@macro ObjectDeleteAuditAlarmW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    ObjectDeleteAuditAlarmW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ObjectOpenAuditAlarmW(12)
+@macro ObjectOpenAuditAlarmW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     qword ptr [rsp + 88], &arg11
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ObjectOpenAuditAlarmW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ObjectPrivilegeAuditAlarmW(6)
+@macro ObjectPrivilegeAuditAlarmW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    ObjectPrivilegeAuditAlarmW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OpenBackupEventLogW(2)
+@macro OpenBackupEventLogW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    OpenBackupEventLogW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OpenEncryptedFileRawW(3)
+@macro OpenEncryptedFileRawW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    OpenEncryptedFileRawW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OpenEventLogW(2)
+@macro OpenEventLogW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    OpenEventLogW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OpenProcessToken(3)
+@macro OpenProcessToken(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    OpenProcessToken
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OpenSCManagerW(3)
+@macro OpenSCManagerW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    OpenSCManagerW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OpenServiceW(3)
+@macro OpenServiceW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    OpenServiceW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OpenThreadToken(4)
+@macro OpenThreadToken(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    OpenThreadToken
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OpenThreadWaitChainSession(2)
+@macro OpenThreadWaitChainSession(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    OpenThreadWaitChainSession
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OpenTraceFromBufferStream(3)
+@macro OpenTraceFromBufferStream(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    OpenTraceFromBufferStream
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OpenTraceFromFile(3)
+@macro OpenTraceFromFile(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    OpenTraceFromFile
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OpenTraceFromRealTimeLogger(3)
+@macro OpenTraceFromRealTimeLogger(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    OpenTraceFromRealTimeLogger
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OpenTraceFromRealTimeLoggerWithAllocationOptions(5)
+@macro OpenTraceFromRealTimeLoggerWithAllocationOptions(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    OpenTraceFromRealTimeLoggerWithAllocationOptions
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OpenTraceW(1)
+@macro OpenTraceW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    OpenTraceW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OperationEnd(1)
+@macro OperationEnd(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    OperationEnd
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" OperationStart(1)
+@macro OperationStart(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    OperationStart
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfAddCounters(3)
+@macro PerfAddCounters(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PerfAddCounters
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfCloseQueryHandle(1)
+@macro PerfCloseQueryHandle(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PerfCloseQueryHandle
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfCreateInstance(4)
+@macro PerfCreateInstance(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    PerfCreateInstance
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfDecrementULongCounterValue(4)
+@macro PerfDecrementULongCounterValue(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    PerfDecrementULongCounterValue
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfDecrementULongLongCounterValue(4)
+@macro PerfDecrementULongLongCounterValue(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    PerfDecrementULongLongCounterValue
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfDeleteCounters(3)
+@macro PerfDeleteCounters(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PerfDeleteCounters
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfDeleteInstance(2)
+@macro PerfDeleteInstance(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PerfDeleteInstance
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfEnumerateCounterSet(4)
+@macro PerfEnumerateCounterSet(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    PerfEnumerateCounterSet
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfEnumerateCounterSetInstances(5)
+@macro PerfEnumerateCounterSetInstances(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    PerfEnumerateCounterSetInstances
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfIncrementULongCounterValue(4)
+@macro PerfIncrementULongCounterValue(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    PerfIncrementULongCounterValue
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfIncrementULongLongCounterValue(4)
+@macro PerfIncrementULongLongCounterValue(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    PerfIncrementULongLongCounterValue
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfOpenQueryHandle(2)
+@macro PerfOpenQueryHandle(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PerfOpenQueryHandle
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfQueryCounterData(4)
+@macro PerfQueryCounterData(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    PerfQueryCounterData
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfQueryCounterInfo(4)
+@macro PerfQueryCounterInfo(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    PerfQueryCounterInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfQueryCounterSetRegistrationInfo(7)
+@macro PerfQueryCounterSetRegistrationInfo(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    PerfQueryCounterSetRegistrationInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfQueryInstance(4)
+@macro PerfQueryInstance(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    PerfQueryInstance
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfSetCounterRefValue(4)
+@macro PerfSetCounterRefValue(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    PerfSetCounterRefValue
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfSetCounterSetInfo(3)
+@macro PerfSetCounterSetInfo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PerfSetCounterSetInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfSetULongCounterValue(4)
+@macro PerfSetULongCounterValue(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    PerfSetULongCounterValue
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfSetULongLongCounterValue(4)
+@macro PerfSetULongLongCounterValue(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    PerfSetULongLongCounterValue
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfStartProvider(3)
+@macro PerfStartProvider(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    PerfStartProvider
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfStartProviderEx(3)
+@macro PerfStartProviderEx(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    PerfStartProviderEx
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PerfStopProvider(1)
+@macro PerfStopProvider(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PerfStopProvider
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PrivilegeCheck(3)
+@macro PrivilegeCheck(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    PrivilegeCheck
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" PrivilegedServiceAuditAlarmW(5)
+@macro PrivilegedServiceAuditAlarmW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    PrivilegedServiceAuditAlarmW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ProcessTrace(4)
+@macro ProcessTrace(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    ProcessTrace
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ProcessTraceAddBufferToBufferStream(3)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" ProcessTraceBufferDecrementReference(1)
+@macro ProcessTraceBufferDecrementReference(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    ProcessTraceBufferDecrementReference
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ProcessTraceBufferIncrementReference(2)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" QueryAllTracesW(3)
+@macro QueryAllTracesW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    QueryAllTracesW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" QueryRecoveryAgentsOnEncryptedFile(2)
+@macro QueryRecoveryAgentsOnEncryptedFile(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    QueryRecoveryAgentsOnEncryptedFile
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" QuerySecurityAccessMask(2)
+@macro QuerySecurityAccessMask(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    QuerySecurityAccessMask
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" QueryServiceConfig2W(5)
+@macro QueryServiceConfig2W(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    QueryServiceConfig2W
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" QueryServiceConfigW(4)
+@macro QueryServiceConfigW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    QueryServiceConfigW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" QueryServiceDynamicInformation(3)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" QueryServiceLockStatusW(4)
+@macro QueryServiceLockStatusW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    QueryServiceLockStatusW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" QueryServiceObjectSecurity(5)
+@macro QueryServiceObjectSecurity(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    QueryServiceObjectSecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" QueryServiceStatus(2)
+@macro QueryServiceStatus(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    QueryServiceStatus
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" QueryServiceStatusEx(5)
+@macro QueryServiceStatusEx(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    QueryServiceStatusEx
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" QueryTraceProcessingHandle(7)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" QueryTraceW(3)
+@macro QueryTraceW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    QueryTraceW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" QueryUsersOnEncryptedFile(2)
+@macro QueryUsersOnEncryptedFile(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    QueryUsersOnEncryptedFile
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ReadEncryptedFileRaw(3)
+@macro ReadEncryptedFileRaw(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    ReadEncryptedFileRaw
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ReadEventLogW(7)
+@macro ReadEventLogW(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    ReadEventLogW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegCloseKey(1)
+@macro RegCloseKey(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RegCloseKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegConnectRegistryExW(4)
+@macro RegConnectRegistryExW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    RegConnectRegistryExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegConnectRegistryW(3)
+@macro RegConnectRegistryW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    RegConnectRegistryW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegCopyTreeW(3)
+@macro RegCopyTreeW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    RegCopyTreeW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegCreateKeyExW(9)
+@macro RegCreateKeyExW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    RegCreateKeyExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegCreateKeyTransactedW(11)
+@macro RegCreateKeyTransactedW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    RegCreateKeyTransactedW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegCreateKeyW(3)
+@macro RegCreateKeyW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    RegCreateKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegDeleteKeyExW(4)
+@macro RegDeleteKeyExW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    RegDeleteKeyExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegDeleteKeyTransactedW(6)
+@macro RegDeleteKeyTransactedW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    RegDeleteKeyTransactedW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegDeleteKeyValueW(3)
+@macro RegDeleteKeyValueW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    RegDeleteKeyValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegDeleteKeyW(2)
+@macro RegDeleteKeyW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RegDeleteKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegDeleteTreeW(2)
+@macro RegDeleteTreeW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RegDeleteTreeW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegDeleteValueW(2)
+@macro RegDeleteValueW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RegDeleteValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegDisablePredefinedCache(0)
+@macro RegDisablePredefinedCache()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    RegDisablePredefinedCache
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegDisablePredefinedCacheEx(0)
+@macro RegDisablePredefinedCacheEx()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    RegDisablePredefinedCacheEx
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegDisableReflectionKey(1)
+@macro RegDisableReflectionKey(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RegDisableReflectionKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegEnableReflectionKey(1)
+@macro RegEnableReflectionKey(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RegEnableReflectionKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegEnumKeyExW(8)
+@macro RegEnumKeyExW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    RegEnumKeyExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegEnumKeyW(4)
+@macro RegEnumKeyW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    RegEnumKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegEnumValueW(8)
+@macro RegEnumValueW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    RegEnumValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegFlushKey(1)
+@macro RegFlushKey(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RegFlushKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegGetKeySecurity(4)
+@macro RegGetKeySecurity(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    RegGetKeySecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegGetValueW(7)
+@macro RegGetValueW(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    RegGetValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegLoadAppKeyW(5)
+@macro RegLoadAppKeyW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    RegLoadAppKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegLoadKeyW(3)
+@macro RegLoadKeyW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    RegLoadKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegLoadMUIStringW(7)
+@macro RegLoadMUIStringW(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    RegLoadMUIStringW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegNotifyChangeKeyValue(5)
+@macro RegNotifyChangeKeyValue(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    RegNotifyChangeKeyValue
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegOpenCurrentUser(2)
+@macro RegOpenCurrentUser(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    RegOpenCurrentUser
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegOpenKeyExW(5)
+@macro RegOpenKeyExW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    RegOpenKeyExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegOpenKeyTransactedW(7)
+@macro RegOpenKeyTransactedW(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    RegOpenKeyTransactedW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegOpenKeyW(3)
+@macro RegOpenKeyW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    RegOpenKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegOpenUserClassesRoot(4)
+@macro RegOpenUserClassesRoot(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    RegOpenUserClassesRoot
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegOverridePredefKey(2)
+@macro RegOverridePredefKey(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RegOverridePredefKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegQueryInfoKeyW(12)
+@macro RegQueryInfoKeyW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     qword ptr [rsp + 88], &arg11
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    RegQueryInfoKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegQueryMultipleValuesW(5)
+@macro RegQueryMultipleValuesW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    RegQueryMultipleValuesW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegQueryReflectionKey(2)
+@macro RegQueryReflectionKey(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RegQueryReflectionKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegQueryValueExW(6)
+@macro RegQueryValueExW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    RegQueryValueExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegQueryValueW(4)
+@macro RegQueryValueW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    RegQueryValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegRenameKey(3)
+@macro RegRenameKey(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    RegRenameKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegReplaceKeyW(4)
+@macro RegReplaceKeyW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    RegReplaceKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegRestoreKeyW(3)
+@macro RegRestoreKeyW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    RegRestoreKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegSaveKeyExW(4)
+@macro RegSaveKeyExW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    RegSaveKeyExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegSaveKeyW(3)
+@macro RegSaveKeyW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    RegSaveKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegSetKeySecurity(3)
+@macro RegSetKeySecurity(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    RegSetKeySecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegSetKeyValueW(6)
+@macro RegSetKeyValueW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    RegSetKeyValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegSetValueExW(6)
+@macro RegSetValueExW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    RegSetValueExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegSetValueW(5)
+@macro RegSetValueW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    RegSetValueW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegUnLoadKeyW(2)
+@macro RegUnLoadKeyW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RegUnLoadKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegisterEventSourceW(2)
+@macro RegisterEventSourceW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RegisterEventSourceW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegisterServiceCtrlHandlerExW(3)
+@macro RegisterServiceCtrlHandlerExW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    RegisterServiceCtrlHandlerExW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegisterServiceCtrlHandlerW(2)
+@macro RegisterServiceCtrlHandlerW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RegisterServiceCtrlHandlerW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegisterTraceGuidsW(8)
+@macro RegisterTraceGuidsW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    RegisterTraceGuidsW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RegisterWaitChainCOMCallback(2)
+@macro RegisterWaitChainCOMCallback(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RegisterWaitChainCOMCallback
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RemoveTraceCallback(1)
+@macro RemoveTraceCallback(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RemoveTraceCallback
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RemoveUsersFromEncryptedFile(2)
+@macro RemoveUsersFromEncryptedFile(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RemoveUsersFromEncryptedFile
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" ReportEventW(9)
+@macro ReportEventW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8w, &arg2
+    mov     r9d, &arg3
+    call    ReportEventW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RevertToSelf(0)
+@macro RevertToSelf()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    RevertToSelf
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RtlDecryptMemory(3)
+@macro RtlDecryptMemory(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    RtlDecryptMemory
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RtlEncryptMemory(3)
+@macro RtlEncryptMemory(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    RtlEncryptMemory
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" RtlGenRandom(2)
+@macro RtlGenRandom(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    RtlGenRandom
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SaferCloseLevel(1)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" SaferComputeTokenFromLevel(5)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" SaferCreateLevel(5)
+@macro SaferCreateLevel(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SaferCreateLevel
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SaferGetLevelInformation(5)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" SaferGetPolicyInformation(6)
+@macro SaferGetPolicyInformation(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SaferGetPolicyInformation
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SaferIdentifyLevel(4)
+@macro SaferIdentifyLevel(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SaferIdentifyLevel
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SaferRecordEventLogEntry(3)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" SaferSetLevelInformation(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" SaferSetPolicyInformation(5)
+@macro SaferSetPolicyInformation(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SaferSetPolicyInformation
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SaferiIsExecutableFileType(2)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" SetAclInformation(4)
+@macro SetAclInformation(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    SetAclInformation
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetEncryptedFileMetadata(6)
+@macro SetEncryptedFileMetadata(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SetEncryptedFileMetadata
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetEntriesInAclW(4)
+@macro SetEntriesInAclW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SetEntriesInAclW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetFileSecurityW(3)
+@macro SetFileSecurityW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SetFileSecurityW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetKernelObjectSecurity(3)
+@macro SetKernelObjectSecurity(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SetKernelObjectSecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetNamedSecurityInfoW(7)
+@macro SetNamedSecurityInfoW(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SetNamedSecurityInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetPrivateObjectSecurity(5)
+@macro SetPrivateObjectSecurity(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SetPrivateObjectSecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetPrivateObjectSecurityEx(6)
+@macro SetPrivateObjectSecurityEx(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SetPrivateObjectSecurityEx
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetSecurityAccessMask(2)
+@macro SetSecurityAccessMask(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetSecurityAccessMask
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetSecurityDescriptorControl(3)
+@macro SetSecurityDescriptorControl(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    SetSecurityDescriptorControl
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetSecurityDescriptorDacl(4)
+@macro SetSecurityDescriptorDacl(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SetSecurityDescriptorDacl
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetSecurityDescriptorGroup(3)
+@macro SetSecurityDescriptorGroup(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SetSecurityDescriptorGroup
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetSecurityDescriptorOwner(3)
+@macro SetSecurityDescriptorOwner(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SetSecurityDescriptorOwner
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetSecurityDescriptorRMControl(2)
+@macro SetSecurityDescriptorRMControl(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetSecurityDescriptorRMControl
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetSecurityDescriptorSacl(4)
+@macro SetSecurityDescriptorSacl(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SetSecurityDescriptorSacl
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetSecurityInfo(7)
+@macro SetSecurityInfo(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SetSecurityInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetServiceBits(4)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" SetServiceObjectSecurity(3)
+@macro SetServiceObjectSecurity(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SetServiceObjectSecurity
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetServiceStatus(2)  ; (no wrapper -- unsupported signature)
+
+@extern "ADVAPI32.dll" SetThreadToken(2)
+@macro SetThreadToken(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetThreadToken
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetTokenInformation(4)
+@macro SetTokenInformation(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    SetTokenInformation
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetTraceCallback(2)
+@macro SetTraceCallback(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetTraceCallback
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetUserFileEncryptionKey(1)
+@macro SetUserFileEncryptionKey(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SetUserFileEncryptionKey
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" SetUserFileEncryptionKeyEx(4)
+@macro SetUserFileEncryptionKeyEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetUserFileEncryptionKeyEx
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" StartServiceCtrlDispatcherW(1)
+@macro StartServiceCtrlDispatcherW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    StartServiceCtrlDispatcherW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" StartServiceW(3)
+@macro StartServiceW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    StartServiceW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" StartTraceW(3)
+@macro StartTraceW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    StartTraceW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" StopTraceW(3)
+@macro StopTraceW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    StopTraceW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" TraceConfigureLastBranchRecord(4)
+@macro TraceConfigureLastBranchRecord(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    TraceConfigureLastBranchRecord
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" TraceEvent(2)
+@macro TraceEvent(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    TraceEvent
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" TraceEventInstance(4)
+@macro TraceEventInstance(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    TraceEventInstance
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" TraceMessage(4)
+@macro TraceMessage(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9w, &arg3
+    call    TraceMessage
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" TraceMessageVa(5)
+@macro TraceMessageVa(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9w, &arg3
+    call    TraceMessageVa
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" TraceQueryInformation(5)
+@macro TraceQueryInformation(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    TraceQueryInformation
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" TraceSetInformation(4)
+@macro TraceSetInformation(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    TraceSetInformation
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" TreeResetNamedSecurityInfoW(11)
+@macro TreeResetNamedSecurityInfoW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    TreeResetNamedSecurityInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" TreeSetNamedSecurityInfoW(11)
+@macro TreeSetNamedSecurityInfoW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    TreeSetNamedSecurityInfoW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" UninstallApplication(2)
+@macro UninstallApplication(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    UninstallApplication
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" UnlockServiceDatabase(1)
+@macro UnlockServiceDatabase(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    UnlockServiceDatabase
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" UnregisterTraceGuids(1)
+@macro UnregisterTraceGuids(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    UnregisterTraceGuids
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" UpdateTraceW(3)
+@macro UpdateTraceW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    UpdateTraceW
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" WaitServiceState(4)
+@macro WaitServiceState(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    WaitServiceState
+    mov     rsp, r12
+@endmacro
+
+@extern "ADVAPI32.dll" WriteEncryptedFileRaw(3)
+@macro WriteEncryptedFileRaw(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    WriteEncryptedFileRaw
+    mov     rsp, r12
+@endmacro

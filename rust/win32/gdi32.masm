@@ -1,0 +1,4160 @@
+; ---------------------------------------------------------------------
+; Generated from windows_api.db -- DLL: GDI32.dll
+; v2: @extern declarations + invoke-style wrapper macros.
+; DO NOT EDIT BY HAND. Regenerate via:
+;     python scripts/win32_gen.py --dll GDI32.dll
+;
+; Each function gets two definitions:
+;
+;   @extern "GDI32.dll" NAME(N)
+;     The declaration the host pairs with LoadLibraryW + GetProcAddress.
+;
+;   @macro NAME(arg0, arg1, ...)
+;     Win64-ABI-aware wrapper. Each arg goes in its register or stack
+;     slot per the parameter's type; shadow space and 16-byte RSP
+;     alignment are handled. Functions whose signatures cannot be
+;     modelled (struct-by-value params, variadics) get only the
+;     @extern -- call those by hand.
+;
+; Function count: 328 wrapped, 56 extern-only
+; Source of truth: E:\windows_api\windows_api.db
+; ---------------------------------------------------------------------
+
+@extern "GDI32.dll" AbortDoc(1)
+@macro AbortDoc(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    AbortDoc
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" AbortPath(1)
+@macro AbortPath(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    AbortPath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" AddFontMemResourceEx(4)
+@macro AddFontMemResourceEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    AddFontMemResourceEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" AddFontResourceExW(3)
+@macro AddFontResourceExW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    AddFontResourceExW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" AddFontResourceW(1)
+@macro AddFontResourceW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    AddFontResourceW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" AngleArc(6)
+@macro AngleArc(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    AngleArc
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" AnimatePalette(4)
+@macro AnimatePalette(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    AnimatePalette
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" Arc(9)
+@macro Arc(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    Arc
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ArcTo(9)
+@macro ArcTo(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    ArcTo
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" BRUSHOBJ_hGetColorTransform(1)
+@macro BRUSHOBJ_hGetColorTransform(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    BRUSHOBJ_hGetColorTransform
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" BRUSHOBJ_pvAllocRbrush(2)
+@macro BRUSHOBJ_pvAllocRbrush(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    BRUSHOBJ_pvAllocRbrush
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" BRUSHOBJ_pvGetRbrush(1)
+@macro BRUSHOBJ_pvGetRbrush(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    BRUSHOBJ_pvGetRbrush
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" BRUSHOBJ_ulGetBrushColor(1)
+@macro BRUSHOBJ_ulGetBrushColor(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    BRUSHOBJ_ulGetBrushColor
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" BeginPath(1)
+@macro BeginPath(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    BeginPath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" BitBlt(9)
+@macro BitBlt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    BitBlt
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CLIPOBJ_bEnum(3)
+@macro CLIPOBJ_bEnum(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    CLIPOBJ_bEnum
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CLIPOBJ_cEnumStart(5)
+@macro CLIPOBJ_cEnumStart(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CLIPOBJ_cEnumStart
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CLIPOBJ_ppoGetPath(1)
+@macro CLIPOBJ_ppoGetPath(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CLIPOBJ_ppoGetPath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CancelDC(1)
+@macro CancelDC(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CancelDC
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CheckColorsInGamut(4)
+@macro CheckColorsInGamut(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CheckColorsInGamut
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ChoosePixelFormat(2)
+@macro ChoosePixelFormat(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ChoosePixelFormat
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" Chord(9)
+@macro Chord(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    Chord
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CloseEnhMetaFile(1)
+@macro CloseEnhMetaFile(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CloseEnhMetaFile
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CloseFigure(1)
+@macro CloseFigure(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CloseFigure
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CloseMetaFile(1)
+@macro CloseMetaFile(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CloseMetaFile
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ColorCorrectPalette(4)
+@macro ColorCorrectPalette(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    ColorCorrectPalette
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ColorMatchToTarget(3)
+@macro ColorMatchToTarget(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    ColorMatchToTarget
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CombineRgn(4)
+@macro CombineRgn(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    CombineRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CombineTransform(3)
+@macro CombineTransform(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    CombineTransform
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CopyEnhMetaFileW(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" CopyMetaFileW(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" CreateBitmap(5)
+@macro CreateBitmap(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CreateBitmap
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateBitmapIndirect(1)
+@macro CreateBitmapIndirect(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateBitmapIndirect
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateBrushIndirect(1)
+@macro CreateBrushIndirect(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateBrushIndirect
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateColorSpaceW(1)
+@macro CreateColorSpaceW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateColorSpaceW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateCompatibleBitmap(3)
+@macro CreateCompatibleBitmap(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    CreateCompatibleBitmap
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateCompatibleDC(1)
+@macro CreateCompatibleDC(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateCompatibleDC
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateDCW(4)
+@macro CreateDCW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CreateDCW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateDIBPatternBrush(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" CreateDIBPatternBrushPt(2)
+@macro CreateDIBPatternBrushPt(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    CreateDIBPatternBrushPt
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateDIBSection(6)
+@macro CreateDIBSection(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CreateDIBSection
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateDIBitmap(6)
+@macro CreateDIBitmap(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    CreateDIBitmap
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateDiscardableBitmap(3)
+@macro CreateDiscardableBitmap(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    CreateDiscardableBitmap
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateEllipticRgn(4)
+@macro CreateEllipticRgn(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CreateEllipticRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateEllipticRgnIndirect(1)
+@macro CreateEllipticRgnIndirect(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateEllipticRgnIndirect
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateEnhMetaFileW(4)
+@macro CreateEnhMetaFileW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CreateEnhMetaFileW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateFontIndirectExW(1)
+@macro CreateFontIndirectExW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateFontIndirectExW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateFontIndirectW(1)
+@macro CreateFontIndirectW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateFontIndirectW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateFontW(14)
+@macro CreateFontW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 112
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     qword ptr [rsp + 88], &arg11
+    mov     qword ptr [rsp + 96], &arg12
+    mov     qword ptr [rsp + 104], &arg13
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CreateFontW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateHalftonePalette(1)
+@macro CreateHalftonePalette(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateHalftonePalette
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateHatchBrush(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" CreateICW(4)
+@macro CreateICW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CreateICW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateMetaFileW(1)
+@macro CreateMetaFileW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateMetaFileW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreatePalette(1)
+@macro CreatePalette(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreatePalette
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreatePatternBrush(1)
+@macro CreatePatternBrush(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreatePatternBrush
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreatePen(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" CreatePenIndirect(1)
+@macro CreatePenIndirect(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreatePenIndirect
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreatePolyPolygonRgn(4)
+@macro CreatePolyPolygonRgn(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CreatePolyPolygonRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreatePolygonRgn(3)
+@macro CreatePolygonRgn(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    CreatePolygonRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateRectRgn(4)
+@macro CreateRectRgn(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CreateRectRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateRectRgnIndirect(1)
+@macro CreateRectRgnIndirect(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    CreateRectRgnIndirect
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateRoundRectRgn(6)
+@macro CreateRoundRectRgn(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    CreateRoundRectRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateScalableFontResourceW(4)
+@macro CreateScalableFontResourceW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    CreateScalableFontResourceW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" CreateSolidBrush(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" DPtoLP(3)
+@macro DPtoLP(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    DPtoLP
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" DeleteColorSpace(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" DeleteDC(1)
+@macro DeleteDC(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    DeleteDC
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" DeleteEnhMetaFile(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" DeleteMetaFile(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" DeleteObject(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" DescribePixelFormat(4)
+@macro DescribePixelFormat(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    DescribePixelFormat
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" DrawEscape(4)
+@macro DrawEscape(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    DrawEscape
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" Ellipse(5)
+@macro Ellipse(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    Ellipse
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EndDoc(1)
+@macro EndDoc(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EndDoc
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EndPage(1)
+@macro EndPage(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EndPage
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EndPath(1)
+@macro EndPath(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EndPath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngAcquireSemaphore(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EngAlphaBlend(7)
+@macro EngAlphaBlend(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngAlphaBlend
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngAssociateSurface(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EngBitBlt(11)
+@macro EngBitBlt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngBitBlt
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngCheckAbort(1)
+@macro EngCheckAbort(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EngCheckAbort
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngComputeGlyphSet(3)
+@macro EngComputeGlyphSet(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    EngComputeGlyphSet
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngCopyBits(6)
+@macro EngCopyBits(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngCopyBits
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngCreateBitmap(5)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EngCreateClip(0)
+@macro EngCreateClip()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    EngCreateClip
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngCreateDeviceBitmap(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EngCreateDeviceSurface(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EngCreatePalette(6)
+@macro EngCreatePalette(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    EngCreatePalette
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngCreateSemaphore(0)
+@macro EngCreateSemaphore()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    EngCreateSemaphore
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngDeleteClip(1)
+@macro EngDeleteClip(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EngDeleteClip
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngDeletePalette(1)
+@macro EngDeletePalette(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EngDeletePalette
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngDeletePath(1)
+@macro EngDeletePath(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EngDeletePath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngDeleteSemaphore(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EngDeleteSurface(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EngEraseSurface(3)
+@macro EngEraseSurface(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    EngEraseSurface
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngFillPath(7)
+@macro EngFillPath(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngFillPath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngFindResource(4)
+@macro EngFindResource(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    EngFindResource
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngFreeModule(1)
+@macro EngFreeModule(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EngFreeModule
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngGetCurrentCodePage(2)
+@macro EngGetCurrentCodePage(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    EngGetCurrentCodePage
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngGetDriverName(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EngGetPrinterDataFileName(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EngGradientFill(10)
+@macro EngGradientFill(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngGradientFill
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngLineTo(9)
+@macro EngLineTo(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    EngLineTo
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngLoadModule(1)
+@macro EngLoadModule(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EngLoadModule
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngLockSurface(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EngMarkBandingSurface(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EngMultiByteToUnicodeN(5)
+@macro EngMultiByteToUnicodeN(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngMultiByteToUnicodeN
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngMultiByteToWideChar(5)
+@macro EngMultiByteToWideChar(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    EngMultiByteToWideChar
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngPaint(5)
+@macro EngPaint(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngPaint
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngPlgBlt(11)
+@macro EngPlgBlt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngPlgBlt
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngQueryEMFInfo(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EngQueryLocalTime(1)
+@macro EngQueryLocalTime(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EngQueryLocalTime
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngReleaseSemaphore(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EngStretchBlt(11)
+@macro EngStretchBlt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngStretchBlt
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngStretchBltROP(13)
+@macro EngStretchBltROP(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 112
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     qword ptr [rsp + 88], &arg11
+    mov     qword ptr [rsp + 96], &arg12
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngStretchBltROP
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngStrokeAndFillPath(10)
+@macro EngStrokeAndFillPath(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngStrokeAndFillPath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngStrokePath(8)
+@macro EngStrokePath(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngStrokePath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngTextOut(10)
+@macro EngTextOut(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngTextOut
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngTransparentBlt(8)
+@macro EngTransparentBlt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngTransparentBlt
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngUnicodeToMultiByteN(5)
+@macro EngUnicodeToMultiByteN(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    EngUnicodeToMultiByteN
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngUnlockSurface(1)
+@macro EngUnlockSurface(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    EngUnlockSurface
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EngWideCharToMultiByte(5)
+@macro EngWideCharToMultiByte(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    EngWideCharToMultiByte
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" EnumEnhMetaFile(5)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EnumFontFamiliesExW(5)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EnumFontFamiliesW(4)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EnumFontsW(4)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EnumICMProfilesW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EnumMetaFile(4)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EnumObjects(4)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" EqualRgn(2)
+@macro EqualRgn(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    EqualRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" Escape(5)
+@macro Escape(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    Escape
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ExcludeClipRect(5)
+@macro ExcludeClipRect(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    ExcludeClipRect
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ExtCreatePen(5)
+@macro ExtCreatePen(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     ecx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    ExtCreatePen
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ExtCreateRegion(3)
+@macro ExtCreateRegion(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    ExtCreateRegion
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ExtEscape(6)
+@macro ExtEscape(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    ExtEscape
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ExtFloodFill(5)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" ExtSelectClipRgn(3)
+@macro ExtSelectClipRgn(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    ExtSelectClipRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ExtTextOutW(8)
+@macro ExtTextOutW(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    ExtTextOutW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" FONTOBJ_cGetAllGlyphHandles(2)
+@macro FONTOBJ_cGetAllGlyphHandles(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    FONTOBJ_cGetAllGlyphHandles
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" FONTOBJ_cGetGlyphs(5)
+@macro FONTOBJ_cGetGlyphs(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    FONTOBJ_cGetGlyphs
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" FONTOBJ_pQueryGlyphAttrs(2)
+@macro FONTOBJ_pQueryGlyphAttrs(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    FONTOBJ_pQueryGlyphAttrs
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" FONTOBJ_pfdg(1)
+@macro FONTOBJ_pfdg(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FONTOBJ_pfdg
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" FONTOBJ_pifi(1)
+@macro FONTOBJ_pifi(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FONTOBJ_pifi
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" FONTOBJ_pvTrueTypeFontFile(2)
+@macro FONTOBJ_pvTrueTypeFontFile(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    FONTOBJ_pvTrueTypeFontFile
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" FONTOBJ_pxoGetXform(1)
+@macro FONTOBJ_pxoGetXform(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FONTOBJ_pxoGetXform
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" FONTOBJ_vGetInfo(3)
+@macro FONTOBJ_vGetInfo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    FONTOBJ_vGetInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" FillPath(1)
+@macro FillPath(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FillPath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" FillRgn(3)
+@macro FillRgn(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    FillRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" FixBrushOrgEx(4)
+@macro FixBrushOrgEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    FixBrushOrgEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" FlattenPath(1)
+@macro FlattenPath(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    FlattenPath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" FloodFill(4)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" FrameRgn(5)
+@macro FrameRgn(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    FrameRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiAlphaBlend(11)
+@macro GdiAlphaBlend(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    GdiAlphaBlend
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiComment(3)
+@macro GdiComment(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    GdiComment
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiDeleteSpoolFileHandle(1)
+@macro GdiDeleteSpoolFileHandle(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GdiDeleteSpoolFileHandle
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiEndDocEMF(1)
+@macro GdiEndDocEMF(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GdiEndDocEMF
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiEndPageEMF(2)
+@macro GdiEndPageEMF(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GdiEndPageEMF
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiFlush(0)
+@macro GdiFlush()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GdiFlush
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiGetBatchLimit(0)
+@macro GdiGetBatchLimit()
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    call    GdiGetBatchLimit
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiGetDC(1)
+@macro GdiGetDC(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GdiGetDC
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiGetDevmodeForPage(4)
+@macro GdiGetDevmodeForPage(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GdiGetDevmodeForPage
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiGetPageCount(1)
+@macro GdiGetPageCount(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GdiGetPageCount
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiGetPageHandle(3)
+@macro GdiGetPageHandle(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    GdiGetPageHandle
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiGetSpoolFileHandle(3)
+@macro GdiGetSpoolFileHandle(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GdiGetSpoolFileHandle
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiGradientFill(6)
+@macro GdiGradientFill(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GdiGradientFill
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiPlayPageEMF(5)
+@macro GdiPlayPageEMF(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    GdiPlayPageEMF
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiResetDCEMF(2)
+@macro GdiResetDCEMF(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GdiResetDCEMF
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiSetBatchLimit(1)
+@macro GdiSetBatchLimit(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    GdiSetBatchLimit
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiStartDocEMF(2)
+@macro GdiStartDocEMF(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GdiStartDocEMF
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiStartPageEMF(1)
+@macro GdiStartPageEMF(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GdiStartPageEMF
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GdiTransparentBlt(11)
+@macro GdiTransparentBlt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    GdiTransparentBlt
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetArcDirection(1)
+@macro GetArcDirection(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetArcDirection
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetAspectRatioFilterEx(2)
+@macro GetAspectRatioFilterEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetAspectRatioFilterEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetBitmapBits(3)
+@macro GetBitmapBits(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    GetBitmapBits
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetBitmapDimensionEx(2)
+@macro GetBitmapDimensionEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetBitmapDimensionEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetBkColor(1)
+@macro GetBkColor(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetBkColor
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetBkMode(1)
+@macro GetBkMode(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetBkMode
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetBoundsRect(3)
+@macro GetBoundsRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    GetBoundsRect
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetBrushOrgEx(2)
+@macro GetBrushOrgEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetBrushOrgEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetCharABCWidthsFloatW(4)
+@macro GetCharABCWidthsFloatW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetCharABCWidthsFloatW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetCharABCWidthsI(5)
+@macro GetCharABCWidthsI(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetCharABCWidthsI
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetCharABCWidthsW(4)
+@macro GetCharABCWidthsW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetCharABCWidthsW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetCharWidth32W(4)
+@macro GetCharWidth32W(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetCharWidth32W
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetCharWidthFloatW(4)
+@macro GetCharWidthFloatW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetCharWidthFloatW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetCharWidthI(5)
+@macro GetCharWidthI(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetCharWidthI
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetCharWidthW(4)
+@macro GetCharWidthW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetCharWidthW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetCharacterPlacementW(6)
+@macro GetCharacterPlacementW(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    GetCharacterPlacementW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetClipBox(2)
+@macro GetClipBox(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetClipBox
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetClipRgn(2)
+@macro GetClipRgn(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetClipRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetColorAdjustment(2)
+@macro GetColorAdjustment(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetColorAdjustment
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetColorSpace(1)
+@macro GetColorSpace(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetColorSpace
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetCurrentObject(2)
+@macro GetCurrentObject(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetCurrentObject
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetCurrentPositionEx(2)
+@macro GetCurrentPositionEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetCurrentPositionEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetDCBrushColor(1)
+@macro GetDCBrushColor(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetDCBrushColor
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetDCOrgEx(2)
+@macro GetDCOrgEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetDCOrgEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetDCPenColor(1)
+@macro GetDCPenColor(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetDCPenColor
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetDIBColorTable(4)
+@macro GetDIBColorTable(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetDIBColorTable
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetDIBits(7)
+@macro GetDIBits(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    GetDIBits
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetDeviceCaps(2)
+@macro GetDeviceCaps(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetDeviceCaps
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetDeviceGammaRamp(2)
+@macro GetDeviceGammaRamp(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetDeviceGammaRamp
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetEnhMetaFileBits(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" GetEnhMetaFileDescriptionW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" GetEnhMetaFileHeader(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" GetEnhMetaFilePaletteEntries(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" GetEnhMetaFilePixelFormat(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" GetEnhMetaFileW(1)
+@macro GetEnhMetaFileW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetEnhMetaFileW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetFontData(5)
+@macro GetFontData(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetFontData
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetFontLanguageInfo(1)
+@macro GetFontLanguageInfo(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetFontLanguageInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetFontUnicodeRanges(2)
+@macro GetFontUnicodeRanges(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetFontUnicodeRanges
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetGlyphIndicesW(5)
+@macro GetGlyphIndicesW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetGlyphIndicesW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetGlyphOutlineW(7)
+@macro GetGlyphOutlineW(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetGlyphOutlineW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetGraphicsMode(1)
+@macro GetGraphicsMode(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetGraphicsMode
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetICMProfileW(3)
+@macro GetICMProfileW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    GetICMProfileW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetKerningPairsW(3)
+@macro GetKerningPairsW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    GetKerningPairsW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetLayout(1)
+@macro GetLayout(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetLayout
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetLogColorSpaceW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" GetMapMode(1)
+@macro GetMapMode(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetMapMode
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetMetaFileBitsEx(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" GetMetaFileW(1)
+@macro GetMetaFileW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetMetaFileW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetMetaRgn(2)
+@macro GetMetaRgn(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetMetaRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetMiterLimit(2)
+@macro GetMiterLimit(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetMiterLimit
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetNearestColor(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" GetNearestPaletteIndex(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" GetObjectType(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" GetObjectW(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" GetOutlineTextMetricsW(3)
+@macro GetOutlineTextMetricsW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    GetOutlineTextMetricsW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetPaletteEntries(4)
+@macro GetPaletteEntries(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetPaletteEntries
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetPath(4)
+@macro GetPath(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    GetPath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetPixel(3)
+@macro GetPixel(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    GetPixel
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetPixelFormat(1)
+@macro GetPixelFormat(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetPixelFormat
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetPolyFillMode(1)
+@macro GetPolyFillMode(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetPolyFillMode
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetROP2(1)
+@macro GetROP2(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetROP2
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetRandomRgn(3)
+@macro GetRandomRgn(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    GetRandomRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetRasterizerCaps(2)
+@macro GetRasterizerCaps(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    GetRasterizerCaps
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetRegionData(3)
+@macro GetRegionData(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    GetRegionData
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetRgnBox(2)
+@macro GetRgnBox(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetRgnBox
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetStockObject(1)
+@macro GetStockObject(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    call    GetStockObject
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetStretchBltMode(1)
+@macro GetStretchBltMode(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetStretchBltMode
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetSystemPaletteEntries(4)
+@macro GetSystemPaletteEntries(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetSystemPaletteEntries
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetSystemPaletteUse(1)
+@macro GetSystemPaletteUse(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetSystemPaletteUse
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetTextAlign(1)
+@macro GetTextAlign(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetTextAlign
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetTextCharacterExtra(1)
+@macro GetTextCharacterExtra(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetTextCharacterExtra
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetTextCharset(1)
+@macro GetTextCharset(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetTextCharset
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetTextCharsetInfo(3)
+@macro GetTextCharsetInfo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    GetTextCharsetInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetTextColor(1)
+@macro GetTextColor(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    GetTextColor
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetTextExtentExPointI(7)
+@macro GetTextExtentExPointI(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    GetTextExtentExPointI
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetTextExtentExPointW(7)
+@macro GetTextExtentExPointW(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    GetTextExtentExPointW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetTextExtentPoint32W(4)
+@macro GetTextExtentPoint32W(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetTextExtentPoint32W
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetTextExtentPointI(4)
+@macro GetTextExtentPointI(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetTextExtentPointI
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetTextExtentPointW(4)
+@macro GetTextExtentPointW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    GetTextExtentPointW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetTextFaceW(3)
+@macro GetTextFaceW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    GetTextFaceW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetTextMetricsW(2)
+@macro GetTextMetricsW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetTextMetricsW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetViewportExtEx(2)
+@macro GetViewportExtEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetViewportExtEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetViewportOrgEx(2)
+@macro GetViewportOrgEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetViewportOrgEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetWinMetaFileBits(5)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" GetWindowExtEx(2)
+@macro GetWindowExtEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetWindowExtEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetWindowOrgEx(2)
+@macro GetWindowOrgEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetWindowOrgEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" GetWorldTransform(2)
+@macro GetWorldTransform(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    GetWorldTransform
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" HT_Get8BPPFormatPalette(4)
+@macro HT_Get8BPPFormatPalette(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     dx, &arg1
+    mov     r8w, &arg2
+    mov     r9w, &arg3
+    call    HT_Get8BPPFormatPalette
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" HT_Get8BPPMaskPalette(6)
+@macro HT_Get8BPPMaskPalette(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8b, &arg2
+    mov     r9w, &arg3
+    call    HT_Get8BPPMaskPalette
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" IntersectClipRect(5)
+@macro IntersectClipRect(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    IntersectClipRect
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" InvertRgn(2)
+@macro InvertRgn(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    InvertRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" LPtoDP(3)
+@macro LPtoDP(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    LPtoDP
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" LineDDA(6)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" LineTo(3)
+@macro LineTo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    LineTo
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" MaskBlt(12)
+@macro MaskBlt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     qword ptr [rsp + 88], &arg11
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    MaskBlt
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ModifyWorldTransform(3)
+@macro ModifyWorldTransform(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    ModifyWorldTransform
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" MoveToEx(4)
+@macro MoveToEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    MoveToEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" OffsetClipRgn(3)
+@macro OffsetClipRgn(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    OffsetClipRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" OffsetRgn(3)
+@macro OffsetRgn(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    OffsetRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" OffsetViewportOrgEx(4)
+@macro OffsetViewportOrgEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    OffsetViewportOrgEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" OffsetWindowOrgEx(4)
+@macro OffsetWindowOrgEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    OffsetWindowOrgEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PATHOBJ_bEnum(2)
+@macro PATHOBJ_bEnum(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PATHOBJ_bEnum
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PATHOBJ_bEnumClipLines(3)
+@macro PATHOBJ_bEnumClipLines(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    PATHOBJ_bEnumClipLines
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PATHOBJ_vEnumStart(1)
+@macro PATHOBJ_vEnumStart(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PATHOBJ_vEnumStart
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PATHOBJ_vEnumStartClipLines(4)
+@macro PATHOBJ_vEnumStartClipLines(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    PATHOBJ_vEnumStartClipLines
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PATHOBJ_vGetBounds(2)
+@macro PATHOBJ_vGetBounds(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PATHOBJ_vGetBounds
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PaintRgn(2)
+@macro PaintRgn(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    PaintRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PatBlt(6)
+@macro PatBlt(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    PatBlt
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PathToRegion(1)
+@macro PathToRegion(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    PathToRegion
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" Pie(9)
+@macro Pie(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    Pie
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PlayEnhMetaFile(3)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" PlayEnhMetaFileRecord(4)
+@macro PlayEnhMetaFileRecord(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    PlayEnhMetaFileRecord
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PlayMetaFile(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" PlayMetaFileRecord(4)
+@macro PlayMetaFileRecord(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    PlayMetaFileRecord
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PlgBlt(10)
+@macro PlgBlt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 80
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    PlgBlt
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PolyBezier(3)
+@macro PolyBezier(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PolyBezier
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PolyBezierTo(3)
+@macro PolyBezierTo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PolyBezierTo
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PolyDraw(4)
+@macro PolyDraw(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    PolyDraw
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PolyPolygon(4)
+@macro PolyPolygon(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    PolyPolygon
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PolyPolyline(4)
+@macro PolyPolyline(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    PolyPolyline
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PolyTextOutW(3)
+@macro PolyTextOutW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PolyTextOutW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" Polygon(3)
+@macro Polygon(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    Polygon
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" Polyline(3)
+@macro Polyline(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    Polyline
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PolylineTo(3)
+@macro PolylineTo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    PolylineTo
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PtInRegion(3)
+@macro PtInRegion(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    PtInRegion
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" PtVisible(3)
+@macro PtVisible(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    PtVisible
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" RealizePalette(1)
+@macro RealizePalette(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RealizePalette
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" RectInRegion(2)
+@macro RectInRegion(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RectInRegion
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" RectVisible(2)
+@macro RectVisible(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    RectVisible
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" Rectangle(5)
+@macro Rectangle(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    Rectangle
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" RemoveFontMemResourceEx(1)
+@macro RemoveFontMemResourceEx(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RemoveFontMemResourceEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" RemoveFontResourceExW(3)
+@macro RemoveFontResourceExW(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    RemoveFontResourceExW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" RemoveFontResourceW(1)
+@macro RemoveFontResourceW(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    RemoveFontResourceW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ResetDCW(2)
+@macro ResetDCW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    ResetDCW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ResizePalette(2)
+@macro ResizePalette(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    ResizePalette
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" RestoreDC(2)
+@macro RestoreDC(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    RestoreDC
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" RoundRect(7)
+@macro RoundRect(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    RoundRect
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" STROBJ_bEnum(3)
+@macro STROBJ_bEnum(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    STROBJ_bEnum
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" STROBJ_bEnumPositionsOnly(3)
+@macro STROBJ_bEnumPositionsOnly(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    STROBJ_bEnumPositionsOnly
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" STROBJ_bGetAdvanceWidths(4)
+@macro STROBJ_bGetAdvanceWidths(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    STROBJ_bGetAdvanceWidths
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" STROBJ_dwGetCodePage(1)
+@macro STROBJ_dwGetCodePage(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    STROBJ_dwGetCodePage
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" STROBJ_vEnumStart(1)
+@macro STROBJ_vEnumStart(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    STROBJ_vEnumStart
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SaveDC(1)
+@macro SaveDC(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SaveDC
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ScaleViewportExtEx(6)
+@macro ScaleViewportExtEx(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    ScaleViewportExtEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" ScaleWindowExtEx(6)
+@macro ScaleWindowExtEx(arg0, arg1, arg2, arg3, arg4, arg5)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    ScaleWindowExtEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SelectClipPath(2)
+@macro SelectClipPath(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SelectClipPath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SelectClipRgn(2)
+@macro SelectClipRgn(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SelectClipRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SelectObject(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" SelectPalette(3)
+@macro SelectPalette(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    call    SelectPalette
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetAbortProc(2)
+@macro SetAbortProc(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetAbortProc
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetArcDirection(2)
+@macro SetArcDirection(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetArcDirection
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetBitmapBits(3)
+@macro SetBitmapBits(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SetBitmapBits
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetBitmapDimensionEx(4)
+@macro SetBitmapDimensionEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetBitmapDimensionEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetBkColor(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" SetBkMode(2)
+@macro SetBkMode(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetBkMode
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetBoundsRect(3)
+@macro SetBoundsRect(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    SetBoundsRect
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetBrushOrgEx(4)
+@macro SetBrushOrgEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetBrushOrgEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetColorAdjustment(2)
+@macro SetColorAdjustment(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetColorAdjustment
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetColorSpace(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" SetDCBrushColor(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" SetDCPenColor(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" SetDIBColorTable(4)
+@macro SetDIBColorTable(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetDIBColorTable
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetDIBits(7)
+@macro SetDIBits(arg0, arg1, arg2, arg3, arg4, arg5, arg6)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 64
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    SetDIBits
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetDIBitsToDevice(12)
+@macro SetDIBitsToDevice(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     qword ptr [rsp + 88], &arg11
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    SetDIBitsToDevice
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetDeviceGammaRamp(2)
+@macro SetDeviceGammaRamp(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetDeviceGammaRamp
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetEnhMetaFileBits(2)
+@macro SetEnhMetaFileBits(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    SetEnhMetaFileBits
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetGraphicsMode(2)
+@macro SetGraphicsMode(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetGraphicsMode
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetICMMode(2)
+@macro SetICMMode(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetICMMode
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetICMProfileW(2)
+@macro SetICMProfileW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetICMProfileW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetLayout(2)
+@macro SetLayout(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetLayout
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetMapMode(2)
+@macro SetMapMode(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetMapMode
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetMapperFlags(2)
+@macro SetMapperFlags(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetMapperFlags
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetMetaFileBitsEx(2)
+@macro SetMetaFileBitsEx(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    call    SetMetaFileBitsEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetMetaRgn(1)
+@macro SetMetaRgn(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SetMetaRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetMiterLimit(3)
+@macro SetMiterLimit(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    movss   xmm1, &arg1
+    mov     r8, &arg2
+    call    SetMiterLimit
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetPaletteEntries(4)
+@macro SetPaletteEntries(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetPaletteEntries
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetPixel(4)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" SetPixelFormat(3)
+@macro SetPixelFormat(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8, &arg2
+    call    SetPixelFormat
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetPixelV(4)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" SetPolyFillMode(2)
+@macro SetPolyFillMode(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetPolyFillMode
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetROP2(2)
+@macro SetROP2(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetROP2
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetRectRgn(5)
+@macro SetRectRgn(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    SetRectRgn
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetStretchBltMode(2)
+@macro SetStretchBltMode(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetStretchBltMode
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetSystemPaletteUse(2)
+@macro SetSystemPaletteUse(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetSystemPaletteUse
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetTextAlign(2)
+@macro SetTextAlign(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetTextAlign
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetTextCharacterExtra(2)
+@macro SetTextCharacterExtra(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    SetTextCharacterExtra
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetTextColor(2)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" SetTextJustification(3)
+@macro SetTextJustification(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    call    SetTextJustification
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetViewportExtEx(4)
+@macro SetViewportExtEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetViewportExtEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetViewportOrgEx(4)
+@macro SetViewportOrgEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetViewportOrgEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetWinMetaFileBits(4)
+@macro SetWinMetaFileBits(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9, &arg3
+    call    SetWinMetaFileBits
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetWindowExtEx(4)
+@macro SetWindowExtEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetWindowExtEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetWindowOrgEx(4)
+@macro SetWindowOrgEx(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    SetWindowOrgEx
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SetWorldTransform(2)
+@macro SetWorldTransform(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    SetWorldTransform
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" StartDocW(2)
+@macro StartDocW(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    StartDocW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" StartPage(1)
+@macro StartPage(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    StartPage
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" StretchBlt(11)
+@macro StretchBlt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 96
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    StretchBlt
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" StretchDIBits(13)
+@macro StretchDIBits(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 112
+    mov     qword ptr [rsp + 32], &arg4
+    mov     qword ptr [rsp + 40], &arg5
+    mov     qword ptr [rsp + 48], &arg6
+    mov     qword ptr [rsp + 56], &arg7
+    mov     qword ptr [rsp + 64], &arg8
+    mov     qword ptr [rsp + 72], &arg9
+    mov     qword ptr [rsp + 80], &arg10
+    mov     qword ptr [rsp + 88], &arg11
+    mov     qword ptr [rsp + 96], &arg12
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9d, &arg3
+    call    StretchDIBits
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" StrokeAndFillPath(1)
+@macro StrokeAndFillPath(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    StrokeAndFillPath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" StrokePath(1)
+@macro StrokePath(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    StrokePath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" SwapBuffers(1)
+@macro SwapBuffers(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    SwapBuffers
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" TextOutW(5)
+@macro TextOutW(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    TextOutW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" TranslateCharsetInfo(3)
+@macro TranslateCharsetInfo(arg0, arg1, arg2)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    mov     r8d, &arg2
+    call    TranslateCharsetInfo
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" UnrealizeObject(1)  ; (no wrapper -- unsupported signature)
+
+@extern "GDI32.dll" UpdateColors(1)
+@macro UpdateColors(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    UpdateColors
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" UpdateICMRegKeyW(4)
+@macro UpdateICMRegKeyW(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     ecx, &arg0
+    mov     rdx, &arg1
+    mov     r8, &arg2
+    mov     r9d, &arg3
+    call    UpdateICMRegKeyW
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" WidenPath(1)
+@macro WidenPath(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    WidenPath
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" XFORMOBJ_bApplyXform(5)
+@macro XFORMOBJ_bApplyXform(arg0, arg1, arg2, arg3, arg4)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 48
+    mov     qword ptr [rsp + 32], &arg4
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    XFORMOBJ_bApplyXform
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" XFORMOBJ_iGetXform(2)
+@macro XFORMOBJ_iGetXform(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     rdx, &arg1
+    call    XFORMOBJ_iGetXform
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" XLATEOBJ_cGetPalette(4)
+@macro XLATEOBJ_cGetPalette(arg0, arg1, arg2, arg3)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    mov     r8d, &arg2
+    mov     r9, &arg3
+    call    XLATEOBJ_cGetPalette
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" XLATEOBJ_hGetColorTransform(1)
+@macro XLATEOBJ_hGetColorTransform(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    XLATEOBJ_hGetColorTransform
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" XLATEOBJ_iXlate(2)
+@macro XLATEOBJ_iXlate(arg0, arg1)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    mov     edx, &arg1
+    call    XLATEOBJ_iXlate
+    mov     rsp, r12
+@endmacro
+
+@extern "GDI32.dll" XLATEOBJ_piVector(1)
+@macro XLATEOBJ_piVector(arg0)
+    mov     r12, rsp
+    and     rsp, -16
+    sub     rsp, 32
+    mov     rcx, &arg0
+    call    XLATEOBJ_piVector
+    mov     rsp, r12
+@endmacro
