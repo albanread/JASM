@@ -72,18 +72,18 @@ time.
 ## Why JASM?
 
 The original project was a 64-bit Forth — a port of Alex McDonald's
-WF32 STC Forth to x64. The first attempt followed WF32's model: use
+WF32 STC Forth (Also here somewhere) to x64. The first attempt followed WF32's model: use
 WF32 itself as the bootstrap host, metacompile through WF32's own
 `asmx64-core.fs` to produce `wf64.exe`. That hit two walls. The
 assembler had untested 64-bit paths; the metacompiler manipulated
 4-byte image offsets that needed widening to 8 bytes everywhere; the
-combined surface was bigger than the original Forth.
+combined surface felt bigger than the original Forth, although that may just have been us.
 
-The pivot: write the assembler in Rust, delegate encoding to LLVM,
+The pivot: write an assembler in Rust, delegate encoding to LLVM,
 JIT instead of metacompile to a PE32+. That replaces three things
 with one. But it raised a new question — how do you write Forth-style
-assembly in Rust without losing the hand-tooled feel that made the
-old project worth porting?
+assembly in Rust without losing the hand-tooled feel that made the 
+project worth porting?
 
 The answer became JASM:
 
@@ -115,7 +115,7 @@ The answer became JASM:
   REX prefix handling — all already correct. We don't reinvent.
 
 If MASM32 + LLVM + Microsoft's WinMD existed in 2005, this is roughly
-what would have come out of Hutch's forum.
+what I imagine might have come out of Hutch's forum. Although maybe not.
 
 ## What you can do with it
 
@@ -148,7 +148,7 @@ binop(and_,  and)
 binop(or_,   or)
 ```
 
-**Write MASM-style runtime control flow:**
+**Write some HLA style runtime control flow:**
 
 ```masm
 proc(min2)
@@ -443,7 +443,7 @@ JASM stands on a stack of generous prior work:
 - **Microsoft** for shipping the SDK metadata as a machine-readable
   binary blob in the first place. Without WinMD, the Win32 surface
   in JASM would be hundreds of hand-curated `.inc` files maintained
-  by someone.
+  by someone/noone.
 
 ## Limitations
 
@@ -466,6 +466,7 @@ JASM stands on a stack of generous prior work:
   declaration without a wrapper — call them by hand.
 - **No callbacks** from Win32 → JIT'd code yet. Needs a per-signature
   JIT-emitted trampoline. Future.
+- **No EXE** should have mentioned that first?, just add it if you want it.
 
 None of these block the common case of writing x64 assembly that
 calls into the OS or into Rust.
