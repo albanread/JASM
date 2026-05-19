@@ -848,10 +848,36 @@ impl<'s> Expander<'s> {
                             continue;
                         }
                     }
-                    // `.foo` — either an MC pass-through directive
-                    // (`.globl`, `.text`, `.cfi_*`, …) or a wfasm-local
-                    // label.
-                    if is_mc_directive(name) {
+                    // `.foo` disambiguation by surrounding tokens.
+                    //
+                    // We're at "directive position" if the previous
+                    // token is Newline (true line start) or Colon
+                    // (right after a label, MASM-style "label: dir").
+                    // We're followed by a Colon if next token is `:`
+                    // (label definition syntax).
+                    //
+                    //   directive-pos + NOT followed-by-`:` + MC-name
+                    //     → MC directive form  → pass through unchanged
+                    //   followed-by-`:`
+                    //     → label definition   → mangle if scoped
+                    //   any other position
+                    //     → label reference    → mangle if scoped
+                    //
+                    // `.skip:` is always a label (the `:` decides);
+                    // `.skip 16` at line-start with no `:` is the GAS
+                    // directive; `mylabel: .quad 10` recognises `.quad`
+                    // because the preceding `:` puts us in directive
+                    // position; `jne .skip` does NOT (preceded by an
+                    // ident), so it mangles to match the definition.
+                    let prev_kind = tokens.get(i.wrapping_sub(1)).map(|t| &t.kind);
+                    let at_directive_pos = i == 0
+                        || matches!(prev_kind, Some(TokenKind::Newline))
+                        || matches!(prev_kind, Some(TokenKind::Punct(Punct::Colon)));
+                    let followed_by_colon = matches!(
+                        tokens.get(i + 1).map(|t| &t.kind),
+                        Some(TokenKind::Punct(Punct::Colon))
+                    );
+                    if at_directive_pos && !followed_by_colon && is_mc_directive(name) {
                         self.out.push(tok.clone());
                         i += 1;
                         continue;
@@ -864,8 +890,8 @@ impl<'s> Expander<'s> {
                             space_before: tok.space_before,
                         });
                     } else {
-                        // No active scope or macro — pass through.
-                        // MC will see `.name` and treat as a local symbol.
+                        // No active scope — pass through. MC will see
+                        // `.name` and treat it as a local symbol.
                         self.out.push(tok.clone());
                     }
                     i += 1;
@@ -1233,7 +1259,17 @@ impl<'s> Expander<'s> {
                         return self.handle_control_flow(kw, tokens, i + 1, tok.span);
                     }
                 }
-                if is_mc_directive(name) {
+                // Disambiguation by surrounding tokens — see the
+                // matching block in expand_range for the full rule.
+                let prev_kind = tokens.get(i.wrapping_sub(1)).map(|t| &t.kind);
+                let at_directive_pos = i == 0
+                    || matches!(prev_kind, Some(TokenKind::Newline))
+                    || matches!(prev_kind, Some(TokenKind::Punct(Punct::Colon)));
+                let followed_by_colon = matches!(
+                    tokens.get(i + 1).map(|t| &t.kind),
+                    Some(TokenKind::Punct(Punct::Colon))
+                );
+                if at_directive_pos && !followed_by_colon && is_mc_directive(name) {
                     self.out.push(tok.clone());
                 } else if let Some(prefix) = self.current_mangle_prefix() {
                     let mangled = format!("{prefix}$${name}");
@@ -4011,6 +4047,29 @@ endp()
         let s = to_text(&out);
         assert!(s.contains("jmp plus$$done"), "got: {s}");
         assert!(s.contains("plus$$done:"), "got: {s}");
+    }
+
+    #[test]
+    fn label_named_same_as_mc_directive_is_mangled() {
+        // `.skip:` (with colon) is a label definition, not the GAS
+        // `.skip` directive. The colon is what disambiguates. Without
+        // this case the expander used to pass `.skip:` through and
+        // every primitive that wanted a `.skip` label collided
+        // against every other.
+        let mut asm = Assembler::new();
+        let out = expand_text(
+            &mut asm,
+            r#"@scope foo
+.skip:
+    nop
+.skip 16
+@endscope
+"#,
+        )
+        .unwrap();
+        let s = to_text(&out);
+        assert!(s.contains("foo$$skip:"), "label form should mangle, got: {s}");
+        assert!(s.contains(".skip 16"), "directive form should pass through, got: {s}");
     }
 
     #[test]
