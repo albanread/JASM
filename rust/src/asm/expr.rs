@@ -500,7 +500,13 @@ fn describe_kind(k: &TokenKind) -> String {
         TokenKind::String(s) => format!("string `{}`", s.raw),
         TokenKind::MacroParam(s) => format!("macro param `&{s}`"),
         TokenKind::Directive(s) => format!("directive `@{s}`"),
-        TokenKind::LocalLabel(s) => format!("local label `.{s}`"),
+        TokenKind::LocalLabel(s, outer) => {
+            if *outer {
+                format!("outer local label `.^{s}`")
+            } else {
+                format!("local label `.{s}`")
+            }
+        }
         TokenKind::Punct(p) => format!("`{}`", p.as_str()),
     }
 }

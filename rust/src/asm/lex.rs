@@ -404,12 +404,21 @@ impl<'a> Lexer<'a> {
             ));
         }
         self.advance(); // .
+        // `.^name` — outer-scope local label reference. Skips macro
+        // invocation frames so the label resolves to one defined in
+        // the enclosing @scope (typically the calling proc).
+        let outer = if self.peek_at(0) == Some(b'^') {
+            self.advance();
+            true
+        } else {
+            false
+        };
         match self.peek_at(0) {
-            // `.name` — local label.
+            // `.name` or `.^name` — local label.
             Some(c) if c == b'_' || c.is_ascii_alphanumeric() => {
                 let name = self.read_ident_chars();
                 Ok(self.make(
-                    TokenKind::LocalLabel(name),
+                    TokenKind::LocalLabel(name, outer),
                     start_line,
                     start_col,
                 ))
@@ -728,8 +737,14 @@ mod tests {
     #[test]
     fn local_label() {
         let toks = lex_text(".done:");
-        assert!(matches!(toks[0], TokenKind::LocalLabel(ref n) if n == "done"));
+        assert!(matches!(toks[0], TokenKind::LocalLabel(ref n, false) if n == "done"));
         assert!(matches!(toks[1], TokenKind::Punct(Punct::Colon)));
+    }
+
+    #[test]
+    fn local_label_outer_scope() {
+        let toks = lex_text(".^done");
+        assert!(matches!(toks[0], TokenKind::LocalLabel(ref n, true) if n == "done"));
     }
 
     #[test]

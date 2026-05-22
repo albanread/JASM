@@ -836,13 +836,13 @@ impl<'s> Expander<'s> {
                     self.out.push(tok.clone());
                     i += 1;
                 }
-                TokenKind::LocalLabel(name) => {
+                TokenKind::LocalLabel(name, outer) => {
                     // MASM-style runtime control flow: `.if`, `.elseif`,
                     // `.else`, `.endif`, `.while`, `.endw`, `.repeat`,
                     // `.until`, `.break`, `.continue`. Only valid at
                     // line start; mid-line `.foo` falls through as a
                     // label or MC directive.
-                    if line_start {
+                    if line_start && !*outer {
                         if let Some(kw) = control_flow_keyword(name) {
                             i = self.handle_control_flow(kw, tokens, i + 1, tok.span)?;
                             continue;
@@ -882,7 +882,12 @@ impl<'s> Expander<'s> {
                         i += 1;
                         continue;
                     }
-                    if let Some(prefix) = self.current_mangle_prefix() {
+                    let prefix = if *outer {
+                        self.outer_mangle_prefix()
+                    } else {
+                        self.current_mangle_prefix()
+                    };
+                    if let Some(prefix) = prefix {
                         let mangled = format!("{prefix}$${name}");
                         self.out.push(Token {
                             kind: TokenKind::Ident(mangled),
@@ -912,6 +917,19 @@ impl<'s> Expander<'s> {
     /// Innermost scope frame's mangling prefix, or `None` if no frame
     /// is open. Used by LocalLabel mangling.
     fn current_mangle_prefix(&self) -> Option<String> {
+        self.state.scope_stack.last().map(|f| f.mangle_prefix())
+    }
+
+    /// Mangling prefix for `.^name` — the innermost frame that is NOT
+    /// a macro invocation. Lets a macro body refer to a label defined
+    /// in the calling proc's `@scope`. Falls back to the innermost
+    /// frame if no `@scope` is open above the macro invocations.
+    fn outer_mangle_prefix(&self) -> Option<String> {
+        for frame in self.state.scope_stack.iter().rev() {
+            if frame.kind == ScopeKind::Scope {
+                return Some(frame.mangle_prefix());
+            }
+        }
         self.state.scope_stack.last().map(|f| f.mangle_prefix())
     }
 
@@ -1253,8 +1271,8 @@ impl<'s> Expander<'s> {
                 self.out.push(tok.clone());
                 Ok(i + 1)
             }
-            TokenKind::LocalLabel(name) => {
-                if at_line_start(tokens, i) {
+            TokenKind::LocalLabel(name, outer) => {
+                if at_line_start(tokens, i) && !*outer {
                     if let Some(kw) = control_flow_keyword(name) {
                         return self.handle_control_flow(kw, tokens, i + 1, tok.span);
                     }
@@ -1271,15 +1289,22 @@ impl<'s> Expander<'s> {
                 );
                 if at_directive_pos && !followed_by_colon && is_mc_directive(name) {
                     self.out.push(tok.clone());
-                } else if let Some(prefix) = self.current_mangle_prefix() {
-                    let mangled = format!("{prefix}$${name}");
-                    self.out.push(Token {
-                        kind: TokenKind::Ident(mangled),
-                        span: tok.span,
-                        space_before: tok.space_before,
-                    });
                 } else {
-                    self.out.push(tok.clone());
+                    let prefix = if *outer {
+                        self.outer_mangle_prefix()
+                    } else {
+                        self.current_mangle_prefix()
+                    };
+                    if let Some(prefix) = prefix {
+                        let mangled = format!("{prefix}$${name}");
+                        self.out.push(Token {
+                            kind: TokenKind::Ident(mangled),
+                            span: tok.span,
+                            space_before: tok.space_before,
+                        });
+                    } else {
+                        self.out.push(tok.clone());
+                    }
                 }
                 Ok(i + 1)
             }
@@ -2753,8 +2778,11 @@ fn tokens_to_text(tokens: &[Token]) -> String {
                 s.push('@');
                 s.push_str(n);
             }
-            TokenKind::LocalLabel(n) => {
+            TokenKind::LocalLabel(n, outer) => {
                 s.push('.');
+                if *outer {
+                    s.push('^');
+                }
                 s.push_str(n);
             }
             TokenKind::Punct(p) => s.push_str(p.as_str()),
@@ -4047,6 +4075,53 @@ endp()
         let s = to_text(&out);
         assert!(s.contains("jmp plus$$done"), "got: {s}");
         assert!(s.contains("plus$$done:"), "got: {s}");
+    }
+
+    #[test]
+    fn outer_label_in_macro_skips_macro_scope() {
+        // `.^name` inside a macro body references a label in the
+        // enclosing @scope (the calling proc), not in the macro's own
+        // hygienic scope. Without this, a macro can't branch to a
+        // proc-local label.
+        let mut asm = Assembler::new();
+        let out = expand_text(
+            &mut asm,
+            r#"@macro bail()
+    jmp .^fail
+@endmacro
+@scope demo
+    bail()
+.fail:
+    ret
+@endscope
+"#,
+        )
+        .unwrap();
+        let s = to_text(&out);
+        assert!(s.contains("jmp demo$$fail"), "got: {s}");
+        assert!(s.contains("demo$$fail:"), "got: {s}");
+    }
+
+    #[test]
+    fn local_label_in_macro_still_uses_macro_scope() {
+        // Sanity: plain `.name` inside a macro body still gets the
+        // macro-invocation prefix, preserving hygiene.
+        let mut asm = Assembler::new();
+        let out = expand_text(
+            &mut asm,
+            r#"@macro skip()
+    jmp .done
+.done:
+@endmacro
+@scope demo
+    skip()
+@endscope
+"#,
+        )
+        .unwrap();
+        let s = to_text(&out);
+        assert!(s.contains("skip$$"), "got: {s}");
+        assert!(!s.contains("demo$$done"), "got: {s}");
     }
 
     #[test]
