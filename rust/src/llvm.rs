@@ -89,6 +89,62 @@ extern "C" {
     pub fn LLVMPointerTypeInContext(C: LLVMContextRef, AddressSpace: c_uint) -> LLVMTypeRef;
 }
 
+// ---- Diagnostics (error capture) ----------------------------------------
+//
+// LLVM-MC reports inline-asm parse errors (and similar non-fatal
+// diagnostics) through the LLVMContext's diagnostic handler. When no
+// handler is installed, LLVM prints to stderr and — for severity
+// `LLVMDSError` — typically calls `report_fatal_error`, which aborts
+// the process. Installing our own handler lets the caller convert
+// those errors into a returnable `Result` and recover.
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum LLVMDiagnosticSeverity {
+    LLVMDSError   = 0,
+    LLVMDSWarning = 1,
+    LLVMDSRemark  = 2,
+    LLVMDSNote    = 3,
+}
+
+pub enum LLVMOpaqueDiagnosticInfo {}
+pub type LLVMDiagnosticInfoRef = *mut LLVMOpaqueDiagnosticInfo;
+
+pub type LLVMDiagnosticHandler =
+    Option<unsafe extern "C" fn(diag: LLVMDiagnosticInfoRef, ctx: *mut std::ffi::c_void)>;
+
+pub type LLVMFatalErrorHandler =
+    Option<unsafe extern "C" fn(reason: *const c_char)>;
+
+#[link(name = "LLVM-C")]
+extern "C" {
+    /// Install a per-context handler called whenever LLVM produces a
+    /// diagnostic (errors, warnings, remarks, notes). The `ctx` pointer
+    /// is opaque to LLVM and gets passed back to the handler verbatim.
+    pub fn LLVMContextSetDiagnosticHandler(
+        C: LLVMContextRef,
+        Handler: LLVMDiagnosticHandler,
+        DiagnosticContext: *mut std::ffi::c_void,
+    );
+
+    /// Returns the diagnostic's message as a newly-allocated string;
+    /// must be freed by the caller with `LLVMDisposeMessage`.
+    pub fn LLVMGetDiagInfoDescription(DI: LLVMDiagnosticInfoRef) -> *mut c_char;
+
+    /// Returns the severity (error / warning / remark / note).
+    pub fn LLVMGetDiagInfoSeverity(DI: LLVMDiagnosticInfoRef) -> LLVMDiagnosticSeverity;
+
+    /// Install a process-wide handler for fatal errors. By default LLVM
+    /// calls `abort()` after printing to stderr; with a handler installed
+    /// it calls our handler instead. The handler is NOT expected to
+    /// return — LLVM considers the program unrecoverable past this point
+    /// — so use with care.
+    pub fn LLVMInstallFatalErrorHandler(Handler: LLVMFatalErrorHandler);
+
+    /// Restore the default fatal-error behaviour (print + abort).
+    pub fn LLVMResetFatalErrorHandler();
+}
+
 // ---- Target init (X86 only) ---------------------------------------------
 
 #[link(name = "LLVM-C")]

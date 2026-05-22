@@ -75,6 +75,39 @@ pub struct Jit {
     /// existing engine, but we don't materialize the engine until first
     /// lookup. On finalize we apply all queued mappings.
     pending_mappings: Vec<(LLVMValueRef, *mut c_void)>,
+    /// Heap-allocated bag of error messages captured by our LLVM
+    /// diagnostic handler. Boxed so its address is stable across moves —
+    /// we hand the raw pointer to `LLVMContextSetDiagnosticHandler` once
+    /// at construction. Drained by `take_errors()` before each public
+    /// operation reports success.
+    diag_errors: Box<Vec<String>>,
+}
+
+/// LLVM diagnostic handler: captures error-severity diagnostics into a
+/// `Vec<String>` whose address LLVM stashed for us via the
+/// `DiagnosticContext` argument to `LLVMContextSetDiagnosticHandler`.
+///
+/// We only capture severity == Error; warnings/remarks/notes are
+/// dropped on the floor for now (we'd otherwise need to plumb them
+/// up through the Result return type, which has no place for them).
+unsafe extern "C" fn diag_handler(diag: LLVMDiagnosticInfoRef, ctx: *mut c_void) {
+    if ctx.is_null() {
+        return;
+    }
+    unsafe {
+        let severity = LLVMGetDiagInfoSeverity(diag);
+        if severity != LLVMDiagnosticSeverity::LLVMDSError {
+            return;
+        }
+        let raw = LLVMGetDiagInfoDescription(diag);
+        if raw.is_null() {
+            return;
+        }
+        let msg = CStr::from_ptr(raw).to_string_lossy().into_owned();
+        LLVMDisposeMessage(raw);
+        let errors = &mut *(ctx as *mut Vec<String>);
+        errors.push(msg);
+    }
 }
 
 impl Jit {
@@ -96,13 +129,30 @@ impl Jit {
                 LLVMDisposeMessage(triple);
             }
 
+            let mut diag_errors: Box<Vec<String>> = Box::new(Vec::new());
+            // Install the diagnostic handler with our errors box as the
+            // opaque context pointer. The box outlives the LLVMContext
+            // (Drop runs in struct-field order: ctx is disposed before
+            // the box is freed), so LLVM never sees a dangling pointer.
+            let errors_ptr = (&mut *diag_errors as *mut Vec<String>) as *mut c_void;
+            LLVMContextSetDiagnosticHandler(ctx, Some(diag_handler), errors_ptr);
+
             Ok(Jit {
                 ctx,
                 module: Some(module),
                 engine: None,
                 pending_mappings: Vec::new(),
+                diag_errors,
             })
         }
+    }
+
+    /// Drain and return all error-severity diagnostics LLVM has reported
+    /// since the last call. Callers should invoke this immediately after
+    /// any LLVM operation that might produce errors and short-circuit
+    /// with `JitError::Llvm` when the result is non-empty.
+    fn take_errors(&mut self) -> Vec<String> {
+        std::mem::take(&mut *self.diag_errors)
     }
 
     /// Append a chunk of assembly to the module.
@@ -195,9 +245,22 @@ impl Jit {
     /// allowed.
     pub fn lookup_addr(&mut self, name: &str) -> Result<u64, JitError> {
         let engine = self.finalize()?;
+        // finalize() triggers MCJIT codegen, which is where MC's inline-asm
+        // parser runs.  Errors from that path are captured into
+        // diag_errors via our installed handler — surface them now
+        // instead of returning a misleading NotFound.
+        let errors = self.take_errors();
+        if !errors.is_empty() {
+            return Err(JitError::Llvm(errors.join("\n")));
+        }
         unsafe {
             let cname = c_string(name)?;
             let addr = LLVMGetFunctionAddress(engine, cname.as_ptr());
+            // Codegen of a single symbol can also fire diagnostics.
+            let errors = self.take_errors();
+            if !errors.is_empty() {
+                return Err(JitError::Llvm(errors.join("\n")));
+            }
             if addr == 0 {
                 return Err(JitError::NotFound(name.to_string()));
             }
