@@ -9,6 +9,8 @@
 //! → this module's two-pass driver (assign offsets, resolve internal labels +
 //! branch relaxation, emit relocs) → `EncodedModule`.
 
+pub mod encode;
 pub mod parse;
 
+pub use encode::{encode, Encoded, Fixup, FixupKind};
 pub use parse::{Directive, Line, Mem, MemSize, Operand, Reg, RegClass};

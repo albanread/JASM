@@ -7,6 +7,11 @@ description = "MASM-style x86-64 macro assembler + LLVM ORC JIT for a 64-bit For
 [dependencies]
 anyhow = "1"
 
+[dev-dependencies]
+# Decoder-only — the differential oracle for the Rasm encoder's unit tests
+# (encode -> decode -> assert the intended instruction). NOT a runtime dep.
+iced-x86 = { version = "1", default-features = false, features = ["std", "decoder", "instr_info", "intel"] }
+
 [features]
 # `llvm` links LLVM-C and compiles the MCJIT assembler/loader (`llvm.rs`,
 # `jit.rs`, the Jit Loader impl). ON BY DEFAULT today — it is still the only
