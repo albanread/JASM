@@ -30,6 +30,10 @@ pub mod jit;
 /// LLVM impls live alongside `Jit`.
 pub mod backend;
 
+/// Rasm — the native x86-64 encoder (text → machine code) replacing LLVM-MC.
+/// Pure Rust, no LLVM. See WF65 docs/design/rasm-replace-llvm.md.
+pub mod rasm;
+
 #[cfg(windows)]
 pub mod win32;
 
