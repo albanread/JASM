@@ -13,14 +13,14 @@ anyhow = "1"
 iced-x86 = { version = "1", default-features = false, features = ["std", "decoder", "instr_info", "intel"] }
 
 [features]
-# `llvm` links LLVM-C and compiles the MCJIT assembler/loader (`llvm.rs`,
-# `jit.rs`, the Jit Loader impl). ON BY DEFAULT today — it is still the only
-# working backend. The Rasm migration adds a native encoder+loader behind the
-# same `backend` traits; once that is the default, `llvm` flips to a
-# non-default `llvm-oracle` role (differential test only). With the feature OFF
-# the crate compiles to the front-end + `backend` trait skeleton + SEH, with no
-# LLVM-C dependency. See WF65 docs/design/rasm-replace-llvm.md.
-default = ["llvm"]
+# NATIVE IS THE DEFAULT. A plain build compiles the front-end + native
+# RasmEncoder/NativeJit + `backend` trait skeleton + SEH, with NO LLVM-C
+# dependency — the native loader is the working backend.
+# `llvm` (opt-in) links LLVM-C and compiles the MCJIT assembler/loader
+# (`llvm.rs`, `jit.rs`, the `Jit` Loader impl). It now serves the differential
+# ORACLE role: the only thing that keeps RasmEncoder byte-honest. Enable it for
+# the LLVM build + oracle tests. See WF65 docs/design/rasm-replace-llvm.md.
+default = []
 llvm = []
 
 [lib]
