@@ -59,6 +59,81 @@ fn is64(r: Reg) -> bool {
     r.class == RegClass::R64
 }
 
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum OpSize {
+    B8,
+    B16,
+    B32,
+    B64,
+}
+
+fn reg_size(r: Reg) -> OpSize {
+    match r.class {
+        RegClass::R8 => OpSize::B8,
+        RegClass::R16 => OpSize::B16,
+        RegClass::R32 => OpSize::B32,
+        RegClass::R64 | RegClass::Xmm => OpSize::B64,
+    }
+}
+
+fn mem_opsize(m: &Mem) -> Option<OpSize> {
+    m.size.map(|s| match s {
+        MemSize::Byte => OpSize::B8,
+        MemSize::Word => OpSize::B16,
+        MemSize::Dword => OpSize::B32,
+        MemSize::Qword => OpSize::B64,
+    })
+}
+
+/// Operand size of a two-operand integer instruction: a register operand wins;
+/// else the sized memory operand; else default 64-bit.
+fn two_op_size(a: &Operand, b: &Operand) -> OpSize {
+    for op in [a, b] {
+        if let Operand::Reg(r) = op {
+            return reg_size(*r);
+        }
+    }
+    for op in [a, b] {
+        if let Operand::Mem(m) = op {
+            if let Some(s) = mem_opsize(m) {
+                return s;
+            }
+        }
+    }
+    OpSize::B64
+}
+
+/// 66 operand-size prefix for 16-bit (emitted before REX).
+fn size_mandatory(s: OpSize) -> &'static [u8] {
+    if s == OpSize::B16 {
+        &[0x66]
+    } else {
+        &[]
+    }
+}
+
+fn size_rexw(s: OpSize) -> bool {
+    s == OpSize::B64
+}
+
+/// 8-bit forms use opcode-1 for the standard two-operand /r encodings.
+fn op8(op: u8, s: OpSize) -> u8 {
+    if s == OpSize::B8 {
+        op - 1
+    } else {
+        op
+    }
+}
+
+/// Append a sign/size-appropriate immediate for an operand of size `s`.
+fn push_imm_sized(e: &mut Encoded, v: i64, s: OpSize) {
+    match s {
+        OpSize::B8 => e.b(v as u8),
+        OpSize::B16 => e.ext(&(v as i16).to_le_bytes()),
+        _ => e.ext(&(v as i32).to_le_bytes()),
+    }
+}
+
 /// Emit `mandatory` prefixes, REX (if needed), `opcode`, then a ModRM for a
 /// register r/m (`mod = 11`). `reg_field` and `rm` are full 0..15 numbers.
 fn emit_reg_rm(e: &mut Encoded, rex_w: bool, mandatory: &[u8], opcode: &[u8], reg_field: u8, rm: u8) {
@@ -110,9 +185,10 @@ fn emit_mem_rm(
     let needs_sib = index.is_some() || matches!(base.map(|b| b.num & 7), Some(0b100)); // rsp/r12 base
 
     let base_low3 = base.map(|b| b.num & 7);
-    // [rbp]/[r13] (low3==5) with no disp can't use mod=00 (that's rip/disp32);
-    // force disp8=0.
-    let force_disp8 = matches!(base_low3, Some(0b101)) && mem.disp == 0 && !needs_sib;
+    // [rbp]/[r13] (low3==5) base with no disp can't use mod=00 (that encodes
+    // rip/disp32, or no-base in a SIB) — force disp8=0. This applies whether or
+    // not a SIB is present, e.g. `[rbp + rax*8]` -> mod=01.
+    let force_disp8 = matches!(base_low3, Some(0b101)) && mem.disp == 0;
 
     let (md, disp_bytes): (u8, &'static [u8]) = if base.is_none() {
         // [disp32] / [index*scale + disp32] — mod=00 with SIB.base=101 form.
@@ -190,18 +266,21 @@ struct Alu {
     ext: u8,
     /// base opcode for the `r/m, r` form (0x01 family).
     rm_r: u8,
+    /// accumulator-immediate short opcode (AL form, e.g. `cmp al`=0x3C); the
+    /// AX/EAX/RAX form is `acc8 + 1`.
+    acc8: u8,
 }
 
 fn alu(mnem: &str) -> Option<Alu> {
     Some(match mnem {
-        "add" => Alu { ext: 0, rm_r: 0x01 },
-        "or" => Alu { ext: 1, rm_r: 0x09 },
-        "adc" => Alu { ext: 2, rm_r: 0x11 },
-        "sbb" => Alu { ext: 3, rm_r: 0x19 },
-        "and" => Alu { ext: 4, rm_r: 0x21 },
-        "sub" => Alu { ext: 5, rm_r: 0x29 },
-        "xor" => Alu { ext: 6, rm_r: 0x31 },
-        "cmp" => Alu { ext: 7, rm_r: 0x39 },
+        "add" => Alu { ext: 0, rm_r: 0x01, acc8: 0x04 },
+        "or" => Alu { ext: 1, rm_r: 0x09, acc8: 0x0C },
+        "adc" => Alu { ext: 2, rm_r: 0x11, acc8: 0x14 },
+        "sbb" => Alu { ext: 3, rm_r: 0x19, acc8: 0x1C },
+        "and" => Alu { ext: 4, rm_r: 0x21, acc8: 0x24 },
+        "sub" => Alu { ext: 5, rm_r: 0x29, acc8: 0x2C },
+        "xor" => Alu { ext: 6, rm_r: 0x31, acc8: 0x34 },
+        "cmp" => Alu { ext: 7, rm_r: 0x39, acc8: 0x3C },
         _ => return None,
     })
 }
@@ -234,6 +313,24 @@ pub fn encode(mnemonic: &str, ops: &[Operand]) -> Result<Encoded> {
         ("leave", []) => e.b(0xC9),
         ("std", []) => e.b(0xFD),
         ("cld", []) => e.b(0xFC),
+        ("clc", []) => e.b(0xF8),
+        ("stc", []) => e.b(0xF9),
+        ("cmc", []) => e.b(0xF5),
+        ("sahf", []) => e.b(0x9E),
+        ("lahf", []) => e.b(0x9F),
+        ("int3", []) => e.b(0xCC),
+        ("int", [Operand::Imm(3)]) => e.b(0xCC),
+        ("int", [Operand::Imm(n)]) => {
+            e.b(0xCD);
+            e.b(*n as u8);
+        }
+        ("syscall", []) => e.ext(&[0x0F, 0x05]),
+        ("cpuid", []) => e.ext(&[0x0F, 0xA2]),
+        ("rdtsc", []) => e.ext(&[0x0F, 0x31]),
+        ("cdqe", []) => e.ext(&[0x48, 0x98]),
+        ("cwde", []) => e.b(0x98),
+        ("cdq", []) => e.b(0x99),
+        ("pause", []) => e.ext(&[0xF3, 0x90]),
 
         // mov
         ("mov", [dst, src]) => encode_mov(&mut e, dst, src)?,
@@ -254,6 +351,13 @@ pub fn encode(mnemonic: &str, ops: &[Operand]) -> Result<Encoded> {
             e.b(0xE9);
             rel32_fixup(&mut e, s);
         }
+        // Indirect jmp/call through r/m64 : FF /4 (jmp), FF /2 (call).
+        ("jmp", [rm @ (Operand::Reg(_) | Operand::Mem(_))]) => {
+            emit_rm(&mut e, false, &[], &[0xFF], 4, rm)?;
+        }
+        ("call", [rm @ (Operand::Reg(_) | Operand::Mem(_))]) => {
+            emit_rm(&mut e, false, &[], &[0xFF], 2, rm)?;
+        }
         (m, [Operand::Sym(s)]) if jcc_code(m).is_some() => {
             e.b(0x0F);
             e.b(0x80 | jcc_code(m).unwrap());
@@ -263,10 +367,10 @@ pub fn encode(mnemonic: &str, ops: &[Operand]) -> Result<Encoded> {
         // group-1 ALU
         (m, [dst, src]) if alu(m).is_some() => encode_alu(&mut e, alu(m).unwrap(), dst, src)?,
 
-        // test
+        // test r/m, r : 85 /r (84 for 8-bit)
         ("test", [rm, Operand::Reg(r)]) => {
-            // test r/m, r : 85 /r (r/m,r form)
-            emit_rm(&mut e, is64(*r), &[], &[0x85], r.num, rm)?;
+            let size = two_op_size(rm, &Operand::Reg(*r));
+            emit_rm(&mut e, size_rexw(size), size_mandatory(size), &[op8(0x85, size)], r.num, rm)?;
         }
 
         _ => bail!("rasm: unsupported instruction `{mnemonic}` with {} operand(s)", ops.len()),
@@ -395,9 +499,41 @@ fn try_misc(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
                 // 2-operand imul r, r/m : 0F AF /r
                 emit_rm(&mut e, is64(*d), &[], &[0x0F, 0xAF], d.num, src)?;
             }
-            ("xchg", [dst, Operand::Reg(s)]) => {
-                // xchg r/m, r : 87 /r
-                emit_rm(&mut e, is64(*s), &[], &[0x87], s.num, dst)?;
+            ("imul", [Operand::Reg(d), src, Operand::Imm(v)]) => {
+                // 3-operand imul r, r/m, imm : 6B /r ib (imm8) or 69 /r id (imm32)
+                if (-128..=127).contains(v) {
+                    emit_rm(&mut e, is64(*d), &[], &[0x6B], d.num, src)?;
+                    e.b(*v as i8 as u8);
+                } else {
+                    emit_rm(&mut e, is64(*d), &[], &[0x69], d.num, src)?;
+                    e.ext(&(*v as i32).to_le_bytes());
+                }
+            }
+            ("popcnt", [Operand::Reg(d), src]) => {
+                emit_rm(&mut e, is64(*d), &[0xF3], &[0x0F, 0xB8], d.num, src)?;
+            }
+            ("lzcnt", [Operand::Reg(d), src]) => {
+                emit_rm(&mut e, is64(*d), &[0xF3], &[0x0F, 0xBD], d.num, src)?;
+            }
+            ("tzcnt", [Operand::Reg(d), src]) => {
+                emit_rm(&mut e, is64(*d), &[0xF3], &[0x0F, 0xBC], d.num, src)?;
+            }
+            ("bsr", [Operand::Reg(d), src]) => {
+                emit_rm(&mut e, is64(*d), &[], &[0x0F, 0xBD], d.num, src)?;
+            }
+            ("bsf", [Operand::Reg(d), src]) => {
+                emit_rm(&mut e, is64(*d), &[], &[0x0F, 0xBC], d.num, src)?;
+            }
+            // xchg r/m, r : 87 /r. MC puts the FIRST operand in the reg field
+            // when it is a register (`xchg rbp, rsp` -> reg=rbp, rm=rsp); a
+            // memory first operand is the r/m.
+            ("xchg", [Operand::Reg(d), src]) => {
+                let size = two_op_size(&Operand::Reg(*d), src);
+                emit_rm(&mut e, size_rexw(size), size_mandatory(size), &[op8(0x87, size)], d.num, src)?;
+            }
+            ("xchg", [Operand::Mem(mm), Operand::Reg(s)]) => {
+                let size = reg_size(*s);
+                emit_mem_rm(&mut e, size_rexw(size), size_mandatory(size), &[op8(0x87, size)], s.num, mm)?;
             }
             ("xadd", [dst, Operand::Reg(s)]) => {
                 // xadd r/m, r : 0F C1 /r
@@ -425,32 +561,58 @@ fn try_misc(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
 }
 
 fn encode_mov(e: &mut Encoded, dst: &Operand, src: &Operand) -> Result<()> {
+    let size = two_op_size(dst, src);
+    let mand = size_mandatory(size);
+    let w = size_rexw(size);
     match (dst, src) {
-        // mov r/m, r  (89 /r)
-        (rm, Operand::Reg(r)) => emit_rm(e, is64(*r), &[], &[0x89], r.num, rm),
-        // mov r, r/m  (8B /r) — when dst is reg and src is mem
-        (Operand::Reg(d), Operand::Mem(m)) => emit_mem_rm(e, is64(*d), &[], &[0x8B], d.num, m),
-        // mov r/m64, imm32 (sign-extended): C7 /0 id ; or mov r64, imm64: B8+r
-        (Operand::Reg(d), Operand::Imm(v)) if d.class == RegClass::R64 => {
-            if i32::try_from(*v).is_ok() {
-                // C7 /0 id (canonical for values fitting i32 — matches MC)
-                emit_reg_rm(e, true, &[], &[0xC7], 0, d.num);
-                e.ext(&(*v as i32).to_le_bytes());
-            } else {
-                // movabs r64, imm64: REX.W B8+rd io
-                if let Some(r) = rex_byte(true, false, false, d.num >= 8) {
-                    e.b(r);
+        // mov r/m, r : 89 /r (88 for 8-bit)
+        (rm, Operand::Reg(r)) => emit_rm(e, w, mand, &[op8(0x89, size)], r.num, rm),
+        // mov r, r/m (mem) : 8B /r (8A for 8-bit)
+        (Operand::Reg(d), Operand::Mem(m)) => emit_mem_rm(e, w, mand, &[op8(0x8B, size)], d.num, m),
+        // mov reg, imm — size-specific
+        (Operand::Reg(d), Operand::Imm(v)) => {
+            match size {
+                OpSize::B64 => {
+                    if i32::try_from(*v).is_ok() {
+                        emit_reg_rm(e, true, &[], &[0xC7], 0, d.num); // C7 /0 id
+                        e.ext(&(*v as i32).to_le_bytes());
+                    } else {
+                        if let Some(r) = rex_byte(true, false, false, d.num >= 8) {
+                            e.b(r);
+                        }
+                        e.b(0xB8 + (d.num & 7)); // movabs r64, imm64
+                        e.ext(&(*v as u64).to_le_bytes());
+                    }
                 }
-                e.b(0xB8 + (d.num & 7));
-                e.ext(&(*v as u64).to_le_bytes());
+                OpSize::B32 => {
+                    if d.num >= 8 {
+                        e.b(0x41);
+                    }
+                    e.b(0xB8 + (d.num & 7)); // B8+r id
+                    e.ext(&(*v as i32 as u32).to_le_bytes());
+                }
+                OpSize::B16 => {
+                    e.b(0x66);
+                    if d.num >= 8 {
+                        e.b(0x41);
+                    }
+                    e.b(0xB8 + (d.num & 7)); // 66 B8+r iw
+                    e.ext(&(*v as i16).to_le_bytes());
+                }
+                OpSize::B8 => {
+                    if d.num >= 8 {
+                        e.b(0x41);
+                    }
+                    e.b(0xB0 + (d.num & 7)); // B0+r ib
+                    e.b(*v as u8);
+                }
             }
             Ok(())
         }
+        // mov m, imm : C7 /0 id (C6 /0 ib for 8-bit)
         (Operand::Mem(m), Operand::Imm(v)) => {
-            // mov r/m64, imm32: C7 /0 id (size from mem, default qword here)
-            let w = mem_is_qword(m);
-            emit_mem_rm(e, w, &[], &[0xC7], 0, m)?;
-            e.ext(&(*v as i32).to_le_bytes());
+            emit_mem_rm(e, w, mand, &[op8(0xC7, size)], 0, m)?;
+            push_imm_sized(e, *v, size);
             Ok(())
         }
         _ => bail!("rasm: unsupported mov form {dst:?} <- {src:?}"),
@@ -462,24 +624,45 @@ fn mem_is_qword(m: &Mem) -> bool {
 }
 
 fn encode_alu(e: &mut Encoded, a: Alu, dst: &Operand, src: &Operand) -> Result<()> {
+    let size = two_op_size(dst, src);
+    let mand = size_mandatory(size);
+    let w = size_rexw(size);
     match (dst, src) {
-        // r/m, r : (rm_r) /r
-        (rm, Operand::Reg(r)) => emit_rm(e, is64(*r), &[], &[a.rm_r], r.num, rm),
-        // r, r/m (mem) : (rm_r + 2) /r
-        (Operand::Reg(d), Operand::Mem(m)) => emit_mem_rm(e, is64(*d), &[], &[a.rm_r + 2], d.num, m),
-        // r/m, imm : 83 /ext ib (imm8) or 81 /ext id (imm32)
+        // r/m, r : (rm_r) /r  (rm_r-1 for 8-bit)
+        (rm, Operand::Reg(r)) => emit_rm(e, w, mand, &[op8(a.rm_r, size)], r.num, rm),
+        // r, r/m (mem) : (rm_r + 2) /r  (rm_r+1 for 8-bit)
+        (Operand::Reg(d), Operand::Mem(m)) => {
+            let opc = if size == OpSize::B8 { a.rm_r + 1 } else { a.rm_r + 2 };
+            emit_mem_rm(e, w, mand, &[opc], d.num, m)
+        }
+        // r/m, imm. MC's choices, for byte-identity:
+        //   al + imm8        -> accumulator short form `acc8 ib` (no ModRM)
+        //   r/m8 + imm8      -> 80 /ext ib
+        //   imm fits i8      -> 83 /ext ib (shortest; even for rax)
+        //   acc + wide imm   -> `acc8+1 iz` (no ModRM, 1 byte shorter than 81)
+        //   else             -> 81 /ext iz
         (rm, Operand::Imm(v)) => {
-            let w = match rm {
-                Operand::Reg(r) => is64(*r),
-                Operand::Mem(m) => mem_is_qword(m),
-                _ => true,
-            };
-            if (-128..=127).contains(v) {
-                emit_rm(e, w, &[], &[0x83], a.ext, rm)?;
+            let is_acc = matches!(rm, Operand::Reg(r) if r.num == 0);
+            if size == OpSize::B8 {
+                if is_acc {
+                    e.b(a.acc8);
+                } else {
+                    emit_rm(e, w, mand, &[0x80], a.ext, rm)?;
+                }
+                e.b(*v as u8);
+            } else if (-128..=127).contains(v) {
+                emit_rm(e, w, mand, &[0x83], a.ext, rm)?;
                 e.b(*v as i8 as u8);
+            } else if is_acc {
+                e.ext(mand);
+                if w {
+                    e.b(0x48); // REX.W (rax form)
+                }
+                e.b(a.acc8 + 1);
+                push_imm_sized(e, *v, size);
             } else {
-                emit_rm(e, w, &[], &[0x81], a.ext, rm)?;
-                e.ext(&(*v as i32).to_le_bytes());
+                emit_rm(e, w, mand, &[0x81], a.ext, rm)?;
+                push_imm_sized(e, *v, size);
             }
             Ok(())
         }
@@ -590,6 +773,8 @@ fn try_shift(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
     let ext = match mnemonic {
         "rol" => 0u8,
         "ror" => 1,
+        "rcl" => 2,
+        "rcr" => 3,
         "shl" | "sal" => 4,
         "shr" => 5,
         "sar" => 7,
@@ -734,8 +919,9 @@ mod tests {
         // imul: 1-operand (F7 /5) vs 2-operand (0F AF)
         assert_eq!(roundtrip("imul rax, [rbp]"), "imul rax,[rbp]");
         assert_eq!(roundtrip("imul qword ptr [rbp]"), "imul qword ptr [rbp]");
-        // xchg / xadd
-        assert_eq!(roundtrip("xchg rbp, rsp"), "xchg rbp,rsp");
+        // xchg / xadd — assert bytes (golden-verified); iced formats xchg with
+        // rm first, so the round-trip string is "xchg rsp,rbp".
+        assert_eq!(bytes("xchg rbp, rsp"), vec![0x48, 0x87, 0xEC]);
         assert_eq!(roundtrip("xadd [rcx], rax"), "xadd [rcx],rax");
         // rep string ops
         assert_eq!(bytes("rep movsq"), vec![0xF3, 0x48, 0xA5]);

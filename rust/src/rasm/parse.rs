@@ -165,11 +165,17 @@ fn parse_operand(p: &str) -> Result<Operand> {
     if size.is_some() {
         bail!("size prefix on non-memory operand: `{p}`");
     }
+    if rest.starts_with('\'') {
+        return Ok(Operand::Imm(parse_char(rest)?));
+    }
     if let Some(reg) = parse_reg(rest) {
         return Ok(Operand::Reg(reg));
     }
     if looks_like_number(rest) {
         return Ok(Operand::Imm(parse_int(rest)?));
+    }
+    if let Some(v) = eval_const(rest) {
+        return Ok(Operand::Imm(v));
     }
     if is_symbol(rest) {
         return Ok(Operand::Sym(rest.to_string()));
@@ -241,11 +247,19 @@ fn parse_mem(s: &str, size: Option<MemSize>) -> Result<Mem> {
             mem.rip_sym = Some(String::new()); // marker; filled by the sym term
             continue;
         }
-        if let Some((rname, sc)) = t.split_once('*') {
-            let reg = parse_reg(rname.trim())
-                .ok_or_else(|| anyhow::anyhow!("bad index register `{rname}` in `{s}`"))?;
-            mem.index = Some(reg);
-            mem.scale = parse_int(sc.trim())? as u8;
+        if let Some((lhs, rhs)) = t.split_once('*') {
+            let (lhs, rhs) = (lhs.trim(), rhs.trim());
+            if let Some(reg) = parse_reg(lhs) {
+                mem.index = Some(reg);
+                mem.scale = parse_int(rhs)? as u8;
+            } else if let Some(reg) = parse_reg(rhs) {
+                // `scale*reg` form.
+                mem.index = Some(reg);
+                mem.scale = parse_int(lhs)? as u8;
+            } else {
+                // Constant product, e.g. `2*8` (a displacement, not index*scale).
+                mem.disp += sgn * parse_int(lhs)? * parse_int(rhs)?;
+            }
             continue;
         }
         if let Some(reg) = parse_reg(&t) {
@@ -337,6 +351,114 @@ fn looks_like_number(s: &str) -> bool {
     !t.is_empty() && t.chars().all(|c| c.is_ascii_hexdigit() || c == '_')
         && (s.starts_with("0x") || s.starts_with("0X") || s.starts_with(['-', '+'])
             || t.chars().all(|c| c.is_ascii_digit() || c == '_'))
+}
+
+/// Evaluate a constant integer expression of numbers with `*`, `+`, `-`
+/// (no parens; `*` binds tighter than `+`/`-`). Returns `None` if any token
+/// isn't a number (e.g. a bare symbol). Matches what MC folds in operands like
+/// `2*8` or `2*8 + 1`.
+fn eval_const(s: &str) -> Option<i64> {
+    enum T {
+        N(i64),
+        Plus,
+        Minus,
+        Times,
+    }
+    let chars: Vec<char> = s.trim().chars().collect();
+    if chars.is_empty() {
+        return None;
+    }
+    let mut toks: Vec<T> = Vec::new();
+    let mut i = 0;
+    let mut prev_value = false;
+    while i < chars.len() {
+        let c = chars[i];
+        if c.is_whitespace() {
+            i += 1;
+            continue;
+        }
+        if prev_value && (c == '+' || c == '-' || c == '*') {
+            toks.push(match c {
+                '+' => T::Plus,
+                '-' => T::Minus,
+                _ => T::Times,
+            });
+            prev_value = false;
+            i += 1;
+            continue;
+        }
+        // A number (optional leading unary sign).
+        let start = i;
+        if c == '+' || c == '-' {
+            i += 1;
+        }
+        while i < chars.len()
+            && (chars[i].is_ascii_hexdigit() || chars[i] == 'x' || chars[i] == 'X' || chars[i] == '_')
+        {
+            i += 1;
+        }
+        let numstr: String = chars[start..i].iter().collect();
+        toks.push(T::N(parse_int(&numstr).ok()?));
+        prev_value = true;
+    }
+    if !prev_value {
+        return None; // trailing operator
+    }
+    // Collapse products first.
+    let mut terms: Vec<i64> = Vec::new();
+    let mut sign = 1i64;
+    let mut acc: Option<i64> = None;
+    let mut pending_times = false;
+    for t in toks {
+        match t {
+            T::N(v) => {
+                if pending_times {
+                    acc = Some(acc.unwrap_or(1) * v);
+                    pending_times = false;
+                } else {
+                    if let Some(a) = acc.take() {
+                        terms.push(a);
+                    }
+                    acc = Some(v);
+                }
+            }
+            T::Times => pending_times = true,
+            T::Plus | T::Minus => {
+                if let Some(a) = acc.take() {
+                    terms.push(sign * a);
+                }
+                sign = if matches!(t, T::Minus) { -1 } else { 1 };
+            }
+        }
+    }
+    if let Some(a) = acc {
+        terms.push(sign * a);
+    }
+    Some(terms.iter().sum())
+}
+
+/// Parse a character-literal immediate: `'a'`, `'\n'`, `'\''`.
+fn parse_char(s: &str) -> Result<i64> {
+    let inner = s
+        .strip_prefix('\'')
+        .and_then(|x| x.strip_suffix('\''))
+        .ok_or_else(|| anyhow::anyhow!("malformed char literal: `{s}`"))?;
+    let mut chars = inner.chars();
+    let v = match chars.next() {
+        Some('\\') => match chars.next() {
+            Some('n') => b'\n' as i64,
+            Some('t') => b'\t' as i64,
+            Some('r') => b'\r' as i64,
+            Some('0') => 0,
+            Some('\\') => b'\\' as i64,
+            Some('\'') => b'\'' as i64,
+            Some(o) => o as i64,
+            None => bail!("dangling escape in char literal `{s}`"),
+        },
+        Some(c) => c as i64,
+        None => bail!("empty char literal `{s}`"),
+    };
+    Ok(v)
 }
 
 /// Parse a signed integer: decimal or `0x` hex, `_` separators allowed.
