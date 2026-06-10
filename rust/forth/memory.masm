@@ -1,0 +1,216 @@
+; forth/memory.masm — ANS Forth memory access words.
+;
+; Fetch words pop an address from TOS and push the value at that address.
+; Store words pop an address (TOS) and a value (NOS) and write the value.
+;
+; Register convention (from macros.masm):
+;   TOS (rax) = top of data stack (register-cached)
+;   DSP (rbp) = data stack pointer, points to NOS
+;   UP  (rbx) = user/task pointer
+;   RSP       = return stack (hardware stack)
+;
+; Scratch registers used: rcx, rdx, r8, rdi, rsi.
+; None of these are Forth dedicated registers, so they're free to use.
+
+@include "forth/macros.masm"
+
+; ── Fetch words ───────────────────────────────────────────────────────────────
+
+; @ (FETCH) ( addr -- x )
+; Load a 64-bit cell from addr.
+head("@", fetch, 0)
+    mov  TOS, [TOS]              ; TOS = cell at address TOS
+endword()
+
+; C@ (C-FETCH) ( addr -- c )
+; Load one byte from addr, zero-extended to 64 bits.
+head("C@", c_fetch, 0)
+    movzx TOS, byte ptr [TOS]
+endword()
+
+; W@ (W-FETCH) ( addr -- w )
+; Load a 16-bit word from addr, zero-extended to 64 bits.
+head("W@", w_fetch, 0)
+    movzx TOS, word ptr [TOS]
+endword()
+
+; L@ (L-FETCH) ( addr -- l )
+; Load a 32-bit longword from addr.
+; mov eax, [rax] zero-extends into rax automatically on x64.
+head("L@", l_fetch, 0)
+    mov  eax, dword ptr [TOS]   ; eax = low 32 bits of TOS; auto zero-extends to rax
+endword()
+
+; 2@ (2-FETCH) ( addr -- x1 x2 )
+; Load two consecutive cells from addr.
+; ANS Forth: x1 is stored at addr, x2 at addr+cell.
+; Result: TOS=x2, NOS=x1 (x1 is the "lower" in memory, goes to NOS).
+; Before: TOS=addr
+; After:  TOS=x2, [DSP]=x1, [DSP+cell]=old-TOS
+head("2@", two_fetch, 0)
+    mov  rcx, [TOS]             ; rcx = x1 (at addr)
+    mov  rax, [TOS+cell]        ; rax = x2 (at addr+8) → this is new TOS
+    sub  DSP, cell              ; grow stack by one cell
+    mov  [DSP], rcx             ; [DSP] = x1 (NOS)
+    ; TOS (rax) now = x2
+endword()
+
+; ── Store words ───────────────────────────────────────────────────────────────
+; General pattern for binary ( val addr -- ):
+;   TOS = addr, [DSP] = val, [DSP+cell] = new-TOS-after-store
+;   After: TOS = [DSP+cell], DSP += 2*cell
+
+; ! (STORE) ( x addr -- )
+; Store a 64-bit cell.
+head("!", store, 0)
+    mov  rcx, [DSP]             ; rcx = x (value)
+    mov  [TOS], rcx             ; [addr] = x
+    mov  TOS, [DSP+cell]        ; new TOS = what was below x
+    add  DSP, 2*cell            ; consumed both x and addr
+endword()
+
+; C! (C-STORE) ( c addr -- )
+; Store the low byte.
+head("C!", c_store, 0)
+    mov  rcx, [DSP]             ; rcx = c
+    mov  byte ptr [TOS], cl     ; [addr] = low byte
+    mov  TOS, [DSP+cell]
+    add  DSP, 2*cell
+endword()
+
+; W! (W-STORE) ( w addr -- )
+; Store a 16-bit word.
+head("W!", w_store, 0)
+    mov  rcx, [DSP]             ; rcx = w
+    mov  word ptr [TOS], cx     ; [addr] = low 16 bits
+    mov  TOS, [DSP+cell]
+    add  DSP, 2*cell
+endword()
+
+; L! (L-STORE) ( l addr -- )
+; Store a 32-bit longword.
+head("L!", l_store, 0)
+    mov  rcx, [DSP]             ; rcx = l
+    mov  dword ptr [TOS], ecx   ; [addr] = low 32 bits
+    mov  TOS, [DSP+cell]
+    add  DSP, 2*cell
+endword()
+
+; 2! (2-STORE) ( x1 x2 addr -- )
+; Store two cells.
+; ANS Forth: ( x1 x2 addr -- ) stores x1 at addr, x2 at addr+cell.
+; Stack before: TOS=addr, [DSP]=x2, [DSP+cell]=x1, [DSP+2*cell]=new-TOS
+head("2!", two_store, 0)
+    mov  rcx, [DSP]             ; rcx = x2
+    mov  rdx, [DSP+cell]        ; rdx = x1
+    mov  [TOS], rdx             ; [addr] = x1
+    mov  [TOS+cell], rcx        ; [addr+cell] = x2
+    mov  TOS, [DSP+2*cell]      ; new TOS = what was below x1
+    add  DSP, 3*cell            ; consumed x2, x1, and addr
+endword()
+
+; +! (PLUS-STORE) ( n addr -- )
+; Add n to the cell at addr.
+head("+!", plus_store, 0)
+    mov  rcx, [DSP]             ; rcx = n
+    add  [TOS], rcx             ; [addr] += n
+    mov  TOS, [DSP+cell]        ; new TOS = what was below n
+    add  DSP, 2*cell
+endword()
+
+; ── Block memory words ────────────────────────────────────────────────────────
+; These use rdi/rsi freely — they are not Forth dedicated registers.
+; Within the STC call chain, rdi/rsi are scratch (callee-saved only at
+; the Rust-to-Forth boundary, not between individual Forth primitives).
+
+; FILL ( addr u c -- )
+; Fill u bytes starting at addr with the byte value c.
+; Uses: rdi=dest, rcx=count, al=byte value.
+; TOS=c, [DSP]=u, [DSP+cell]=addr
+head("FILL", fill_, 0)
+    movzx rax, al               ; isolate low byte (c) in al; clears upper bits
+    mov  rcx, [DSP]             ; rcx = u (byte count)
+    mov  rdi, [DSP+cell]        ; rdi = addr (destination)
+    rep  stosb                  ; fill: [rdi..rdi+rcx] = al; advances rdi, rcx→0
+    mov  TOS, [DSP+2*cell]      ; new TOS = what was below u and addr
+    add  DSP, 3*cell
+endword()
+
+; MOVE ( src dst u -- )
+; Copy u bytes from src to dst.
+; ANS Forth MOVE correctly handles overlapping regions. We use memmove-style:
+; if dst > src and regions overlap, copy backward; otherwise forward.
+; TOS=u, [DSP]=dst, [DSP+cell]=src
+head("MOVE", move_, 0)
+    mov  rcx, TOS               ; rcx = u (count)
+    mov  rdi, [DSP]             ; rdi = dst
+    mov  rsi, [DSP+cell]        ; rsi = src
+    ; Determine copy direction: if dst > src and dst < src+u → overlap, copy backward
+    cmp  rdi, rsi
+    jbe  .forward               ; dst <= src: safe to copy forward
+    mov  rdx, rsi
+    add  rdx, rcx               ; rdx = src + u (end of source region)
+    cmp  rdi, rdx
+    jae  .forward               ; dst >= src+u: no overlap, copy forward
+    ; Overlap with dst > src: copy backward to avoid clobbering
+    add  rdi, rcx               ; point past end of dst
+    add  rsi, rcx               ; point past end of src
+    dec  rdi
+    dec  rsi
+    std                         ; set direction flag: decrement after each stosd/movsb
+    rep  movsb
+    cld                         ; always clear DF before leaving
+    jmp  .done
+.forward:
+    cld
+    rep  movsb
+.done:
+    mov  TOS, [DSP+2*cell]
+    add  DSP, 3*cell
+endword()
+
+; CMOVE ( src dst u -- )
+; Copy u bytes from src to dst, always low-to-high (forward).
+; Correct for non-overlapping or when src > dst.
+; TOS=u, [DSP]=dst, [DSP+cell]=src
+head("CMOVE", cmove_, 0)
+    mov  rcx, TOS               ; count
+    mov  rdi, [DSP]             ; dst
+    mov  rsi, [DSP+cell]        ; src
+    cld
+    rep  movsb
+    mov  TOS, [DSP+2*cell]
+    add  DSP, 3*cell
+endword()
+
+; CMOVE> ( src dst u -- )
+; Copy u bytes from src to dst, high-to-low (backward).
+; Correct when dst > src and regions overlap.
+; TOS=u, [DSP]=dst, [DSP+cell]=src
+head("CMOVE>", cmove_up, 0)
+    mov  rcx, TOS               ; count
+    mov  rdi, [DSP]             ; dst
+    mov  rsi, [DSP+cell]        ; src
+    ; Point to the last byte of each region
+    add  rdi, rcx
+    add  rsi, rcx
+    dec  rdi
+    dec  rsi
+    std                         ; copy backward
+    rep  movsb
+    cld                         ; restore direction flag
+    mov  TOS, [DSP+2*cell]
+    add  DSP, 3*cell
+endword()
+
+; ERASE ( addr u -- )
+; Fill u bytes at addr with zero. Equivalent to 0 FILL.
+; TOS=u, [DSP]=addr
+head("ERASE", erase_, 0)
+    mov  rcx, TOS               ; count
+    mov  rdi, [DSP]             ; addr
+    xor  eax, eax               ; al = 0
+    rep  stosb
+    mov  TOS, [DSP+cell]
+    add  DSP, 2*cell
+endword()

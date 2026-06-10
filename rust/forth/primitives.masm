@@ -1,0 +1,467 @@
+; forth/primitives.masm — ANS Forth core code words
+; Stack, arithmetic, logic, comparison, and system primitives.
+;
+; Register convention:
+;   TOS (rax)  = top of data stack (register-cached)
+;   DSP (rbp)  = data stack pointer, points to NOS (one cell below TOS)
+;   RSP        = return stack (hardware stack)
+;   UP  (rbx)  = user/task pointer
+;
+; Stack discipline:
+;   DSP points to NOS. Stack grows DOWN (lower addresses = deeper).
+;   PUSH: sub DSP, cell ; mov [DSP], TOS ; mov TOS, new_val
+;   POP:  mov TOS, [DSP] ; add DSP, cell
+;   Empty stack: TOS = undefined, DSP past end of stack buffer.
+
+@include "forth/macros.masm"
+
+.text
+
+; ─────────────────────────────────────────────────────────────────────────────
+; Stack manipulation words
+; ─────────────────────────────────────────────────────────────────────────────
+
+; DUP ( n -- n n )
+; Copy TOS. Push the old TOS as NOS; TOS stays the same.
+head("DUP", dup_, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    ; TOS unchanged
+endword()
+
+; DROP ( n -- )
+; Before: TOS=n, [DSP]=x   After: TOS=x, DSP+=cell
+head("DROP", drop_, 0)
+    mov  TOS, [DSP]
+    add  DSP, cell
+endword()
+
+; SWAP ( a b -- b a )
+; Exchange TOS and NOS in one instruction.
+; Before: TOS=b, [DSP]=a   After: TOS=a, [DSP]=b
+head("SWAP", swap_, 0)
+    xchg TOS, [DSP]
+endword()
+
+; OVER ( a b -- a b a )
+; Before: TOS=b, [DSP]=a
+; Push old TOS (b) → TOS becomes a (old NOS).
+; After:  TOS=a, [DSP]=b, [DSP+cell]=a
+head("OVER", over_, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    mov  TOS, [DSP+cell]
+endword()
+
+; ROT ( a b c -- b c a )
+; Before: TOS=c, [DSP]=b, [DSP+cell]=a
+; After:  TOS=a, [DSP]=c, [DSP+cell]=b
+head("ROT", rot_, 0)
+    mov  rcx, [DSP]           ; rcx = b
+    mov  rdx, [DSP+cell]      ; rdx = a
+    mov  [DSP+cell], rcx      ; [DSP+cell] = b
+    mov  [DSP], TOS           ; [DSP] = c
+    mov  TOS, rdx             ; TOS = a
+endword()
+
+; -ROT ( a b c -- c a b )
+; Reverse rotation — opposite of ROT.
+; Before: TOS=c, [DSP]=b, [DSP+cell]=a
+; After:  TOS=b, [DSP]=a, [DSP+cell]=c
+head("-ROT", nrot_, 0)
+    mov  rcx, [DSP]           ; rcx = b
+    mov  rdx, [DSP+cell]      ; rdx = a
+    mov  [DSP+cell], TOS      ; [DSP+cell] = c
+    mov  [DSP], rdx           ; [DSP] = a
+    mov  TOS, rcx             ; TOS = b
+endword()
+
+; NIP ( a b -- b )
+; Discard NOS; keep TOS.
+; Before: TOS=b, [DSP]=a   After: TOS=b, DSP+=cell
+head("NIP", nip_, 0)
+    add  DSP, cell
+endword()
+
+; TUCK ( a b -- b a b )
+; Copy TOS beneath NOS.
+; Before: TOS=b, [DSP]=a
+; After:  TOS=b, [DSP]=a, [DSP+cell]=b
+; Strategy: save a, grow stack, put a at [DSP], b at [DSP+cell].
+head("TUCK", tuck_, 0)
+    mov  rcx, [DSP]           ; rcx = a (NOS)
+    sub  DSP, cell            ; grow stack one cell
+    mov  [DSP], rcx           ; [DSP] = a (new NOS)
+    mov  [DSP+cell], TOS      ; [DSP+cell] = b (the tucked copy)
+    ; TOS = b (unchanged)
+endword()
+
+; ?DUP ( n -- n n | 0 -- 0 )
+; Duplicate TOS only if it is non-zero.
+head("?DUP", question_dup_, 0)
+    test TOS, TOS
+    jz   .skip
+    sub  DSP, cell
+    mov  [DSP], TOS
+.skip:
+endword()
+
+; 2DUP ( a b -- a b a b )
+; Before: TOS=b, [DSP]=a
+; After:  TOS=b, [DSP]=a, [DSP+cell]=b, [DSP+2*cell]=a
+head("2DUP", two_dup_, 0)
+    mov  rcx, [DSP]           ; rcx = a
+    sub  DSP, 2*cell          ; grow two cells
+    mov  [DSP+cell], TOS      ; [DSP+cell] = b
+    mov  [DSP], rcx           ; [DSP] = a
+    ; [DSP+2*cell] = old [DSP] = a  (already there)
+    ; TOS = b (unchanged)
+endword()
+
+; 2DROP ( a b -- )
+; Before: TOS=b, [DSP]=a, [DSP+cell]=x
+; After:  TOS=x, DSP = old DSP+2*cell
+; Load x first, then advance DSP by 2 cells.
+head("2DROP", two_drop_, 0)
+    mov  TOS, [DSP+cell]      ; TOS = x (was under a)
+    add  DSP, 2*cell          ; shrink by 2
+endword()
+
+; 2SWAP ( a b c d -- c d a b )
+; Before: TOS=d, [DSP]=c, [DSP+cell]=b, [DSP+2*cell]=a
+; After:  TOS=b, [DSP]=a, [DSP+cell]=d, [DSP+2*cell]=c
+head("2SWAP", two_swap_, 0)
+    mov  rcx, [DSP]           ; rcx = c
+    mov  rdx, [DSP+cell]      ; rdx = b
+    mov  r8,  [DSP+2*cell]    ; r8  = a
+    mov  [DSP], r8            ; [DSP] = a
+    mov  [DSP+cell], TOS      ; [DSP+cell] = d
+    mov  [DSP+2*cell], rcx    ; [DSP+2*cell] = c
+    mov  TOS, rdx             ; TOS = b
+endword()
+
+; 2OVER ( a b c d -- a b c d a b )
+; Before: TOS=d, [DSP]=c, [DSP+cell]=b, [DSP+2*cell]=a
+; After:  TOS=b, [DSP]=a, [DSP+cell]=d, [DSP+2*cell]=c, [DSP+3*cell]=b, [DSP+4*cell]=a
+; Grow by 2, then copy the pair that was at [DSP+cell]...[DSP+2*cell].
+head("2OVER", two_over_, 0)
+    mov  rcx, [DSP+cell]      ; rcx = b (2nd pair low)
+    mov  rdx, [DSP+2*cell]    ; rdx = a (2nd pair high)
+    sub  DSP, 2*cell          ; grow two cells
+    mov  [DSP+cell], TOS      ; save old TOS=d
+    ; Now: [DSP+cell]=d, [DSP+2*cell]=old_c, [DSP+3*cell]=b, [DSP+4*cell]=a
+    mov  TOS, rcx             ; TOS = b
+    mov  [DSP], rdx           ; [DSP] = a
+endword()
+
+; EXIT ( -- )
+; Return from current word (STC: just ret).
+head("EXIT", exit_, 0)
+    ret
+    @endscope
+
+; EXECUTE ( xt -- )
+; Call the word whose execution token is TOS.
+; Pop xt, expose new TOS from NOS, then tail-jump to xt.
+; Since we jmp (not call), EXECUTE's return address is still on RSP;
+; the executed word's ret returns to EXECUTE's caller — correct STC.
+head("EXECUTE", execute_, 0)
+    mov  rcx, TOS             ; rcx = xt
+    mov  TOS, [DSP]           ; new TOS = old NOS
+    add  DSP, cell            ; shrink stack
+    jmp  rcx                  ; tail-jump; no endword ret needed
+    @endscope
+
+; NOP ( -- )
+; Does nothing.
+head("NOP", nop_, 0)
+endword()
+
+; ─────────────────────────────────────────────────────────────────────────────
+; Arithmetic words
+; ─────────────────────────────────────────────────────────────────────────────
+
+; + ( n1 n2 -- n1+n2 )
+head("+", plus_, 0)
+    add  TOS, [DSP]
+    add  DSP, cell
+endword()
+
+; - ( n1 n2 -- n1-n2 )
+; TOS=n2, [DSP]=n1. Result = n1 - n2.
+head("-", minus_, 0)
+    mov  rcx, TOS
+    mov  TOS, [DSP]
+    sub  TOS, rcx
+    add  DSP, cell
+endword()
+
+; * ( n1 n2 -- n1*n2 )
+head("*", star_, 0)
+    imul TOS, [DSP]
+    add  DSP, cell
+endword()
+
+; /MOD ( n1 n2 -- rem quot )
+; TOS=n2 (divisor), [DSP]=n1 (dividend).
+; After: TOS=quotient, [DSP]=remainder.
+head("/MOD", slash_mod_, 0)
+    mov  rcx, TOS             ; rcx = divisor (n2)
+    mov  rax, [DSP]           ; rax = dividend (n1)
+    cqo                       ; sign-extend rax into rdx:rax
+    idiv rcx                  ; rax=quotient, rdx=remainder
+    mov  [DSP], rdx           ; NOS = remainder
+    mov  TOS, rax             ; TOS = quotient
+endword()
+
+; / ( n1 n2 -- quot )
+; TOS=n2 (divisor), [DSP]=n1 (dividend). Result = n1/n2.
+head("/", slash_, 0)
+    mov  rcx, TOS             ; rcx = divisor
+    mov  rax, [DSP]           ; rax = dividend
+    cqo
+    idiv rcx                  ; rax = quotient
+    add  DSP, cell
+    mov  TOS, rax
+endword()
+
+; MOD ( n1 n2 -- rem )
+; TOS=n2 (divisor), [DSP]=n1 (dividend). Result = remainder.
+head("MOD", mod_, 0)
+    mov  rcx, TOS             ; rcx = divisor
+    mov  rax, [DSP]           ; rax = dividend
+    cqo
+    idiv rcx                  ; rdx = remainder
+    add  DSP, cell
+    mov  TOS, rdx
+endword()
+
+; NEGATE ( n -- -n )
+head("NEGATE", negate_, 0)
+    neg  TOS
+endword()
+
+; ABS ( n -- |n| )
+head("ABS", abs_, 0)
+    test TOS, TOS
+    jns  .positive
+    neg  TOS
+.positive:
+endword()
+
+; MAX ( n1 n2 -- n1|n2 )
+; TOS=n2, [DSP]=n1. Push the larger (signed).
+head("MAX", max_, 0)
+    cmp  TOS, [DSP]
+    jge  .done                ; if n2 >= n1, TOS already has max
+    mov  TOS, [DSP]           ; else take n1
+.done:
+    add  DSP, cell
+endword()
+
+; MIN ( n1 n2 -- n1|n2 )
+; TOS=n2, [DSP]=n1. Push the smaller (signed).
+head("MIN", min_, 0)
+    cmp  TOS, [DSP]
+    jle  .done                ; if n2 <= n1, TOS already has min
+    mov  TOS, [DSP]           ; else take n1
+.done:
+    add  DSP, cell
+endword()
+
+; 1+ ( n -- n+1 )
+head("1+", one_plus_, 0)
+    inc  TOS
+endword()
+
+; 1- ( n -- n-1 )
+head("1-", one_minus_, 0)
+    dec  TOS
+endword()
+
+; 2+ ( n -- n+2 )
+head("2+", two_plus_, 0)
+    add  TOS, 2
+endword()
+
+; 2- ( n -- n-2 )
+head("2-", two_minus_, 0)
+    sub  TOS, 2
+endword()
+
+; 2* ( n -- n*2 ) — arithmetic left shift
+head("2*", two_star_, 0)
+    shl  TOS, 1
+endword()
+
+; 2/ ( n -- n/2 ) — arithmetic right shift (signed)
+head("2/", two_slash_, 0)
+    sar  TOS, 1
+endword()
+
+; ─────────────────────────────────────────────────────────────────────────────
+; Comparison words  (ANS Forth: TRUE = -1 = 0xFFFFFFFFFFFFFFFF, FALSE = 0)
+; ─────────────────────────────────────────────────────────────────────────────
+
+; = ( n1 n2 -- flag )
+; TOS=n2, [DSP]=n1. Push -1 if equal, 0 otherwise.
+head("=", equals_, 0)
+    cmp  TOS, [DSP]
+    sete al
+    movzx TOS, al
+    neg  TOS                  ; 1 → -1 (all ones), 0 → 0
+    add  DSP, cell
+endword()
+
+; <> ( n1 n2 -- flag )
+head("<>", not_equals_, 0)
+    cmp  TOS, [DSP]
+    setne al
+    movzx TOS, al
+    neg  TOS
+    add  DSP, cell
+endword()
+
+; < ( n1 n2 -- flag ) — signed less-than
+; TOS=n2, [DSP]=n1. True if n1 < n2.
+head("<", less_than_, 0)
+    cmp  [DSP], TOS           ; compare n1 vs n2
+    setl al                   ; al=1 if n1 < n2
+    movzx TOS, al
+    neg  TOS
+    add  DSP, cell
+endword()
+
+; > ( n1 n2 -- flag ) — signed greater-than
+; TOS=n2, [DSP]=n1. True if n1 > n2.
+head(">", greater_than_, 0)
+    cmp  [DSP], TOS           ; compare n1 vs n2
+    setg al                   ; al=1 if n1 > n2
+    movzx TOS, al
+    neg  TOS
+    add  DSP, cell
+endword()
+
+; 0= ( n -- flag )
+; True if TOS is zero.
+head("0=", zero_equals_, 0)
+    test TOS, TOS
+    setz al
+    movzx TOS, al
+    neg  TOS
+endword()
+
+; 0< ( n -- flag )
+; True if TOS is negative (signed).
+head("0<", zero_less_, 0)
+    test TOS, TOS
+    sets al                   ; sets if sign bit set (negative)
+    movzx TOS, al
+    neg  TOS
+endword()
+
+; 0<> ( n -- flag )
+; True if TOS is non-zero.
+head("0<>", zero_not_equals_, 0)
+    test TOS, TOS
+    setnz al
+    movzx TOS, al
+    neg  TOS
+endword()
+
+; 0> ( n -- flag )
+; True if TOS is positive (strictly greater than zero).
+head("0>", zero_greater_, 0)
+    test TOS, TOS
+    setg al                   ; setg: greater (signed) — ZF=0 and SF=OF
+    movzx TOS, al
+    neg  TOS
+endword()
+
+; U< ( u1 u2 -- flag ) — unsigned less-than
+; TOS=u2, [DSP]=u1. True if u1 < u2 (unsigned).
+head("U<", u_less_, 0)
+    cmp  [DSP], TOS           ; compare u1 vs u2
+    setb al                   ; below (unsigned)
+    movzx TOS, al
+    neg  TOS
+    add  DSP, cell
+endword()
+
+; U> ( u1 u2 -- flag ) — unsigned greater-than
+; TOS=u2, [DSP]=u1. True if u1 > u2 (unsigned).
+head("U>", u_greater_, 0)
+    cmp  [DSP], TOS           ; compare u1 vs u2
+    seta al                   ; above (unsigned)
+    movzx TOS, al
+    neg  TOS
+    add  DSP, cell
+endword()
+
+; ─────────────────────────────────────────────────────────────────────────────
+; Logic / bitwise words
+; ─────────────────────────────────────────────────────────────────────────────
+
+; AND ( n1 n2 -- n1&n2 )
+head("AND", and_, 0)
+    and  TOS, [DSP]
+    add  DSP, cell
+endword()
+
+; OR ( n1 n2 -- n1|n2 )
+head("OR", or_, 0)
+    or   TOS, [DSP]
+    add  DSP, cell
+endword()
+
+; XOR ( n1 n2 -- n1^n2 )
+head("XOR", xor_, 0)
+    xor  TOS, [DSP]
+    add  DSP, cell
+endword()
+
+; INVERT ( n -- ~n ) — bitwise complement
+head("INVERT", invert_, 0)
+    not  TOS
+endword()
+
+; LSHIFT ( n count -- n<<count )
+; TOS=count, [DSP]=n. Shift n left by count bits.
+head("LSHIFT", lshift_, 0)
+    mov  rcx, TOS             ; cl = shift count
+    mov  TOS, [DSP]           ; TOS = n
+    shl  TOS, cl
+    add  DSP, cell
+endword()
+
+; RSHIFT ( n count -- n>>count ) — logical (unsigned) right shift
+; TOS=count, [DSP]=n.
+head("RSHIFT", rshift_, 0)
+    mov  rcx, TOS             ; cl = shift count
+    mov  TOS, [DSP]           ; TOS = n
+    shr  TOS, cl              ; shr = logical shift (unsigned)
+    add  DSP, cell
+endword()
+
+; TRUE ( -- -1 )
+; Push ANS Forth true flag (all bits set).
+head("TRUE", true_, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    mov  TOS, -1
+endword()
+
+; FALSE ( -- 0 )
+; Push ANS Forth false flag (zero).
+head("FALSE", false_, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    xor  TOS, TOS
+endword()
+
+; ─────────────────────────────────────────────────────────────────────────────
+; End of primitives — dictionary chain terminates here.
+; The Rust harness can find the last link via PREVIOUS_LINK at this point.
+; Include forth/end-of-kernel.masm here (or in a top-level kernel.masm)
+; to emit the forth_last_link symbol.
+; ─────────────────────────────────────────────────────────────────────────────

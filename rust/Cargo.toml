@@ -27,6 +27,10 @@ path = "src/bin/hello_win32.rs"
 name = "hello-seh"
 path = "src/bin/hello_seh.rs"
 
+[[bin]]
+name = "wf64"
+path = "src/bin/wf64.rs"
+
 [profile.dev]
 # Debuginfo is slow on Windows; keep it small for fast iteration.
 debug = 1

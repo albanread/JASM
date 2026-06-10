@@ -1,0 +1,90 @@
+; forth/macros.masm — WF64 macro framework
+; All WF64 .masm files @include this first.
+
+    .intel_syntax noprefix
+    .text
+
+; ── Cell size and register aliases ────────────────────────────────────────────
+@assign cell = 8
+@define TOS  rax
+@define DSP  rbp
+@define UP   rbx
+
+; ── ANS Forth flag bits ───────────────────────────────────────────────────────
+@assign F_IMMED  = 0x01    ; IMMEDIATE
+@assign F_HIDDEN = 0x02    ; hidden from FIND
+
+; ── Dictionary link chain ─────────────────────────────────────────────────────
+; PREVIOUS_LINK tracks the most recent word's link label for chain linking.
+; The head() macro updates this after each word definition.
+@define PREVIOUS_LINK 0
+
+; ── Word header macro ─────────────────────────────────────────────────────────
+; head(forthname, asmname, flags)
+;   forthname — the Forth name string (e.g., "DUP", "+", ">R")
+;   asmname   — the assembly label name (e.g., dup, plus, to_r)
+;   flags     — F_IMMED, F_HIDDEN, or 0
+;
+; Emits:
+;   8-byte link pointer (to PREVIOUS_LINK, 0 for first word)
+;   1-byte flags
+;   1-byte name length (calculated via GAS local label arithmetic)
+;   name bytes
+;   then opens @scope asmname so .local labels work inside the word
+;   and updates PREVIOUS_LINK to link_asmname
+@macro head(forthname, asmname, flags)
+    .balign 8
+    .globl link_&asmname
+link_&asmname:
+    .quad PREVIOUS_LINK
+    .byte &flags
+    .byte 3f - 2f
+2:  .ascii "&forthname"
+3:
+    @scope &asmname
+    .globl &asmname
+&asmname:
+    @define PREVIOUS_LINK link_&asmname
+@endmacro
+
+; Closes a word opened with head(). Emits ret and closes the @scope.
+@macro endword()
+    ret
+    @endscope
+@endmacro
+
+; next() is NEXT in STC — just ret (call chain returns to caller).
+@macro next()
+    ret
+@endmacro
+
+; ── Data stack push/pop helpers ───────────────────────────────────────────────
+; pushd(val) — push val onto data stack (old TOS becomes NOS).
+@macro pushd(val)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    mov  TOS, &val
+@endmacro
+
+; popd() — pop NOS into TOS. Shrinks stack by one cell.
+@macro popd()
+    mov  TOS, [DSP]
+    add  DSP, cell
+@endmacro
+
+; ── Win64 callout wrapper ─────────────────────────────────────────────────────
+; win64_call(target) — calls target with Win64 ABI alignment + shadow space.
+; R12 is callee-saved on Win64 so it survives the call.
+@macro win64_call(target)
+    mov  r12, rsp
+    and  rsp, -16
+    sub  rsp, 32
+    call &target
+    mov  rsp, r12
+@endmacro
+
+; ── End-of-kernel sentinel ────────────────────────────────────────────────────
+; Exported so the Rust harness can read LATEST from JIT memory.
+; Emitted by including "forth/end-of-kernel.masm" after all word definitions:
+;   .globl forth_last_link
+;   forth_last_link: .quad PREVIOUS_LINK

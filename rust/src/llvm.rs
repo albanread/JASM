@@ -19,7 +19,7 @@
 #![allow(non_snake_case)]
 #![allow(dead_code)]
 
-use std::os::raw::{c_char, c_int, c_uint};
+use std::os::raw::{c_char, c_int, c_uint, c_void};
 
 // ---- Opaque handle types --------------------------------------------------
 
@@ -52,6 +52,35 @@ pub struct LLVMMCJITCompilerOptions {
     pub EnableFastISel: LLVMBool,
     pub MCJMM: LLVMMCJITMemoryManagerRef,
 }
+
+// ---- MCJIT memory manager callbacks --------------------------------------
+//
+// A `SimpleMCJITMemoryManager` lets us choose where MCJIT places emitted
+// sections. We use it to allocate code/data from a near arena (within
+// ±1.75 GB of the kernel) so runtime-JITed words are rel32-reachable —
+// no far-segment jump trampoline needed.  Signatures from
+// `llvm-c/ExecutionEngine.h`.
+pub type LLVMMemoryManagerAllocateCodeSectionCallback = unsafe extern "C" fn(
+    Opaque: *mut c_void,
+    Size: usize,
+    Alignment: c_uint,
+    SectionID: c_uint,
+    SectionName: *const c_char,
+) -> *mut u8;
+
+pub type LLVMMemoryManagerAllocateDataSectionCallback = unsafe extern "C" fn(
+    Opaque: *mut c_void,
+    Size: usize,
+    Alignment: c_uint,
+    SectionID: c_uint,
+    SectionName: *const c_char,
+    IsReadOnly: LLVMBool,
+) -> *mut u8;
+
+pub type LLVMMemoryManagerFinalizeMemoryCallback =
+    unsafe extern "C" fn(Opaque: *mut c_void, ErrMsg: *mut *mut c_char) -> LLVMBool;
+
+pub type LLVMMemoryManagerDestroyCallback = unsafe extern "C" fn(Opaque: *mut c_void);
 
 // ---- Core ----------------------------------------------------------------
 
@@ -172,6 +201,18 @@ extern "C" {
         Options: *mut LLVMMCJITCompilerOptions,
         SizeOfOptions: usize,
     );
+
+    /// Create a memory manager whose section-allocation decisions are
+    /// delegated to the supplied callbacks. We use this to place runtime
+    /// code in a near arena. Ownership passes to the engine built from the
+    /// options that reference it; the engine calls `Destroy` on dispose.
+    pub fn LLVMCreateSimpleMCJITMemoryManager(
+        Opaque: *mut c_void,
+        AllocateCodeSection: LLVMMemoryManagerAllocateCodeSectionCallback,
+        AllocateDataSection: LLVMMemoryManagerAllocateDataSectionCallback,
+        FinalizeMemory: LLVMMemoryManagerFinalizeMemoryCallback,
+        Destroy: LLVMMemoryManagerDestroyCallback,
+    ) -> LLVMMCJITMemoryManagerRef;
 
     /// Build an MCJIT execution engine that compiles `Module`. **Consumes**
     /// `Module` — do not dispose or reuse it after a successful call. On

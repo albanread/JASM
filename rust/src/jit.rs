@@ -22,7 +22,7 @@
 //! `LLVMAddModule`, but that's not what this layer does today.
 
 use std::ffi::{c_void, CStr, CString};
-use std::os::raw::c_uint;
+use std::os::raw::{c_char, c_uint};
 use std::ptr;
 
 use crate::llvm::*;
@@ -81,6 +81,11 @@ pub struct Jit {
     /// at construction. Drained by `take_errors()` before each public
     /// operation reports success.
     diag_errors: Box<Vec<String>>,
+    /// If set, `finalize()` installs a SimpleMCJITMemoryManager backed by
+    /// this near arena so emitted sections land rel32-reachable. The
+    /// pointer is borrowed from the host, which keeps the arena alive
+    /// longer than this `Jit`.
+    arena: Option<*mut CodeArena>,
 }
 
 /// LLVM diagnostic handler: captures error-severity diagnostics into a
@@ -108,6 +113,85 @@ unsafe extern "C" fn diag_handler(diag: LLVMDiagnosticInfoRef, ctx: *mut c_void)
         let errors = &mut *(ctx as *mut Vec<String>);
         errors.push(msg);
     }
+}
+
+/// A near (rel32-reachable) code/data arena the host allocates within
+/// ±1.75 GB of the kernel. A `Jit` built with [`Jit::new_in_arena`] routes
+/// every MCJIT section allocation here, so emitted code is reachable by a
+/// plain `call rel32` from the kernel/dictionary — no far-segment jump
+/// trampoline needed. The arena must be mapped **RWX** (so `finalize` is a
+/// no-op) and the host owns the backing memory: it must outlive every `Jit`
+/// that allocates from it, but individual engines may be dropped while the
+/// code they emitted lives on here.
+#[repr(C)]
+pub struct CodeArena {
+    base: *mut u8,
+    size: usize,
+    offset: usize,
+    /// Bytes reserved immediately before each CODE section so the host can
+    /// stash per-function metadata at `[section_base - code_header ..
+    /// section_base)` — e.g. a dictionary xt back-offset cell, the same way
+    /// boot-time primitives carry one. 0 = no reservation.
+    code_header: usize,
+}
+
+impl CodeArena {
+    /// `base`/`size` must describe an RWX region kept alive by the caller.
+    pub fn new(base: *mut u8, size: usize) -> Self {
+        CodeArena { base, size, offset: 0, code_header: 0 }
+    }
+
+    /// Like [`new`], but reserve `code_header` bytes before every code
+    /// section (see the field docs).
+    pub fn with_code_header(base: *mut u8, size: usize, code_header: usize) -> Self {
+        CodeArena { base, size, offset: 0, code_header }
+    }
+
+    /// Bytes handed out so far.
+    pub fn used(&self) -> usize { self.offset }
+
+    fn bump(&mut self, size: usize, align: usize, reserve: usize) -> *mut u8 {
+        let align = align.max(1);
+        // Reserve first, then align: the returned pointer is `align`-aligned
+        // and `[ptr - reserve .. ptr)` is free space past the prior section.
+        let start = (self.offset + reserve + align - 1) & !(align - 1);
+        match start.checked_add(size) {
+            Some(end) if end <= self.size => {
+                self.offset = end;
+                unsafe { self.base.add(start) }
+            }
+            // Exhausted (or overflow): returning null makes MCJIT fail the
+            // finalize cleanly rather than scribbling out of bounds.
+            _ => ptr::null_mut(),
+        }
+    }
+}
+
+unsafe extern "C" fn arena_alloc_code(
+    opaque: *mut c_void, size: usize, align: c_uint,
+    _id: c_uint, _name: *const c_char,
+) -> *mut u8 {
+    if opaque.is_null() { return ptr::null_mut(); }
+    let a = unsafe { &mut *(opaque as *mut CodeArena) };
+    let reserve = a.code_header;
+    a.bump(size, align as usize, reserve)
+}
+
+unsafe extern "C" fn arena_alloc_data(
+    opaque: *mut c_void, size: usize, align: c_uint,
+    _id: c_uint, _name: *const c_char, _read_only: LLVMBool,
+) -> *mut u8 {
+    if opaque.is_null() { return ptr::null_mut(); }
+    let a = unsafe { &mut *(opaque as *mut CodeArena) };
+    a.bump(size, align as usize, 0)
+}
+
+unsafe extern "C" fn arena_finalize(_opaque: *mut c_void, _err: *mut *mut c_char) -> LLVMBool {
+    0 // success — the arena is already executable (RWX)
+}
+
+unsafe extern "C" fn arena_destroy(_opaque: *mut c_void) {
+    // The host owns the arena memory; nothing to free per-engine.
 }
 
 impl Jit {
@@ -143,8 +227,19 @@ impl Jit {
                 engine: None,
                 pending_mappings: Vec::new(),
                 diag_errors,
+                arena: None,
             })
         }
+    }
+
+    /// Build a JIT whose emitted code/data go into `arena` — a near,
+    /// RWX, rel32-reachable region the host keeps alive. Use this for
+    /// runtime word compilation (`CODE:` / `LET`) so the result is a real
+    /// near function callable directly, with no far-segment trampoline.
+    pub fn new_in_arena(module_name: &str, arena: *mut CodeArena) -> Result<Self, JitError> {
+        let mut jit = Self::new(module_name)?;
+        jit.arena = Some(arena);
+        Ok(jit)
     }
 
     /// Drain and return all error-severity diagnostics LLVM has reported
@@ -310,6 +405,22 @@ impl Jit {
             // mostly affects helper functions we add later.)
             opts.OptLevel = 0;
 
+            // If a near arena was supplied, route all section allocations
+            // through it so emitted code is rel32-reachable from the kernel
+            // (no far-segment trampoline). MCJIT takes ownership of the
+            // memory manager and calls `arena_destroy` (a no-op) on dispose;
+            // the emitted code outlives the engine because the host owns the
+            // arena.
+            if let Some(arena) = self.arena {
+                opts.MCJMM = LLVMCreateSimpleMCJITMemoryManager(
+                    arena as *mut c_void,
+                    arena_alloc_code,
+                    arena_alloc_data,
+                    arena_finalize,
+                    arena_destroy,
+                );
+            }
+
             let mut engine: LLVMExecutionEngineRef = ptr::null_mut();
             let mut err_msg: *mut std::os::raw::c_char = ptr::null_mut();
             let rc = LLVMCreateMCJITCompilerForModule(
@@ -379,4 +490,29 @@ impl Drop for Jit {
 
 fn c_string(s: &str) -> Result<CString, JitError> {
     CString::new(s).map_err(|_| JitError::Nul(s.to_string()))
+}
+
+/// `Jit` is the LLVM/MCJIT [`Loader`](crate::backend::Loader) — the "LlvmJit"
+/// of the Rasm migration. The native loader will implement the same trait.
+impl crate::backend::Loader for Jit {
+    fn add_asm(&mut self, asm_text: &str) -> anyhow::Result<()> {
+        Jit::add_asm(self, asm_text)?;
+        Ok(())
+    }
+    fn declare_fn(&mut self, name: &str, arg_count: usize) -> anyhow::Result<()> {
+        Jit::declare_fn(self, name, arg_count)?;
+        Ok(())
+    }
+    fn define_extern_fn(
+        &mut self,
+        name: &str,
+        arg_count: usize,
+        addr: *mut c_void,
+    ) -> anyhow::Result<()> {
+        Jit::define_extern_fn(self, name, arg_count, addr)?;
+        Ok(())
+    }
+    fn lookup_addr(&mut self, name: &str) -> anyhow::Result<u64> {
+        Ok(Jit::lookup_addr(self, name)?)
+    }
 }

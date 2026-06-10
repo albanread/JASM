@@ -1,0 +1,188 @@
+; forth/user-area.masm — User area layout constants and user variable words.
+;
+; The user area is a block of memory pointed to by UP (rbx).
+; Each slot is one 64-bit cell wide.
+;
+; Register convention (from macros.masm):
+;   TOS (rax) = top of data stack (register-cached)
+;   DSP (rbp) = data stack pointer, points to NOS
+;   UP  (rbx) = user/task pointer — base of per-task user area
+;   RSP       = return stack (hardware stack)
+;
+; User variable words push the ADDRESS of their slot (not the value),
+; so the caller uses @ and ! to read/write. E.g.: BASE @ to read the base.
+; Exceptions: HERE pushes the VALUE of DP, and SOURCE pushes ( addr len ).
+
+@include "forth/macros.masm"
+
+; ── User area slot offsets (relative to UP = rbx) ────────────────────────────
+@assign UP_DP          = 0      ; dictionary pointer (HERE)
+@assign UP_BASE        = 8      ; number base (default 10)
+@assign UP_STATE       = 16     ; 0=interpret, nonzero=compile
+@assign UP_LATEST      = 24     ; link field address of most recent definition
+@assign UP_IN          = 32     ; >IN: parse position in current source
+@assign UP_SOURCE_ADDR = 40     ; address of current source string
+@assign UP_SOURCE_LEN  = 48     ; length of current source string
+@assign UP_TIB         = 56     ; pointer to terminal input buffer
+@assign UP_NTIB        = 64     ; #TIB: terminal input buffer capacity
+@assign UP_HLD         = 72     ; pictured numeric output hold pointer
+@assign UP_HANDLER     = 80     ; THROW/CATCH exception handler
+@assign UP_SIZE        = 128    ; total bytes to allocate for a user area
+
+; ── User variable words ───────────────────────────────────────────────────────
+; Pattern: push old TOS to NOS, load address of slot into TOS.
+
+; BASE ( -- a-addr )
+; Address of the number-base cell.
+head("BASE", base_, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    lea  TOS, [UP + UP_BASE]
+endword()
+
+; STATE ( -- a-addr )
+; Address of the interpretation/compilation state cell.
+head("STATE", state_, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    lea  TOS, [UP + UP_STATE]
+endword()
+
+; >IN ( -- a-addr )
+; Address of the parse position cell.
+head(">IN", to_in, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    lea  TOS, [UP + UP_IN]
+endword()
+
+; SOURCE ( -- addr len )
+; Push the address and length of the current input source (two cells).
+; Before: TOS=x
+; After:  TOS=len, [DSP]=addr, [DSP+cell]=old x
+head("SOURCE", source_word, 0)
+    sub  DSP, 2*cell              ; make room for two new cells
+    mov  [DSP+cell], TOS          ; save old TOS below new pair
+    mov  rcx, [UP + UP_SOURCE_ADDR]
+    mov  [DSP], rcx               ; [DSP] = addr (will be NOS)
+    mov  TOS, [UP + UP_SOURCE_LEN] ; TOS = len
+endword()
+
+; TIB ( -- addr )
+; Push the address of the terminal input buffer (the buffer itself, not the slot).
+head("TIB", tib_word, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    mov  TOS, [UP + UP_TIB]      ; dereference: push the buffer address
+endword()
+
+; #TIB ( -- a-addr )
+; Address of the TIB capacity cell.
+head("#TIB", hash_tib, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    lea  TOS, [UP + UP_NTIB]
+endword()
+
+; HLD ( -- a-addr )
+; Address of the pictured numeric output hold pointer.
+head("HLD", hld_, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    lea  TOS, [UP + UP_HLD]
+endword()
+
+; HANDLER ( -- a-addr )
+; Address of the THROW/CATCH exception handler cell.
+head("HANDLER", handler_, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    lea  TOS, [UP + UP_HANDLER]
+endword()
+
+; DP ( -- a-addr )
+; Address of the dictionary pointer cell.
+head("DP", dp_word, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    lea  TOS, [UP + UP_DP]
+endword()
+
+; LATEST ( -- a-addr )
+; Address of the LATEST (most recent definition link) cell.
+head("LATEST", latest_word, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    lea  TOS, [UP + UP_LATEST]
+endword()
+
+; ── Dictionary allocation words ───────────────────────────────────────────────
+
+; HERE ( -- addr )
+; Push the CURRENT VALUE of DP (the next free dictionary address).
+head("HERE", here_word, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    mov  TOS, [UP + UP_DP]       ; push the value, not the address
+endword()
+
+; ALLOT ( n -- )
+; Add n bytes to DP, reserving space in the dictionary.
+head("ALLOT", allot_, 0)
+    add  [UP + UP_DP], TOS       ; DP += n
+    mov  TOS, [DSP]              ; pop data stack
+    add  DSP, cell
+endword()
+
+; , (COMMA) ( x -- )
+; Write TOS (one cell) to HERE and advance DP by cell.
+head(",", comma_, 0)
+    mov  rcx, [UP + UP_DP]      ; rcx = HERE
+    mov  [rcx], TOS              ; [HERE] = x
+    add  qword ptr [UP + UP_DP], cell  ; HERE += cell
+    mov  TOS, [DSP]              ; pop data stack
+    add  DSP, cell
+endword()
+
+; C, (C-COMMA) ( c -- )
+; Write the low byte of TOS to HERE and advance DP by 1.
+head("C,", c_comma, 0)
+    mov  rcx, [UP + UP_DP]      ; rcx = HERE
+    mov  byte ptr [rcx], al     ; [HERE] = low byte of TOS (rax)
+    add  qword ptr [UP + UP_DP], 1
+    mov  TOS, [DSP]              ; pop data stack
+    add  DSP, cell
+endword()
+
+; ── Address arithmetic words ──────────────────────────────────────────────────
+
+; ALIGNED ( addr -- aligned-addr )
+; Round addr UP to the nearest cell (8-byte) boundary.
+head("ALIGNED", aligned_, 0)
+    add  TOS, cell-1             ; TOS += 7
+    and  TOS, -cell              ; TOS &= ~7 (clear low 3 bits)
+endword()
+
+; CELLS ( n -- n*cell )
+; Convert a cell count to a byte count (multiply by cell size = 8).
+head("CELLS", cells_, 0)
+    shl  TOS, 3                  ; TOS *= 8
+endword()
+
+; CHARS ( n -- n )
+; Convert a character count to a byte count. Characters are 1 byte, so no-op.
+head("CHARS", chars_, 0)
+    ; chars are bytes: n chars = n bytes; identity
+endword()
+
+; CELL+ ( addr -- addr+cell )
+; Add one cell width to an address.
+head("CELL+", cell_plus, 0)
+    add  TOS, cell
+endword()
+
+; CHAR+ ( addr -- addr+1 )
+; Advance an address by one character (one byte).
+head("CHAR+", char_plus, 0)
+    inc  TOS
+endword()

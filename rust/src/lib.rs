@@ -18,6 +18,11 @@ pub mod asm;
 pub mod llvm;
 pub mod jit;
 
+/// Backend seam (Encoder / Loader traits) for the Rasm migration — replacing
+/// LLVM-MC + MCJIT with a native Rust assembler + loader. Always compiled; the
+/// LLVM impls live alongside `Jit`.
+pub mod backend;
+
 #[cfg(windows)]
 pub mod win32;
 
@@ -25,4 +30,5 @@ pub mod win32;
 pub mod seh;
 
 pub use asm::Assembler;
-pub use jit::{Jit, JitError};
+pub use backend::{EncodedModule, Encoder, Loader, Reloc, RelocKind};
+pub use jit::{CodeArena, Jit, JitError};

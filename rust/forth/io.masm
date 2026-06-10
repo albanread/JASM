@@ -1,0 +1,121 @@
+; forth/io.masm — ANS Forth I/O words.
+;
+; These words call Rust runtime functions via the Win64 ABI.
+; win64_call(target) (defined in macros.masm) aligns RSP, provides 32 bytes
+; of shadow space, calls the target, and restores RSP. It uses R12 for RSP
+; parking (R12 is callee-saved on Win64 and not used for any Forth role).
+;
+; IMPORTANT: win64_call clobbers RAX (= TOS) with the callee's return value.
+; When we need to preserve our own TOS across a call, we temporarily spill it
+; to the data stack (sub DSP/mov [DSP],TOS … mov TOS,[DSP]/add DSP) or keep
+; it in R13 (another callee-saved register we don't otherwise dedicate).
+;
+; Runtime functions the Rust harness must register:
+;   rt_emit(1)  — write the character in RCX (as u64) to stdout; returns 0
+;   rt_key(0)   — read one character; returns it in RAX as u64
+;
+; Register convention (from macros.masm):
+;   TOS (rax) = top of data stack (register-cached)
+;   DSP (rbp) = data stack pointer, points to NOS
+;   UP  (rbx) = user/task pointer
+;   RSP       = return stack (hardware stack)
+;   R12       = RSP-save register (used inside win64_call)
+;   R13, R14  = used as local saves across win64_call in words below
+
+@include "forth/macros.masm"
+
+@extern rt_emit(1)
+@extern rt_key(0)
+
+; ── Character output ──────────────────────────────────────────────────────────
+
+; EMIT ( c -- )
+; Output the character whose ASCII code is TOS.
+; win64_call clobbers rax (TOS); we save the new data-TOS in R13 first.
+head("EMIT", emit_, 0)
+    mov  rcx, TOS               ; Win64 arg1 = character
+    mov  r13, [DSP]             ; r13 = new TOS (old NOS) — save before call
+    add  DSP, cell              ; pop data stack (consume c)
+    win64_call(rt_emit)         ; clobbers rax; we don't use the return value
+    mov  TOS, r13               ; restore TOS (discard rt_emit's rax)
+endword()
+
+; SPACE ( -- )
+; Output a space character (ASCII 32).
+; No net change to the data stack.
+head("SPACE", space_, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS             ; park current TOS on data stack
+    mov  rcx, 32                ; Win64 arg1 = ' '
+    win64_call(rt_emit)         ; clobbers rax (TOS)
+    mov  TOS, [DSP]             ; restore TOS
+    add  DSP, cell
+endword()
+
+; CR ( -- )
+; Output a newline character (ASCII 10).
+head("CR", cr_, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS             ; park current TOS
+    mov  rcx, 10                ; Win64 arg1 = '\n'
+    win64_call(rt_emit)
+    mov  TOS, [DSP]
+    add  DSP, cell
+endword()
+
+; TYPE ( addr len -- )
+; Output len characters starting at addr.
+; Uses R13 = character count (loop counter), R14 = source pointer.
+; Both R13 and R14 are callee-saved on Win64 and not otherwise dedicated in
+; this Forth kernel, so they are safe to use as primitives-local variables.
+head("TYPE", type_, 0)
+    ; TOS=len, [DSP]=addr, [DSP+cell]=new-data-TOS
+    mov  r13, TOS               ; r13 = len (loop counter)
+    mov  r14, [DSP]             ; r14 = addr (source pointer)
+    mov  TOS, [DSP+cell]        ; new TOS = what was below addr
+    add  DSP, 2*cell            ; consumed len and addr
+    ; Loop: emit one character at a time
+.loop:
+    test r13, r13
+    jz   .done
+    ; Spill TOS around win64_call (which clobbers rax).
+    sub  DSP, cell
+    mov  [DSP], TOS             ; park TOS on data stack
+    movzx rcx, byte ptr [r14]  ; Win64 arg1 = next character
+    win64_call(rt_emit)
+    mov  TOS, [DSP]             ; restore TOS
+    add  DSP, cell
+    inc  r14                    ; advance source pointer
+    dec  r13                    ; decrement count
+    jmp  .loop
+.done:
+endword()
+
+; ── Character input ───────────────────────────────────────────────────────────
+
+; KEY ( -- c )
+; Read one character from input. Pushes the character code.
+; rt_key() returns the character in RAX = TOS. No pre-call TOS to save;
+; we push the old TOS to NOS first, then let win64_call put the result in rax.
+head("KEY", key_, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS             ; push old TOS to NOS
+    win64_call(rt_key)          ; returns character in rax = TOS ✓
+endword()
+
+; KEY? ( -- c true | false )
+; Non-blocking character test. Returns ( c -1 ) if a character is available,
+; ( 0 ) if not. Requires rt_key_q(0) to return: high 32 bits = 1 if avail,
+; low 32 bits = char. We implement this as a stub that always blocks (same
+; as KEY) for now. A full implementation needs an rt_key_q runtime function.
+; Stub: just fall through to KEY behaviour (will block).
+; TODO: add @extern rt_key_q(0) and implement non-blocking poll.
+head("KEY?", key_q, 0)
+    sub  DSP, cell
+    mov  [DSP], TOS
+    win64_call(rt_key)          ; blocking: same as KEY for now
+    ; Push TRUE flag
+    sub  DSP, cell
+    mov  [DSP], TOS             ; NOS = char
+    mov  TOS, -1                ; TOS = TRUE (ANS Forth -1)
+endword()
