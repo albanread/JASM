@@ -454,13 +454,13 @@ fn sym_str(query: u64) -> String {
 /// For Win32 externs (whose addresses came from `GetProcAddress` via
 /// `bind_externs`), the host has the (name, addr) pairs already —
 /// feed them to `register_many` directly with source `"win32"`.
-pub fn register_jit_procs(
-    jit: &mut crate::Jit,
+pub fn register_jit_procs<L: crate::backend::Loader>(
+    loader: &mut L,
     names: &[&str],
-) -> Result<(), crate::JitError> {
+) -> anyhow::Result<()> {
     let mut acc: Vec<(String, u64, &'static str)> = Vec::with_capacity(names.len());
     for &name in names {
-        let addr = jit.lookup_addr(name)?;
+        let addr = loader.lookup_addr(name)?;
         acc.push((name.to_string(), addr, "jit_proc"));
     }
     register_many(acc);

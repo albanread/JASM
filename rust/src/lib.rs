@@ -15,7 +15,14 @@
 //! LLVM pipe is wired up. The MASM parser then plugs in above this layer.
 
 pub mod asm;
+
+// LLVM-MC assembler + MCJIT loader. Behind the `llvm` feature (default ON) —
+// the Rasm migration replaces these with a native encoder+loader behind the
+// `backend` traits. With `llvm` off, the crate compiles to the front-end +
+// trait skeleton + SEH, with no LLVM-C dependency.
+#[cfg(feature = "llvm")]
 pub mod llvm;
+#[cfg(feature = "llvm")]
 pub mod jit;
 
 /// Backend seam (Encoder / Loader traits) for the Rasm migration — replacing
@@ -31,4 +38,5 @@ pub mod seh;
 
 pub use asm::Assembler;
 pub use backend::{EncodedModule, Encoder, Loader, Reloc, RelocKind};
+#[cfg(feature = "llvm")]
 pub use jit::{CodeArena, Jit, JitError};

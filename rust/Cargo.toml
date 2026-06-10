@@ -7,6 +7,17 @@ description = "MASM-style x86-64 macro assembler + LLVM ORC JIT for a 64-bit For
 [dependencies]
 anyhow = "1"
 
+[features]
+# `llvm` links LLVM-C and compiles the MCJIT assembler/loader (`llvm.rs`,
+# `jit.rs`, the Jit Loader impl). ON BY DEFAULT today — it is still the only
+# working backend. The Rasm migration adds a native encoder+loader behind the
+# same `backend` traits; once that is the default, `llvm` flips to a
+# non-default `llvm-oracle` role (differential test only). With the feature OFF
+# the crate compiles to the front-end + `backend` trait skeleton + SEH, with no
+# LLVM-C dependency. See WF65 docs/design/rasm-replace-llvm.md.
+default = ["llvm"]
+llvm = []
+
 [lib]
 name = "wfasm"
 path = "src/lib.rs"
@@ -14,22 +25,27 @@ path = "src/lib.rs"
 [[bin]]
 name = "hello-jit"
 path = "src/bin/hello_jit.rs"
+required-features = ["llvm"]
 
 [[bin]]
 name = "hello-runtime"
 path = "src/bin/hello_runtime.rs"
+required-features = ["llvm"]
 
 [[bin]]
 name = "hello-win32"
 path = "src/bin/hello_win32.rs"
+required-features = ["llvm"]
 
 [[bin]]
 name = "hello-seh"
 path = "src/bin/hello_seh.rs"
+required-features = ["llvm"]
 
 [[bin]]
 name = "wf64"
 path = "src/bin/wf64.rs"
+required-features = ["llvm"]
 
 [profile.dev]
 # Debuginfo is slow on Windows; keep it small for fast iteration.

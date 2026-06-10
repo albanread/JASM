@@ -44,7 +44,7 @@ use std::collections::HashMap;
 use std::ffi::{c_void, CString};
 
 use crate::asm::Assembler;
-use crate::jit::Jit;
+use crate::backend::Loader;
 
 // ─── Win32 FFI (minimal — three functions) ──────────────────────────
 
@@ -67,7 +67,7 @@ pub enum BindError {
     LoadLibrary { dll: String, win_error: u32 },
     GetProcAddress { dll: String, name: String, win_error: u32 },
     UnresolvedHostExtern { name: String },
-    Jit(crate::jit::JitError),
+    Loader(String),
     Cstring(String),
 }
 
@@ -85,18 +85,12 @@ impl std::fmt::Display for BindError {
                 f,
                 "@extern `{name}` has no DLL string and the resolver returned None"
             ),
-            BindError::Jit(e) => write!(f, "JIT bind failed: {e}"),
+            BindError::Loader(e) => write!(f, "loader bind failed: {e}"),
             BindError::Cstring(s) => write!(f, "name `{s}` contains an interior NUL"),
         }
     }
 }
 impl std::error::Error for BindError {}
-
-impl From<crate::jit::JitError> for BindError {
-    fn from(e: crate::jit::JitError) -> Self {
-        BindError::Jit(e)
-    }
-}
 
 /// Outcome of a `bind_externs` call.
 #[derive(Debug, Default)]
@@ -131,12 +125,13 @@ pub struct BindReport {
 /// * `host_resolver` returning `None` for a host-side extern IS
 ///   fatal — the host should know exactly which Rust functions it
 ///   provides.
-pub fn bind_externs<F>(
+pub fn bind_externs<L, F>(
     asm: &Assembler,
-    jit: &mut Jit,
+    loader: &mut L,
     mut host_resolver: F,
 ) -> Result<BindReport, BindError>
 where
+    L: Loader,
     F: FnMut(&str) -> Option<*mut c_void>,
 {
     // Snapshot the externs first — registering with the JIT borrows
@@ -159,7 +154,9 @@ where
             })?),
         };
         if let Some(addr) = addr_opt {
-            jit.define_extern_fn(&name, arg_count, addr)?;
+            loader
+                .define_extern_fn(&name, arg_count, addr)
+                .map_err(|e| BindError::Loader(e.to_string()))?;
             report.bound += 1;
         }
     }
