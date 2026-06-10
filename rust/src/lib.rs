@@ -16,6 +16,9 @@
 
 pub mod asm;
 
+/// Near (rel32-reachable) RWX code arena for runtime words. LLVM-independent.
+pub mod arena;
+
 // LLVM-MC assembler + MCJIT loader. Behind the `llvm` feature (default ON) —
 // the Rasm migration replaces these with a native encoder+loader behind the
 // `backend` traits. With `llvm` off, the crate compiles to the front-end +
@@ -45,7 +48,8 @@ pub mod seh;
 #[cfg(windows)]
 pub mod native;
 
+pub use arena::CodeArena;
 pub use asm::Assembler;
 pub use backend::{EncodedModule, Encoder, Loader, Reloc, RelocKind};
 #[cfg(feature = "llvm")]
-pub use jit::{CodeArena, Jit, JitError};
+pub use jit::{Jit, JitError};

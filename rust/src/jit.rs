@@ -25,6 +25,7 @@ use std::ffi::{c_void, CStr, CString};
 use std::os::raw::{c_char, c_uint};
 use std::ptr;
 
+use crate::arena::CodeArena;
 use crate::llvm::*;
 
 #[derive(Debug)]
@@ -112,66 +113,6 @@ unsafe extern "C" fn diag_handler(diag: LLVMDiagnosticInfoRef, ctx: *mut c_void)
         LLVMDisposeMessage(raw);
         let errors = &mut *(ctx as *mut Vec<String>);
         errors.push(msg);
-    }
-}
-
-/// A near (rel32-reachable) code/data arena the host allocates within
-/// ±1.75 GB of the kernel. A `Jit` built with [`Jit::new_in_arena`] routes
-/// every MCJIT section allocation here, so emitted code is reachable by a
-/// plain `call rel32` from the kernel/dictionary — no far-segment jump
-/// trampoline needed. The arena must be mapped **RWX** (so `finalize` is a
-/// no-op) and the host owns the backing memory: it must outlive every `Jit`
-/// that allocates from it, but individual engines may be dropped while the
-/// code they emitted lives on here.
-#[repr(C)]
-pub struct CodeArena {
-    base: *mut u8,
-    size: usize,
-    offset: usize,
-    /// Bytes reserved immediately before each CODE section so the host can
-    /// stash per-function metadata at `[section_base - code_header ..
-    /// section_base)` — e.g. a dictionary xt back-offset cell, the same way
-    /// boot-time primitives carry one. 0 = no reservation.
-    code_header: usize,
-}
-
-impl CodeArena {
-    /// `base`/`size` must describe an RWX region kept alive by the caller.
-    pub fn new(base: *mut u8, size: usize) -> Self {
-        CodeArena { base, size, offset: 0, code_header: 0 }
-    }
-
-    /// Like [`new`], but reserve `code_header` bytes before every code
-    /// section (see the field docs).
-    pub fn with_code_header(base: *mut u8, size: usize, code_header: usize) -> Self {
-        CodeArena { base, size, offset: 0, code_header }
-    }
-
-    /// Bytes handed out so far.
-    pub fn used(&self) -> usize { self.offset }
-
-    /// Bump-allocate `size` bytes (`align`-aligned) with NO header reservation —
-    /// the caller supplies its own leading xt-metadata cell (e.g. a `.quad 0`
-    /// already in the assembled bytes). Returns null if the arena is exhausted.
-    /// Used by the native `CODE:` path to place a RasmEncoder-assembled word.
-    pub fn alloc(&mut self, size: usize, align: usize) -> *mut u8 {
-        self.bump(size, align, 0)
-    }
-
-    fn bump(&mut self, size: usize, align: usize, reserve: usize) -> *mut u8 {
-        let align = align.max(1);
-        // Reserve first, then align: the returned pointer is `align`-aligned
-        // and `[ptr - reserve .. ptr)` is free space past the prior section.
-        let start = (self.offset + reserve + align - 1) & !(align - 1);
-        match start.checked_add(size) {
-            Some(end) if end <= self.size => {
-                self.offset = end;
-                unsafe { self.base.add(start) }
-            }
-            // Exhausted (or overflow): returning null makes MCJIT fail the
-            // finalize cleanly rather than scribbling out of bounds.
-            _ => ptr::null_mut(),
-        }
     }
 }
 
