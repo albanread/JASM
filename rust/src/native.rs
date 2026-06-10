@@ -83,8 +83,23 @@ fn virtual_alloc2() -> Result<VirtualAlloc2Fn> {
     }
 }
 
+/// Allocate `size` bytes of RW memory anywhere the OS picks (a roomy spot, not
+/// crowded against the host image). Far externs are reached via stubs, so the
+/// code region has no rel32 constraint to the host.
+fn alloc_anywhere(size: usize) -> Result<*mut u8> {
+    let va2 = virtual_alloc2().context("locate VirtualAlloc2")?;
+    let base = unsafe {
+        va2(ptr::null_mut(), ptr::null_mut(), size, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE, ptr::null_mut(), 0)
+    };
+    if base.is_null() {
+        bail!("VirtualAlloc2 (anywhere) returned null (GetLastError = {})", unsafe { GetLastError() });
+    }
+    Ok(base as *mut u8)
+}
+
 /// Allocate `size` bytes of RW memory within ±window of `anchor` so emitted
 /// code reaches host externs by `call rel32`.
+#[allow(dead_code)]
 fn alloc_near(anchor: u64, size: usize) -> Result<*mut u8> {
     let va2 = virtual_alloc2().context("locate VirtualAlloc2")?;
     const GRANULARITY: u64 = 0x10000;
@@ -140,6 +155,9 @@ pub struct NativeJit {
     externs: HashMap<String, u64>,
     placed: Vec<Placed>,
     finalized: bool,
+    /// Accumulated assembly text (Loader builder path); assembled by
+    /// `RasmEncoder` on first lookup. Empty in the low-level module path.
+    pending_text: String,
 }
 
 impl NativeJit {
@@ -154,7 +172,46 @@ impl NativeJit {
             externs: HashMap::new(),
             placed: Vec::new(),
             finalized: false,
+            pending_text: String::new(),
         })
+    }
+
+    /// A builder-mode loader: accumulate assembly text + externs, then assemble
+    /// + place on first `lookup_addr`. No region is reserved until then (the
+    /// anchor is derived from the bound externs, so emitted code is rel32-near
+    /// the host `rt_*` functions). This is the [`Loader`](crate::backend::Loader)
+    /// path the kernel boots through.
+    pub fn new() -> Self {
+        NativeJit {
+            region: ptr::null_mut(),
+            cap: 0,
+            used: 0,
+            symbols: HashMap::new(),
+            externs: HashMap::new(),
+            placed: Vec::new(),
+            finalized: false,
+            pending_text: String::new(),
+        }
+    }
+
+    /// Builder path: assemble the accumulated text with `RasmEncoder`, reserve
+    /// a code region near the externs, place + relocate + RX-protect. Idempotent.
+    fn build_if_needed(&mut self) -> Result<()> {
+        if self.finalized {
+            return Ok(());
+        }
+        if self.region.is_null() {
+            let module = crate::rasm::assemble(&self.pending_text)
+                .context("RasmEncoder: assemble kernel text")?;
+            // Reserve space for the code + far-call stubs (12 bytes/extern) + slack.
+            // Placed anywhere roomy; ALL externs (host rt_* and DLL imports) are
+            // reached via stubs, so there is no rel32 constraint to the host.
+            let cap = (module.code.len() + module.externs.len() * 16 + 4096 + 0xFFF) & !0xFFF;
+            self.region = alloc_anywhere(cap)?;
+            self.cap = cap;
+            self.load_module(&module)?;
+        }
+        self.finalize()
     }
 
     /// Bind a host extern (a Rust `extern "C"` function) by name.
@@ -203,12 +260,57 @@ impl NativeJit {
                 patches.push((p.base, r.clone()));
             }
         }
+        // Apply relocations. A far branch target (e.g. a kernel32 DLL import
+        // >2GB from our code) can't be reached by `call rel32`, so route it
+        // through a 12-byte `movabs rax,target ; jmp rax` stub appended after
+        // the code (one per distinct target) — the same trick RTDyld uses.
+        let mut stub_off = self.used;
+        let mut stubs: HashMap<u64, u64> = HashMap::new();
         for (base, r) in patches {
             let target = self
                 .resolve(&r.target)
                 .with_context(|| format!("unresolved reloc target `{}`", r.target))?;
-            self.apply_reloc(base, &r, target)?;
+            let field = base + r.at as u64;
+            match r.kind {
+                RelocKind::BranchRel32 | RelocKind::RipRel32 => {
+                    let mut rel = (target as i64 + r.addend) - (field as i64 + 4);
+                    if i32::try_from(rel).is_err() {
+                        if r.kind == RelocKind::RipRel32 {
+                            bail!("RIP-rel disp32 out of range for `{}` (no stub possible)", r.target);
+                        }
+                        let stub = match stubs.get(&target) {
+                            Some(&s) => s,
+                            None => {
+                                if stub_off + 12 > self.cap {
+                                    bail!("far-call stub region exhausted");
+                                }
+                                let s = self.region as u64 + stub_off as u64;
+                                unsafe {
+                                    let p = self.region.add(stub_off);
+                                    *p = 0x48; // REX.W
+                                    *p.add(1) = 0xB8; // movabs rax, imm64
+                                    ptr::copy_nonoverlapping(target.to_le_bytes().as_ptr(), p.add(2), 8);
+                                    *p.add(10) = 0xFF; // jmp rax
+                                    *p.add(11) = 0xE0;
+                                }
+                                stub_off += 12;
+                                stubs.insert(target, s);
+                                s
+                            }
+                        };
+                        rel = stub as i64 - (field as i64 + 4);
+                    }
+                    let rel32 = i32::try_from(rel)
+                        .map_err(|_| anyhow::anyhow!("rel32 still out of range for `{}` via stub", r.target))?;
+                    unsafe { ptr::copy_nonoverlapping(rel32.to_le_bytes().as_ptr(), field as *mut u8, 4); }
+                }
+                RelocKind::Abs64 => {
+                    let val = (target as i64 + r.addend) as u64;
+                    unsafe { ptr::copy_nonoverlapping(val.to_le_bytes().as_ptr(), field as *mut u8, 8); }
+                }
+            }
         }
+        self.used = stub_off;
 
         let mut old = 0u32;
         let ok = unsafe {
@@ -221,37 +323,6 @@ impl NativeJit {
         Ok(())
     }
 
-    fn apply_reloc(&self, base: u64, r: &Reloc, target: u64) -> Result<()> {
-        let field_addr = base + r.at as u64;
-        match r.kind {
-            RelocKind::BranchRel32 | RelocKind::RipRel32 => {
-                debug_assert_eq!(r.size, 4);
-                let rel = (target as i64 + r.addend) - (field_addr as i64 + 4);
-                let rel32 = i32::try_from(rel).map_err(|_| {
-                    anyhow::anyhow!(
-                        "rel32 out of range for `{}`: {rel} (target {target:#x}, site {field_addr:#x})",
-                        r.target
-                    )
-                })?;
-                unsafe {
-                    ptr::copy_nonoverlapping(
-                        rel32.to_le_bytes().as_ptr(),
-                        field_addr as *mut u8,
-                        4,
-                    );
-                }
-            }
-            RelocKind::Abs64 => {
-                debug_assert_eq!(r.size, 8);
-                let val = (target as i64 + r.addend) as u64;
-                unsafe {
-                    ptr::copy_nonoverlapping(val.to_le_bytes().as_ptr(), field_addr as *mut u8, 8);
-                }
-            }
-        }
-        Ok(())
-    }
-
     /// Runtime address of a defined symbol (after [`finalize`]).
     pub fn lookup(&self, name: &str) -> Option<u64> {
         self.symbols.get(name).copied()
@@ -260,6 +331,40 @@ impl NativeJit {
     /// Convenience: a CString-free symbol existence check for tests.
     pub fn has_symbol(&self, name: &str) -> bool {
         self.symbols.contains_key(name)
+    }
+}
+
+impl Default for NativeJit {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+/// The native [`Loader`](crate::backend::Loader) — assembles accumulated text
+/// with `RasmEncoder` and places it, replacing MCJIT. `declare_fn` is a no-op
+/// (symbols come from the encoder's symbol table).
+impl crate::backend::Loader for NativeJit {
+    fn add_asm(&mut self, asm_text: &str) -> Result<()> {
+        self.pending_text.push_str(asm_text);
+        self.pending_text.push('\n');
+        Ok(())
+    }
+
+    fn declare_fn(&mut self, _name: &str, _arg_count: usize) -> Result<()> {
+        Ok(())
+    }
+
+    fn define_extern_fn(&mut self, name: &str, _arg_count: usize, addr: *mut c_void) -> Result<()> {
+        self.externs.insert(name.to_string(), addr as u64);
+        Ok(())
+    }
+
+    fn lookup_addr(&mut self, name: &str) -> Result<u64> {
+        self.build_if_needed()?;
+        self.symbols
+            .get(name)
+            .copied()
+            .ok_or_else(|| anyhow::anyhow!("native loader: symbol `{name}` not found"))
     }
 }
 

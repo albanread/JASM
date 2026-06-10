@@ -125,13 +125,12 @@ pub struct BindReport {
 /// * `host_resolver` returning `None` for a host-side extern IS
 ///   fatal — the host should know exactly which Rust functions it
 ///   provides.
-pub fn bind_externs<L, F>(
+pub fn bind_externs<F>(
     asm: &Assembler,
-    loader: &mut L,
+    loader: &mut dyn Loader,
     mut host_resolver: F,
 ) -> Result<BindReport, BindError>
 where
-    L: Loader,
     F: FnMut(&str) -> Option<*mut c_void>,
 {
     // Snapshot the externs first — registering with the JIT borrows
