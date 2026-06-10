@@ -217,6 +217,12 @@ pub fn encode(mnemonic: &str, ops: &[Operand]) -> Result<Encoded> {
     if let Some(r) = try_shift(mnemonic, ops) {
         return r;
     }
+    if let Some(r) = try_cc(mnemonic, ops) {
+        return r;
+    }
+    if let Some(r) = try_misc(mnemonic, ops) {
+        return r;
+    }
     let mut e = Encoded::default();
     match (mnemonic, ops) {
         ("ret", []) => e.b(0xC3),
@@ -281,26 +287,135 @@ fn rel32_fixup(e: &mut Encoded, sym: &str) {
     e.fixups.push(Fixup { at, kind: FixupKind::Rel32, target: sym.to_string() });
 }
 
-fn jcc_code(m: &str) -> Option<u8> {
-    Some(match m {
-        "jo" => 0x0,
-        "jno" => 0x1,
-        "jb" | "jc" | "jnae" => 0x2,
-        "jae" | "jnb" | "jnc" => 0x3,
-        "je" | "jz" => 0x4,
-        "jne" | "jnz" => 0x5,
-        "jbe" | "jna" => 0x6,
-        "ja" | "jnbe" => 0x7,
-        "js" => 0x8,
-        "jns" => 0x9,
-        "jp" | "jpe" => 0xA,
-        "jnp" | "jpo" => 0xB,
-        "jl" | "jnge" => 0xC,
-        "jge" | "jnl" => 0xD,
-        "jle" | "jng" => 0xE,
-        "jg" | "jnle" => 0xF,
+/// Condition-code nibble for a bare condition suffix (shared by jcc/setcc/cmovcc).
+fn cc_code(cc: &str) -> Option<u8> {
+    Some(match cc {
+        "o" => 0x0,
+        "no" => 0x1,
+        "b" | "c" | "nae" => 0x2,
+        "ae" | "nb" | "nc" => 0x3,
+        "e" | "z" => 0x4,
+        "ne" | "nz" => 0x5,
+        "be" | "na" => 0x6,
+        "a" | "nbe" => 0x7,
+        "s" => 0x8,
+        "ns" => 0x9,
+        "p" | "pe" => 0xA,
+        "np" | "po" => 0xB,
+        "l" | "nge" => 0xC,
+        "ge" | "nl" => 0xD,
+        "le" | "ng" => 0xE,
+        "g" | "nle" => 0xF,
         _ => return None,
     })
+}
+
+fn jcc_code(m: &str) -> Option<u8> {
+    m.strip_prefix('j').and_then(cc_code)
+}
+
+fn src_size_word(src: &Operand) -> Option<bool> {
+    match src {
+        Operand::Mem(m) => match m.size {
+            Some(MemSize::Byte) => Some(false),
+            Some(MemSize::Word) => Some(true),
+            _ => None,
+        },
+        Operand::Reg(r) => match r.class {
+            RegClass::R8 => Some(false),
+            RegClass::R16 => Some(true),
+            _ => None,
+        },
+        _ => None,
+    }
+}
+
+/// `(opcode, needs REX.W)` for a `rep`-prefixed string op.
+fn string_op(s: &str) -> Option<(u8, bool)> {
+    Some(match s {
+        "movsb" => (0xA4, false),
+        "movsq" => (0xA5, true),
+        "stosb" => (0xAA, false),
+        "stosq" => (0xAB, true),
+        "cmpsb" => (0xA6, false),
+        "cmpsq" => (0xA7, true),
+        "scasb" => (0xAE, false),
+        "scasq" => (0xAF, true),
+        "lodsb" => (0xAC, false),
+        "lodsq" => (0xAD, true),
+        _ => return None,
+    })
+}
+
+/// setcc r/m8 (0F 90+cc /0) and cmovcc r, r/m (0F 40+cc /r).
+fn try_cc(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    let mut e = Encoded::default();
+    if let Some(cc) = mnemonic.strip_prefix("set").and_then(cc_code) {
+        let [rm] = ops else {
+            return Some(Err(anyhow::anyhow!("setcc needs 1 operand")));
+        };
+        return Some(emit_rm(&mut e, false, &[], &[0x0F, 0x90 | cc], 0, rm).map(|()| e));
+    }
+    if let Some(cc) = mnemonic.strip_prefix("cmov").and_then(cc_code) {
+        if let [Operand::Reg(d), src] = ops {
+            return Some(emit_rm(&mut e, is64(*d), &[], &[0x0F, 0x40 | cc], d.num, src).map(|()| e));
+        }
+    }
+    None
+}
+
+/// movzx/movsx/movsxd, 2-operand imul, xchg, xadd, and rep-string ops.
+fn try_misc(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    let mut e = Encoded::default();
+    let r = (|| -> Result<bool> {
+        match (mnemonic, ops) {
+            ("movzx" | "movsx", [Operand::Reg(d), src]) => {
+                let word = src_size_word(src)
+                    .ok_or_else(|| anyhow::anyhow!("movzx/movsx needs a sized source: {src:?}"))?;
+                let op = match (mnemonic, word) {
+                    ("movzx", false) => 0xB6,
+                    ("movzx", true) => 0xB7,
+                    ("movsx", false) => 0xBE,
+                    ("movsx", true) => 0xBF,
+                    _ => unreachable!(),
+                };
+                emit_rm(&mut e, is64(*d), &[], &[0x0F, op], d.num, src)?;
+            }
+            ("movsxd", [Operand::Reg(d), src]) => {
+                // movsxd r64, r/m32 : REX.W 63 /r
+                emit_rm(&mut e, true, &[], &[0x63], d.num, src)?;
+            }
+            ("imul", [Operand::Reg(d), src]) => {
+                // 2-operand imul r, r/m : 0F AF /r
+                emit_rm(&mut e, is64(*d), &[], &[0x0F, 0xAF], d.num, src)?;
+            }
+            ("xchg", [dst, Operand::Reg(s)]) => {
+                // xchg r/m, r : 87 /r
+                emit_rm(&mut e, is64(*s), &[], &[0x87], s.num, dst)?;
+            }
+            ("xadd", [dst, Operand::Reg(s)]) => {
+                // xadd r/m, r : 0F C1 /r
+                emit_rm(&mut e, is64(*s), &[], &[0x0F, 0xC1], s.num, dst)?;
+            }
+            ("rep" | "repe" | "repz" | "repne" | "repnz", [Operand::Sym(strop)]) => {
+                let pfx = if mnemonic.starts_with("repn") { 0xF2u8 } else { 0xF3 };
+                let (opc, w) =
+                    string_op(strop).ok_or_else(|| anyhow::anyhow!("unknown string op `{strop}`"))?;
+                e.b(pfx);
+                if w {
+                    e.b(0x48); // REX.W (after the F3/F2 prefix, before the opcode)
+                }
+                e.b(opc);
+            }
+            _ => return Ok(false),
+        }
+        Ok(true)
+    })();
+    match r {
+        Ok(true) => Some(Ok(e)),
+        Ok(false) => None,
+        Err(err) => Some(Err(err)),
+    }
 }
 
 fn encode_mov(e: &mut Encoded, dst: &Operand, src: &Operand) -> Result<()> {
@@ -597,6 +712,28 @@ mod tests {
         assert_eq!(roundtrip("shl rax, 3"), "shl rax,3");
         assert_eq!(roundtrip("sar rdx, 63"), "sar rdx,3Fh");
         assert_eq!(roundtrip("shr r9, cl"), "shr r9,cl");
+    }
+
+    #[test]
+    fn extend_setcc_cmov_imul_xchg_string() {
+        // movzx/movsx with sized source (kernel forms)
+        assert_eq!(roundtrip("movzx rax, byte ptr [rax]"), "movzx rax,byte ptr [rax]");
+        assert_eq!(roundtrip("movsx rax, word ptr [rax]"), "movsx rax,word ptr [rax]");
+        assert_eq!(roundtrip("movsxd rdx, edx"), "movsxd rdx,edx");
+        // setcc / cmovcc
+        assert_eq!(bytes("sete cl"), vec![0x0F, 0x94, 0xC1]);
+        assert_eq!(bytes("setb cl"), vec![0x0F, 0x92, 0xC1]);
+        assert_eq!(roundtrip("cmovl rax, rcx"), "cmovl rax,rcx");
+        assert_eq!(roundtrip("cmovg rax, rcx"), "cmovg rax,rcx");
+        // imul: 1-operand (F7 /5) vs 2-operand (0F AF)
+        assert_eq!(roundtrip("imul rax, [rbp]"), "imul rax,[rbp]");
+        assert_eq!(roundtrip("imul qword ptr [rbp]"), "imul qword ptr [rbp]");
+        // xchg / xadd
+        assert_eq!(roundtrip("xchg rbp, rsp"), "xchg rbp,rsp");
+        assert_eq!(roundtrip("xadd [rcx], rax"), "xadd [rcx],rax");
+        // rep string ops
+        assert_eq!(bytes("rep movsq"), vec![0xF3, 0x48, 0xA5]);
+        assert_eq!(bytes("rep stosb"), vec![0xF3, 0xAA]);
     }
 
     #[test]
