@@ -314,6 +314,12 @@ fn jcc_code(m: &str) -> Option<u8> {
     m.strip_prefix('j').and_then(cc_code)
 }
 
+/// The condition nibble for a `jcc` mnemonic (`jz`→4, …) — used by the
+/// two-pass driver to build the short/long branch forms. `None` for `jmp`.
+pub(crate) fn jcc_nibble(m: &str) -> Option<u8> {
+    jcc_code(m)
+}
+
 fn src_size_word(src: &Operand) -> Option<bool> {
     match src {
         Operand::Mem(m) => match m.size {
