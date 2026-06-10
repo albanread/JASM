@@ -150,6 +150,14 @@ impl CodeArena {
     /// Bytes handed out so far.
     pub fn used(&self) -> usize { self.offset }
 
+    /// Bump-allocate `size` bytes (`align`-aligned) with NO header reservation —
+    /// the caller supplies its own leading xt-metadata cell (e.g. a `.quad 0`
+    /// already in the assembled bytes). Returns null if the arena is exhausted.
+    /// Used by the native `CODE:` path to place a RasmEncoder-assembled word.
+    pub fn alloc(&mut self, size: usize, align: usize) -> *mut u8 {
+        self.bump(size, align, 0)
+    }
+
     fn bump(&mut self, size: usize, align: usize, reserve: usize) -> *mut u8 {
         let align = align.max(1);
         // Reserve first, then align: the returned pointer is `align`-aligned
