@@ -36,6 +36,11 @@ pub mod win32;
 #[cfg(windows)]
 pub mod seh;
 
+/// Native loader (`NativeJit`) — the Rasm replacement for MCJIT's place +
+/// relocate + protect job. No LLVM; always compiled (Windows).
+#[cfg(windows)]
+pub mod native;
+
 pub use asm::Assembler;
 pub use backend::{EncodedModule, Encoder, Loader, Reloc, RelocKind};
 #[cfg(feature = "llvm")]
