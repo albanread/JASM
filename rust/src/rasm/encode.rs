@@ -208,6 +208,15 @@ fn alu(mnem: &str) -> Option<Alu> {
 
 /// Encode a single instruction. `ops` are the parsed operands.
 pub fn encode(mnemonic: &str, ops: &[Operand]) -> Result<Encoded> {
+    if let Some(r) = try_sse(mnemonic, ops) {
+        return r;
+    }
+    if let Some(r) = try_unary(mnemonic, ops) {
+        return r;
+    }
+    if let Some(r) = try_shift(mnemonic, ops) {
+        return r;
+    }
     let mut e = Encoded::default();
     match (mnemonic, ops) {
         ("ret", []) => e.b(0xC3),
@@ -357,6 +366,131 @@ fn encode_alu(e: &mut Encoded, a: Alu, dst: &Operand, src: &Operand) -> Result<(
     }
 }
 
+fn operand_w(op: &Operand) -> bool {
+    match op {
+        Operand::Reg(r) => is64(*r),
+        Operand::Mem(m) => mem_is_qword(m),
+        _ => true,
+    }
+}
+
+/// SSE2 scalar-double + the xmm move/convert family (the FTOS/REX.R island).
+fn try_sse(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    let mut e = Encoded::default();
+    let r = (|| -> Result<bool> {
+        match (mnemonic, ops) {
+            // movsd: load (xmm <- r/m) F2 0F 10 ; store (m <- xmm) F2 0F 11
+            ("movsd", [Operand::Reg(d), src]) if d.class == RegClass::Xmm => {
+                emit_rm(&mut e, false, &[0xF2], &[0x0F, 0x10], d.num, src)?;
+            }
+            ("movsd", [Operand::Mem(m), Operand::Reg(s)]) if s.class == RegClass::Xmm => {
+                emit_mem_rm(&mut e, false, &[0xF2], &[0x0F, 0x11], s.num, m)?;
+            }
+            // movups: load 0F 10 ; store 0F 11 (no mandatory prefix)
+            ("movups", [Operand::Reg(d), src]) if d.class == RegClass::Xmm => {
+                emit_rm(&mut e, false, &[], &[0x0F, 0x10], d.num, src)?;
+            }
+            ("movups", [Operand::Mem(m), Operand::Reg(s)]) if s.class == RegClass::Xmm => {
+                emit_mem_rm(&mut e, false, &[], &[0x0F, 0x11], s.num, m)?;
+            }
+            // arithmetic: F2 0F <op> /r, dst xmm = reg field
+            ("addsd" | "subsd" | "mulsd" | "divsd", [Operand::Reg(d), src])
+                if d.class == RegClass::Xmm =>
+            {
+                let op = match mnemonic {
+                    "addsd" => 0x58,
+                    "subsd" => 0x5C,
+                    "mulsd" => 0x59,
+                    "divsd" => 0x5E,
+                    _ => unreachable!(),
+                };
+                emit_rm(&mut e, false, &[0xF2], &[0x0F, op], d.num, src)?;
+            }
+            ("ucomisd", [Operand::Reg(d), src]) if d.class == RegClass::Xmm => {
+                emit_rm(&mut e, false, &[0x66], &[0x0F, 0x2E], d.num, src)?;
+            }
+            ("xorpd", [Operand::Reg(d), src]) if d.class == RegClass::Xmm => {
+                emit_rm(&mut e, false, &[0x66], &[0x0F, 0x57], d.num, src)?;
+            }
+            // movq xmm, r64 : 66 REX.W 0F 6E /r ; movq r64, xmm : 66 REX.W 0F 7E /r
+            ("movq", [Operand::Reg(d), Operand::Reg(s)])
+                if d.class == RegClass::Xmm && s.class == RegClass::R64 =>
+            {
+                emit_reg_rm(&mut e, true, &[0x66], &[0x0F, 0x6E], d.num, s.num);
+            }
+            ("movq", [Operand::Reg(d), Operand::Reg(s)])
+                if d.class == RegClass::R64 && s.class == RegClass::Xmm =>
+            {
+                emit_reg_rm(&mut e, true, &[0x66], &[0x0F, 0x7E], s.num, d.num);
+            }
+            // cvtsi2sd xmm, r/m64 : F2 REX.W 0F 2A /r
+            ("cvtsi2sd", [Operand::Reg(d), src]) if d.class == RegClass::Xmm => {
+                emit_rm(&mut e, true, &[0xF2], &[0x0F, 0x2A], d.num, src)?;
+            }
+            // cvttsd2si r64, xmm/m : F2 REX.W 0F 2C /r (reg field = GPR)
+            ("cvttsd2si", [Operand::Reg(d), src]) if d.class == RegClass::R64 => {
+                emit_rm(&mut e, true, &[0xF2], &[0x0F, 0x2C], d.num, src)?;
+            }
+            _ => return Ok(false),
+        }
+        Ok(true)
+    })();
+    match r {
+        Ok(true) => Some(Ok(e)),
+        Ok(false) => None,
+        Err(err) => Some(Err(err)),
+    }
+}
+
+/// One-operand F7/FF group: neg/not/mul/imul/div/idiv (F7 /ext) and inc/dec
+/// (FF /ext).
+fn try_unary(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    let (opcode, ext) = match mnemonic {
+        "not" => (0xF7u8, 2u8),
+        "neg" => (0xF7, 3),
+        "mul" => (0xF7, 4),
+        "imul" if ops.len() == 1 => (0xF7, 5),
+        "div" => (0xF7, 6),
+        "idiv" => (0xF7, 7),
+        "inc" => (0xFF, 0),
+        "dec" => (0xFF, 1),
+        _ => return None,
+    };
+    let [rm] = ops else { return None };
+    let mut e = Encoded::default();
+    match emit_rm(&mut e, operand_w(rm), &[], &[opcode], ext, rm) {
+        Ok(()) => Some(Ok(e)),
+        Err(err) => Some(Err(err)),
+    }
+}
+
+/// Shift group: shl/sal/shr/sar/rol/ror by 1 (D1), imm8 (C1), or cl (D3).
+fn try_shift(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    let ext = match mnemonic {
+        "rol" => 0u8,
+        "ror" => 1,
+        "shl" | "sal" => 4,
+        "shr" => 5,
+        "sar" => 7,
+        _ => return None,
+    };
+    let [rm, count] = ops else { return None };
+    let mut e = Encoded::default();
+    let w = operand_w(rm);
+    let r = match count {
+        Operand::Imm(1) => emit_rm(&mut e, w, &[], &[0xD1], ext, rm),
+        Operand::Imm(n) => emit_rm(&mut e, w, &[], &[0xC1], ext, rm).map(|()| e.b(*n as u8)),
+        Operand::Reg(r) if r.class == RegClass::R8 && r.num == 1 => {
+            emit_rm(&mut e, w, &[], &[0xD3], ext, rm) // shift by cl
+        }
+        other => Err(anyhow::anyhow!("bad shift count {other:?}")),
+    };
+    match r {
+        Ok(()) => Some(Ok(e)),
+        Err(err) => Some(Err(err)),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -427,6 +561,42 @@ mod tests {
         assert_eq!(bytes("pop rbp"), vec![0x5D]);
         assert_eq!(roundtrip("lea r8, [rax + rax*1]"), "lea r8,[rax+rax]");
         assert_eq!(roundtrip("test rax, rax"), "test rax,rax");
+    }
+
+    #[test]
+    fn sse_ftos_xmm15_island() {
+        // f_plus golden: addsd xmm15,[rcx] = f2 44 0f 58 39 (REX.R for xmm15)
+        assert_eq!(bytes("addsd xmm15, qword ptr [rcx]"), vec![0xF2, 0x44, 0x0F, 0x58, 0x39]);
+        // f_fetch golden fragment: movsd qword ptr [rdx-8], xmm15 (store, REX.R)
+        assert_eq!(bytes("movsd qword ptr [rcx - 8], xmm15"), vec![0xF2, 0x44, 0x0F, 0x11, 0x79, 0xF8]);
+        // movsd xmm15, [rcx] (load, REX.R)
+        assert_eq!(bytes("movsd xmm15, qword ptr [rcx]"), vec![0xF2, 0x44, 0x0F, 0x10, 0x39]);
+        // round-trips for the rest of the island
+        assert_eq!(roundtrip("subsd xmm15, xmm14"), "subsd xmm15,xmm14");
+        assert_eq!(roundtrip("mulsd xmm0, xmm1"), "mulsd xmm0,xmm1");
+        assert_eq!(roundtrip("divsd xmm6, qword ptr [rbx]"), "divsd xmm6,[rbx]");
+        assert_eq!(roundtrip("ucomisd xmm15, xmm0"), "ucomisd xmm15,xmm0");
+        assert_eq!(roundtrip("xorpd xmm0, xmm0"), "xorpd xmm0,xmm0");
+        assert_eq!(roundtrip("movups xmm8, [rsp]"), "movups xmm8,[rsp]");
+        assert_eq!(roundtrip("movups [rsp + 32], xmm8"), "movups [rsp+20h],xmm8");
+        assert_eq!(roundtrip("movq xmm15, rdx"), "movq xmm15,rdx");
+        assert_eq!(roundtrip("movq r10, xmm15"), "movq r10,xmm15");
+        assert_eq!(roundtrip("cvtsi2sd xmm0, rcx"), "cvtsi2sd xmm0,rcx");
+        assert_eq!(roundtrip("cvttsd2si rcx, xmm15"), "cvttsd2si rcx,xmm15");
+    }
+
+    #[test]
+    fn unary_and_shift() {
+        assert_eq!(roundtrip("neg rcx"), "neg rcx");
+        assert_eq!(roundtrip("not rax"), "not rax");
+        assert_eq!(roundtrip("idiv rcx"), "idiv rcx");
+        assert_eq!(roundtrip("inc qword ptr [rbx]"), "inc qword ptr [rbx]");
+        assert_eq!(roundtrip("dec rax"), "dec rax");
+        // shifts: by-1 → D1 (not C1 imm=1), to match MC
+        assert_eq!(bytes("shl rax, 1"), vec![0x48, 0xD1, 0xE0]);
+        assert_eq!(roundtrip("shl rax, 3"), "shl rax,3");
+        assert_eq!(roundtrip("sar rdx, 63"), "sar rdx,3Fh");
+        assert_eq!(roundtrip("shr r9, cl"), "shr r9,cl");
     }
 
     #[test]
