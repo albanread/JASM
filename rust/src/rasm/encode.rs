@@ -82,6 +82,8 @@ fn mem_opsize(m: &Mem) -> Option<OpSize> {
         MemSize::Word => OpSize::B16,
         MemSize::Dword => OpSize::B32,
         MemSize::Qword => OpSize::B64,
+        // xmmword is only ever an SSE operand; SSE encoders ignore mem_opsize.
+        MemSize::Xmmword => OpSize::B64,
     })
 }
 
@@ -334,6 +336,17 @@ pub fn encode(mnemonic: &str, ops: &[Operand]) -> Result<Encoded> {
 
         // mov
         ("mov", [dst, src]) => encode_mov(&mut e, dst, src)?,
+        // movabs r64, imm64 — always the REX.W B8+r imm64 form, even for a
+        // small immediate (that is the whole point of `movabs`; plain `mov`
+        // would shrink it to a sign-extended imm32). LET bakes libm addresses
+        // (>2^32) this way.
+        ("movabs", [Operand::Reg(d), Operand::Imm(v)]) if d.class == RegClass::R64 => {
+            if let Some(r) = rex_byte(true, false, false, d.num >= 8) {
+                e.b(r);
+            }
+            e.b(0xB8 + (d.num & 7));
+            e.ext(&(*v as u64).to_le_bytes());
+        }
         // lea reg, mem
         ("lea", [Operand::Reg(d), Operand::Mem(m)]) => {
             emit_mem_rm(&mut e, is64(*d), &[], &[0x8D], d.num, m)?;
@@ -716,6 +729,47 @@ fn try_sse(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
             ("xorpd", [Operand::Reg(d), src]) if d.class == RegClass::Xmm => {
                 emit_rm(&mut e, false, &[0x66], &[0x0F, 0x57], d.num, src)?;
             }
+            // packed-double logical ops: 66 0F <op> /r — LET abs/select blends.
+            ("andpd" | "andnpd" | "orpd", [Operand::Reg(d), src]) if d.class == RegClass::Xmm => {
+                let op = match mnemonic {
+                    "andpd" => 0x54,
+                    "andnpd" => 0x55,
+                    "orpd" => 0x56,
+                    _ => unreachable!(),
+                };
+                emit_rm(&mut e, false, &[0x66], &[0x0F, op], d.num, src)?;
+            }
+            // sqrtsd / minsd / maxsd : F2 0F <op> /r.
+            ("sqrtsd" | "minsd" | "maxsd", [Operand::Reg(d), src]) if d.class == RegClass::Xmm => {
+                let op = match mnemonic {
+                    "sqrtsd" => 0x51,
+                    "minsd" => 0x5D,
+                    "maxsd" => 0x5F,
+                    _ => unreachable!(),
+                };
+                emit_rm(&mut e, false, &[0xF2], &[0x0F, op], d.num, src)?;
+            }
+            // cmpsd pseudo-ops: F2 0F C2 /r ib — predicate encoded in the
+            // mnemonic (eq=0, lt=1, le=2, neq=4). LET comparisons.
+            ("cmpeqsd" | "cmpltsd" | "cmplesd" | "cmpneqsd", [Operand::Reg(d), src])
+                if d.class == RegClass::Xmm =>
+            {
+                let pred: u8 = match mnemonic {
+                    "cmpeqsd" => 0,
+                    "cmpltsd" => 1,
+                    "cmplesd" => 2,
+                    "cmpneqsd" => 4,
+                    _ => unreachable!(),
+                };
+                emit_rm(&mut e, false, &[0xF2], &[0x0F, 0xC2], d.num, src)?;
+                e.b(pred);
+            }
+            // roundsd xmm, xmm/m, imm8 : 66 0F 3A 0B /r ib (SSE4.1) — LET
+            // floor/ceil/round/trunc intrinsics.
+            ("roundsd", [Operand::Reg(d), src, Operand::Imm(mode)]) if d.class == RegClass::Xmm => {
+                emit_rm(&mut e, false, &[0x66], &[0x0F, 0x3A, 0x0B], d.num, src)?;
+                e.b(*mode as u8);
+            }
             // movq xmm, r64 : 66 REX.W 0F 6E /r ; movq r64, xmm : 66 REX.W 0F 7E /r
             ("movq", [Operand::Reg(d), Operand::Reg(s)])
                 if d.class == RegClass::Xmm && s.class == RegClass::R64 =>
@@ -889,6 +943,38 @@ mod tests {
         assert_eq!(roundtrip("movq r10, xmm15"), "movq r10,xmm15");
         assert_eq!(roundtrip("cvtsi2sd xmm0, rcx"), "cvtsi2sd xmm0,rcx");
         assert_eq!(roundtrip("cvttsd2si rcx, xmm15"), "cvttsd2si rcx,xmm15");
+    }
+
+    #[test]
+    fn sse_let_island() {
+        // F2 0F <op> /r single-double ops.
+        assert_eq!(bytes("sqrtsd xmm6, xmm6"), vec![0xF2, 0x0F, 0x51, 0xF6]);
+        assert_eq!(bytes("minsd xmm0, xmm1"), vec![0xF2, 0x0F, 0x5D, 0xC1]);
+        assert_eq!(bytes("maxsd xmm0, xmm1"), vec![0xF2, 0x0F, 0x5F, 0xC1]);
+        // 66 0F <op> /r packed-double logicals.
+        assert_eq!(bytes("andpd xmm6, xmm7"), vec![0x66, 0x0F, 0x54, 0xF7]);
+        assert_eq!(bytes("andnpd xmm0, xmm1"), vec![0x66, 0x0F, 0x55, 0xC1]);
+        assert_eq!(bytes("orpd xmm0, xmm1"), vec![0x66, 0x0F, 0x56, 0xC1]);
+        // xmmword ptr memory operand: opcode + ModRM for [rcx] (mod=00, rm=001).
+        assert_eq!(bytes("andpd xmm6, xmmword ptr [rcx]"), vec![0x66, 0x0F, 0x54, 0x31]);
+        // cmpsd pseudo-ops: F2 0F C2 /r ib, predicate from the mnemonic.
+        assert_eq!(bytes("cmpeqsd xmm0, xmm1"), vec![0xF2, 0x0F, 0xC2, 0xC1, 0x00]);
+        assert_eq!(bytes("cmpltsd xmm0, xmm1"), vec![0xF2, 0x0F, 0xC2, 0xC1, 0x01]);
+        assert_eq!(bytes("cmplesd xmm0, xmm1"), vec![0xF2, 0x0F, 0xC2, 0xC1, 0x02]);
+        assert_eq!(bytes("cmpneqsd xmm0, xmm1"), vec![0xF2, 0x0F, 0xC2, 0xC1, 0x04]);
+        // roundsd xmm, xmm, imm8 : 66 0F 3A 0B /r ib (SSE4.1).
+        assert_eq!(bytes("roundsd xmm0, xmm0, 1"), vec![0x66, 0x0F, 0x3A, 0x0B, 0xC0, 0x01]);
+        assert_eq!(bytes("roundsd xmm2, xmm3, 0"), vec![0x66, 0x0F, 0x3A, 0x0B, 0xD3, 0x00]);
+    }
+
+    #[test]
+    fn multi_value_quad() {
+        // .quad a, b emits two little-endian 8-byte words back to back.
+        let m = crate::rasm::assemble(".quad 0x8000000000000000, 0\n").unwrap();
+        assert_eq!(
+            m.code,
+            vec![0, 0, 0, 0, 0, 0, 0, 0x80, /* */ 0, 0, 0, 0, 0, 0, 0, 0]
+        );
     }
 
     #[test]

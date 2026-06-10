@@ -65,6 +65,42 @@ impl Item {
     }
 }
 
+/// Emit `count` bytes of alignment padding using the same canonical multi-byte
+/// NOP encodings LLVM-MC's `X86AsmBackend::writeNopData` uses in a code section
+/// — required for byte-identity (a run of `0x90` would diverge). Lengths 1..=10
+/// come straight from the table; 11..=15 prepend `count-10` `0x66` operand-size
+/// prefixes to the 10-byte form. Pads longer than the max single NOP (15) are
+/// split into successive NOPs, largest first.
+fn write_nop_padding(code: &mut Vec<u8>, count: usize) {
+    // Canonical NOPs by length (index = len-1).
+    const NOPS: [&[u8]; 10] = [
+        &[0x90],
+        &[0x66, 0x90],
+        &[0x0F, 0x1F, 0x00],
+        &[0x0F, 0x1F, 0x40, 0x00],
+        &[0x0F, 0x1F, 0x44, 0x00, 0x00],
+        &[0x66, 0x0F, 0x1F, 0x44, 0x00, 0x00],
+        &[0x0F, 0x1F, 0x80, 0x00, 0x00, 0x00, 0x00],
+        &[0x0F, 0x1F, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00],
+        &[0x66, 0x0F, 0x1F, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00],
+        &[0x66, 0x2E, 0x0F, 0x1F, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00],
+    ];
+    const MAX_NOP: usize = 15; // x86-64 generic: NOPs up to 15 bytes (66-prefixed).
+    let mut remaining = count;
+    while remaining != 0 {
+        let this = remaining.min(MAX_NOP);
+        let prefixes = this.saturating_sub(10);
+        for _ in 0..prefixes {
+            code.push(0x66);
+        }
+        let rest = this - prefixes;
+        if rest != 0 {
+            code.extend_from_slice(NOPS[rest - 1]);
+        }
+        remaining -= this;
+    }
+}
+
 fn branch_for(mnemonic: &str, target: &str) -> Option<Branch> {
     if mnemonic == "call" {
         return Some(Branch { short: None, long: vec![0xE8], target: target.to_string(), is_long: true });
@@ -88,7 +124,18 @@ pub fn assemble(text: &str) -> Result<EncodedModule> {
     // ── Pass 1: parse into items ────────────────────────────────────────────
     let mut items: Vec<Item> = Vec::new();
     for (lineno, raw) in text.lines().enumerate() {
-        let line = parse_line(raw).with_context(|| format!("line {}: `{raw}`", lineno + 1))?;
+        // MC allows `label: insn` / `label: .quad ...` on one line; peel any
+        // leading label into its own Item, then parse the remainder.
+        let clean = super::parse::strip_comment(raw);
+        let (label, rest) = super::parse::split_leading_label(clean);
+        if let Some(name) = label {
+            items.push(Item::Label(name.to_string()));
+            if rest.is_empty() {
+                continue;
+            }
+        }
+        let body = if label.is_some() { rest } else { clean };
+        let line = parse_line(body).with_context(|| format!("line {}: `{raw}`", lineno + 1))?;
         match line {
             Line::Empty => {}
             Line::Label(name) => items.push(Item::Label(name)),
@@ -180,9 +227,8 @@ pub fn assemble(text: &str) -> Result<EncodedModule> {
             }
             Item::AlignP2(n) => {
                 let align = 1usize << *n;
-                while code.len() % align != 0 {
-                    code.push(0x90); // NOP padding (MC uses multi-byte nops; tune later)
-                }
+                let pad = (align - (code.len() % align)) % align;
+                write_nop_padding(&mut code, pad);
             }
             Item::Code { bytes, riprel } => {
                 let base = code.len();
@@ -253,7 +299,10 @@ fn push_directive(items: &mut Vec<Item>, d: Directive) -> Result<()> {
     match d {
         Directive::IntelSyntax | Directive::Text | Directive::Other(_) => {}
         Directive::Globl(n) => items.push(Item::Globl(n)),
-        Directive::Quad(v) => items.push(Item::Code { bytes: v.to_le_bytes().to_vec(), riprel: vec![] }),
+        Directive::Quad(vs) => items.push(Item::Code {
+            bytes: vs.iter().flat_map(|v| v.to_le_bytes()).collect(),
+            riprel: vec![],
+        }),
         Directive::Byte(b) => items.push(Item::Code { bytes: vec![b], riprel: vec![] }),
         Directive::Zero(n) => items.push(Item::Code { bytes: vec![0u8; n], riprel: vec![] }),
         Directive::Ascii(bytes, nul) => {

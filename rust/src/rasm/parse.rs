@@ -30,6 +30,10 @@ pub enum MemSize {
     Word,
     Dword,
     Qword,
+    /// `xmmword ptr` — 16-byte SSE operand. A size hint only; SSE opcodes carry
+    /// their own operand size, so this never affects encoding (used by LET's
+    /// `andpd/orpd/xorpd xmm, xmmword ptr [rip + mask]`).
+    Xmmword,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -57,7 +61,9 @@ pub enum Directive {
     IntelSyntax,
     Text,
     Globl(String),
-    Quad(i64),
+    /// `.quad a, b, ...` — one or more 8-byte little-endian values. LET's
+    /// SSE masks emit two (`.quad 0x8000..., 0x0000...`).
+    Quad(Vec<i64>),
     Byte(u8),
     Zero(usize),
     /// `.align`/`.balign N` (byte alignment).
@@ -77,9 +83,51 @@ pub enum Line {
     Insn { mnemonic: String, ops: Vec<Operand> },
 }
 
+/// Strip a trailing `#`/`;` end-of-line comment (LET codegen annotates lines
+/// like `movabs rax, 0x.. # &sin`; the kernel front-end pre-strips its `;`
+/// comments, so this is a harmless no-op there). The `#`/`;` is only honored at
+/// top level — not inside `[]` (no comment chars occur in operands anyway).
+pub fn strip_comment(s: &str) -> &str {
+    let mut depth = 0i32;
+    for (i, c) in s.char_indices() {
+        match c {
+            '[' => depth += 1,
+            ']' => depth -= 1,
+            '#' | ';' if depth == 0 => return &s[..i],
+            _ => {}
+        }
+    }
+    s
+}
+
+/// If the (comment-stripped) line begins with `symbol:`, return
+/// `(Some(symbol), rest)` where `rest` is everything after the colon. Lets the
+/// assembler accept MC's combined `label: insn` / `label: .quad ...` lines —
+/// LET codegen emits its constant-pool data labels inline.
+pub fn split_leading_label(line: &str) -> (Option<&str>, &str) {
+    let line = line.trim_start();
+    let mut depth = 0i32;
+    for (i, c) in line.char_indices() {
+        match c {
+            '[' => depth += 1,
+            ']' => depth -= 1,
+            ':' if depth == 0 => {
+                let name = line[..i].trim();
+                return if is_symbol(name) {
+                    (Some(name), line[i + 1..].trim_start())
+                } else {
+                    (None, line)
+                };
+            }
+            _ => {}
+        }
+    }
+    (None, line)
+}
+
 /// Parse a single line. Trailing/leading whitespace is ignored.
 pub fn parse_line(raw: &str) -> Result<Line> {
-    let line = raw.trim();
+    let line = strip_comment(raw).trim();
     if line.is_empty() {
         return Ok(Line::Empty);
     }
@@ -114,7 +162,9 @@ fn parse_directive(d: &str) -> Result<Line> {
         "intel_syntax" => Directive::IntelSyntax,
         "text" => Directive::Text,
         "globl" | "global" => Directive::Globl(arg.to_string()),
-        "quad" => Directive::Quad(parse_int(arg)?),
+        "quad" => Directive::Quad(
+            arg.split(',').map(|v| parse_int(v.trim())).collect::<Result<Vec<_>>>()?,
+        ),
         "byte" => Directive::Byte(parse_int(arg)? as u8),
         "zero" | "skip" | "space" => Directive::Zero(parse_int(arg)? as usize),
         "align" | "balign" => Directive::Align(parse_int(arg)? as u32),
@@ -190,6 +240,7 @@ fn strip_size_prefix(p: &str) -> (Option<MemSize>, &str) {
         ("word ptr", MemSize::Word),
         ("dword ptr", MemSize::Dword),
         ("qword ptr", MemSize::Qword),
+        ("xmmword ptr", MemSize::Xmmword),
     ] {
         if let Some(rest) = strip_ci_prefix(lower, kw) {
             return (Some(sz), rest);
@@ -529,7 +580,11 @@ mod tests {
         assert_eq!(parse_line(".intel_syntax noprefix").unwrap(), Line::Directive(Directive::IntelSyntax));
         assert_eq!(parse_line(".text").unwrap(), Line::Directive(Directive::Text));
         assert_eq!(parse_line(".globl dup_").unwrap(), Line::Directive(Directive::Globl("dup_".into())));
-        assert_eq!(parse_line(".quad 0").unwrap(), Line::Directive(Directive::Quad(0)));
+        assert_eq!(parse_line(".quad 0").unwrap(), Line::Directive(Directive::Quad(vec![0])));
+        assert_eq!(
+            parse_line(".quad 0x8000000000000000, 0").unwrap(),
+            Line::Directive(Directive::Quad(vec![0x8000000000000000u64 as i64, 0])),
+        );
         assert_eq!(parse_line("dup_:").unwrap(), Line::Label("dup_".into()));
         assert_eq!(parse_line("qdup$$nodup:").unwrap(), Line::Label("qdup$$nodup".into()));
         assert_eq!(parse_line("").unwrap(), Line::Empty);
