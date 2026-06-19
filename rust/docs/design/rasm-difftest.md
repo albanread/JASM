@@ -331,5 +331,20 @@ decoder is icing.
    - WF66 unaffected (builds clean; `rasm-diff` still 141; byte-neutral to kernel).
 6. **Prove portability** (when an arch is wanted): add `Aarch64Model` + reloc map,
    record `corpus/aarch64.jsonl`, confirm the driver/replay/corpus code is untouched.
+7. **AVX-512 (EVEX), increment 1 — unmasked.** ✅ **done: 5109/5109 forms match,
+   0 mismatch, 0 gaps.**
+   - `Zmm` reg class + vector registers extended to 0..=31 (`parse.rs`).
+   - `emit_evex_rm` (4-byte `62` prefix with R/X/B/R'/V' extension bits) and
+     `emit_vec_rm`, which auto-selects VEX vs EVEX (EVEX iff zmm or any reg ≥ 16).
+     The VEX form helpers feed `emit_vec_rm` and gate their 2-byte optimizations
+     to the VEX case.
+   - EVEX `W` is element-size semantic (W1 for double/qword); VEX is WIG, so
+     `emit_vec_rm` forces VEX `W=0`. The oracle's TargetMachine now enables
+     `+avx512f,+avx512vl,+avx512dq,+avx512bw` so it accepts EVEX forms.
+   - Excluded from the unmasked set (they change form under EVEX): `vpand/vpor/…`
+     (→ `vpandd/q`), `vpcmpeq*` (mask-register destination).
+   - Increment 2 (pending): masking — `{k}{z}` operand decorators, `k0..k7` mask
+     registers, `kmov*`. Needs the only invasive piece: a writemask on the
+     destination operand in the parser/operand model.
 
 [`object`]: https://crates.io/crates/object

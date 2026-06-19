@@ -16,6 +16,7 @@ pub enum RegClass {
     R64,
     Xmm,
     Ymm,
+    Zmm,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -385,17 +386,17 @@ fn reg_table(s: &str) -> Option<Reg> {
             return Some(Reg { class: RegClass::R8, num: i as u8 });
         }
     }
-    if let Some(rest) = s.strip_prefix("xmm") {
-        if let Ok(n) = rest.parse::<u8>() {
-            if n < 16 {
-                return Some(Reg { class: RegClass::Xmm, num: n });
-            }
-        }
-    }
-    if let Some(rest) = s.strip_prefix("ymm") {
-        if let Ok(n) = rest.parse::<u8>() {
-            if n < 16 {
-                return Some(Reg { class: RegClass::Ymm, num: n });
+    // Vector registers — 0..=31 in AVX-512 (xmm/ymm16-31 and zmm need EVEX).
+    for (prefix, class) in [
+        ("xmm", RegClass::Xmm),
+        ("ymm", RegClass::Ymm),
+        ("zmm", RegClass::Zmm),
+    ] {
+        if let Some(rest) = s.strip_prefix(prefix) {
+            if let Ok(n) = rest.parse::<u8>() {
+                if n < 32 {
+                    return Some(Reg { class, num: n });
+                }
             }
         }
     }

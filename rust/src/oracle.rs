@@ -83,11 +83,14 @@ impl LlvmMcEncoder {
             }
 
             let empty = CString::new("").unwrap();
+            // Enable AVX-512 so the assembler accepts zmm / EVEX forms. The
+            // explicit asm chooses the encoding; features only gate availability.
+            let features = CString::new("+avx512f,+avx512vl,+avx512dq,+avx512bw").unwrap();
             let tm = LLVMCreateTargetMachine(
                 target,
                 triple.as_ptr(),
                 empty.as_ptr(),
-                empty.as_ptr(),
+                features.as_ptr(),
                 LLVMCodeGenOptLevel::Default,
                 LLVMRelocMode::Static,
                 LLVMCodeModel::Small,

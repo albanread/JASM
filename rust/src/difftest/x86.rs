@@ -78,6 +78,10 @@ enum Op {
     Ymm,
     /// ymm-or-memory.
     YmmRm,
+    /// A zmm register (AVX-512 512-bit) — low + extended (16..31) to exercise EVEX.
+    Zmm,
+    /// zmm-or-memory.
+    ZmmRm,
     /// A bare memory operand (no size ptr) — for `lea`/`movbe`.
     Mem,
     /// A symbol reference (branch/call target).
@@ -110,6 +114,15 @@ fn op_choices(op: Op) -> Vec<String> {
         Op::Ymm => vec!["ymm1".into(), "ymm12".into()],
         Op::YmmRm => {
             let mut v = vec!["ymm1".to_string(), "ymm12".to_string()];
+            for m in MEMS {
+                v.push((*m).to_string());
+            }
+            v
+        }
+        // zmm1 (all-low), zmm12 (REX bit3 set), zmm18 (EVEX bit4 → R'/X/V').
+        Op::Zmm => vec!["zmm1".into(), "zmm12".into(), "zmm18".into()],
+        Op::ZmmRm => {
+            let mut v = vec!["zmm1".to_string(), "zmm12".to_string(), "zmm18".to_string()];
             for m in MEMS {
                 v.push((*m).to_string());
             }
@@ -352,6 +365,36 @@ impl IsaModel for X86Model {
         }
         emit(&mut o, "vpshufd", "vex.shuffle", &[Xmm, XmmRm, Imm(B)]);
         emit(&mut o, "vpshufd", "vex.shuffle", &[Ymm, YmmRm, Imm(B)]);
+
+        // ── AVX-512 (EVEX, 512-bit zmm; unmasked) ─────────────────────────────
+        // Same opcodes as AVX, EVEX-encoded because the operands are zmm. Only
+        // forms with a real 512-bit encoding (excludes AVX-only vrcpps/vrsqrtps).
+        for m in [
+            "vaddps", "vsubps", "vmulps", "vdivps", "vminps", "vmaxps", "vandps", "vandnps",
+            "vorps", "vxorps", "vunpcklps", "vunpckhps", "vaddpd", "vsubpd", "vmulpd", "vdivpd",
+            "vminpd", "vmaxpd", "vandpd", "vandnpd", "vorpd", "vxorpd",
+        ] {
+            emit(&mut o, m, "evex.packed.fp", &[Zmm, Zmm, ZmmRm]);
+        }
+        // Integer adds/subs/muls keep the same mnemonic under EVEX. (The
+        // bitwise ops become vpandd/vpandq etc., and vpcmpeq* take a mask
+        // destination — both are out of scope for this unmasked increment.)
+        for m in [
+            "vpaddb", "vpaddw", "vpaddd", "vpaddq", "vpsubb", "vpsubw", "vpsubd", "vpsubq",
+            "vpmullw", "vpmulld",
+        ] {
+            emit(&mut o, m, "evex.packed.int", &[Zmm, Zmm, ZmmRm]);
+        }
+        for m in ["vsqrtps", "vsqrtpd", "vcvtdq2ps", "vcvtps2dq", "vcvttps2dq"] {
+            emit(&mut o, m, "evex.packed.2op", &[Zmm, ZmmRm]);
+        }
+        for m in ["vmovaps", "vmovups", "vmovapd", "vmovupd"] {
+            emit(&mut o, m, "evex.mov", &[Zmm, ZmmRm]);
+            emit(&mut o, m, "evex.mov", &[Mem, Zmm]);
+        }
+        emit(&mut o, "vshufps", "evex.shuffle", &[Zmm, Zmm, ZmmRm, Imm(B)]);
+        emit(&mut o, "vshufpd", "evex.shuffle", &[Zmm, Zmm, ZmmRm, Imm(B)]);
+        emit(&mut o, "vpshufd", "evex.shuffle", &[Zmm, ZmmRm, Imm(B)]);
 
         o
     }

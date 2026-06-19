@@ -72,7 +72,7 @@ fn reg_size(r: Reg) -> OpSize {
         RegClass::R8 => OpSize::B8,
         RegClass::R16 => OpSize::B16,
         RegClass::R32 => OpSize::B32,
-        RegClass::R64 | RegClass::Xmm | RegClass::Ymm => OpSize::B64,
+        RegClass::R64 | RegClass::Xmm | RegClass::Ymm | RegClass::Zmm => OpSize::B64,
     }
 }
 
@@ -956,7 +956,7 @@ fn is_gpr_reg(op: &Operand) -> bool {
 }
 
 fn is_vec_class(c: RegClass) -> bool {
-    matches!(c, RegClass::Xmm | RegClass::Ymm)
+    matches!(c, RegClass::Xmm | RegClass::Ymm | RegClass::Zmm)
 }
 
 // ── AVX / VEX encoding ───────────────────────────────────────────────────────
@@ -1011,6 +1011,94 @@ fn emit_vex_rm(
     Ok(())
 }
 
+/// Vector length code: 0=xmm/128, 1=ymm/256, 2=zmm/512.
+fn vec_len(c: RegClass) -> u8 {
+    match c {
+        RegClass::Ymm => 1,
+        RegClass::Zmm => 2,
+        _ => 0,
+    }
+}
+
+/// EVEX is required for a 512-bit op or any extended vector register (16..=31).
+fn use_evex(ll: u8, reg: u8, vvvv: Option<u8>, rm: &Operand) -> bool {
+    ll == 2
+        || reg >= 16
+        || vvvv.map_or(false, |v| v >= 16)
+        || matches!(rm, Operand::Reg(r) if r.num >= 16)
+}
+
+/// Emit a 4-byte EVEX-encoded instruction (AVX-512): `62 P0 P1 P2 opcode ModRM`.
+/// `ll`: 0=128, 1=256, 2=512. `mask`/`z`/`bcast` are 0/false for the unmasked,
+/// no-broadcast forms (masking lands in a later increment).
+#[allow(clippy::too_many_arguments)]
+fn emit_evex_rm(
+    e: &mut Encoded,
+    map: u8,
+    w: bool,
+    pp: u8,
+    ll: u8,
+    opcode: u8,
+    reg: u8,
+    vvvv: Option<u8>,
+    rm: &Operand,
+) -> Result<()> {
+    let vv = vvvv.unwrap_or(0);
+    // reg (ModRM.reg) extends to 5 bits: R = bit3, R' = bit4.
+    let r = (reg >> 3) & 1;
+    let r2 = (reg >> 4) & 1;
+    // rm extension: register-direct rm extends via B (bit3) and X (bit4); a
+    // memory rm takes X/B from index/base like REX.
+    let (x, b) = match rm {
+        Operand::Reg(rr) => ((rr.num >> 4) & 1, (rr.num >> 3) & 1),
+        Operand::Mem(m) => {
+            let (xx, bb) = mem_xb(m);
+            (xx as u8, bb as u8)
+        }
+        other => bail!("expected reg/mem r/m, got {other:?}"),
+    };
+    let vlo = vv & 0x0F;
+    let vhi = (vv >> 4) & 1; // V'
+    let (mask, z, bcast) = (0u8, 0u8, 0u8);
+
+    e.b(0x62);
+    // P0: R̄ X̄ B̄ R̄' 0 0 m m  (R/X/B/R' inverted)
+    e.b(((r ^ 1) << 7) | ((x ^ 1) << 6) | ((b ^ 1) << 5) | ((r2 ^ 1) << 4) | (map & 0x03));
+    // P1: W v̄v̄v̄v̄ 1 pp
+    e.b(((w as u8) << 7) | (((!vlo) & 0x0F) << 3) | (1 << 2) | (pp & 3));
+    // P2: z L'L b V̄' aaa
+    e.b((z << 7) | ((ll & 3) << 5) | (bcast << 4) | (((vhi ^ 1) & 1) << 3) | (mask & 7));
+    e.b(opcode);
+    match rm {
+        Operand::Reg(rr) => emit_modrm_reg(e, reg, rr.num),
+        Operand::Mem(m) => emit_modrm_mem(e, reg, m)?,
+        _ => unreachable!(),
+    }
+    Ok(())
+}
+
+/// Encode a vector reg/vvvv/rm instruction, choosing VEX or EVEX automatically.
+#[allow(clippy::too_many_arguments)]
+fn emit_vec_rm(
+    e: &mut Encoded,
+    map: u8,
+    w: bool,
+    pp: u8,
+    ll: u8,
+    opcode: u8,
+    reg: u8,
+    vvvv: Option<u8>,
+    rm: &Operand,
+) -> Result<()> {
+    if use_evex(ll, reg, vvvv, rm) {
+        // EVEX W is semantic (W1 for double/qword elements).
+        emit_evex_rm(e, map, w, pp, ll, opcode, reg, vvvv, rm)
+    } else {
+        // All VEX forms here are WIG; LLVM normalizes the byte to W=0.
+        emit_vex_rm(e, map, false, pp, ll == 1, opcode, reg, vvvv, rm)
+    }
+}
+
 /// Packed VEX ops whose two sources are interchangeable, so LLVM may swap them
 /// to keep a high register out of the `rm` field (shorter 2-byte VEX). Scalar
 /// ops are excluded: their upper lanes come from `vvvv`, so the sources are not
@@ -1041,17 +1129,17 @@ fn vex_rvm(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
         "vxorps" => (0, 1, false, 0x57),
         "vunpcklps" => (0, 1, false, 0x14),
         "vunpckhps" => (0, 1, false, 0x15),
-        // packed double — 66.0F
-        "vaddpd" => (1, 1, false, 0x58),
-        "vsubpd" => (1, 1, false, 0x5C),
-        "vmulpd" => (1, 1, false, 0x59),
-        "vdivpd" => (1, 1, false, 0x5E),
-        "vminpd" => (1, 1, false, 0x5D),
-        "vmaxpd" => (1, 1, false, 0x5F),
-        "vandpd" => (1, 1, false, 0x54),
-        "vandnpd" => (1, 1, false, 0x55),
-        "vorpd" => (1, 1, false, 0x56),
-        "vxorpd" => (1, 1, false, 0x57),
+        // packed double — 66.0F.W1 (W is EVEX-semantic; VEX forces it to 0)
+        "vaddpd" => (1, 1, true, 0x58),
+        "vsubpd" => (1, 1, true, 0x5C),
+        "vmulpd" => (1, 1, true, 0x59),
+        "vdivpd" => (1, 1, true, 0x5E),
+        "vminpd" => (1, 1, true, 0x5D),
+        "vmaxpd" => (1, 1, true, 0x5F),
+        "vandpd" => (1, 1, true, 0x54),
+        "vandnpd" => (1, 1, true, 0x55),
+        "vorpd" => (1, 1, true, 0x56),
+        "vxorpd" => (1, 1, true, 0x57),
         // scalar single — F3.0F
         "vaddss" => (2, 1, false, 0x58),
         "vsubss" => (2, 1, false, 0x5C),
@@ -1060,23 +1148,23 @@ fn vex_rvm(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
         "vminss" => (2, 1, false, 0x5D),
         "vmaxss" => (2, 1, false, 0x5F),
         "vsqrtss" => (2, 1, false, 0x51),
-        // scalar double — F2.0F
-        "vaddsd" => (3, 1, false, 0x58),
-        "vsubsd" => (3, 1, false, 0x5C),
-        "vmulsd" => (3, 1, false, 0x59),
-        "vdivsd" => (3, 1, false, 0x5E),
-        "vminsd" => (3, 1, false, 0x5D),
-        "vmaxsd" => (3, 1, false, 0x5F),
-        "vsqrtsd" => (3, 1, false, 0x51),
+        // scalar double — F2.0F.W1
+        "vaddsd" => (3, 1, true, 0x58),
+        "vsubsd" => (3, 1, true, 0x5C),
+        "vmulsd" => (3, 1, true, 0x59),
+        "vdivsd" => (3, 1, true, 0x5E),
+        "vminsd" => (3, 1, true, 0x5D),
+        "vmaxsd" => (3, 1, true, 0x5F),
+        "vsqrtsd" => (3, 1, true, 0x51),
         // packed integer — 66.0F (vpmulld is 66.0F38)
         "vpaddb" => (1, 1, false, 0xFC),
         "vpaddw" => (1, 1, false, 0xFD),
         "vpaddd" => (1, 1, false, 0xFE),
-        "vpaddq" => (1, 1, false, 0xD4),
+        "vpaddq" => (1, 1, true, 0xD4),
         "vpsubb" => (1, 1, false, 0xF8),
         "vpsubw" => (1, 1, false, 0xF9),
         "vpsubd" => (1, 1, false, 0xFA),
-        "vpsubq" => (1, 1, false, 0xFB),
+        "vpsubq" => (1, 1, true, 0xFB),
         "vpand" => (1, 1, false, 0xDB),
         "vpandn" => (1, 1, false, 0xDF),
         "vpor" => (1, 1, false, 0xEB),
@@ -1091,11 +1179,14 @@ fn vex_rvm(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
     if !is_vec_class(d.class) {
         return None;
     }
-    // Commutative-source swap (matches LLVM): if src2 is a high reg and src1 is
-    // low, swap so the high reg lands in vvvv (not rm), enabling the 2-byte form.
-    // Only worth it when 2-byte VEX is reachable (map==0F); LLVM doesn't swap a
-    // 0F38/0F3A op like `vpmulld`, which is always 3-byte.
-    let swap = vex_commutative(mnemonic)
+    let ll = vec_len(d.class);
+    let evex = use_evex(ll, d.num, Some(v.num), rm);
+    // Commutative-source swap (VEX only): if src2 is a high reg and src1 is low,
+    // swap so the high reg lands in vvvv (not rm), enabling the 2-byte form. Only
+    // worth it when 2-byte VEX is reachable (map==0F, no EVEX); LLVM doesn't swap
+    // a 0F38 op like `vpmulld` (always 3-byte) or any EVEX op (no 2-byte form).
+    let swap = !evex
+        && vex_commutative(mnemonic)
         && map == 1
         && matches!(rm, Operand::Reg(r2) if r2.num >= 8)
         && v.num < 8;
@@ -1109,7 +1200,7 @@ fn vex_rvm(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
         (v.num, rm)
     };
     let mut e = Encoded::default();
-    match emit_vex_rm(&mut e, map, w, pp, d.class == RegClass::Ymm, op, d.num, Some(vvvv), rm_ref) {
+    match emit_vec_rm(&mut e, map, w, pp, ll, op, d.num, Some(vvvv), rm_ref) {
         Ok(()) => Some(Ok(e)),
         Err(err) => Some(Err(err)),
     }
@@ -1120,7 +1211,7 @@ fn vex_rvm(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
 fn vex_rm(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
     let (pp, map, w, op): (u8, u8, bool, u8) = match mnemonic {
         "vsqrtps" => (0, 1, false, 0x51),
-        "vsqrtpd" => (1, 1, false, 0x51),
+        "vsqrtpd" => (1, 1, true, 0x51),
         "vrcpps" => (0, 1, false, 0x53),
         "vrsqrtps" => (0, 1, false, 0x52),
         "vcvtdq2ps" => (0, 1, false, 0x5B),
@@ -1133,7 +1224,7 @@ fn vex_rm(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
         return None;
     }
     let mut e = Encoded::default();
-    match emit_vex_rm(&mut e, map, w, pp, d.class == RegClass::Ymm, op, d.num, None, rm) {
+    match emit_vec_rm(&mut e, map, w, pp, vec_len(d.class), op, d.num, None, rm) {
         Ok(()) => Some(Ok(e)),
         Err(err) => Some(Err(err)),
     }
@@ -1141,33 +1232,36 @@ fn vex_rm(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
 
 /// VEX moves with load (`vec ← vec/m`) and store (`m ← vec`) directions.
 fn vex_mov(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
-    let (pp, load, store): (u8, u8, u8) = match mnemonic {
-        "vmovaps" => (0, 0x28, 0x29),
-        "vmovups" => (0, 0x10, 0x11),
-        "vmovapd" => (1, 0x28, 0x29),
-        "vmovupd" => (1, 0x10, 0x11),
-        "vmovdqa" => (1, 0x6F, 0x7F),
-        "vmovdqu" => (2, 0x6F, 0x7F),
+    // (pp, load opcode, store opcode, EVEX-semantic W)
+    let (pp, load, store, w): (u8, u8, u8, bool) = match mnemonic {
+        "vmovaps" => (0, 0x28, 0x29, false),
+        "vmovups" => (0, 0x10, 0x11, false),
+        "vmovapd" => (1, 0x28, 0x29, true),
+        "vmovupd" => (1, 0x10, 0x11, true),
+        "vmovdqa" => (1, 0x6F, 0x7F, false),
+        "vmovdqu" => (2, 0x6F, 0x7F, false),
         _ => return None,
     };
     let mut e = Encoded::default();
     let r = match ops {
         // reg-reg: LLVM flips to the store opcode when src is a high reg and dest
         // is low — that puts the high reg in the `reg`/R field (fine for 2-byte
-        // VEX) instead of `rm`/B (which would force 3-byte).
+        // VEX) instead of `rm`/B (which would force 3-byte). VEX only; EVEX has
+        // no 2-byte form and encodes any register either way.
         [Operand::Reg(d), Operand::Reg(s)] if is_vec_class(d.class) && is_vec_class(s.class) => {
-            let l = d.class == RegClass::Ymm;
-            if s.num >= 8 && d.num < 8 {
-                emit_vex_rm(&mut e, 1, false, pp, l, store, s.num, None, &Operand::Reg(*d))
+            let ll = vec_len(d.class);
+            let evex = use_evex(ll, d.num, None, &Operand::Reg(*s));
+            if !evex && s.num >= 8 && d.num < 8 {
+                emit_vec_rm(&mut e, 1, w, pp, ll, store, s.num, None, &Operand::Reg(*d))
             } else {
-                emit_vex_rm(&mut e, 1, false, pp, l, load, d.num, None, &Operand::Reg(*s))
+                emit_vec_rm(&mut e, 1, w, pp, ll, load, d.num, None, &Operand::Reg(*s))
             }
         }
         [Operand::Reg(d), src] if is_vec_class(d.class) => {
-            emit_vex_rm(&mut e, 1, false, pp, d.class == RegClass::Ymm, load, d.num, None, src)
+            emit_vec_rm(&mut e, 1, w, pp, vec_len(d.class), load, d.num, None, src)
         }
         [dst @ Operand::Mem(_), Operand::Reg(s)] if is_vec_class(s.class) => {
-            emit_vex_rm(&mut e, 1, false, pp, s.class == RegClass::Ymm, store, s.num, None, dst)
+            emit_vec_rm(&mut e, 1, w, pp, vec_len(s.class), store, s.num, None, dst)
         }
         _ => return None,
     };
@@ -1181,9 +1275,9 @@ fn vex_mov(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
 /// (2-op RMI, vvvv unused).
 fn vex_shuffle(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
     // RVMI: dest, vvvv, rm, imm8.
-    if let Some((pp, op)) = match mnemonic {
-        "vshufps" => Some((0u8, 0xC6u8)),
-        "vshufpd" => Some((1, 0xC6)),
+    if let Some((pp, op, w)) = match mnemonic {
+        "vshufps" => Some((0u8, 0xC6u8, false)),
+        "vshufpd" => Some((1, 0xC6, true)),
         _ => None,
     } {
         let [Operand::Reg(d), Operand::Reg(v), rm, Operand::Imm(imm)] = ops else { return None };
@@ -1191,7 +1285,7 @@ fn vex_shuffle(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
             return None;
         }
         let mut e = Encoded::default();
-        if let Err(err) = emit_vex_rm(&mut e, 1, false, pp, d.class == RegClass::Ymm, op, d.num, Some(v.num), rm) {
+        if let Err(err) = emit_vec_rm(&mut e, 1, w, pp, vec_len(d.class), op, d.num, Some(v.num), rm) {
             return Some(Err(err));
         }
         e.b(*imm as u8);
@@ -1204,7 +1298,7 @@ fn vex_shuffle(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
             return None;
         }
         let mut e = Encoded::default();
-        if let Err(err) = emit_vex_rm(&mut e, 1, false, 1, d.class == RegClass::Ymm, 0x70, d.num, None, rm) {
+        if let Err(err) = emit_vec_rm(&mut e, 1, false, 1, vec_len(d.class), 0x70, d.num, None, rm) {
             return Some(Err(err));
         }
         e.b(*imm as u8);

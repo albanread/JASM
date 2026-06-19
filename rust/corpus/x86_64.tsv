@@ -3391,3 +3391,1719 @@ vpshufd ymm12, ymm1, 0x7f	c57d70e17f
 vpshufd ymm12, ymm12, 0x7f	c4417d70e47f	
 vpshufd ymm12, [rax], 0x7f	c57d70207f	
 vpshufd ymm12, [r13 + r14*2], 0x7f	c4017d706475007f	
+vaddps zmm1, zmm1, zmm1	62f1744858c9	
+vaddps zmm1, zmm1, zmm12	62d1744858cc	
+vaddps zmm1, zmm1, zmm18	62b1744858ca	
+vaddps zmm1, zmm1, [rax]	62f174485808	
+vaddps zmm1, zmm1, [r13 + r14*2]	62917448584c7500	
+vaddps zmm1, zmm12, zmm1	62f11c4858c9	
+vaddps zmm1, zmm12, zmm12	62d11c4858cc	
+vaddps zmm1, zmm12, zmm18	62b11c4858ca	
+vaddps zmm1, zmm12, [rax]	62f11c485808	
+vaddps zmm1, zmm12, [r13 + r14*2]	62911c48584c7500	
+vaddps zmm1, zmm18, zmm1	62f16c4058c9	
+vaddps zmm1, zmm18, zmm12	62d16c4058cc	
+vaddps zmm1, zmm18, zmm18	62b16c4058ca	
+vaddps zmm1, zmm18, [rax]	62f16c405808	
+vaddps zmm1, zmm18, [r13 + r14*2]	62916c40584c7500	
+vaddps zmm12, zmm1, zmm1	6271744858e1	
+vaddps zmm12, zmm1, zmm12	6251744858e4	
+vaddps zmm12, zmm1, zmm18	6231744858e2	
+vaddps zmm12, zmm1, [rax]	627174485820	
+vaddps zmm12, zmm1, [r13 + r14*2]	6211744858647500	
+vaddps zmm12, zmm12, zmm1	62711c4858e1	
+vaddps zmm12, zmm12, zmm12	62511c4858e4	
+vaddps zmm12, zmm12, zmm18	62311c4858e2	
+vaddps zmm12, zmm12, [rax]	62711c485820	
+vaddps zmm12, zmm12, [r13 + r14*2]	62111c4858647500	
+vaddps zmm12, zmm18, zmm1	62716c4058e1	
+vaddps zmm12, zmm18, zmm12	62516c4058e4	
+vaddps zmm12, zmm18, zmm18	62316c4058e2	
+vaddps zmm12, zmm18, [rax]	62716c405820	
+vaddps zmm12, zmm18, [r13 + r14*2]	62116c4058647500	
+vaddps zmm18, zmm1, zmm1	62e1744858d1	
+vaddps zmm18, zmm1, zmm12	62c1744858d4	
+vaddps zmm18, zmm1, zmm18	62a1744858d2	
+vaddps zmm18, zmm1, [rax]	62e174485810	
+vaddps zmm18, zmm1, [r13 + r14*2]	6281744858547500	
+vaddps zmm18, zmm12, zmm1	62e11c4858d1	
+vaddps zmm18, zmm12, zmm12	62c11c4858d4	
+vaddps zmm18, zmm12, zmm18	62a11c4858d2	
+vaddps zmm18, zmm12, [rax]	62e11c485810	
+vaddps zmm18, zmm12, [r13 + r14*2]	62811c4858547500	
+vaddps zmm18, zmm18, zmm1	62e16c4058d1	
+vaddps zmm18, zmm18, zmm12	62c16c4058d4	
+vaddps zmm18, zmm18, zmm18	62a16c4058d2	
+vaddps zmm18, zmm18, [rax]	62e16c405810	
+vaddps zmm18, zmm18, [r13 + r14*2]	62816c4058547500	
+vsubps zmm1, zmm1, zmm1	62f174485cc9	
+vsubps zmm1, zmm1, zmm12	62d174485ccc	
+vsubps zmm1, zmm1, zmm18	62b174485cca	
+vsubps zmm1, zmm1, [rax]	62f174485c08	
+vsubps zmm1, zmm1, [r13 + r14*2]	629174485c4c7500	
+vsubps zmm1, zmm12, zmm1	62f11c485cc9	
+vsubps zmm1, zmm12, zmm12	62d11c485ccc	
+vsubps zmm1, zmm12, zmm18	62b11c485cca	
+vsubps zmm1, zmm12, [rax]	62f11c485c08	
+vsubps zmm1, zmm12, [r13 + r14*2]	62911c485c4c7500	
+vsubps zmm1, zmm18, zmm1	62f16c405cc9	
+vsubps zmm1, zmm18, zmm12	62d16c405ccc	
+vsubps zmm1, zmm18, zmm18	62b16c405cca	
+vsubps zmm1, zmm18, [rax]	62f16c405c08	
+vsubps zmm1, zmm18, [r13 + r14*2]	62916c405c4c7500	
+vsubps zmm12, zmm1, zmm1	627174485ce1	
+vsubps zmm12, zmm1, zmm12	625174485ce4	
+vsubps zmm12, zmm1, zmm18	623174485ce2	
+vsubps zmm12, zmm1, [rax]	627174485c20	
+vsubps zmm12, zmm1, [r13 + r14*2]	621174485c647500	
+vsubps zmm12, zmm12, zmm1	62711c485ce1	
+vsubps zmm12, zmm12, zmm12	62511c485ce4	
+vsubps zmm12, zmm12, zmm18	62311c485ce2	
+vsubps zmm12, zmm12, [rax]	62711c485c20	
+vsubps zmm12, zmm12, [r13 + r14*2]	62111c485c647500	
+vsubps zmm12, zmm18, zmm1	62716c405ce1	
+vsubps zmm12, zmm18, zmm12	62516c405ce4	
+vsubps zmm12, zmm18, zmm18	62316c405ce2	
+vsubps zmm12, zmm18, [rax]	62716c405c20	
+vsubps zmm12, zmm18, [r13 + r14*2]	62116c405c647500	
+vsubps zmm18, zmm1, zmm1	62e174485cd1	
+vsubps zmm18, zmm1, zmm12	62c174485cd4	
+vsubps zmm18, zmm1, zmm18	62a174485cd2	
+vsubps zmm18, zmm1, [rax]	62e174485c10	
+vsubps zmm18, zmm1, [r13 + r14*2]	628174485c547500	
+vsubps zmm18, zmm12, zmm1	62e11c485cd1	
+vsubps zmm18, zmm12, zmm12	62c11c485cd4	
+vsubps zmm18, zmm12, zmm18	62a11c485cd2	
+vsubps zmm18, zmm12, [rax]	62e11c485c10	
+vsubps zmm18, zmm12, [r13 + r14*2]	62811c485c547500	
+vsubps zmm18, zmm18, zmm1	62e16c405cd1	
+vsubps zmm18, zmm18, zmm12	62c16c405cd4	
+vsubps zmm18, zmm18, zmm18	62a16c405cd2	
+vsubps zmm18, zmm18, [rax]	62e16c405c10	
+vsubps zmm18, zmm18, [r13 + r14*2]	62816c405c547500	
+vmulps zmm1, zmm1, zmm1	62f1744859c9	
+vmulps zmm1, zmm1, zmm12	62d1744859cc	
+vmulps zmm1, zmm1, zmm18	62b1744859ca	
+vmulps zmm1, zmm1, [rax]	62f174485908	
+vmulps zmm1, zmm1, [r13 + r14*2]	62917448594c7500	
+vmulps zmm1, zmm12, zmm1	62f11c4859c9	
+vmulps zmm1, zmm12, zmm12	62d11c4859cc	
+vmulps zmm1, zmm12, zmm18	62b11c4859ca	
+vmulps zmm1, zmm12, [rax]	62f11c485908	
+vmulps zmm1, zmm12, [r13 + r14*2]	62911c48594c7500	
+vmulps zmm1, zmm18, zmm1	62f16c4059c9	
+vmulps zmm1, zmm18, zmm12	62d16c4059cc	
+vmulps zmm1, zmm18, zmm18	62b16c4059ca	
+vmulps zmm1, zmm18, [rax]	62f16c405908	
+vmulps zmm1, zmm18, [r13 + r14*2]	62916c40594c7500	
+vmulps zmm12, zmm1, zmm1	6271744859e1	
+vmulps zmm12, zmm1, zmm12	6251744859e4	
+vmulps zmm12, zmm1, zmm18	6231744859e2	
+vmulps zmm12, zmm1, [rax]	627174485920	
+vmulps zmm12, zmm1, [r13 + r14*2]	6211744859647500	
+vmulps zmm12, zmm12, zmm1	62711c4859e1	
+vmulps zmm12, zmm12, zmm12	62511c4859e4	
+vmulps zmm12, zmm12, zmm18	62311c4859e2	
+vmulps zmm12, zmm12, [rax]	62711c485920	
+vmulps zmm12, zmm12, [r13 + r14*2]	62111c4859647500	
+vmulps zmm12, zmm18, zmm1	62716c4059e1	
+vmulps zmm12, zmm18, zmm12	62516c4059e4	
+vmulps zmm12, zmm18, zmm18	62316c4059e2	
+vmulps zmm12, zmm18, [rax]	62716c405920	
+vmulps zmm12, zmm18, [r13 + r14*2]	62116c4059647500	
+vmulps zmm18, zmm1, zmm1	62e1744859d1	
+vmulps zmm18, zmm1, zmm12	62c1744859d4	
+vmulps zmm18, zmm1, zmm18	62a1744859d2	
+vmulps zmm18, zmm1, [rax]	62e174485910	
+vmulps zmm18, zmm1, [r13 + r14*2]	6281744859547500	
+vmulps zmm18, zmm12, zmm1	62e11c4859d1	
+vmulps zmm18, zmm12, zmm12	62c11c4859d4	
+vmulps zmm18, zmm12, zmm18	62a11c4859d2	
+vmulps zmm18, zmm12, [rax]	62e11c485910	
+vmulps zmm18, zmm12, [r13 + r14*2]	62811c4859547500	
+vmulps zmm18, zmm18, zmm1	62e16c4059d1	
+vmulps zmm18, zmm18, zmm12	62c16c4059d4	
+vmulps zmm18, zmm18, zmm18	62a16c4059d2	
+vmulps zmm18, zmm18, [rax]	62e16c405910	
+vmulps zmm18, zmm18, [r13 + r14*2]	62816c4059547500	
+vdivps zmm1, zmm1, zmm1	62f174485ec9	
+vdivps zmm1, zmm1, zmm12	62d174485ecc	
+vdivps zmm1, zmm1, zmm18	62b174485eca	
+vdivps zmm1, zmm1, [rax]	62f174485e08	
+vdivps zmm1, zmm1, [r13 + r14*2]	629174485e4c7500	
+vdivps zmm1, zmm12, zmm1	62f11c485ec9	
+vdivps zmm1, zmm12, zmm12	62d11c485ecc	
+vdivps zmm1, zmm12, zmm18	62b11c485eca	
+vdivps zmm1, zmm12, [rax]	62f11c485e08	
+vdivps zmm1, zmm12, [r13 + r14*2]	62911c485e4c7500	
+vdivps zmm1, zmm18, zmm1	62f16c405ec9	
+vdivps zmm1, zmm18, zmm12	62d16c405ecc	
+vdivps zmm1, zmm18, zmm18	62b16c405eca	
+vdivps zmm1, zmm18, [rax]	62f16c405e08	
+vdivps zmm1, zmm18, [r13 + r14*2]	62916c405e4c7500	
+vdivps zmm12, zmm1, zmm1	627174485ee1	
+vdivps zmm12, zmm1, zmm12	625174485ee4	
+vdivps zmm12, zmm1, zmm18	623174485ee2	
+vdivps zmm12, zmm1, [rax]	627174485e20	
+vdivps zmm12, zmm1, [r13 + r14*2]	621174485e647500	
+vdivps zmm12, zmm12, zmm1	62711c485ee1	
+vdivps zmm12, zmm12, zmm12	62511c485ee4	
+vdivps zmm12, zmm12, zmm18	62311c485ee2	
+vdivps zmm12, zmm12, [rax]	62711c485e20	
+vdivps zmm12, zmm12, [r13 + r14*2]	62111c485e647500	
+vdivps zmm12, zmm18, zmm1	62716c405ee1	
+vdivps zmm12, zmm18, zmm12	62516c405ee4	
+vdivps zmm12, zmm18, zmm18	62316c405ee2	
+vdivps zmm12, zmm18, [rax]	62716c405e20	
+vdivps zmm12, zmm18, [r13 + r14*2]	62116c405e647500	
+vdivps zmm18, zmm1, zmm1	62e174485ed1	
+vdivps zmm18, zmm1, zmm12	62c174485ed4	
+vdivps zmm18, zmm1, zmm18	62a174485ed2	
+vdivps zmm18, zmm1, [rax]	62e174485e10	
+vdivps zmm18, zmm1, [r13 + r14*2]	628174485e547500	
+vdivps zmm18, zmm12, zmm1	62e11c485ed1	
+vdivps zmm18, zmm12, zmm12	62c11c485ed4	
+vdivps zmm18, zmm12, zmm18	62a11c485ed2	
+vdivps zmm18, zmm12, [rax]	62e11c485e10	
+vdivps zmm18, zmm12, [r13 + r14*2]	62811c485e547500	
+vdivps zmm18, zmm18, zmm1	62e16c405ed1	
+vdivps zmm18, zmm18, zmm12	62c16c405ed4	
+vdivps zmm18, zmm18, zmm18	62a16c405ed2	
+vdivps zmm18, zmm18, [rax]	62e16c405e10	
+vdivps zmm18, zmm18, [r13 + r14*2]	62816c405e547500	
+vminps zmm1, zmm1, zmm1	62f174485dc9	
+vminps zmm1, zmm1, zmm12	62d174485dcc	
+vminps zmm1, zmm1, zmm18	62b174485dca	
+vminps zmm1, zmm1, [rax]	62f174485d08	
+vminps zmm1, zmm1, [r13 + r14*2]	629174485d4c7500	
+vminps zmm1, zmm12, zmm1	62f11c485dc9	
+vminps zmm1, zmm12, zmm12	62d11c485dcc	
+vminps zmm1, zmm12, zmm18	62b11c485dca	
+vminps zmm1, zmm12, [rax]	62f11c485d08	
+vminps zmm1, zmm12, [r13 + r14*2]	62911c485d4c7500	
+vminps zmm1, zmm18, zmm1	62f16c405dc9	
+vminps zmm1, zmm18, zmm12	62d16c405dcc	
+vminps zmm1, zmm18, zmm18	62b16c405dca	
+vminps zmm1, zmm18, [rax]	62f16c405d08	
+vminps zmm1, zmm18, [r13 + r14*2]	62916c405d4c7500	
+vminps zmm12, zmm1, zmm1	627174485de1	
+vminps zmm12, zmm1, zmm12	625174485de4	
+vminps zmm12, zmm1, zmm18	623174485de2	
+vminps zmm12, zmm1, [rax]	627174485d20	
+vminps zmm12, zmm1, [r13 + r14*2]	621174485d647500	
+vminps zmm12, zmm12, zmm1	62711c485de1	
+vminps zmm12, zmm12, zmm12	62511c485de4	
+vminps zmm12, zmm12, zmm18	62311c485de2	
+vminps zmm12, zmm12, [rax]	62711c485d20	
+vminps zmm12, zmm12, [r13 + r14*2]	62111c485d647500	
+vminps zmm12, zmm18, zmm1	62716c405de1	
+vminps zmm12, zmm18, zmm12	62516c405de4	
+vminps zmm12, zmm18, zmm18	62316c405de2	
+vminps zmm12, zmm18, [rax]	62716c405d20	
+vminps zmm12, zmm18, [r13 + r14*2]	62116c405d647500	
+vminps zmm18, zmm1, zmm1	62e174485dd1	
+vminps zmm18, zmm1, zmm12	62c174485dd4	
+vminps zmm18, zmm1, zmm18	62a174485dd2	
+vminps zmm18, zmm1, [rax]	62e174485d10	
+vminps zmm18, zmm1, [r13 + r14*2]	628174485d547500	
+vminps zmm18, zmm12, zmm1	62e11c485dd1	
+vminps zmm18, zmm12, zmm12	62c11c485dd4	
+vminps zmm18, zmm12, zmm18	62a11c485dd2	
+vminps zmm18, zmm12, [rax]	62e11c485d10	
+vminps zmm18, zmm12, [r13 + r14*2]	62811c485d547500	
+vminps zmm18, zmm18, zmm1	62e16c405dd1	
+vminps zmm18, zmm18, zmm12	62c16c405dd4	
+vminps zmm18, zmm18, zmm18	62a16c405dd2	
+vminps zmm18, zmm18, [rax]	62e16c405d10	
+vminps zmm18, zmm18, [r13 + r14*2]	62816c405d547500	
+vmaxps zmm1, zmm1, zmm1	62f174485fc9	
+vmaxps zmm1, zmm1, zmm12	62d174485fcc	
+vmaxps zmm1, zmm1, zmm18	62b174485fca	
+vmaxps zmm1, zmm1, [rax]	62f174485f08	
+vmaxps zmm1, zmm1, [r13 + r14*2]	629174485f4c7500	
+vmaxps zmm1, zmm12, zmm1	62f11c485fc9	
+vmaxps zmm1, zmm12, zmm12	62d11c485fcc	
+vmaxps zmm1, zmm12, zmm18	62b11c485fca	
+vmaxps zmm1, zmm12, [rax]	62f11c485f08	
+vmaxps zmm1, zmm12, [r13 + r14*2]	62911c485f4c7500	
+vmaxps zmm1, zmm18, zmm1	62f16c405fc9	
+vmaxps zmm1, zmm18, zmm12	62d16c405fcc	
+vmaxps zmm1, zmm18, zmm18	62b16c405fca	
+vmaxps zmm1, zmm18, [rax]	62f16c405f08	
+vmaxps zmm1, zmm18, [r13 + r14*2]	62916c405f4c7500	
+vmaxps zmm12, zmm1, zmm1	627174485fe1	
+vmaxps zmm12, zmm1, zmm12	625174485fe4	
+vmaxps zmm12, zmm1, zmm18	623174485fe2	
+vmaxps zmm12, zmm1, [rax]	627174485f20	
+vmaxps zmm12, zmm1, [r13 + r14*2]	621174485f647500	
+vmaxps zmm12, zmm12, zmm1	62711c485fe1	
+vmaxps zmm12, zmm12, zmm12	62511c485fe4	
+vmaxps zmm12, zmm12, zmm18	62311c485fe2	
+vmaxps zmm12, zmm12, [rax]	62711c485f20	
+vmaxps zmm12, zmm12, [r13 + r14*2]	62111c485f647500	
+vmaxps zmm12, zmm18, zmm1	62716c405fe1	
+vmaxps zmm12, zmm18, zmm12	62516c405fe4	
+vmaxps zmm12, zmm18, zmm18	62316c405fe2	
+vmaxps zmm12, zmm18, [rax]	62716c405f20	
+vmaxps zmm12, zmm18, [r13 + r14*2]	62116c405f647500	
+vmaxps zmm18, zmm1, zmm1	62e174485fd1	
+vmaxps zmm18, zmm1, zmm12	62c174485fd4	
+vmaxps zmm18, zmm1, zmm18	62a174485fd2	
+vmaxps zmm18, zmm1, [rax]	62e174485f10	
+vmaxps zmm18, zmm1, [r13 + r14*2]	628174485f547500	
+vmaxps zmm18, zmm12, zmm1	62e11c485fd1	
+vmaxps zmm18, zmm12, zmm12	62c11c485fd4	
+vmaxps zmm18, zmm12, zmm18	62a11c485fd2	
+vmaxps zmm18, zmm12, [rax]	62e11c485f10	
+vmaxps zmm18, zmm12, [r13 + r14*2]	62811c485f547500	
+vmaxps zmm18, zmm18, zmm1	62e16c405fd1	
+vmaxps zmm18, zmm18, zmm12	62c16c405fd4	
+vmaxps zmm18, zmm18, zmm18	62a16c405fd2	
+vmaxps zmm18, zmm18, [rax]	62e16c405f10	
+vmaxps zmm18, zmm18, [r13 + r14*2]	62816c405f547500	
+vandps zmm1, zmm1, zmm1	62f1744854c9	
+vandps zmm1, zmm1, zmm12	62d1744854cc	
+vandps zmm1, zmm1, zmm18	62b1744854ca	
+vandps zmm1, zmm1, [rax]	62f174485408	
+vandps zmm1, zmm1, [r13 + r14*2]	62917448544c7500	
+vandps zmm1, zmm12, zmm1	62f11c4854c9	
+vandps zmm1, zmm12, zmm12	62d11c4854cc	
+vandps zmm1, zmm12, zmm18	62b11c4854ca	
+vandps zmm1, zmm12, [rax]	62f11c485408	
+vandps zmm1, zmm12, [r13 + r14*2]	62911c48544c7500	
+vandps zmm1, zmm18, zmm1	62f16c4054c9	
+vandps zmm1, zmm18, zmm12	62d16c4054cc	
+vandps zmm1, zmm18, zmm18	62b16c4054ca	
+vandps zmm1, zmm18, [rax]	62f16c405408	
+vandps zmm1, zmm18, [r13 + r14*2]	62916c40544c7500	
+vandps zmm12, zmm1, zmm1	6271744854e1	
+vandps zmm12, zmm1, zmm12	6251744854e4	
+vandps zmm12, zmm1, zmm18	6231744854e2	
+vandps zmm12, zmm1, [rax]	627174485420	
+vandps zmm12, zmm1, [r13 + r14*2]	6211744854647500	
+vandps zmm12, zmm12, zmm1	62711c4854e1	
+vandps zmm12, zmm12, zmm12	62511c4854e4	
+vandps zmm12, zmm12, zmm18	62311c4854e2	
+vandps zmm12, zmm12, [rax]	62711c485420	
+vandps zmm12, zmm12, [r13 + r14*2]	62111c4854647500	
+vandps zmm12, zmm18, zmm1	62716c4054e1	
+vandps zmm12, zmm18, zmm12	62516c4054e4	
+vandps zmm12, zmm18, zmm18	62316c4054e2	
+vandps zmm12, zmm18, [rax]	62716c405420	
+vandps zmm12, zmm18, [r13 + r14*2]	62116c4054647500	
+vandps zmm18, zmm1, zmm1	62e1744854d1	
+vandps zmm18, zmm1, zmm12	62c1744854d4	
+vandps zmm18, zmm1, zmm18	62a1744854d2	
+vandps zmm18, zmm1, [rax]	62e174485410	
+vandps zmm18, zmm1, [r13 + r14*2]	6281744854547500	
+vandps zmm18, zmm12, zmm1	62e11c4854d1	
+vandps zmm18, zmm12, zmm12	62c11c4854d4	
+vandps zmm18, zmm12, zmm18	62a11c4854d2	
+vandps zmm18, zmm12, [rax]	62e11c485410	
+vandps zmm18, zmm12, [r13 + r14*2]	62811c4854547500	
+vandps zmm18, zmm18, zmm1	62e16c4054d1	
+vandps zmm18, zmm18, zmm12	62c16c4054d4	
+vandps zmm18, zmm18, zmm18	62a16c4054d2	
+vandps zmm18, zmm18, [rax]	62e16c405410	
+vandps zmm18, zmm18, [r13 + r14*2]	62816c4054547500	
+vandnps zmm1, zmm1, zmm1	62f1744855c9	
+vandnps zmm1, zmm1, zmm12	62d1744855cc	
+vandnps zmm1, zmm1, zmm18	62b1744855ca	
+vandnps zmm1, zmm1, [rax]	62f174485508	
+vandnps zmm1, zmm1, [r13 + r14*2]	62917448554c7500	
+vandnps zmm1, zmm12, zmm1	62f11c4855c9	
+vandnps zmm1, zmm12, zmm12	62d11c4855cc	
+vandnps zmm1, zmm12, zmm18	62b11c4855ca	
+vandnps zmm1, zmm12, [rax]	62f11c485508	
+vandnps zmm1, zmm12, [r13 + r14*2]	62911c48554c7500	
+vandnps zmm1, zmm18, zmm1	62f16c4055c9	
+vandnps zmm1, zmm18, zmm12	62d16c4055cc	
+vandnps zmm1, zmm18, zmm18	62b16c4055ca	
+vandnps zmm1, zmm18, [rax]	62f16c405508	
+vandnps zmm1, zmm18, [r13 + r14*2]	62916c40554c7500	
+vandnps zmm12, zmm1, zmm1	6271744855e1	
+vandnps zmm12, zmm1, zmm12	6251744855e4	
+vandnps zmm12, zmm1, zmm18	6231744855e2	
+vandnps zmm12, zmm1, [rax]	627174485520	
+vandnps zmm12, zmm1, [r13 + r14*2]	6211744855647500	
+vandnps zmm12, zmm12, zmm1	62711c4855e1	
+vandnps zmm12, zmm12, zmm12	62511c4855e4	
+vandnps zmm12, zmm12, zmm18	62311c4855e2	
+vandnps zmm12, zmm12, [rax]	62711c485520	
+vandnps zmm12, zmm12, [r13 + r14*2]	62111c4855647500	
+vandnps zmm12, zmm18, zmm1	62716c4055e1	
+vandnps zmm12, zmm18, zmm12	62516c4055e4	
+vandnps zmm12, zmm18, zmm18	62316c4055e2	
+vandnps zmm12, zmm18, [rax]	62716c405520	
+vandnps zmm12, zmm18, [r13 + r14*2]	62116c4055647500	
+vandnps zmm18, zmm1, zmm1	62e1744855d1	
+vandnps zmm18, zmm1, zmm12	62c1744855d4	
+vandnps zmm18, zmm1, zmm18	62a1744855d2	
+vandnps zmm18, zmm1, [rax]	62e174485510	
+vandnps zmm18, zmm1, [r13 + r14*2]	6281744855547500	
+vandnps zmm18, zmm12, zmm1	62e11c4855d1	
+vandnps zmm18, zmm12, zmm12	62c11c4855d4	
+vandnps zmm18, zmm12, zmm18	62a11c4855d2	
+vandnps zmm18, zmm12, [rax]	62e11c485510	
+vandnps zmm18, zmm12, [r13 + r14*2]	62811c4855547500	
+vandnps zmm18, zmm18, zmm1	62e16c4055d1	
+vandnps zmm18, zmm18, zmm12	62c16c4055d4	
+vandnps zmm18, zmm18, zmm18	62a16c4055d2	
+vandnps zmm18, zmm18, [rax]	62e16c405510	
+vandnps zmm18, zmm18, [r13 + r14*2]	62816c4055547500	
+vorps zmm1, zmm1, zmm1	62f1744856c9	
+vorps zmm1, zmm1, zmm12	62d1744856cc	
+vorps zmm1, zmm1, zmm18	62b1744856ca	
+vorps zmm1, zmm1, [rax]	62f174485608	
+vorps zmm1, zmm1, [r13 + r14*2]	62917448564c7500	
+vorps zmm1, zmm12, zmm1	62f11c4856c9	
+vorps zmm1, zmm12, zmm12	62d11c4856cc	
+vorps zmm1, zmm12, zmm18	62b11c4856ca	
+vorps zmm1, zmm12, [rax]	62f11c485608	
+vorps zmm1, zmm12, [r13 + r14*2]	62911c48564c7500	
+vorps zmm1, zmm18, zmm1	62f16c4056c9	
+vorps zmm1, zmm18, zmm12	62d16c4056cc	
+vorps zmm1, zmm18, zmm18	62b16c4056ca	
+vorps zmm1, zmm18, [rax]	62f16c405608	
+vorps zmm1, zmm18, [r13 + r14*2]	62916c40564c7500	
+vorps zmm12, zmm1, zmm1	6271744856e1	
+vorps zmm12, zmm1, zmm12	6251744856e4	
+vorps zmm12, zmm1, zmm18	6231744856e2	
+vorps zmm12, zmm1, [rax]	627174485620	
+vorps zmm12, zmm1, [r13 + r14*2]	6211744856647500	
+vorps zmm12, zmm12, zmm1	62711c4856e1	
+vorps zmm12, zmm12, zmm12	62511c4856e4	
+vorps zmm12, zmm12, zmm18	62311c4856e2	
+vorps zmm12, zmm12, [rax]	62711c485620	
+vorps zmm12, zmm12, [r13 + r14*2]	62111c4856647500	
+vorps zmm12, zmm18, zmm1	62716c4056e1	
+vorps zmm12, zmm18, zmm12	62516c4056e4	
+vorps zmm12, zmm18, zmm18	62316c4056e2	
+vorps zmm12, zmm18, [rax]	62716c405620	
+vorps zmm12, zmm18, [r13 + r14*2]	62116c4056647500	
+vorps zmm18, zmm1, zmm1	62e1744856d1	
+vorps zmm18, zmm1, zmm12	62c1744856d4	
+vorps zmm18, zmm1, zmm18	62a1744856d2	
+vorps zmm18, zmm1, [rax]	62e174485610	
+vorps zmm18, zmm1, [r13 + r14*2]	6281744856547500	
+vorps zmm18, zmm12, zmm1	62e11c4856d1	
+vorps zmm18, zmm12, zmm12	62c11c4856d4	
+vorps zmm18, zmm12, zmm18	62a11c4856d2	
+vorps zmm18, zmm12, [rax]	62e11c485610	
+vorps zmm18, zmm12, [r13 + r14*2]	62811c4856547500	
+vorps zmm18, zmm18, zmm1	62e16c4056d1	
+vorps zmm18, zmm18, zmm12	62c16c4056d4	
+vorps zmm18, zmm18, zmm18	62a16c4056d2	
+vorps zmm18, zmm18, [rax]	62e16c405610	
+vorps zmm18, zmm18, [r13 + r14*2]	62816c4056547500	
+vxorps zmm1, zmm1, zmm1	62f1744857c9	
+vxorps zmm1, zmm1, zmm12	62d1744857cc	
+vxorps zmm1, zmm1, zmm18	62b1744857ca	
+vxorps zmm1, zmm1, [rax]	62f174485708	
+vxorps zmm1, zmm1, [r13 + r14*2]	62917448574c7500	
+vxorps zmm1, zmm12, zmm1	62f11c4857c9	
+vxorps zmm1, zmm12, zmm12	62d11c4857cc	
+vxorps zmm1, zmm12, zmm18	62b11c4857ca	
+vxorps zmm1, zmm12, [rax]	62f11c485708	
+vxorps zmm1, zmm12, [r13 + r14*2]	62911c48574c7500	
+vxorps zmm1, zmm18, zmm1	62f16c4057c9	
+vxorps zmm1, zmm18, zmm12	62d16c4057cc	
+vxorps zmm1, zmm18, zmm18	62b16c4057ca	
+vxorps zmm1, zmm18, [rax]	62f16c405708	
+vxorps zmm1, zmm18, [r13 + r14*2]	62916c40574c7500	
+vxorps zmm12, zmm1, zmm1	6271744857e1	
+vxorps zmm12, zmm1, zmm12	6251744857e4	
+vxorps zmm12, zmm1, zmm18	6231744857e2	
+vxorps zmm12, zmm1, [rax]	627174485720	
+vxorps zmm12, zmm1, [r13 + r14*2]	6211744857647500	
+vxorps zmm12, zmm12, zmm1	62711c4857e1	
+vxorps zmm12, zmm12, zmm12	62511c4857e4	
+vxorps zmm12, zmm12, zmm18	62311c4857e2	
+vxorps zmm12, zmm12, [rax]	62711c485720	
+vxorps zmm12, zmm12, [r13 + r14*2]	62111c4857647500	
+vxorps zmm12, zmm18, zmm1	62716c4057e1	
+vxorps zmm12, zmm18, zmm12	62516c4057e4	
+vxorps zmm12, zmm18, zmm18	62316c4057e2	
+vxorps zmm12, zmm18, [rax]	62716c405720	
+vxorps zmm12, zmm18, [r13 + r14*2]	62116c4057647500	
+vxorps zmm18, zmm1, zmm1	62e1744857d1	
+vxorps zmm18, zmm1, zmm12	62c1744857d4	
+vxorps zmm18, zmm1, zmm18	62a1744857d2	
+vxorps zmm18, zmm1, [rax]	62e174485710	
+vxorps zmm18, zmm1, [r13 + r14*2]	6281744857547500	
+vxorps zmm18, zmm12, zmm1	62e11c4857d1	
+vxorps zmm18, zmm12, zmm12	62c11c4857d4	
+vxorps zmm18, zmm12, zmm18	62a11c4857d2	
+vxorps zmm18, zmm12, [rax]	62e11c485710	
+vxorps zmm18, zmm12, [r13 + r14*2]	62811c4857547500	
+vxorps zmm18, zmm18, zmm1	62e16c4057d1	
+vxorps zmm18, zmm18, zmm12	62c16c4057d4	
+vxorps zmm18, zmm18, zmm18	62a16c4057d2	
+vxorps zmm18, zmm18, [rax]	62e16c405710	
+vxorps zmm18, zmm18, [r13 + r14*2]	62816c4057547500	
+vunpcklps zmm1, zmm1, zmm1	62f1744814c9	
+vunpcklps zmm1, zmm1, zmm12	62d1744814cc	
+vunpcklps zmm1, zmm1, zmm18	62b1744814ca	
+vunpcklps zmm1, zmm1, [rax]	62f174481408	
+vunpcklps zmm1, zmm1, [r13 + r14*2]	62917448144c7500	
+vunpcklps zmm1, zmm12, zmm1	62f11c4814c9	
+vunpcklps zmm1, zmm12, zmm12	62d11c4814cc	
+vunpcklps zmm1, zmm12, zmm18	62b11c4814ca	
+vunpcklps zmm1, zmm12, [rax]	62f11c481408	
+vunpcklps zmm1, zmm12, [r13 + r14*2]	62911c48144c7500	
+vunpcklps zmm1, zmm18, zmm1	62f16c4014c9	
+vunpcklps zmm1, zmm18, zmm12	62d16c4014cc	
+vunpcklps zmm1, zmm18, zmm18	62b16c4014ca	
+vunpcklps zmm1, zmm18, [rax]	62f16c401408	
+vunpcklps zmm1, zmm18, [r13 + r14*2]	62916c40144c7500	
+vunpcklps zmm12, zmm1, zmm1	6271744814e1	
+vunpcklps zmm12, zmm1, zmm12	6251744814e4	
+vunpcklps zmm12, zmm1, zmm18	6231744814e2	
+vunpcklps zmm12, zmm1, [rax]	627174481420	
+vunpcklps zmm12, zmm1, [r13 + r14*2]	6211744814647500	
+vunpcklps zmm12, zmm12, zmm1	62711c4814e1	
+vunpcklps zmm12, zmm12, zmm12	62511c4814e4	
+vunpcklps zmm12, zmm12, zmm18	62311c4814e2	
+vunpcklps zmm12, zmm12, [rax]	62711c481420	
+vunpcklps zmm12, zmm12, [r13 + r14*2]	62111c4814647500	
+vunpcklps zmm12, zmm18, zmm1	62716c4014e1	
+vunpcklps zmm12, zmm18, zmm12	62516c4014e4	
+vunpcklps zmm12, zmm18, zmm18	62316c4014e2	
+vunpcklps zmm12, zmm18, [rax]	62716c401420	
+vunpcklps zmm12, zmm18, [r13 + r14*2]	62116c4014647500	
+vunpcklps zmm18, zmm1, zmm1	62e1744814d1	
+vunpcklps zmm18, zmm1, zmm12	62c1744814d4	
+vunpcklps zmm18, zmm1, zmm18	62a1744814d2	
+vunpcklps zmm18, zmm1, [rax]	62e174481410	
+vunpcklps zmm18, zmm1, [r13 + r14*2]	6281744814547500	
+vunpcklps zmm18, zmm12, zmm1	62e11c4814d1	
+vunpcklps zmm18, zmm12, zmm12	62c11c4814d4	
+vunpcklps zmm18, zmm12, zmm18	62a11c4814d2	
+vunpcklps zmm18, zmm12, [rax]	62e11c481410	
+vunpcklps zmm18, zmm12, [r13 + r14*2]	62811c4814547500	
+vunpcklps zmm18, zmm18, zmm1	62e16c4014d1	
+vunpcklps zmm18, zmm18, zmm12	62c16c4014d4	
+vunpcklps zmm18, zmm18, zmm18	62a16c4014d2	
+vunpcklps zmm18, zmm18, [rax]	62e16c401410	
+vunpcklps zmm18, zmm18, [r13 + r14*2]	62816c4014547500	
+vunpckhps zmm1, zmm1, zmm1	62f1744815c9	
+vunpckhps zmm1, zmm1, zmm12	62d1744815cc	
+vunpckhps zmm1, zmm1, zmm18	62b1744815ca	
+vunpckhps zmm1, zmm1, [rax]	62f174481508	
+vunpckhps zmm1, zmm1, [r13 + r14*2]	62917448154c7500	
+vunpckhps zmm1, zmm12, zmm1	62f11c4815c9	
+vunpckhps zmm1, zmm12, zmm12	62d11c4815cc	
+vunpckhps zmm1, zmm12, zmm18	62b11c4815ca	
+vunpckhps zmm1, zmm12, [rax]	62f11c481508	
+vunpckhps zmm1, zmm12, [r13 + r14*2]	62911c48154c7500	
+vunpckhps zmm1, zmm18, zmm1	62f16c4015c9	
+vunpckhps zmm1, zmm18, zmm12	62d16c4015cc	
+vunpckhps zmm1, zmm18, zmm18	62b16c4015ca	
+vunpckhps zmm1, zmm18, [rax]	62f16c401508	
+vunpckhps zmm1, zmm18, [r13 + r14*2]	62916c40154c7500	
+vunpckhps zmm12, zmm1, zmm1	6271744815e1	
+vunpckhps zmm12, zmm1, zmm12	6251744815e4	
+vunpckhps zmm12, zmm1, zmm18	6231744815e2	
+vunpckhps zmm12, zmm1, [rax]	627174481520	
+vunpckhps zmm12, zmm1, [r13 + r14*2]	6211744815647500	
+vunpckhps zmm12, zmm12, zmm1	62711c4815e1	
+vunpckhps zmm12, zmm12, zmm12	62511c4815e4	
+vunpckhps zmm12, zmm12, zmm18	62311c4815e2	
+vunpckhps zmm12, zmm12, [rax]	62711c481520	
+vunpckhps zmm12, zmm12, [r13 + r14*2]	62111c4815647500	
+vunpckhps zmm12, zmm18, zmm1	62716c4015e1	
+vunpckhps zmm12, zmm18, zmm12	62516c4015e4	
+vunpckhps zmm12, zmm18, zmm18	62316c4015e2	
+vunpckhps zmm12, zmm18, [rax]	62716c401520	
+vunpckhps zmm12, zmm18, [r13 + r14*2]	62116c4015647500	
+vunpckhps zmm18, zmm1, zmm1	62e1744815d1	
+vunpckhps zmm18, zmm1, zmm12	62c1744815d4	
+vunpckhps zmm18, zmm1, zmm18	62a1744815d2	
+vunpckhps zmm18, zmm1, [rax]	62e174481510	
+vunpckhps zmm18, zmm1, [r13 + r14*2]	6281744815547500	
+vunpckhps zmm18, zmm12, zmm1	62e11c4815d1	
+vunpckhps zmm18, zmm12, zmm12	62c11c4815d4	
+vunpckhps zmm18, zmm12, zmm18	62a11c4815d2	
+vunpckhps zmm18, zmm12, [rax]	62e11c481510	
+vunpckhps zmm18, zmm12, [r13 + r14*2]	62811c4815547500	
+vunpckhps zmm18, zmm18, zmm1	62e16c4015d1	
+vunpckhps zmm18, zmm18, zmm12	62c16c4015d4	
+vunpckhps zmm18, zmm18, zmm18	62a16c4015d2	
+vunpckhps zmm18, zmm18, [rax]	62e16c401510	
+vunpckhps zmm18, zmm18, [r13 + r14*2]	62816c4015547500	
+vaddpd zmm1, zmm1, zmm1	62f1f54858c9	
+vaddpd zmm1, zmm1, zmm12	62d1f54858cc	
+vaddpd zmm1, zmm1, zmm18	62b1f54858ca	
+vaddpd zmm1, zmm1, [rax]	62f1f5485808	
+vaddpd zmm1, zmm1, [r13 + r14*2]	6291f548584c7500	
+vaddpd zmm1, zmm12, zmm1	62f19d4858c9	
+vaddpd zmm1, zmm12, zmm12	62d19d4858cc	
+vaddpd zmm1, zmm12, zmm18	62b19d4858ca	
+vaddpd zmm1, zmm12, [rax]	62f19d485808	
+vaddpd zmm1, zmm12, [r13 + r14*2]	62919d48584c7500	
+vaddpd zmm1, zmm18, zmm1	62f1ed4058c9	
+vaddpd zmm1, zmm18, zmm12	62d1ed4058cc	
+vaddpd zmm1, zmm18, zmm18	62b1ed4058ca	
+vaddpd zmm1, zmm18, [rax]	62f1ed405808	
+vaddpd zmm1, zmm18, [r13 + r14*2]	6291ed40584c7500	
+vaddpd zmm12, zmm1, zmm1	6271f54858e1	
+vaddpd zmm12, zmm1, zmm12	6251f54858e4	
+vaddpd zmm12, zmm1, zmm18	6231f54858e2	
+vaddpd zmm12, zmm1, [rax]	6271f5485820	
+vaddpd zmm12, zmm1, [r13 + r14*2]	6211f54858647500	
+vaddpd zmm12, zmm12, zmm1	62719d4858e1	
+vaddpd zmm12, zmm12, zmm12	62519d4858e4	
+vaddpd zmm12, zmm12, zmm18	62319d4858e2	
+vaddpd zmm12, zmm12, [rax]	62719d485820	
+vaddpd zmm12, zmm12, [r13 + r14*2]	62119d4858647500	
+vaddpd zmm12, zmm18, zmm1	6271ed4058e1	
+vaddpd zmm12, zmm18, zmm12	6251ed4058e4	
+vaddpd zmm12, zmm18, zmm18	6231ed4058e2	
+vaddpd zmm12, zmm18, [rax]	6271ed405820	
+vaddpd zmm12, zmm18, [r13 + r14*2]	6211ed4058647500	
+vaddpd zmm18, zmm1, zmm1	62e1f54858d1	
+vaddpd zmm18, zmm1, zmm12	62c1f54858d4	
+vaddpd zmm18, zmm1, zmm18	62a1f54858d2	
+vaddpd zmm18, zmm1, [rax]	62e1f5485810	
+vaddpd zmm18, zmm1, [r13 + r14*2]	6281f54858547500	
+vaddpd zmm18, zmm12, zmm1	62e19d4858d1	
+vaddpd zmm18, zmm12, zmm12	62c19d4858d4	
+vaddpd zmm18, zmm12, zmm18	62a19d4858d2	
+vaddpd zmm18, zmm12, [rax]	62e19d485810	
+vaddpd zmm18, zmm12, [r13 + r14*2]	62819d4858547500	
+vaddpd zmm18, zmm18, zmm1	62e1ed4058d1	
+vaddpd zmm18, zmm18, zmm12	62c1ed4058d4	
+vaddpd zmm18, zmm18, zmm18	62a1ed4058d2	
+vaddpd zmm18, zmm18, [rax]	62e1ed405810	
+vaddpd zmm18, zmm18, [r13 + r14*2]	6281ed4058547500	
+vsubpd zmm1, zmm1, zmm1	62f1f5485cc9	
+vsubpd zmm1, zmm1, zmm12	62d1f5485ccc	
+vsubpd zmm1, zmm1, zmm18	62b1f5485cca	
+vsubpd zmm1, zmm1, [rax]	62f1f5485c08	
+vsubpd zmm1, zmm1, [r13 + r14*2]	6291f5485c4c7500	
+vsubpd zmm1, zmm12, zmm1	62f19d485cc9	
+vsubpd zmm1, zmm12, zmm12	62d19d485ccc	
+vsubpd zmm1, zmm12, zmm18	62b19d485cca	
+vsubpd zmm1, zmm12, [rax]	62f19d485c08	
+vsubpd zmm1, zmm12, [r13 + r14*2]	62919d485c4c7500	
+vsubpd zmm1, zmm18, zmm1	62f1ed405cc9	
+vsubpd zmm1, zmm18, zmm12	62d1ed405ccc	
+vsubpd zmm1, zmm18, zmm18	62b1ed405cca	
+vsubpd zmm1, zmm18, [rax]	62f1ed405c08	
+vsubpd zmm1, zmm18, [r13 + r14*2]	6291ed405c4c7500	
+vsubpd zmm12, zmm1, zmm1	6271f5485ce1	
+vsubpd zmm12, zmm1, zmm12	6251f5485ce4	
+vsubpd zmm12, zmm1, zmm18	6231f5485ce2	
+vsubpd zmm12, zmm1, [rax]	6271f5485c20	
+vsubpd zmm12, zmm1, [r13 + r14*2]	6211f5485c647500	
+vsubpd zmm12, zmm12, zmm1	62719d485ce1	
+vsubpd zmm12, zmm12, zmm12	62519d485ce4	
+vsubpd zmm12, zmm12, zmm18	62319d485ce2	
+vsubpd zmm12, zmm12, [rax]	62719d485c20	
+vsubpd zmm12, zmm12, [r13 + r14*2]	62119d485c647500	
+vsubpd zmm12, zmm18, zmm1	6271ed405ce1	
+vsubpd zmm12, zmm18, zmm12	6251ed405ce4	
+vsubpd zmm12, zmm18, zmm18	6231ed405ce2	
+vsubpd zmm12, zmm18, [rax]	6271ed405c20	
+vsubpd zmm12, zmm18, [r13 + r14*2]	6211ed405c647500	
+vsubpd zmm18, zmm1, zmm1	62e1f5485cd1	
+vsubpd zmm18, zmm1, zmm12	62c1f5485cd4	
+vsubpd zmm18, zmm1, zmm18	62a1f5485cd2	
+vsubpd zmm18, zmm1, [rax]	62e1f5485c10	
+vsubpd zmm18, zmm1, [r13 + r14*2]	6281f5485c547500	
+vsubpd zmm18, zmm12, zmm1	62e19d485cd1	
+vsubpd zmm18, zmm12, zmm12	62c19d485cd4	
+vsubpd zmm18, zmm12, zmm18	62a19d485cd2	
+vsubpd zmm18, zmm12, [rax]	62e19d485c10	
+vsubpd zmm18, zmm12, [r13 + r14*2]	62819d485c547500	
+vsubpd zmm18, zmm18, zmm1	62e1ed405cd1	
+vsubpd zmm18, zmm18, zmm12	62c1ed405cd4	
+vsubpd zmm18, zmm18, zmm18	62a1ed405cd2	
+vsubpd zmm18, zmm18, [rax]	62e1ed405c10	
+vsubpd zmm18, zmm18, [r13 + r14*2]	6281ed405c547500	
+vmulpd zmm1, zmm1, zmm1	62f1f54859c9	
+vmulpd zmm1, zmm1, zmm12	62d1f54859cc	
+vmulpd zmm1, zmm1, zmm18	62b1f54859ca	
+vmulpd zmm1, zmm1, [rax]	62f1f5485908	
+vmulpd zmm1, zmm1, [r13 + r14*2]	6291f548594c7500	
+vmulpd zmm1, zmm12, zmm1	62f19d4859c9	
+vmulpd zmm1, zmm12, zmm12	62d19d4859cc	
+vmulpd zmm1, zmm12, zmm18	62b19d4859ca	
+vmulpd zmm1, zmm12, [rax]	62f19d485908	
+vmulpd zmm1, zmm12, [r13 + r14*2]	62919d48594c7500	
+vmulpd zmm1, zmm18, zmm1	62f1ed4059c9	
+vmulpd zmm1, zmm18, zmm12	62d1ed4059cc	
+vmulpd zmm1, zmm18, zmm18	62b1ed4059ca	
+vmulpd zmm1, zmm18, [rax]	62f1ed405908	
+vmulpd zmm1, zmm18, [r13 + r14*2]	6291ed40594c7500	
+vmulpd zmm12, zmm1, zmm1	6271f54859e1	
+vmulpd zmm12, zmm1, zmm12	6251f54859e4	
+vmulpd zmm12, zmm1, zmm18	6231f54859e2	
+vmulpd zmm12, zmm1, [rax]	6271f5485920	
+vmulpd zmm12, zmm1, [r13 + r14*2]	6211f54859647500	
+vmulpd zmm12, zmm12, zmm1	62719d4859e1	
+vmulpd zmm12, zmm12, zmm12	62519d4859e4	
+vmulpd zmm12, zmm12, zmm18	62319d4859e2	
+vmulpd zmm12, zmm12, [rax]	62719d485920	
+vmulpd zmm12, zmm12, [r13 + r14*2]	62119d4859647500	
+vmulpd zmm12, zmm18, zmm1	6271ed4059e1	
+vmulpd zmm12, zmm18, zmm12	6251ed4059e4	
+vmulpd zmm12, zmm18, zmm18	6231ed4059e2	
+vmulpd zmm12, zmm18, [rax]	6271ed405920	
+vmulpd zmm12, zmm18, [r13 + r14*2]	6211ed4059647500	
+vmulpd zmm18, zmm1, zmm1	62e1f54859d1	
+vmulpd zmm18, zmm1, zmm12	62c1f54859d4	
+vmulpd zmm18, zmm1, zmm18	62a1f54859d2	
+vmulpd zmm18, zmm1, [rax]	62e1f5485910	
+vmulpd zmm18, zmm1, [r13 + r14*2]	6281f54859547500	
+vmulpd zmm18, zmm12, zmm1	62e19d4859d1	
+vmulpd zmm18, zmm12, zmm12	62c19d4859d4	
+vmulpd zmm18, zmm12, zmm18	62a19d4859d2	
+vmulpd zmm18, zmm12, [rax]	62e19d485910	
+vmulpd zmm18, zmm12, [r13 + r14*2]	62819d4859547500	
+vmulpd zmm18, zmm18, zmm1	62e1ed4059d1	
+vmulpd zmm18, zmm18, zmm12	62c1ed4059d4	
+vmulpd zmm18, zmm18, zmm18	62a1ed4059d2	
+vmulpd zmm18, zmm18, [rax]	62e1ed405910	
+vmulpd zmm18, zmm18, [r13 + r14*2]	6281ed4059547500	
+vdivpd zmm1, zmm1, zmm1	62f1f5485ec9	
+vdivpd zmm1, zmm1, zmm12	62d1f5485ecc	
+vdivpd zmm1, zmm1, zmm18	62b1f5485eca	
+vdivpd zmm1, zmm1, [rax]	62f1f5485e08	
+vdivpd zmm1, zmm1, [r13 + r14*2]	6291f5485e4c7500	
+vdivpd zmm1, zmm12, zmm1	62f19d485ec9	
+vdivpd zmm1, zmm12, zmm12	62d19d485ecc	
+vdivpd zmm1, zmm12, zmm18	62b19d485eca	
+vdivpd zmm1, zmm12, [rax]	62f19d485e08	
+vdivpd zmm1, zmm12, [r13 + r14*2]	62919d485e4c7500	
+vdivpd zmm1, zmm18, zmm1	62f1ed405ec9	
+vdivpd zmm1, zmm18, zmm12	62d1ed405ecc	
+vdivpd zmm1, zmm18, zmm18	62b1ed405eca	
+vdivpd zmm1, zmm18, [rax]	62f1ed405e08	
+vdivpd zmm1, zmm18, [r13 + r14*2]	6291ed405e4c7500	
+vdivpd zmm12, zmm1, zmm1	6271f5485ee1	
+vdivpd zmm12, zmm1, zmm12	6251f5485ee4	
+vdivpd zmm12, zmm1, zmm18	6231f5485ee2	
+vdivpd zmm12, zmm1, [rax]	6271f5485e20	
+vdivpd zmm12, zmm1, [r13 + r14*2]	6211f5485e647500	
+vdivpd zmm12, zmm12, zmm1	62719d485ee1	
+vdivpd zmm12, zmm12, zmm12	62519d485ee4	
+vdivpd zmm12, zmm12, zmm18	62319d485ee2	
+vdivpd zmm12, zmm12, [rax]	62719d485e20	
+vdivpd zmm12, zmm12, [r13 + r14*2]	62119d485e647500	
+vdivpd zmm12, zmm18, zmm1	6271ed405ee1	
+vdivpd zmm12, zmm18, zmm12	6251ed405ee4	
+vdivpd zmm12, zmm18, zmm18	6231ed405ee2	
+vdivpd zmm12, zmm18, [rax]	6271ed405e20	
+vdivpd zmm12, zmm18, [r13 + r14*2]	6211ed405e647500	
+vdivpd zmm18, zmm1, zmm1	62e1f5485ed1	
+vdivpd zmm18, zmm1, zmm12	62c1f5485ed4	
+vdivpd zmm18, zmm1, zmm18	62a1f5485ed2	
+vdivpd zmm18, zmm1, [rax]	62e1f5485e10	
+vdivpd zmm18, zmm1, [r13 + r14*2]	6281f5485e547500	
+vdivpd zmm18, zmm12, zmm1	62e19d485ed1	
+vdivpd zmm18, zmm12, zmm12	62c19d485ed4	
+vdivpd zmm18, zmm12, zmm18	62a19d485ed2	
+vdivpd zmm18, zmm12, [rax]	62e19d485e10	
+vdivpd zmm18, zmm12, [r13 + r14*2]	62819d485e547500	
+vdivpd zmm18, zmm18, zmm1	62e1ed405ed1	
+vdivpd zmm18, zmm18, zmm12	62c1ed405ed4	
+vdivpd zmm18, zmm18, zmm18	62a1ed405ed2	
+vdivpd zmm18, zmm18, [rax]	62e1ed405e10	
+vdivpd zmm18, zmm18, [r13 + r14*2]	6281ed405e547500	
+vminpd zmm1, zmm1, zmm1	62f1f5485dc9	
+vminpd zmm1, zmm1, zmm12	62d1f5485dcc	
+vminpd zmm1, zmm1, zmm18	62b1f5485dca	
+vminpd zmm1, zmm1, [rax]	62f1f5485d08	
+vminpd zmm1, zmm1, [r13 + r14*2]	6291f5485d4c7500	
+vminpd zmm1, zmm12, zmm1	62f19d485dc9	
+vminpd zmm1, zmm12, zmm12	62d19d485dcc	
+vminpd zmm1, zmm12, zmm18	62b19d485dca	
+vminpd zmm1, zmm12, [rax]	62f19d485d08	
+vminpd zmm1, zmm12, [r13 + r14*2]	62919d485d4c7500	
+vminpd zmm1, zmm18, zmm1	62f1ed405dc9	
+vminpd zmm1, zmm18, zmm12	62d1ed405dcc	
+vminpd zmm1, zmm18, zmm18	62b1ed405dca	
+vminpd zmm1, zmm18, [rax]	62f1ed405d08	
+vminpd zmm1, zmm18, [r13 + r14*2]	6291ed405d4c7500	
+vminpd zmm12, zmm1, zmm1	6271f5485de1	
+vminpd zmm12, zmm1, zmm12	6251f5485de4	
+vminpd zmm12, zmm1, zmm18	6231f5485de2	
+vminpd zmm12, zmm1, [rax]	6271f5485d20	
+vminpd zmm12, zmm1, [r13 + r14*2]	6211f5485d647500	
+vminpd zmm12, zmm12, zmm1	62719d485de1	
+vminpd zmm12, zmm12, zmm12	62519d485de4	
+vminpd zmm12, zmm12, zmm18	62319d485de2	
+vminpd zmm12, zmm12, [rax]	62719d485d20	
+vminpd zmm12, zmm12, [r13 + r14*2]	62119d485d647500	
+vminpd zmm12, zmm18, zmm1	6271ed405de1	
+vminpd zmm12, zmm18, zmm12	6251ed405de4	
+vminpd zmm12, zmm18, zmm18	6231ed405de2	
+vminpd zmm12, zmm18, [rax]	6271ed405d20	
+vminpd zmm12, zmm18, [r13 + r14*2]	6211ed405d647500	
+vminpd zmm18, zmm1, zmm1	62e1f5485dd1	
+vminpd zmm18, zmm1, zmm12	62c1f5485dd4	
+vminpd zmm18, zmm1, zmm18	62a1f5485dd2	
+vminpd zmm18, zmm1, [rax]	62e1f5485d10	
+vminpd zmm18, zmm1, [r13 + r14*2]	6281f5485d547500	
+vminpd zmm18, zmm12, zmm1	62e19d485dd1	
+vminpd zmm18, zmm12, zmm12	62c19d485dd4	
+vminpd zmm18, zmm12, zmm18	62a19d485dd2	
+vminpd zmm18, zmm12, [rax]	62e19d485d10	
+vminpd zmm18, zmm12, [r13 + r14*2]	62819d485d547500	
+vminpd zmm18, zmm18, zmm1	62e1ed405dd1	
+vminpd zmm18, zmm18, zmm12	62c1ed405dd4	
+vminpd zmm18, zmm18, zmm18	62a1ed405dd2	
+vminpd zmm18, zmm18, [rax]	62e1ed405d10	
+vminpd zmm18, zmm18, [r13 + r14*2]	6281ed405d547500	
+vmaxpd zmm1, zmm1, zmm1	62f1f5485fc9	
+vmaxpd zmm1, zmm1, zmm12	62d1f5485fcc	
+vmaxpd zmm1, zmm1, zmm18	62b1f5485fca	
+vmaxpd zmm1, zmm1, [rax]	62f1f5485f08	
+vmaxpd zmm1, zmm1, [r13 + r14*2]	6291f5485f4c7500	
+vmaxpd zmm1, zmm12, zmm1	62f19d485fc9	
+vmaxpd zmm1, zmm12, zmm12	62d19d485fcc	
+vmaxpd zmm1, zmm12, zmm18	62b19d485fca	
+vmaxpd zmm1, zmm12, [rax]	62f19d485f08	
+vmaxpd zmm1, zmm12, [r13 + r14*2]	62919d485f4c7500	
+vmaxpd zmm1, zmm18, zmm1	62f1ed405fc9	
+vmaxpd zmm1, zmm18, zmm12	62d1ed405fcc	
+vmaxpd zmm1, zmm18, zmm18	62b1ed405fca	
+vmaxpd zmm1, zmm18, [rax]	62f1ed405f08	
+vmaxpd zmm1, zmm18, [r13 + r14*2]	6291ed405f4c7500	
+vmaxpd zmm12, zmm1, zmm1	6271f5485fe1	
+vmaxpd zmm12, zmm1, zmm12	6251f5485fe4	
+vmaxpd zmm12, zmm1, zmm18	6231f5485fe2	
+vmaxpd zmm12, zmm1, [rax]	6271f5485f20	
+vmaxpd zmm12, zmm1, [r13 + r14*2]	6211f5485f647500	
+vmaxpd zmm12, zmm12, zmm1	62719d485fe1	
+vmaxpd zmm12, zmm12, zmm12	62519d485fe4	
+vmaxpd zmm12, zmm12, zmm18	62319d485fe2	
+vmaxpd zmm12, zmm12, [rax]	62719d485f20	
+vmaxpd zmm12, zmm12, [r13 + r14*2]	62119d485f647500	
+vmaxpd zmm12, zmm18, zmm1	6271ed405fe1	
+vmaxpd zmm12, zmm18, zmm12	6251ed405fe4	
+vmaxpd zmm12, zmm18, zmm18	6231ed405fe2	
+vmaxpd zmm12, zmm18, [rax]	6271ed405f20	
+vmaxpd zmm12, zmm18, [r13 + r14*2]	6211ed405f647500	
+vmaxpd zmm18, zmm1, zmm1	62e1f5485fd1	
+vmaxpd zmm18, zmm1, zmm12	62c1f5485fd4	
+vmaxpd zmm18, zmm1, zmm18	62a1f5485fd2	
+vmaxpd zmm18, zmm1, [rax]	62e1f5485f10	
+vmaxpd zmm18, zmm1, [r13 + r14*2]	6281f5485f547500	
+vmaxpd zmm18, zmm12, zmm1	62e19d485fd1	
+vmaxpd zmm18, zmm12, zmm12	62c19d485fd4	
+vmaxpd zmm18, zmm12, zmm18	62a19d485fd2	
+vmaxpd zmm18, zmm12, [rax]	62e19d485f10	
+vmaxpd zmm18, zmm12, [r13 + r14*2]	62819d485f547500	
+vmaxpd zmm18, zmm18, zmm1	62e1ed405fd1	
+vmaxpd zmm18, zmm18, zmm12	62c1ed405fd4	
+vmaxpd zmm18, zmm18, zmm18	62a1ed405fd2	
+vmaxpd zmm18, zmm18, [rax]	62e1ed405f10	
+vmaxpd zmm18, zmm18, [r13 + r14*2]	6281ed405f547500	
+vandpd zmm1, zmm1, zmm1	62f1f54854c9	
+vandpd zmm1, zmm1, zmm12	62d1f54854cc	
+vandpd zmm1, zmm1, zmm18	62b1f54854ca	
+vandpd zmm1, zmm1, [rax]	62f1f5485408	
+vandpd zmm1, zmm1, [r13 + r14*2]	6291f548544c7500	
+vandpd zmm1, zmm12, zmm1	62f19d4854c9	
+vandpd zmm1, zmm12, zmm12	62d19d4854cc	
+vandpd zmm1, zmm12, zmm18	62b19d4854ca	
+vandpd zmm1, zmm12, [rax]	62f19d485408	
+vandpd zmm1, zmm12, [r13 + r14*2]	62919d48544c7500	
+vandpd zmm1, zmm18, zmm1	62f1ed4054c9	
+vandpd zmm1, zmm18, zmm12	62d1ed4054cc	
+vandpd zmm1, zmm18, zmm18	62b1ed4054ca	
+vandpd zmm1, zmm18, [rax]	62f1ed405408	
+vandpd zmm1, zmm18, [r13 + r14*2]	6291ed40544c7500	
+vandpd zmm12, zmm1, zmm1	6271f54854e1	
+vandpd zmm12, zmm1, zmm12	6251f54854e4	
+vandpd zmm12, zmm1, zmm18	6231f54854e2	
+vandpd zmm12, zmm1, [rax]	6271f5485420	
+vandpd zmm12, zmm1, [r13 + r14*2]	6211f54854647500	
+vandpd zmm12, zmm12, zmm1	62719d4854e1	
+vandpd zmm12, zmm12, zmm12	62519d4854e4	
+vandpd zmm12, zmm12, zmm18	62319d4854e2	
+vandpd zmm12, zmm12, [rax]	62719d485420	
+vandpd zmm12, zmm12, [r13 + r14*2]	62119d4854647500	
+vandpd zmm12, zmm18, zmm1	6271ed4054e1	
+vandpd zmm12, zmm18, zmm12	6251ed4054e4	
+vandpd zmm12, zmm18, zmm18	6231ed4054e2	
+vandpd zmm12, zmm18, [rax]	6271ed405420	
+vandpd zmm12, zmm18, [r13 + r14*2]	6211ed4054647500	
+vandpd zmm18, zmm1, zmm1	62e1f54854d1	
+vandpd zmm18, zmm1, zmm12	62c1f54854d4	
+vandpd zmm18, zmm1, zmm18	62a1f54854d2	
+vandpd zmm18, zmm1, [rax]	62e1f5485410	
+vandpd zmm18, zmm1, [r13 + r14*2]	6281f54854547500	
+vandpd zmm18, zmm12, zmm1	62e19d4854d1	
+vandpd zmm18, zmm12, zmm12	62c19d4854d4	
+vandpd zmm18, zmm12, zmm18	62a19d4854d2	
+vandpd zmm18, zmm12, [rax]	62e19d485410	
+vandpd zmm18, zmm12, [r13 + r14*2]	62819d4854547500	
+vandpd zmm18, zmm18, zmm1	62e1ed4054d1	
+vandpd zmm18, zmm18, zmm12	62c1ed4054d4	
+vandpd zmm18, zmm18, zmm18	62a1ed4054d2	
+vandpd zmm18, zmm18, [rax]	62e1ed405410	
+vandpd zmm18, zmm18, [r13 + r14*2]	6281ed4054547500	
+vandnpd zmm1, zmm1, zmm1	62f1f54855c9	
+vandnpd zmm1, zmm1, zmm12	62d1f54855cc	
+vandnpd zmm1, zmm1, zmm18	62b1f54855ca	
+vandnpd zmm1, zmm1, [rax]	62f1f5485508	
+vandnpd zmm1, zmm1, [r13 + r14*2]	6291f548554c7500	
+vandnpd zmm1, zmm12, zmm1	62f19d4855c9	
+vandnpd zmm1, zmm12, zmm12	62d19d4855cc	
+vandnpd zmm1, zmm12, zmm18	62b19d4855ca	
+vandnpd zmm1, zmm12, [rax]	62f19d485508	
+vandnpd zmm1, zmm12, [r13 + r14*2]	62919d48554c7500	
+vandnpd zmm1, zmm18, zmm1	62f1ed4055c9	
+vandnpd zmm1, zmm18, zmm12	62d1ed4055cc	
+vandnpd zmm1, zmm18, zmm18	62b1ed4055ca	
+vandnpd zmm1, zmm18, [rax]	62f1ed405508	
+vandnpd zmm1, zmm18, [r13 + r14*2]	6291ed40554c7500	
+vandnpd zmm12, zmm1, zmm1	6271f54855e1	
+vandnpd zmm12, zmm1, zmm12	6251f54855e4	
+vandnpd zmm12, zmm1, zmm18	6231f54855e2	
+vandnpd zmm12, zmm1, [rax]	6271f5485520	
+vandnpd zmm12, zmm1, [r13 + r14*2]	6211f54855647500	
+vandnpd zmm12, zmm12, zmm1	62719d4855e1	
+vandnpd zmm12, zmm12, zmm12	62519d4855e4	
+vandnpd zmm12, zmm12, zmm18	62319d4855e2	
+vandnpd zmm12, zmm12, [rax]	62719d485520	
+vandnpd zmm12, zmm12, [r13 + r14*2]	62119d4855647500	
+vandnpd zmm12, zmm18, zmm1	6271ed4055e1	
+vandnpd zmm12, zmm18, zmm12	6251ed4055e4	
+vandnpd zmm12, zmm18, zmm18	6231ed4055e2	
+vandnpd zmm12, zmm18, [rax]	6271ed405520	
+vandnpd zmm12, zmm18, [r13 + r14*2]	6211ed4055647500	
+vandnpd zmm18, zmm1, zmm1	62e1f54855d1	
+vandnpd zmm18, zmm1, zmm12	62c1f54855d4	
+vandnpd zmm18, zmm1, zmm18	62a1f54855d2	
+vandnpd zmm18, zmm1, [rax]	62e1f5485510	
+vandnpd zmm18, zmm1, [r13 + r14*2]	6281f54855547500	
+vandnpd zmm18, zmm12, zmm1	62e19d4855d1	
+vandnpd zmm18, zmm12, zmm12	62c19d4855d4	
+vandnpd zmm18, zmm12, zmm18	62a19d4855d2	
+vandnpd zmm18, zmm12, [rax]	62e19d485510	
+vandnpd zmm18, zmm12, [r13 + r14*2]	62819d4855547500	
+vandnpd zmm18, zmm18, zmm1	62e1ed4055d1	
+vandnpd zmm18, zmm18, zmm12	62c1ed4055d4	
+vandnpd zmm18, zmm18, zmm18	62a1ed4055d2	
+vandnpd zmm18, zmm18, [rax]	62e1ed405510	
+vandnpd zmm18, zmm18, [r13 + r14*2]	6281ed4055547500	
+vorpd zmm1, zmm1, zmm1	62f1f54856c9	
+vorpd zmm1, zmm1, zmm12	62d1f54856cc	
+vorpd zmm1, zmm1, zmm18	62b1f54856ca	
+vorpd zmm1, zmm1, [rax]	62f1f5485608	
+vorpd zmm1, zmm1, [r13 + r14*2]	6291f548564c7500	
+vorpd zmm1, zmm12, zmm1	62f19d4856c9	
+vorpd zmm1, zmm12, zmm12	62d19d4856cc	
+vorpd zmm1, zmm12, zmm18	62b19d4856ca	
+vorpd zmm1, zmm12, [rax]	62f19d485608	
+vorpd zmm1, zmm12, [r13 + r14*2]	62919d48564c7500	
+vorpd zmm1, zmm18, zmm1	62f1ed4056c9	
+vorpd zmm1, zmm18, zmm12	62d1ed4056cc	
+vorpd zmm1, zmm18, zmm18	62b1ed4056ca	
+vorpd zmm1, zmm18, [rax]	62f1ed405608	
+vorpd zmm1, zmm18, [r13 + r14*2]	6291ed40564c7500	
+vorpd zmm12, zmm1, zmm1	6271f54856e1	
+vorpd zmm12, zmm1, zmm12	6251f54856e4	
+vorpd zmm12, zmm1, zmm18	6231f54856e2	
+vorpd zmm12, zmm1, [rax]	6271f5485620	
+vorpd zmm12, zmm1, [r13 + r14*2]	6211f54856647500	
+vorpd zmm12, zmm12, zmm1	62719d4856e1	
+vorpd zmm12, zmm12, zmm12	62519d4856e4	
+vorpd zmm12, zmm12, zmm18	62319d4856e2	
+vorpd zmm12, zmm12, [rax]	62719d485620	
+vorpd zmm12, zmm12, [r13 + r14*2]	62119d4856647500	
+vorpd zmm12, zmm18, zmm1	6271ed4056e1	
+vorpd zmm12, zmm18, zmm12	6251ed4056e4	
+vorpd zmm12, zmm18, zmm18	6231ed4056e2	
+vorpd zmm12, zmm18, [rax]	6271ed405620	
+vorpd zmm12, zmm18, [r13 + r14*2]	6211ed4056647500	
+vorpd zmm18, zmm1, zmm1	62e1f54856d1	
+vorpd zmm18, zmm1, zmm12	62c1f54856d4	
+vorpd zmm18, zmm1, zmm18	62a1f54856d2	
+vorpd zmm18, zmm1, [rax]	62e1f5485610	
+vorpd zmm18, zmm1, [r13 + r14*2]	6281f54856547500	
+vorpd zmm18, zmm12, zmm1	62e19d4856d1	
+vorpd zmm18, zmm12, zmm12	62c19d4856d4	
+vorpd zmm18, zmm12, zmm18	62a19d4856d2	
+vorpd zmm18, zmm12, [rax]	62e19d485610	
+vorpd zmm18, zmm12, [r13 + r14*2]	62819d4856547500	
+vorpd zmm18, zmm18, zmm1	62e1ed4056d1	
+vorpd zmm18, zmm18, zmm12	62c1ed4056d4	
+vorpd zmm18, zmm18, zmm18	62a1ed4056d2	
+vorpd zmm18, zmm18, [rax]	62e1ed405610	
+vorpd zmm18, zmm18, [r13 + r14*2]	6281ed4056547500	
+vxorpd zmm1, zmm1, zmm1	62f1f54857c9	
+vxorpd zmm1, zmm1, zmm12	62d1f54857cc	
+vxorpd zmm1, zmm1, zmm18	62b1f54857ca	
+vxorpd zmm1, zmm1, [rax]	62f1f5485708	
+vxorpd zmm1, zmm1, [r13 + r14*2]	6291f548574c7500	
+vxorpd zmm1, zmm12, zmm1	62f19d4857c9	
+vxorpd zmm1, zmm12, zmm12	62d19d4857cc	
+vxorpd zmm1, zmm12, zmm18	62b19d4857ca	
+vxorpd zmm1, zmm12, [rax]	62f19d485708	
+vxorpd zmm1, zmm12, [r13 + r14*2]	62919d48574c7500	
+vxorpd zmm1, zmm18, zmm1	62f1ed4057c9	
+vxorpd zmm1, zmm18, zmm12	62d1ed4057cc	
+vxorpd zmm1, zmm18, zmm18	62b1ed4057ca	
+vxorpd zmm1, zmm18, [rax]	62f1ed405708	
+vxorpd zmm1, zmm18, [r13 + r14*2]	6291ed40574c7500	
+vxorpd zmm12, zmm1, zmm1	6271f54857e1	
+vxorpd zmm12, zmm1, zmm12	6251f54857e4	
+vxorpd zmm12, zmm1, zmm18	6231f54857e2	
+vxorpd zmm12, zmm1, [rax]	6271f5485720	
+vxorpd zmm12, zmm1, [r13 + r14*2]	6211f54857647500	
+vxorpd zmm12, zmm12, zmm1	62719d4857e1	
+vxorpd zmm12, zmm12, zmm12	62519d4857e4	
+vxorpd zmm12, zmm12, zmm18	62319d4857e2	
+vxorpd zmm12, zmm12, [rax]	62719d485720	
+vxorpd zmm12, zmm12, [r13 + r14*2]	62119d4857647500	
+vxorpd zmm12, zmm18, zmm1	6271ed4057e1	
+vxorpd zmm12, zmm18, zmm12	6251ed4057e4	
+vxorpd zmm12, zmm18, zmm18	6231ed4057e2	
+vxorpd zmm12, zmm18, [rax]	6271ed405720	
+vxorpd zmm12, zmm18, [r13 + r14*2]	6211ed4057647500	
+vxorpd zmm18, zmm1, zmm1	62e1f54857d1	
+vxorpd zmm18, zmm1, zmm12	62c1f54857d4	
+vxorpd zmm18, zmm1, zmm18	62a1f54857d2	
+vxorpd zmm18, zmm1, [rax]	62e1f5485710	
+vxorpd zmm18, zmm1, [r13 + r14*2]	6281f54857547500	
+vxorpd zmm18, zmm12, zmm1	62e19d4857d1	
+vxorpd zmm18, zmm12, zmm12	62c19d4857d4	
+vxorpd zmm18, zmm12, zmm18	62a19d4857d2	
+vxorpd zmm18, zmm12, [rax]	62e19d485710	
+vxorpd zmm18, zmm12, [r13 + r14*2]	62819d4857547500	
+vxorpd zmm18, zmm18, zmm1	62e1ed4057d1	
+vxorpd zmm18, zmm18, zmm12	62c1ed4057d4	
+vxorpd zmm18, zmm18, zmm18	62a1ed4057d2	
+vxorpd zmm18, zmm18, [rax]	62e1ed405710	
+vxorpd zmm18, zmm18, [r13 + r14*2]	6281ed4057547500	
+vpaddb zmm1, zmm1, zmm1	62f17548fcc9	
+vpaddb zmm1, zmm1, zmm12	62d17548fccc	
+vpaddb zmm1, zmm1, zmm18	62b17548fcca	
+vpaddb zmm1, zmm1, [rax]	62f17548fc08	
+vpaddb zmm1, zmm1, [r13 + r14*2]	62917548fc4c7500	
+vpaddb zmm1, zmm12, zmm1	62f11d48fcc9	
+vpaddb zmm1, zmm12, zmm12	62d11d48fccc	
+vpaddb zmm1, zmm12, zmm18	62b11d48fcca	
+vpaddb zmm1, zmm12, [rax]	62f11d48fc08	
+vpaddb zmm1, zmm12, [r13 + r14*2]	62911d48fc4c7500	
+vpaddb zmm1, zmm18, zmm1	62f16d40fcc9	
+vpaddb zmm1, zmm18, zmm12	62d16d40fccc	
+vpaddb zmm1, zmm18, zmm18	62b16d40fcca	
+vpaddb zmm1, zmm18, [rax]	62f16d40fc08	
+vpaddb zmm1, zmm18, [r13 + r14*2]	62916d40fc4c7500	
+vpaddb zmm12, zmm1, zmm1	62717548fce1	
+vpaddb zmm12, zmm1, zmm12	62517548fce4	
+vpaddb zmm12, zmm1, zmm18	62317548fce2	
+vpaddb zmm12, zmm1, [rax]	62717548fc20	
+vpaddb zmm12, zmm1, [r13 + r14*2]	62117548fc647500	
+vpaddb zmm12, zmm12, zmm1	62711d48fce1	
+vpaddb zmm12, zmm12, zmm12	62511d48fce4	
+vpaddb zmm12, zmm12, zmm18	62311d48fce2	
+vpaddb zmm12, zmm12, [rax]	62711d48fc20	
+vpaddb zmm12, zmm12, [r13 + r14*2]	62111d48fc647500	
+vpaddb zmm12, zmm18, zmm1	62716d40fce1	
+vpaddb zmm12, zmm18, zmm12	62516d40fce4	
+vpaddb zmm12, zmm18, zmm18	62316d40fce2	
+vpaddb zmm12, zmm18, [rax]	62716d40fc20	
+vpaddb zmm12, zmm18, [r13 + r14*2]	62116d40fc647500	
+vpaddb zmm18, zmm1, zmm1	62e17548fcd1	
+vpaddb zmm18, zmm1, zmm12	62c17548fcd4	
+vpaddb zmm18, zmm1, zmm18	62a17548fcd2	
+vpaddb zmm18, zmm1, [rax]	62e17548fc10	
+vpaddb zmm18, zmm1, [r13 + r14*2]	62817548fc547500	
+vpaddb zmm18, zmm12, zmm1	62e11d48fcd1	
+vpaddb zmm18, zmm12, zmm12	62c11d48fcd4	
+vpaddb zmm18, zmm12, zmm18	62a11d48fcd2	
+vpaddb zmm18, zmm12, [rax]	62e11d48fc10	
+vpaddb zmm18, zmm12, [r13 + r14*2]	62811d48fc547500	
+vpaddb zmm18, zmm18, zmm1	62e16d40fcd1	
+vpaddb zmm18, zmm18, zmm12	62c16d40fcd4	
+vpaddb zmm18, zmm18, zmm18	62a16d40fcd2	
+vpaddb zmm18, zmm18, [rax]	62e16d40fc10	
+vpaddb zmm18, zmm18, [r13 + r14*2]	62816d40fc547500	
+vpaddw zmm1, zmm1, zmm1	62f17548fdc9	
+vpaddw zmm1, zmm1, zmm12	62d17548fdcc	
+vpaddw zmm1, zmm1, zmm18	62b17548fdca	
+vpaddw zmm1, zmm1, [rax]	62f17548fd08	
+vpaddw zmm1, zmm1, [r13 + r14*2]	62917548fd4c7500	
+vpaddw zmm1, zmm12, zmm1	62f11d48fdc9	
+vpaddw zmm1, zmm12, zmm12	62d11d48fdcc	
+vpaddw zmm1, zmm12, zmm18	62b11d48fdca	
+vpaddw zmm1, zmm12, [rax]	62f11d48fd08	
+vpaddw zmm1, zmm12, [r13 + r14*2]	62911d48fd4c7500	
+vpaddw zmm1, zmm18, zmm1	62f16d40fdc9	
+vpaddw zmm1, zmm18, zmm12	62d16d40fdcc	
+vpaddw zmm1, zmm18, zmm18	62b16d40fdca	
+vpaddw zmm1, zmm18, [rax]	62f16d40fd08	
+vpaddw zmm1, zmm18, [r13 + r14*2]	62916d40fd4c7500	
+vpaddw zmm12, zmm1, zmm1	62717548fde1	
+vpaddw zmm12, zmm1, zmm12	62517548fde4	
+vpaddw zmm12, zmm1, zmm18	62317548fde2	
+vpaddw zmm12, zmm1, [rax]	62717548fd20	
+vpaddw zmm12, zmm1, [r13 + r14*2]	62117548fd647500	
+vpaddw zmm12, zmm12, zmm1	62711d48fde1	
+vpaddw zmm12, zmm12, zmm12	62511d48fde4	
+vpaddw zmm12, zmm12, zmm18	62311d48fde2	
+vpaddw zmm12, zmm12, [rax]	62711d48fd20	
+vpaddw zmm12, zmm12, [r13 + r14*2]	62111d48fd647500	
+vpaddw zmm12, zmm18, zmm1	62716d40fde1	
+vpaddw zmm12, zmm18, zmm12	62516d40fde4	
+vpaddw zmm12, zmm18, zmm18	62316d40fde2	
+vpaddw zmm12, zmm18, [rax]	62716d40fd20	
+vpaddw zmm12, zmm18, [r13 + r14*2]	62116d40fd647500	
+vpaddw zmm18, zmm1, zmm1	62e17548fdd1	
+vpaddw zmm18, zmm1, zmm12	62c17548fdd4	
+vpaddw zmm18, zmm1, zmm18	62a17548fdd2	
+vpaddw zmm18, zmm1, [rax]	62e17548fd10	
+vpaddw zmm18, zmm1, [r13 + r14*2]	62817548fd547500	
+vpaddw zmm18, zmm12, zmm1	62e11d48fdd1	
+vpaddw zmm18, zmm12, zmm12	62c11d48fdd4	
+vpaddw zmm18, zmm12, zmm18	62a11d48fdd2	
+vpaddw zmm18, zmm12, [rax]	62e11d48fd10	
+vpaddw zmm18, zmm12, [r13 + r14*2]	62811d48fd547500	
+vpaddw zmm18, zmm18, zmm1	62e16d40fdd1	
+vpaddw zmm18, zmm18, zmm12	62c16d40fdd4	
+vpaddw zmm18, zmm18, zmm18	62a16d40fdd2	
+vpaddw zmm18, zmm18, [rax]	62e16d40fd10	
+vpaddw zmm18, zmm18, [r13 + r14*2]	62816d40fd547500	
+vpaddd zmm1, zmm1, zmm1	62f17548fec9	
+vpaddd zmm1, zmm1, zmm12	62d17548fecc	
+vpaddd zmm1, zmm1, zmm18	62b17548feca	
+vpaddd zmm1, zmm1, [rax]	62f17548fe08	
+vpaddd zmm1, zmm1, [r13 + r14*2]	62917548fe4c7500	
+vpaddd zmm1, zmm12, zmm1	62f11d48fec9	
+vpaddd zmm1, zmm12, zmm12	62d11d48fecc	
+vpaddd zmm1, zmm12, zmm18	62b11d48feca	
+vpaddd zmm1, zmm12, [rax]	62f11d48fe08	
+vpaddd zmm1, zmm12, [r13 + r14*2]	62911d48fe4c7500	
+vpaddd zmm1, zmm18, zmm1	62f16d40fec9	
+vpaddd zmm1, zmm18, zmm12	62d16d40fecc	
+vpaddd zmm1, zmm18, zmm18	62b16d40feca	
+vpaddd zmm1, zmm18, [rax]	62f16d40fe08	
+vpaddd zmm1, zmm18, [r13 + r14*2]	62916d40fe4c7500	
+vpaddd zmm12, zmm1, zmm1	62717548fee1	
+vpaddd zmm12, zmm1, zmm12	62517548fee4	
+vpaddd zmm12, zmm1, zmm18	62317548fee2	
+vpaddd zmm12, zmm1, [rax]	62717548fe20	
+vpaddd zmm12, zmm1, [r13 + r14*2]	62117548fe647500	
+vpaddd zmm12, zmm12, zmm1	62711d48fee1	
+vpaddd zmm12, zmm12, zmm12	62511d48fee4	
+vpaddd zmm12, zmm12, zmm18	62311d48fee2	
+vpaddd zmm12, zmm12, [rax]	62711d48fe20	
+vpaddd zmm12, zmm12, [r13 + r14*2]	62111d48fe647500	
+vpaddd zmm12, zmm18, zmm1	62716d40fee1	
+vpaddd zmm12, zmm18, zmm12	62516d40fee4	
+vpaddd zmm12, zmm18, zmm18	62316d40fee2	
+vpaddd zmm12, zmm18, [rax]	62716d40fe20	
+vpaddd zmm12, zmm18, [r13 + r14*2]	62116d40fe647500	
+vpaddd zmm18, zmm1, zmm1	62e17548fed1	
+vpaddd zmm18, zmm1, zmm12	62c17548fed4	
+vpaddd zmm18, zmm1, zmm18	62a17548fed2	
+vpaddd zmm18, zmm1, [rax]	62e17548fe10	
+vpaddd zmm18, zmm1, [r13 + r14*2]	62817548fe547500	
+vpaddd zmm18, zmm12, zmm1	62e11d48fed1	
+vpaddd zmm18, zmm12, zmm12	62c11d48fed4	
+vpaddd zmm18, zmm12, zmm18	62a11d48fed2	
+vpaddd zmm18, zmm12, [rax]	62e11d48fe10	
+vpaddd zmm18, zmm12, [r13 + r14*2]	62811d48fe547500	
+vpaddd zmm18, zmm18, zmm1	62e16d40fed1	
+vpaddd zmm18, zmm18, zmm12	62c16d40fed4	
+vpaddd zmm18, zmm18, zmm18	62a16d40fed2	
+vpaddd zmm18, zmm18, [rax]	62e16d40fe10	
+vpaddd zmm18, zmm18, [r13 + r14*2]	62816d40fe547500	
+vpaddq zmm1, zmm1, zmm1	62f1f548d4c9	
+vpaddq zmm1, zmm1, zmm12	62d1f548d4cc	
+vpaddq zmm1, zmm1, zmm18	62b1f548d4ca	
+vpaddq zmm1, zmm1, [rax]	62f1f548d408	
+vpaddq zmm1, zmm1, [r13 + r14*2]	6291f548d44c7500	
+vpaddq zmm1, zmm12, zmm1	62f19d48d4c9	
+vpaddq zmm1, zmm12, zmm12	62d19d48d4cc	
+vpaddq zmm1, zmm12, zmm18	62b19d48d4ca	
+vpaddq zmm1, zmm12, [rax]	62f19d48d408	
+vpaddq zmm1, zmm12, [r13 + r14*2]	62919d48d44c7500	
+vpaddq zmm1, zmm18, zmm1	62f1ed40d4c9	
+vpaddq zmm1, zmm18, zmm12	62d1ed40d4cc	
+vpaddq zmm1, zmm18, zmm18	62b1ed40d4ca	
+vpaddq zmm1, zmm18, [rax]	62f1ed40d408	
+vpaddq zmm1, zmm18, [r13 + r14*2]	6291ed40d44c7500	
+vpaddq zmm12, zmm1, zmm1	6271f548d4e1	
+vpaddq zmm12, zmm1, zmm12	6251f548d4e4	
+vpaddq zmm12, zmm1, zmm18	6231f548d4e2	
+vpaddq zmm12, zmm1, [rax]	6271f548d420	
+vpaddq zmm12, zmm1, [r13 + r14*2]	6211f548d4647500	
+vpaddq zmm12, zmm12, zmm1	62719d48d4e1	
+vpaddq zmm12, zmm12, zmm12	62519d48d4e4	
+vpaddq zmm12, zmm12, zmm18	62319d48d4e2	
+vpaddq zmm12, zmm12, [rax]	62719d48d420	
+vpaddq zmm12, zmm12, [r13 + r14*2]	62119d48d4647500	
+vpaddq zmm12, zmm18, zmm1	6271ed40d4e1	
+vpaddq zmm12, zmm18, zmm12	6251ed40d4e4	
+vpaddq zmm12, zmm18, zmm18	6231ed40d4e2	
+vpaddq zmm12, zmm18, [rax]	6271ed40d420	
+vpaddq zmm12, zmm18, [r13 + r14*2]	6211ed40d4647500	
+vpaddq zmm18, zmm1, zmm1	62e1f548d4d1	
+vpaddq zmm18, zmm1, zmm12	62c1f548d4d4	
+vpaddq zmm18, zmm1, zmm18	62a1f548d4d2	
+vpaddq zmm18, zmm1, [rax]	62e1f548d410	
+vpaddq zmm18, zmm1, [r13 + r14*2]	6281f548d4547500	
+vpaddq zmm18, zmm12, zmm1	62e19d48d4d1	
+vpaddq zmm18, zmm12, zmm12	62c19d48d4d4	
+vpaddq zmm18, zmm12, zmm18	62a19d48d4d2	
+vpaddq zmm18, zmm12, [rax]	62e19d48d410	
+vpaddq zmm18, zmm12, [r13 + r14*2]	62819d48d4547500	
+vpaddq zmm18, zmm18, zmm1	62e1ed40d4d1	
+vpaddq zmm18, zmm18, zmm12	62c1ed40d4d4	
+vpaddq zmm18, zmm18, zmm18	62a1ed40d4d2	
+vpaddq zmm18, zmm18, [rax]	62e1ed40d410	
+vpaddq zmm18, zmm18, [r13 + r14*2]	6281ed40d4547500	
+vpsubb zmm1, zmm1, zmm1	62f17548f8c9	
+vpsubb zmm1, zmm1, zmm12	62d17548f8cc	
+vpsubb zmm1, zmm1, zmm18	62b17548f8ca	
+vpsubb zmm1, zmm1, [rax]	62f17548f808	
+vpsubb zmm1, zmm1, [r13 + r14*2]	62917548f84c7500	
+vpsubb zmm1, zmm12, zmm1	62f11d48f8c9	
+vpsubb zmm1, zmm12, zmm12	62d11d48f8cc	
+vpsubb zmm1, zmm12, zmm18	62b11d48f8ca	
+vpsubb zmm1, zmm12, [rax]	62f11d48f808	
+vpsubb zmm1, zmm12, [r13 + r14*2]	62911d48f84c7500	
+vpsubb zmm1, zmm18, zmm1	62f16d40f8c9	
+vpsubb zmm1, zmm18, zmm12	62d16d40f8cc	
+vpsubb zmm1, zmm18, zmm18	62b16d40f8ca	
+vpsubb zmm1, zmm18, [rax]	62f16d40f808	
+vpsubb zmm1, zmm18, [r13 + r14*2]	62916d40f84c7500	
+vpsubb zmm12, zmm1, zmm1	62717548f8e1	
+vpsubb zmm12, zmm1, zmm12	62517548f8e4	
+vpsubb zmm12, zmm1, zmm18	62317548f8e2	
+vpsubb zmm12, zmm1, [rax]	62717548f820	
+vpsubb zmm12, zmm1, [r13 + r14*2]	62117548f8647500	
+vpsubb zmm12, zmm12, zmm1	62711d48f8e1	
+vpsubb zmm12, zmm12, zmm12	62511d48f8e4	
+vpsubb zmm12, zmm12, zmm18	62311d48f8e2	
+vpsubb zmm12, zmm12, [rax]	62711d48f820	
+vpsubb zmm12, zmm12, [r13 + r14*2]	62111d48f8647500	
+vpsubb zmm12, zmm18, zmm1	62716d40f8e1	
+vpsubb zmm12, zmm18, zmm12	62516d40f8e4	
+vpsubb zmm12, zmm18, zmm18	62316d40f8e2	
+vpsubb zmm12, zmm18, [rax]	62716d40f820	
+vpsubb zmm12, zmm18, [r13 + r14*2]	62116d40f8647500	
+vpsubb zmm18, zmm1, zmm1	62e17548f8d1	
+vpsubb zmm18, zmm1, zmm12	62c17548f8d4	
+vpsubb zmm18, zmm1, zmm18	62a17548f8d2	
+vpsubb zmm18, zmm1, [rax]	62e17548f810	
+vpsubb zmm18, zmm1, [r13 + r14*2]	62817548f8547500	
+vpsubb zmm18, zmm12, zmm1	62e11d48f8d1	
+vpsubb zmm18, zmm12, zmm12	62c11d48f8d4	
+vpsubb zmm18, zmm12, zmm18	62a11d48f8d2	
+vpsubb zmm18, zmm12, [rax]	62e11d48f810	
+vpsubb zmm18, zmm12, [r13 + r14*2]	62811d48f8547500	
+vpsubb zmm18, zmm18, zmm1	62e16d40f8d1	
+vpsubb zmm18, zmm18, zmm12	62c16d40f8d4	
+vpsubb zmm18, zmm18, zmm18	62a16d40f8d2	
+vpsubb zmm18, zmm18, [rax]	62e16d40f810	
+vpsubb zmm18, zmm18, [r13 + r14*2]	62816d40f8547500	
+vpsubw zmm1, zmm1, zmm1	62f17548f9c9	
+vpsubw zmm1, zmm1, zmm12	62d17548f9cc	
+vpsubw zmm1, zmm1, zmm18	62b17548f9ca	
+vpsubw zmm1, zmm1, [rax]	62f17548f908	
+vpsubw zmm1, zmm1, [r13 + r14*2]	62917548f94c7500	
+vpsubw zmm1, zmm12, zmm1	62f11d48f9c9	
+vpsubw zmm1, zmm12, zmm12	62d11d48f9cc	
+vpsubw zmm1, zmm12, zmm18	62b11d48f9ca	
+vpsubw zmm1, zmm12, [rax]	62f11d48f908	
+vpsubw zmm1, zmm12, [r13 + r14*2]	62911d48f94c7500	
+vpsubw zmm1, zmm18, zmm1	62f16d40f9c9	
+vpsubw zmm1, zmm18, zmm12	62d16d40f9cc	
+vpsubw zmm1, zmm18, zmm18	62b16d40f9ca	
+vpsubw zmm1, zmm18, [rax]	62f16d40f908	
+vpsubw zmm1, zmm18, [r13 + r14*2]	62916d40f94c7500	
+vpsubw zmm12, zmm1, zmm1	62717548f9e1	
+vpsubw zmm12, zmm1, zmm12	62517548f9e4	
+vpsubw zmm12, zmm1, zmm18	62317548f9e2	
+vpsubw zmm12, zmm1, [rax]	62717548f920	
+vpsubw zmm12, zmm1, [r13 + r14*2]	62117548f9647500	
+vpsubw zmm12, zmm12, zmm1	62711d48f9e1	
+vpsubw zmm12, zmm12, zmm12	62511d48f9e4	
+vpsubw zmm12, zmm12, zmm18	62311d48f9e2	
+vpsubw zmm12, zmm12, [rax]	62711d48f920	
+vpsubw zmm12, zmm12, [r13 + r14*2]	62111d48f9647500	
+vpsubw zmm12, zmm18, zmm1	62716d40f9e1	
+vpsubw zmm12, zmm18, zmm12	62516d40f9e4	
+vpsubw zmm12, zmm18, zmm18	62316d40f9e2	
+vpsubw zmm12, zmm18, [rax]	62716d40f920	
+vpsubw zmm12, zmm18, [r13 + r14*2]	62116d40f9647500	
+vpsubw zmm18, zmm1, zmm1	62e17548f9d1	
+vpsubw zmm18, zmm1, zmm12	62c17548f9d4	
+vpsubw zmm18, zmm1, zmm18	62a17548f9d2	
+vpsubw zmm18, zmm1, [rax]	62e17548f910	
+vpsubw zmm18, zmm1, [r13 + r14*2]	62817548f9547500	
+vpsubw zmm18, zmm12, zmm1	62e11d48f9d1	
+vpsubw zmm18, zmm12, zmm12	62c11d48f9d4	
+vpsubw zmm18, zmm12, zmm18	62a11d48f9d2	
+vpsubw zmm18, zmm12, [rax]	62e11d48f910	
+vpsubw zmm18, zmm12, [r13 + r14*2]	62811d48f9547500	
+vpsubw zmm18, zmm18, zmm1	62e16d40f9d1	
+vpsubw zmm18, zmm18, zmm12	62c16d40f9d4	
+vpsubw zmm18, zmm18, zmm18	62a16d40f9d2	
+vpsubw zmm18, zmm18, [rax]	62e16d40f910	
+vpsubw zmm18, zmm18, [r13 + r14*2]	62816d40f9547500	
+vpsubd zmm1, zmm1, zmm1	62f17548fac9	
+vpsubd zmm1, zmm1, zmm12	62d17548facc	
+vpsubd zmm1, zmm1, zmm18	62b17548faca	
+vpsubd zmm1, zmm1, [rax]	62f17548fa08	
+vpsubd zmm1, zmm1, [r13 + r14*2]	62917548fa4c7500	
+vpsubd zmm1, zmm12, zmm1	62f11d48fac9	
+vpsubd zmm1, zmm12, zmm12	62d11d48facc	
+vpsubd zmm1, zmm12, zmm18	62b11d48faca	
+vpsubd zmm1, zmm12, [rax]	62f11d48fa08	
+vpsubd zmm1, zmm12, [r13 + r14*2]	62911d48fa4c7500	
+vpsubd zmm1, zmm18, zmm1	62f16d40fac9	
+vpsubd zmm1, zmm18, zmm12	62d16d40facc	
+vpsubd zmm1, zmm18, zmm18	62b16d40faca	
+vpsubd zmm1, zmm18, [rax]	62f16d40fa08	
+vpsubd zmm1, zmm18, [r13 + r14*2]	62916d40fa4c7500	
+vpsubd zmm12, zmm1, zmm1	62717548fae1	
+vpsubd zmm12, zmm1, zmm12	62517548fae4	
+vpsubd zmm12, zmm1, zmm18	62317548fae2	
+vpsubd zmm12, zmm1, [rax]	62717548fa20	
+vpsubd zmm12, zmm1, [r13 + r14*2]	62117548fa647500	
+vpsubd zmm12, zmm12, zmm1	62711d48fae1	
+vpsubd zmm12, zmm12, zmm12	62511d48fae4	
+vpsubd zmm12, zmm12, zmm18	62311d48fae2	
+vpsubd zmm12, zmm12, [rax]	62711d48fa20	
+vpsubd zmm12, zmm12, [r13 + r14*2]	62111d48fa647500	
+vpsubd zmm12, zmm18, zmm1	62716d40fae1	
+vpsubd zmm12, zmm18, zmm12	62516d40fae4	
+vpsubd zmm12, zmm18, zmm18	62316d40fae2	
+vpsubd zmm12, zmm18, [rax]	62716d40fa20	
+vpsubd zmm12, zmm18, [r13 + r14*2]	62116d40fa647500	
+vpsubd zmm18, zmm1, zmm1	62e17548fad1	
+vpsubd zmm18, zmm1, zmm12	62c17548fad4	
+vpsubd zmm18, zmm1, zmm18	62a17548fad2	
+vpsubd zmm18, zmm1, [rax]	62e17548fa10	
+vpsubd zmm18, zmm1, [r13 + r14*2]	62817548fa547500	
+vpsubd zmm18, zmm12, zmm1	62e11d48fad1	
+vpsubd zmm18, zmm12, zmm12	62c11d48fad4	
+vpsubd zmm18, zmm12, zmm18	62a11d48fad2	
+vpsubd zmm18, zmm12, [rax]	62e11d48fa10	
+vpsubd zmm18, zmm12, [r13 + r14*2]	62811d48fa547500	
+vpsubd zmm18, zmm18, zmm1	62e16d40fad1	
+vpsubd zmm18, zmm18, zmm12	62c16d40fad4	
+vpsubd zmm18, zmm18, zmm18	62a16d40fad2	
+vpsubd zmm18, zmm18, [rax]	62e16d40fa10	
+vpsubd zmm18, zmm18, [r13 + r14*2]	62816d40fa547500	
+vpsubq zmm1, zmm1, zmm1	62f1f548fbc9	
+vpsubq zmm1, zmm1, zmm12	62d1f548fbcc	
+vpsubq zmm1, zmm1, zmm18	62b1f548fbca	
+vpsubq zmm1, zmm1, [rax]	62f1f548fb08	
+vpsubq zmm1, zmm1, [r13 + r14*2]	6291f548fb4c7500	
+vpsubq zmm1, zmm12, zmm1	62f19d48fbc9	
+vpsubq zmm1, zmm12, zmm12	62d19d48fbcc	
+vpsubq zmm1, zmm12, zmm18	62b19d48fbca	
+vpsubq zmm1, zmm12, [rax]	62f19d48fb08	
+vpsubq zmm1, zmm12, [r13 + r14*2]	62919d48fb4c7500	
+vpsubq zmm1, zmm18, zmm1	62f1ed40fbc9	
+vpsubq zmm1, zmm18, zmm12	62d1ed40fbcc	
+vpsubq zmm1, zmm18, zmm18	62b1ed40fbca	
+vpsubq zmm1, zmm18, [rax]	62f1ed40fb08	
+vpsubq zmm1, zmm18, [r13 + r14*2]	6291ed40fb4c7500	
+vpsubq zmm12, zmm1, zmm1	6271f548fbe1	
+vpsubq zmm12, zmm1, zmm12	6251f548fbe4	
+vpsubq zmm12, zmm1, zmm18	6231f548fbe2	
+vpsubq zmm12, zmm1, [rax]	6271f548fb20	
+vpsubq zmm12, zmm1, [r13 + r14*2]	6211f548fb647500	
+vpsubq zmm12, zmm12, zmm1	62719d48fbe1	
+vpsubq zmm12, zmm12, zmm12	62519d48fbe4	
+vpsubq zmm12, zmm12, zmm18	62319d48fbe2	
+vpsubq zmm12, zmm12, [rax]	62719d48fb20	
+vpsubq zmm12, zmm12, [r13 + r14*2]	62119d48fb647500	
+vpsubq zmm12, zmm18, zmm1	6271ed40fbe1	
+vpsubq zmm12, zmm18, zmm12	6251ed40fbe4	
+vpsubq zmm12, zmm18, zmm18	6231ed40fbe2	
+vpsubq zmm12, zmm18, [rax]	6271ed40fb20	
+vpsubq zmm12, zmm18, [r13 + r14*2]	6211ed40fb647500	
+vpsubq zmm18, zmm1, zmm1	62e1f548fbd1	
+vpsubq zmm18, zmm1, zmm12	62c1f548fbd4	
+vpsubq zmm18, zmm1, zmm18	62a1f548fbd2	
+vpsubq zmm18, zmm1, [rax]	62e1f548fb10	
+vpsubq zmm18, zmm1, [r13 + r14*2]	6281f548fb547500	
+vpsubq zmm18, zmm12, zmm1	62e19d48fbd1	
+vpsubq zmm18, zmm12, zmm12	62c19d48fbd4	
+vpsubq zmm18, zmm12, zmm18	62a19d48fbd2	
+vpsubq zmm18, zmm12, [rax]	62e19d48fb10	
+vpsubq zmm18, zmm12, [r13 + r14*2]	62819d48fb547500	
+vpsubq zmm18, zmm18, zmm1	62e1ed40fbd1	
+vpsubq zmm18, zmm18, zmm12	62c1ed40fbd4	
+vpsubq zmm18, zmm18, zmm18	62a1ed40fbd2	
+vpsubq zmm18, zmm18, [rax]	62e1ed40fb10	
+vpsubq zmm18, zmm18, [r13 + r14*2]	6281ed40fb547500	
+vpmullw zmm1, zmm1, zmm1	62f17548d5c9	
+vpmullw zmm1, zmm1, zmm12	62d17548d5cc	
+vpmullw zmm1, zmm1, zmm18	62b17548d5ca	
+vpmullw zmm1, zmm1, [rax]	62f17548d508	
+vpmullw zmm1, zmm1, [r13 + r14*2]	62917548d54c7500	
+vpmullw zmm1, zmm12, zmm1	62f11d48d5c9	
+vpmullw zmm1, zmm12, zmm12	62d11d48d5cc	
+vpmullw zmm1, zmm12, zmm18	62b11d48d5ca	
+vpmullw zmm1, zmm12, [rax]	62f11d48d508	
+vpmullw zmm1, zmm12, [r13 + r14*2]	62911d48d54c7500	
+vpmullw zmm1, zmm18, zmm1	62f16d40d5c9	
+vpmullw zmm1, zmm18, zmm12	62d16d40d5cc	
+vpmullw zmm1, zmm18, zmm18	62b16d40d5ca	
+vpmullw zmm1, zmm18, [rax]	62f16d40d508	
+vpmullw zmm1, zmm18, [r13 + r14*2]	62916d40d54c7500	
+vpmullw zmm12, zmm1, zmm1	62717548d5e1	
+vpmullw zmm12, zmm1, zmm12	62517548d5e4	
+vpmullw zmm12, zmm1, zmm18	62317548d5e2	
+vpmullw zmm12, zmm1, [rax]	62717548d520	
+vpmullw zmm12, zmm1, [r13 + r14*2]	62117548d5647500	
+vpmullw zmm12, zmm12, zmm1	62711d48d5e1	
+vpmullw zmm12, zmm12, zmm12	62511d48d5e4	
+vpmullw zmm12, zmm12, zmm18	62311d48d5e2	
+vpmullw zmm12, zmm12, [rax]	62711d48d520	
+vpmullw zmm12, zmm12, [r13 + r14*2]	62111d48d5647500	
+vpmullw zmm12, zmm18, zmm1	62716d40d5e1	
+vpmullw zmm12, zmm18, zmm12	62516d40d5e4	
+vpmullw zmm12, zmm18, zmm18	62316d40d5e2	
+vpmullw zmm12, zmm18, [rax]	62716d40d520	
+vpmullw zmm12, zmm18, [r13 + r14*2]	62116d40d5647500	
+vpmullw zmm18, zmm1, zmm1	62e17548d5d1	
+vpmullw zmm18, zmm1, zmm12	62c17548d5d4	
+vpmullw zmm18, zmm1, zmm18	62a17548d5d2	
+vpmullw zmm18, zmm1, [rax]	62e17548d510	
+vpmullw zmm18, zmm1, [r13 + r14*2]	62817548d5547500	
+vpmullw zmm18, zmm12, zmm1	62e11d48d5d1	
+vpmullw zmm18, zmm12, zmm12	62c11d48d5d4	
+vpmullw zmm18, zmm12, zmm18	62a11d48d5d2	
+vpmullw zmm18, zmm12, [rax]	62e11d48d510	
+vpmullw zmm18, zmm12, [r13 + r14*2]	62811d48d5547500	
+vpmullw zmm18, zmm18, zmm1	62e16d40d5d1	
+vpmullw zmm18, zmm18, zmm12	62c16d40d5d4	
+vpmullw zmm18, zmm18, zmm18	62a16d40d5d2	
+vpmullw zmm18, zmm18, [rax]	62e16d40d510	
+vpmullw zmm18, zmm18, [r13 + r14*2]	62816d40d5547500	
+vpmulld zmm1, zmm1, zmm1	62f2754840c9	
+vpmulld zmm1, zmm1, zmm12	62d2754840cc	
+vpmulld zmm1, zmm1, zmm18	62b2754840ca	
+vpmulld zmm1, zmm1, [rax]	62f275484008	
+vpmulld zmm1, zmm1, [r13 + r14*2]	62927548404c7500	
+vpmulld zmm1, zmm12, zmm1	62f21d4840c9	
+vpmulld zmm1, zmm12, zmm12	62d21d4840cc	
+vpmulld zmm1, zmm12, zmm18	62b21d4840ca	
+vpmulld zmm1, zmm12, [rax]	62f21d484008	
+vpmulld zmm1, zmm12, [r13 + r14*2]	62921d48404c7500	
+vpmulld zmm1, zmm18, zmm1	62f26d4040c9	
+vpmulld zmm1, zmm18, zmm12	62d26d4040cc	
+vpmulld zmm1, zmm18, zmm18	62b26d4040ca	
+vpmulld zmm1, zmm18, [rax]	62f26d404008	
+vpmulld zmm1, zmm18, [r13 + r14*2]	62926d40404c7500	
+vpmulld zmm12, zmm1, zmm1	6272754840e1	
+vpmulld zmm12, zmm1, zmm12	6252754840e4	
+vpmulld zmm12, zmm1, zmm18	6232754840e2	
+vpmulld zmm12, zmm1, [rax]	627275484020	
+vpmulld zmm12, zmm1, [r13 + r14*2]	6212754840647500	
+vpmulld zmm12, zmm12, zmm1	62721d4840e1	
+vpmulld zmm12, zmm12, zmm12	62521d4840e4	
+vpmulld zmm12, zmm12, zmm18	62321d4840e2	
+vpmulld zmm12, zmm12, [rax]	62721d484020	
+vpmulld zmm12, zmm12, [r13 + r14*2]	62121d4840647500	
+vpmulld zmm12, zmm18, zmm1	62726d4040e1	
+vpmulld zmm12, zmm18, zmm12	62526d4040e4	
+vpmulld zmm12, zmm18, zmm18	62326d4040e2	
+vpmulld zmm12, zmm18, [rax]	62726d404020	
+vpmulld zmm12, zmm18, [r13 + r14*2]	62126d4040647500	
+vpmulld zmm18, zmm1, zmm1	62e2754840d1	
+vpmulld zmm18, zmm1, zmm12	62c2754840d4	
+vpmulld zmm18, zmm1, zmm18	62a2754840d2	
+vpmulld zmm18, zmm1, [rax]	62e275484010	
+vpmulld zmm18, zmm1, [r13 + r14*2]	6282754840547500	
+vpmulld zmm18, zmm12, zmm1	62e21d4840d1	
+vpmulld zmm18, zmm12, zmm12	62c21d4840d4	
+vpmulld zmm18, zmm12, zmm18	62a21d4840d2	
+vpmulld zmm18, zmm12, [rax]	62e21d484010	
+vpmulld zmm18, zmm12, [r13 + r14*2]	62821d4840547500	
+vpmulld zmm18, zmm18, zmm1	62e26d4040d1	
+vpmulld zmm18, zmm18, zmm12	62c26d4040d4	
+vpmulld zmm18, zmm18, zmm18	62a26d4040d2	
+vpmulld zmm18, zmm18, [rax]	62e26d404010	
+vpmulld zmm18, zmm18, [r13 + r14*2]	62826d4040547500	
+vsqrtps zmm1, zmm1	62f17c4851c9	
+vsqrtps zmm1, zmm12	62d17c4851cc	
+vsqrtps zmm1, zmm18	62b17c4851ca	
+vsqrtps zmm1, [rax]	62f17c485108	
+vsqrtps zmm1, [r13 + r14*2]	62917c48514c7500	
+vsqrtps zmm12, zmm1	62717c4851e1	
+vsqrtps zmm12, zmm12	62517c4851e4	
+vsqrtps zmm12, zmm18	62317c4851e2	
+vsqrtps zmm12, [rax]	62717c485120	
+vsqrtps zmm12, [r13 + r14*2]	62117c4851647500	
+vsqrtps zmm18, zmm1	62e17c4851d1	
+vsqrtps zmm18, zmm12	62c17c4851d4	
+vsqrtps zmm18, zmm18	62a17c4851d2	
+vsqrtps zmm18, [rax]	62e17c485110	
+vsqrtps zmm18, [r13 + r14*2]	62817c4851547500	
+vsqrtpd zmm1, zmm1	62f1fd4851c9	
+vsqrtpd zmm1, zmm12	62d1fd4851cc	
+vsqrtpd zmm1, zmm18	62b1fd4851ca	
+vsqrtpd zmm1, [rax]	62f1fd485108	
+vsqrtpd zmm1, [r13 + r14*2]	6291fd48514c7500	
+vsqrtpd zmm12, zmm1	6271fd4851e1	
+vsqrtpd zmm12, zmm12	6251fd4851e4	
+vsqrtpd zmm12, zmm18	6231fd4851e2	
+vsqrtpd zmm12, [rax]	6271fd485120	
+vsqrtpd zmm12, [r13 + r14*2]	6211fd4851647500	
+vsqrtpd zmm18, zmm1	62e1fd4851d1	
+vsqrtpd zmm18, zmm12	62c1fd4851d4	
+vsqrtpd zmm18, zmm18	62a1fd4851d2	
+vsqrtpd zmm18, [rax]	62e1fd485110	
+vsqrtpd zmm18, [r13 + r14*2]	6281fd4851547500	
+vcvtdq2ps zmm1, zmm1	62f17c485bc9	
+vcvtdq2ps zmm1, zmm12	62d17c485bcc	
+vcvtdq2ps zmm1, zmm18	62b17c485bca	
+vcvtdq2ps zmm1, [rax]	62f17c485b08	
+vcvtdq2ps zmm1, [r13 + r14*2]	62917c485b4c7500	
+vcvtdq2ps zmm12, zmm1	62717c485be1	
+vcvtdq2ps zmm12, zmm12	62517c485be4	
+vcvtdq2ps zmm12, zmm18	62317c485be2	
+vcvtdq2ps zmm12, [rax]	62717c485b20	
+vcvtdq2ps zmm12, [r13 + r14*2]	62117c485b647500	
+vcvtdq2ps zmm18, zmm1	62e17c485bd1	
+vcvtdq2ps zmm18, zmm12	62c17c485bd4	
+vcvtdq2ps zmm18, zmm18	62a17c485bd2	
+vcvtdq2ps zmm18, [rax]	62e17c485b10	
+vcvtdq2ps zmm18, [r13 + r14*2]	62817c485b547500	
+vcvtps2dq zmm1, zmm1	62f17d485bc9	
+vcvtps2dq zmm1, zmm12	62d17d485bcc	
+vcvtps2dq zmm1, zmm18	62b17d485bca	
+vcvtps2dq zmm1, [rax]	62f17d485b08	
+vcvtps2dq zmm1, [r13 + r14*2]	62917d485b4c7500	
+vcvtps2dq zmm12, zmm1	62717d485be1	
+vcvtps2dq zmm12, zmm12	62517d485be4	
+vcvtps2dq zmm12, zmm18	62317d485be2	
+vcvtps2dq zmm12, [rax]	62717d485b20	
+vcvtps2dq zmm12, [r13 + r14*2]	62117d485b647500	
+vcvtps2dq zmm18, zmm1	62e17d485bd1	
+vcvtps2dq zmm18, zmm12	62c17d485bd4	
+vcvtps2dq zmm18, zmm18	62a17d485bd2	
+vcvtps2dq zmm18, [rax]	62e17d485b10	
+vcvtps2dq zmm18, [r13 + r14*2]	62817d485b547500	
+vcvttps2dq zmm1, zmm1	62f17e485bc9	
+vcvttps2dq zmm1, zmm12	62d17e485bcc	
+vcvttps2dq zmm1, zmm18	62b17e485bca	
+vcvttps2dq zmm1, [rax]	62f17e485b08	
+vcvttps2dq zmm1, [r13 + r14*2]	62917e485b4c7500	
+vcvttps2dq zmm12, zmm1	62717e485be1	
+vcvttps2dq zmm12, zmm12	62517e485be4	
+vcvttps2dq zmm12, zmm18	62317e485be2	
+vcvttps2dq zmm12, [rax]	62717e485b20	
+vcvttps2dq zmm12, [r13 + r14*2]	62117e485b647500	
+vcvttps2dq zmm18, zmm1	62e17e485bd1	
+vcvttps2dq zmm18, zmm12	62c17e485bd4	
+vcvttps2dq zmm18, zmm18	62a17e485bd2	
+vcvttps2dq zmm18, [rax]	62e17e485b10	
+vcvttps2dq zmm18, [r13 + r14*2]	62817e485b547500	
+vmovaps zmm1, zmm1	62f17c4828c9	
+vmovaps zmm1, zmm12	62d17c4828cc	
+vmovaps zmm1, zmm18	62b17c4828ca	
+vmovaps zmm1, [rax]	62f17c482808	
+vmovaps zmm1, [r13 + r14*2]	62917c48284c7500	
+vmovaps zmm12, zmm1	62717c4828e1	
+vmovaps zmm12, zmm12	62517c4828e4	
+vmovaps zmm12, zmm18	62317c4828e2	
+vmovaps zmm12, [rax]	62717c482820	
+vmovaps zmm12, [r13 + r14*2]	62117c4828647500	
+vmovaps zmm18, zmm1	62e17c4828d1	
+vmovaps zmm18, zmm12	62c17c4828d4	
+vmovaps zmm18, zmm18	62a17c4828d2	
+vmovaps zmm18, [rax]	62e17c482810	
+vmovaps zmm18, [r13 + r14*2]	62817c4828547500	
+vmovaps [rax], zmm1	62f17c482908	
+vmovaps [rax], zmm12	62717c482920	
+vmovaps [rax], zmm18	62e17c482910	
+vmovaps [r13 + r14*2], zmm1	62917c48294c7500	
+vmovaps [r13 + r14*2], zmm12	62117c4829647500	
+vmovaps [r13 + r14*2], zmm18	62817c4829547500	
+vmovaps [rip + sym0], zmm1	62f17c48290d00000000	6,4,rel32,sym0
+vmovaps [rip + sym0], zmm12	62717c48292500000000	6,4,rel32,sym0
+vmovaps [rip + sym0], zmm18	62e17c48291500000000	6,4,rel32,sym0
+vmovups zmm1, zmm1	62f17c4810c9	
+vmovups zmm1, zmm12	62d17c4810cc	
+vmovups zmm1, zmm18	62b17c4810ca	
+vmovups zmm1, [rax]	62f17c481008	
+vmovups zmm1, [r13 + r14*2]	62917c48104c7500	
+vmovups zmm12, zmm1	62717c4810e1	
+vmovups zmm12, zmm12	62517c4810e4	
+vmovups zmm12, zmm18	62317c4810e2	
+vmovups zmm12, [rax]	62717c481020	
+vmovups zmm12, [r13 + r14*2]	62117c4810647500	
+vmovups zmm18, zmm1	62e17c4810d1	
+vmovups zmm18, zmm12	62c17c4810d4	
+vmovups zmm18, zmm18	62a17c4810d2	
+vmovups zmm18, [rax]	62e17c481010	
+vmovups zmm18, [r13 + r14*2]	62817c4810547500	
+vmovups [rax], zmm1	62f17c481108	
+vmovups [rax], zmm12	62717c481120	
+vmovups [rax], zmm18	62e17c481110	
+vmovups [r13 + r14*2], zmm1	62917c48114c7500	
+vmovups [r13 + r14*2], zmm12	62117c4811647500	
+vmovups [r13 + r14*2], zmm18	62817c4811547500	
+vmovups [rip + sym0], zmm1	62f17c48110d00000000	6,4,rel32,sym0
+vmovups [rip + sym0], zmm12	62717c48112500000000	6,4,rel32,sym0
+vmovups [rip + sym0], zmm18	62e17c48111500000000	6,4,rel32,sym0
+vmovapd zmm1, zmm1	62f1fd4828c9	
+vmovapd zmm1, zmm12	62d1fd4828cc	
+vmovapd zmm1, zmm18	62b1fd4828ca	
+vmovapd zmm1, [rax]	62f1fd482808	
+vmovapd zmm1, [r13 + r14*2]	6291fd48284c7500	
+vmovapd zmm12, zmm1	6271fd4828e1	
+vmovapd zmm12, zmm12	6251fd4828e4	
+vmovapd zmm12, zmm18	6231fd4828e2	
+vmovapd zmm12, [rax]	6271fd482820	
+vmovapd zmm12, [r13 + r14*2]	6211fd4828647500	
+vmovapd zmm18, zmm1	62e1fd4828d1	
+vmovapd zmm18, zmm12	62c1fd4828d4	
+vmovapd zmm18, zmm18	62a1fd4828d2	
+vmovapd zmm18, [rax]	62e1fd482810	
+vmovapd zmm18, [r13 + r14*2]	6281fd4828547500	
+vmovapd [rax], zmm1	62f1fd482908	
+vmovapd [rax], zmm12	6271fd482920	
+vmovapd [rax], zmm18	62e1fd482910	
+vmovapd [r13 + r14*2], zmm1	6291fd48294c7500	
+vmovapd [r13 + r14*2], zmm12	6211fd4829647500	
+vmovapd [r13 + r14*2], zmm18	6281fd4829547500	
+vmovapd [rip + sym0], zmm1	62f1fd48290d00000000	6,4,rel32,sym0
+vmovapd [rip + sym0], zmm12	6271fd48292500000000	6,4,rel32,sym0
+vmovapd [rip + sym0], zmm18	62e1fd48291500000000	6,4,rel32,sym0
+vmovupd zmm1, zmm1	62f1fd4810c9	
+vmovupd zmm1, zmm12	62d1fd4810cc	
+vmovupd zmm1, zmm18	62b1fd4810ca	
+vmovupd zmm1, [rax]	62f1fd481008	
+vmovupd zmm1, [r13 + r14*2]	6291fd48104c7500	
+vmovupd zmm12, zmm1	6271fd4810e1	
+vmovupd zmm12, zmm12	6251fd4810e4	
+vmovupd zmm12, zmm18	6231fd4810e2	
+vmovupd zmm12, [rax]	6271fd481020	
+vmovupd zmm12, [r13 + r14*2]	6211fd4810647500	
+vmovupd zmm18, zmm1	62e1fd4810d1	
+vmovupd zmm18, zmm12	62c1fd4810d4	
+vmovupd zmm18, zmm18	62a1fd4810d2	
+vmovupd zmm18, [rax]	62e1fd481010	
+vmovupd zmm18, [r13 + r14*2]	6281fd4810547500	
+vmovupd [rax], zmm1	62f1fd481108	
+vmovupd [rax], zmm12	6271fd481120	
+vmovupd [rax], zmm18	62e1fd481110	
+vmovupd [r13 + r14*2], zmm1	6291fd48114c7500	
+vmovupd [r13 + r14*2], zmm12	6211fd4811647500	
+vmovupd [r13 + r14*2], zmm18	6281fd4811547500	
+vmovupd [rip + sym0], zmm1	62f1fd48110d00000000	6,4,rel32,sym0
+vmovupd [rip + sym0], zmm12	6271fd48112500000000	6,4,rel32,sym0
+vmovupd [rip + sym0], zmm18	62e1fd48111500000000	6,4,rel32,sym0
+vshufps zmm1, zmm1, zmm1, 0x7f	62f17448c6c97f	
+vshufps zmm1, zmm1, zmm12, 0x7f	62d17448c6cc7f	
+vshufps zmm1, zmm1, zmm18, 0x7f	62b17448c6ca7f	
+vshufps zmm1, zmm1, [rax], 0x7f	62f17448c6087f	
+vshufps zmm1, zmm1, [r13 + r14*2], 0x7f	62917448c64c75007f	
+vshufps zmm1, zmm12, zmm1, 0x7f	62f11c48c6c97f	
+vshufps zmm1, zmm12, zmm12, 0x7f	62d11c48c6cc7f	
+vshufps zmm1, zmm12, zmm18, 0x7f	62b11c48c6ca7f	
+vshufps zmm1, zmm12, [rax], 0x7f	62f11c48c6087f	
+vshufps zmm1, zmm12, [r13 + r14*2], 0x7f	62911c48c64c75007f	
+vshufps zmm1, zmm18, zmm1, 0x7f	62f16c40c6c97f	
+vshufps zmm1, zmm18, zmm12, 0x7f	62d16c40c6cc7f	
+vshufps zmm1, zmm18, zmm18, 0x7f	62b16c40c6ca7f	
+vshufps zmm1, zmm18, [rax], 0x7f	62f16c40c6087f	
+vshufps zmm1, zmm18, [r13 + r14*2], 0x7f	62916c40c64c75007f	
+vshufps zmm12, zmm1, zmm1, 0x7f	62717448c6e17f	
+vshufps zmm12, zmm1, zmm12, 0x7f	62517448c6e47f	
+vshufps zmm12, zmm1, zmm18, 0x7f	62317448c6e27f	
+vshufps zmm12, zmm1, [rax], 0x7f	62717448c6207f	
+vshufps zmm12, zmm1, [r13 + r14*2], 0x7f	62117448c66475007f	
+vshufps zmm12, zmm12, zmm1, 0x7f	62711c48c6e17f	
+vshufps zmm12, zmm12, zmm12, 0x7f	62511c48c6e47f	
+vshufps zmm12, zmm12, zmm18, 0x7f	62311c48c6e27f	
+vshufps zmm12, zmm12, [rax], 0x7f	62711c48c6207f	
+vshufps zmm12, zmm12, [r13 + r14*2], 0x7f	62111c48c66475007f	
+vshufps zmm12, zmm18, zmm1, 0x7f	62716c40c6e17f	
+vshufps zmm12, zmm18, zmm12, 0x7f	62516c40c6e47f	
+vshufps zmm12, zmm18, zmm18, 0x7f	62316c40c6e27f	
+vshufps zmm12, zmm18, [rax], 0x7f	62716c40c6207f	
+vshufps zmm12, zmm18, [r13 + r14*2], 0x7f	62116c40c66475007f	
+vshufps zmm18, zmm1, zmm1, 0x7f	62e17448c6d17f	
+vshufps zmm18, zmm1, zmm12, 0x7f	62c17448c6d47f	
+vshufps zmm18, zmm1, zmm18, 0x7f	62a17448c6d27f	
+vshufps zmm18, zmm1, [rax], 0x7f	62e17448c6107f	
+vshufps zmm18, zmm1, [r13 + r14*2], 0x7f	62817448c65475007f	
+vshufps zmm18, zmm12, zmm1, 0x7f	62e11c48c6d17f	
+vshufps zmm18, zmm12, zmm12, 0x7f	62c11c48c6d47f	
+vshufps zmm18, zmm12, zmm18, 0x7f	62a11c48c6d27f	
+vshufps zmm18, zmm12, [rax], 0x7f	62e11c48c6107f	
+vshufps zmm18, zmm12, [r13 + r14*2], 0x7f	62811c48c65475007f	
+vshufps zmm18, zmm18, zmm1, 0x7f	62e16c40c6d17f	
+vshufps zmm18, zmm18, zmm12, 0x7f	62c16c40c6d47f	
+vshufps zmm18, zmm18, zmm18, 0x7f	62a16c40c6d27f	
+vshufps zmm18, zmm18, [rax], 0x7f	62e16c40c6107f	
+vshufps zmm18, zmm18, [r13 + r14*2], 0x7f	62816c40c65475007f	
+vshufpd zmm1, zmm1, zmm1, 0x7f	62f1f548c6c97f	
+vshufpd zmm1, zmm1, zmm12, 0x7f	62d1f548c6cc7f	
+vshufpd zmm1, zmm1, zmm18, 0x7f	62b1f548c6ca7f	
+vshufpd zmm1, zmm1, [rax], 0x7f	62f1f548c6087f	
+vshufpd zmm1, zmm1, [r13 + r14*2], 0x7f	6291f548c64c75007f	
+vshufpd zmm1, zmm12, zmm1, 0x7f	62f19d48c6c97f	
+vshufpd zmm1, zmm12, zmm12, 0x7f	62d19d48c6cc7f	
+vshufpd zmm1, zmm12, zmm18, 0x7f	62b19d48c6ca7f	
+vshufpd zmm1, zmm12, [rax], 0x7f	62f19d48c6087f	
+vshufpd zmm1, zmm12, [r13 + r14*2], 0x7f	62919d48c64c75007f	
+vshufpd zmm1, zmm18, zmm1, 0x7f	62f1ed40c6c97f	
+vshufpd zmm1, zmm18, zmm12, 0x7f	62d1ed40c6cc7f	
+vshufpd zmm1, zmm18, zmm18, 0x7f	62b1ed40c6ca7f	
+vshufpd zmm1, zmm18, [rax], 0x7f	62f1ed40c6087f	
+vshufpd zmm1, zmm18, [r13 + r14*2], 0x7f	6291ed40c64c75007f	
+vshufpd zmm12, zmm1, zmm1, 0x7f	6271f548c6e17f	
+vshufpd zmm12, zmm1, zmm12, 0x7f	6251f548c6e47f	
+vshufpd zmm12, zmm1, zmm18, 0x7f	6231f548c6e27f	
+vshufpd zmm12, zmm1, [rax], 0x7f	6271f548c6207f	
+vshufpd zmm12, zmm1, [r13 + r14*2], 0x7f	6211f548c66475007f	
+vshufpd zmm12, zmm12, zmm1, 0x7f	62719d48c6e17f	
+vshufpd zmm12, zmm12, zmm12, 0x7f	62519d48c6e47f	
+vshufpd zmm12, zmm12, zmm18, 0x7f	62319d48c6e27f	
+vshufpd zmm12, zmm12, [rax], 0x7f	62719d48c6207f	
+vshufpd zmm12, zmm12, [r13 + r14*2], 0x7f	62119d48c66475007f	
+vshufpd zmm12, zmm18, zmm1, 0x7f	6271ed40c6e17f	
+vshufpd zmm12, zmm18, zmm12, 0x7f	6251ed40c6e47f	
+vshufpd zmm12, zmm18, zmm18, 0x7f	6231ed40c6e27f	
+vshufpd zmm12, zmm18, [rax], 0x7f	6271ed40c6207f	
+vshufpd zmm12, zmm18, [r13 + r14*2], 0x7f	6211ed40c66475007f	
+vshufpd zmm18, zmm1, zmm1, 0x7f	62e1f548c6d17f	
+vshufpd zmm18, zmm1, zmm12, 0x7f	62c1f548c6d47f	
+vshufpd zmm18, zmm1, zmm18, 0x7f	62a1f548c6d27f	
+vshufpd zmm18, zmm1, [rax], 0x7f	62e1f548c6107f	
+vshufpd zmm18, zmm1, [r13 + r14*2], 0x7f	6281f548c65475007f	
+vshufpd zmm18, zmm12, zmm1, 0x7f	62e19d48c6d17f	
+vshufpd zmm18, zmm12, zmm12, 0x7f	62c19d48c6d47f	
+vshufpd zmm18, zmm12, zmm18, 0x7f	62a19d48c6d27f	
+vshufpd zmm18, zmm12, [rax], 0x7f	62e19d48c6107f	
+vshufpd zmm18, zmm12, [r13 + r14*2], 0x7f	62819d48c65475007f	
+vshufpd zmm18, zmm18, zmm1, 0x7f	62e1ed40c6d17f	
+vshufpd zmm18, zmm18, zmm12, 0x7f	62c1ed40c6d47f	
+vshufpd zmm18, zmm18, zmm18, 0x7f	62a1ed40c6d27f	
+vshufpd zmm18, zmm18, [rax], 0x7f	62e1ed40c6107f	
+vshufpd zmm18, zmm18, [r13 + r14*2], 0x7f	6281ed40c65475007f	
+vpshufd zmm1, zmm1, 0x7f	62f17d4870c97f	
+vpshufd zmm1, zmm12, 0x7f	62d17d4870cc7f	
+vpshufd zmm1, zmm18, 0x7f	62b17d4870ca7f	
+vpshufd zmm1, [rax], 0x7f	62f17d4870087f	
+vpshufd zmm1, [r13 + r14*2], 0x7f	62917d48704c75007f	
+vpshufd zmm12, zmm1, 0x7f	62717d4870e17f	
+vpshufd zmm12, zmm12, 0x7f	62517d4870e47f	
+vpshufd zmm12, zmm18, 0x7f	62317d4870e27f	
+vpshufd zmm12, [rax], 0x7f	62717d4870207f	
+vpshufd zmm12, [r13 + r14*2], 0x7f	62117d48706475007f	
+vpshufd zmm18, zmm1, 0x7f	62e17d4870d17f	
+vpshufd zmm18, zmm12, 0x7f	62c17d4870d47f	
+vpshufd zmm18, zmm18, 0x7f	62a17d4870d27f	
+vpshufd zmm18, [rax], 0x7f	62e17d4870107f	
+vpshufd zmm18, [r13 + r14*2], 0x7f	62817d48705475007f	
