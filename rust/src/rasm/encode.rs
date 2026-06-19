@@ -72,7 +72,7 @@ fn reg_size(r: Reg) -> OpSize {
         RegClass::R8 => OpSize::B8,
         RegClass::R16 => OpSize::B16,
         RegClass::R32 => OpSize::B32,
-        RegClass::R64 | RegClass::Xmm => OpSize::B64,
+        RegClass::R64 | RegClass::Xmm | RegClass::Ymm => OpSize::B64,
     }
 }
 
@@ -147,24 +147,30 @@ fn emit_reg_rm(e: &mut Encoded, rex_w: bool, mandatory: &[u8], opcode: &[u8], re
     e.b(0xC0 | ((reg_field & 7) << 3) | (rm & 7));
 }
 
-/// Emit `mandatory`, REX, `opcode`, then ModRM+SIB+disp for a memory r/m.
-/// Records a RIP-rel fixup when `mem.rip_sym` is set. Matches MC's disp sizing.
-fn emit_mem_rm(
-    e: &mut Encoded,
-    rex_w: bool,
-    mandatory: &[u8],
-    opcode: &[u8],
-    reg_field: u8,
-    mem: &Mem,
-) -> Result<()> {
-    e.ext(mandatory);
+/// High bits (bit 3) of a memory operand's index and base — for REX.X/REX.B or
+/// the (inverted) VEX.X̄/VEX.B̄. RIP-relative and absent index/base yield false.
+fn mem_xb(mem: &Mem) -> (bool, bool) {
+    if mem.rip_sym.is_some() {
+        return (false, false);
+    }
+    (
+        mem.index.map(|r| r.num >= 8).unwrap_or(false),
+        mem.base.map(|r| r.num >= 8).unwrap_or(false),
+    )
+}
 
+/// Emit ModRM for a register r/m (`mod=11`). No prefix/REX/opcode — for VEX and
+/// legacy paths that emit their own prefix bytes.
+fn emit_modrm_reg(e: &mut Encoded, reg_field: u8, rm: u8) {
+    e.b(0xC0 | ((reg_field & 7) << 3) | (rm & 7));
+}
+
+/// Emit ModRM (+SIB +disp) for a memory r/m with `reg_field` in the reg slot.
+/// No prefix/REX/opcode. Records a RIP-rel fixup when `mem.rip_sym` is set.
+/// Matches MC's disp sizing.
+fn emit_modrm_mem(e: &mut Encoded, reg_field: u8, mem: &Mem) -> Result<()> {
     // RIP-relative: mod=00, rm=101, disp32 (fixup).
     if let Some(sym) = &mem.rip_sym {
-        if let Some(r) = rex_byte(rex_w, reg_field >= 8, false, false) {
-            e.b(r);
-        }
-        e.ext(opcode);
         e.b(0x00 | ((reg_field & 7) << 3) | 0b101);
         let at = e.len();
         e.ext(&[0, 0, 0, 0]);
@@ -174,13 +180,6 @@ fn emit_mem_rm(
 
     let base = mem.base;
     let index = mem.index;
-    let rex_x = index.map(|r| r.num >= 8).unwrap_or(false);
-    let rex_b = base.map(|r| r.num >= 8).unwrap_or(false);
-    if let Some(r) = rex_byte(rex_w, reg_field >= 8, rex_x, rex_b) {
-        e.b(r);
-    }
-    e.ext(opcode);
-
     let reg3 = (reg_field & 7) << 3;
 
     // Decide mod + whether a SIB is needed.
@@ -192,19 +191,18 @@ fn emit_mem_rm(
     // not a SIB is present, e.g. `[rbp + rax*8]` -> mod=01.
     let force_disp8 = matches!(base_low3, Some(0b101)) && mem.disp == 0;
 
-    let (md, disp_bytes): (u8, &'static [u8]) = if base.is_none() {
+    let md: u8 = if base.is_none() {
         // [disp32] / [index*scale + disp32] — mod=00 with SIB.base=101 form.
-        (0b00, &[])
+        0b00
     } else if force_disp8 {
-        (0b01, &[])
-    } else if mem.disp == 0 && !force_disp8 {
-        (0b00, &[])
+        0b01
+    } else if mem.disp == 0 {
+        0b00
     } else if (-128..=127).contains(&mem.disp) {
-        (0b01, &[])
+        0b01
     } else {
-        (0b10, &[])
+        0b10
     };
-    let _ = disp_bytes;
 
     if needs_sib {
         let rm = 0b100u8; // SIB follows
@@ -238,6 +236,24 @@ fn emit_mem_rm(
         _ => {}
     }
     Ok(())
+}
+
+/// Emit `mandatory`, REX, `opcode`, then ModRM+SIB+disp for a memory r/m.
+fn emit_mem_rm(
+    e: &mut Encoded,
+    rex_w: bool,
+    mandatory: &[u8],
+    opcode: &[u8],
+    reg_field: u8,
+    mem: &Mem,
+) -> Result<()> {
+    e.ext(mandatory);
+    let (rex_x, rex_b) = mem_xb(mem);
+    if let Some(r) = rex_byte(rex_w, reg_field >= 8, rex_x, rex_b) {
+        e.b(r);
+    }
+    e.ext(opcode);
+    emit_modrm_mem(e, reg_field, mem)
 }
 
 /// Emit a register or memory r/m with the given reg field.
@@ -288,7 +304,126 @@ fn alu(mnem: &str) -> Option<Alu> {
 }
 
 /// Encode a single instruction. `ops` are the parsed operands.
+/// Operand width of a single r/m operand (register width, or a memory operand's
+/// explicit size; defaults to 64-bit).
+fn rm_size(op: &Operand) -> OpSize {
+    match op {
+        Operand::Reg(r) => reg_size(*r),
+        Operand::Mem(m) => mem_opsize(m).unwrap_or(OpSize::B64),
+        _ => OpSize::B64,
+    }
+}
+
+/// Miscellaneous integer instructions outside the ALU/shift/unary groups:
+/// bit tests, `bswap`, `cmpxchg`, `movbe`, `endbr64`, bare (non-`rep`) string
+/// ops, `test r/m,imm`, and `push r/m`/`push imm`.
+fn try_int_misc(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    let mut e = Encoded::default();
+    let r = (|| -> Result<bool> {
+        match (mnemonic, ops) {
+            ("endbr64", []) => e.ext(&[0xF3, 0x0F, 0x1E, 0xFA]),
+            // bare string ops (no `rep`): reuse the rep table's opcode/REX.W.
+            (m, []) if string_op(m).is_some() => {
+                let (op, w) = string_op(m).unwrap();
+                if w {
+                    e.b(0x48);
+                }
+                e.b(op);
+            }
+            // bswap r32/r64 : [REX] 0F C8+rd
+            ("bswap", [Operand::Reg(rg)])
+                if rg.class == RegClass::R32 || rg.class == RegClass::R64 =>
+            {
+                if let Some(rex) = rex_byte(rg.class == RegClass::R64, false, false, rg.num >= 8) {
+                    e.b(rex);
+                }
+                e.b(0x0F);
+                e.b(0xC8 + (rg.num & 7));
+            }
+            // bt/bts/btr/btc r/m, r : 0F A3/AB/B3/BB /r (reg field = bit index)
+            ("bt" | "bts" | "btr" | "btc", [rm, Operand::Reg(s)]) => {
+                let op = match mnemonic {
+                    "bt" => 0xA3u8,
+                    "bts" => 0xAB,
+                    "btr" => 0xB3,
+                    "btc" => 0xBB,
+                    _ => unreachable!(),
+                };
+                let size = two_op_size(rm, &Operand::Reg(*s));
+                emit_rm(&mut e, size_rexw(size), size_mandatory(size), &[0x0F, op], s.num, rm)?;
+            }
+            // bt/bts/btr/btc r/m, imm8 : 0F BA /ext ib
+            ("bt" | "bts" | "btr" | "btc", [rm, Operand::Imm(v)]) => {
+                let ext = match mnemonic {
+                    "bt" => 4u8,
+                    "bts" => 5,
+                    "btr" => 6,
+                    "btc" => 7,
+                    _ => unreachable!(),
+                };
+                let size = rm_size(rm);
+                emit_rm(&mut e, size_rexw(size), size_mandatory(size), &[0x0F, 0xBA], ext, rm)?;
+                e.b(*v as u8);
+            }
+            // cmpxchg r/m, r : 0F B0 (8-bit) / 0F B1 /r
+            ("cmpxchg", [rm, Operand::Reg(s)]) => {
+                let size = two_op_size(rm, &Operand::Reg(*s));
+                let op = if size == OpSize::B8 { 0xB0 } else { 0xB1 };
+                emit_rm(&mut e, size_rexw(size), size_mandatory(size), &[0x0F, op], s.num, rm)?;
+            }
+            // movbe r, m : 0F 38 F0 ; movbe m, r : 0F 38 F1
+            ("movbe", [Operand::Reg(d), Operand::Mem(m)]) => {
+                let size = reg_size(*d);
+                emit_mem_rm(&mut e, size_rexw(size), size_mandatory(size), &[0x0F, 0x38, 0xF0], d.num, m)?;
+            }
+            ("movbe", [Operand::Mem(m), Operand::Reg(s)]) => {
+                let size = reg_size(*s);
+                emit_mem_rm(&mut e, size_rexw(size), size_mandatory(size), &[0x0F, 0x38, 0xF1], s.num, m)?;
+            }
+            // push r/m64 : FF /6 (memory; `push reg64` is handled by the main match)
+            ("push", [Operand::Mem(m)]) => {
+                emit_mem_rm(&mut e, false, &[], &[0xFF], 6, m)?;
+            }
+            // push imm : 6A ib (imm8) / 68 id
+            ("push", [Operand::Imm(v)]) => {
+                if (-128..=127).contains(v) {
+                    e.b(0x6A);
+                    e.b(*v as i8 as u8);
+                } else {
+                    e.b(0x68);
+                    e.ext(&(*v as i32).to_le_bytes());
+                }
+            }
+            // test r/m, imm : accumulator short A8/A9, else F6/F7 /0
+            ("test", [rm, Operand::Imm(v)]) => {
+                let size = rm_size(rm);
+                if matches!(rm, Operand::Reg(r) if r.num == 0) {
+                    e.ext(size_mandatory(size));
+                    if size_rexw(size) {
+                        e.b(0x48);
+                    }
+                    e.b(if size == OpSize::B8 { 0xA8 } else { 0xA9 });
+                } else {
+                    let op = if size == OpSize::B8 { 0xF6 } else { 0xF7 };
+                    emit_rm(&mut e, size_rexw(size), size_mandatory(size), &[op], 0, rm)?;
+                }
+                push_imm_sized(&mut e, *v, size);
+            }
+            _ => return Ok(false),
+        }
+        Ok(true)
+    })();
+    match r {
+        Ok(true) => Some(Ok(e)),
+        Ok(false) => None,
+        Err(err) => Some(Err(err)),
+    }
+}
+
 pub fn encode(mnemonic: &str, ops: &[Operand]) -> Result<Encoded> {
+    if let Some(r) = try_vex(mnemonic, ops) {
+        return r;
+    }
     if let Some(r) = try_sse(mnemonic, ops) {
         return r;
     }
@@ -302,6 +437,9 @@ pub fn encode(mnemonic: &str, ops: &[Operand]) -> Result<Encoded> {
         return r;
     }
     if let Some(r) = try_misc(mnemonic, ops) {
+        return r;
+    }
+    if let Some(r) = try_int_misc(mnemonic, ops) {
         return r;
     }
     let mut e = Encoded::default();
@@ -537,9 +675,31 @@ fn try_misc(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
             ("bsf", [Operand::Reg(d), src]) => {
                 emit_rm(&mut e, is64(*d), &[], &[0x0F, 0xBC], d.num, src)?;
             }
-            // xchg r/m, r : 87 /r. MC puts the FIRST operand in the reg field
-            // when it is a register (`xchg rbp, rsp` -> reg=rbp, rm=rsp); a
-            // memory first operand is the r/m.
+            // xchg rAX, r / r, rAX (two regs, width 16/32/64): MC uses the
+            // accumulator short form `90+rd`, not `87 /r`. `xchg <acc>,<acc>`
+            // collapses to the width nop with NO REX.W (matches MC: `xchg rax,rax`
+            // -> `90`, not `48 90`).
+            ("xchg", [Operand::Reg(d), Operand::Reg(s)]) => {
+                let size = reg_size(*d);
+                let acc_d = d.num == 0 && size != OpSize::B8;
+                let acc_s = s.num == 0 && size != OpSize::B8;
+                if acc_d || acc_s {
+                    e.ext(size_mandatory(size)); // 66 for 16-bit
+                    if acc_d && acc_s {
+                        e.b(0x90);
+                    } else {
+                        let other = if acc_d { *s } else { *d };
+                        if let Some(rex) = rex_byte(size_rexw(size), false, false, other.num >= 8) {
+                            e.b(rex);
+                        }
+                        e.b(0x90 + (other.num & 7));
+                    }
+                } else {
+                    emit_rm(&mut e, size_rexw(size), size_mandatory(size), &[op8(0x87, size)], d.num, &Operand::Reg(*s))?;
+                }
+            }
+            // xchg r, m : 87 /r (the FIRST operand is the reg field; a memory
+            // first operand is handled by the `Mem, Reg` arm below).
             ("xchg", [Operand::Reg(d), src]) => {
                 let size = two_op_size(&Operand::Reg(*d), src);
                 emit_rm(&mut e, size_rexw(size), size_mandatory(size), &[op8(0x87, size)], d.num, src)?;
@@ -691,8 +851,490 @@ fn operand_w(op: &Operand) -> bool {
     }
 }
 
+/// Regular two-operand SSE: `xmm, xmm/m` — mandatory prefix + fixed opcode, no
+/// REX.W, no immediate. Covers scalar/packed arithmetic & logicals, unpack,
+/// ordered compares, packed-integer ops, and xmm→xmm conversions. The
+/// scalar-double arithmetic the kernel already used keeps its inline arms in
+/// [`try_sse`]; this table fills in the rest of the SSE/SSE2 surface.
+fn sse_rrm(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    let (pfx, op): (&[u8], &[u8]) = match mnemonic {
+        // scalar single — F3 0F
+        "addss" => (&[0xF3], &[0x0F, 0x58]),
+        "subss" => (&[0xF3], &[0x0F, 0x5C]),
+        "mulss" => (&[0xF3], &[0x0F, 0x59]),
+        "divss" => (&[0xF3], &[0x0F, 0x5E]),
+        "minss" => (&[0xF3], &[0x0F, 0x5D]),
+        "maxss" => (&[0xF3], &[0x0F, 0x5F]),
+        "sqrtss" => (&[0xF3], &[0x0F, 0x51]),
+        // ordered compares (set EFLAGS) — packed-form prefixes
+        "comiss" => (&[], &[0x0F, 0x2F]),
+        "ucomiss" => (&[], &[0x0F, 0x2E]),
+        "comisd" => (&[0x66], &[0x0F, 0x2F]),
+        // packed single — no prefix
+        "addps" => (&[], &[0x0F, 0x58]),
+        "subps" => (&[], &[0x0F, 0x5C]),
+        "mulps" => (&[], &[0x0F, 0x59]),
+        "divps" => (&[], &[0x0F, 0x5E]),
+        "minps" => (&[], &[0x0F, 0x5D]),
+        "maxps" => (&[], &[0x0F, 0x5F]),
+        "sqrtps" => (&[], &[0x0F, 0x51]),
+        "andps" => (&[], &[0x0F, 0x54]),
+        "andnps" => (&[], &[0x0F, 0x55]),
+        "orps" => (&[], &[0x0F, 0x56]),
+        "xorps" => (&[], &[0x0F, 0x57]),
+        "unpcklps" => (&[], &[0x0F, 0x14]),
+        "unpckhps" => (&[], &[0x0F, 0x15]),
+        // packed double — 66 0F
+        "addpd" => (&[0x66], &[0x0F, 0x58]),
+        "subpd" => (&[0x66], &[0x0F, 0x5C]),
+        "mulpd" => (&[0x66], &[0x0F, 0x59]),
+        "divpd" => (&[0x66], &[0x0F, 0x5E]),
+        "minpd" => (&[0x66], &[0x0F, 0x5D]),
+        "maxpd" => (&[0x66], &[0x0F, 0x5F]),
+        "sqrtpd" => (&[0x66], &[0x0F, 0x51]),
+        // packed integer — 66 0F
+        "paddb" => (&[0x66], &[0x0F, 0xFC]),
+        "paddw" => (&[0x66], &[0x0F, 0xFD]),
+        "paddd" => (&[0x66], &[0x0F, 0xFE]),
+        "paddq" => (&[0x66], &[0x0F, 0xD4]),
+        "psubb" => (&[0x66], &[0x0F, 0xF8]),
+        "psubw" => (&[0x66], &[0x0F, 0xF9]),
+        "psubd" => (&[0x66], &[0x0F, 0xFA]),
+        "psubq" => (&[0x66], &[0x0F, 0xFB]),
+        "pmullw" => (&[0x66], &[0x0F, 0xD5]),
+        "pmulld" => (&[0x66], &[0x0F, 0x38, 0x40]), // SSE4.1, 3-byte opcode
+        "pand" => (&[0x66], &[0x0F, 0xDB]),
+        "pandn" => (&[0x66], &[0x0F, 0xDF]),
+        "por" => (&[0x66], &[0x0F, 0xEB]),
+        "pxor" => (&[0x66], &[0x0F, 0xEF]),
+        "pcmpeqb" => (&[0x66], &[0x0F, 0x74]),
+        "pcmpeqw" => (&[0x66], &[0x0F, 0x75]),
+        "pcmpeqd" => (&[0x66], &[0x0F, 0x76]),
+        // xmm→xmm conversions (no GPR, no REX.W)
+        "cvtsd2ss" => (&[0xF2], &[0x0F, 0x5A]),
+        "cvtss2sd" => (&[0xF3], &[0x0F, 0x5A]),
+        "cvtdq2pd" => (&[0xF3], &[0x0F, 0xE6]),
+        "cvtdq2ps" => (&[], &[0x0F, 0x5B]),
+        "cvtpd2ps" => (&[0x66], &[0x0F, 0x5A]),
+        "cvtps2pd" => (&[], &[0x0F, 0x5A]),
+        _ => return None,
+    };
+    let [Operand::Reg(d), src] = ops else { return None };
+    if d.class != RegClass::Xmm {
+        return None;
+    }
+    let mut e = Encoded::default();
+    match emit_rm(&mut e, false, pfx, op, d.num, src) {
+        Ok(()) => Some(Ok(e)),
+        Err(err) => Some(Err(err)),
+    }
+}
+
+/// Three-operand SSE with an imm8: `shufps`/`shufpd`/`pshufd xmm, xmm/m, imm8`.
+fn sse_shuffle(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    let (pfx, op): (&[u8], u8) = match mnemonic {
+        "shufps" => (&[], 0xC6),
+        "shufpd" => (&[0x66], 0xC6),
+        "pshufd" => (&[0x66], 0x70),
+        _ => return None,
+    };
+    let [Operand::Reg(d), src, Operand::Imm(imm)] = ops else { return None };
+    if d.class != RegClass::Xmm {
+        return None;
+    }
+    let mut e = Encoded::default();
+    if let Err(err) = emit_rm(&mut e, false, pfx, &[0x0F, op], d.num, src) {
+        return Some(Err(err));
+    }
+    e.b(*imm as u8);
+    Some(Ok(e))
+}
+
+/// Whether an operand is a general-purpose register (not a vector register).
+fn is_gpr_reg(op: &Operand) -> bool {
+    matches!(op, Operand::Reg(r) if r.class != RegClass::Xmm && r.class != RegClass::Ymm)
+}
+
+fn is_vec_class(c: RegClass) -> bool {
+    matches!(c, RegClass::Xmm | RegClass::Ymm)
+}
+
+// ── AVX / VEX encoding ───────────────────────────────────────────────────────
+//
+// VEX replaces the legacy prefix+REX+escape bytes with a compact 2- or 3-byte
+// prefix carrying the inverted REX bits, an NDS register (`vvvv`), the vector
+// length (`L`: 0=xmm/128, 1=ymm/256), the implied legacy prefix (`pp`: 0=none,
+// 1=66, 2=F3, 3=F2), and the opcode map (`mmmmm`: 1=0F, 2=0F38, 3=0F3A). LLVM
+// picks the 2-byte form (C5) whenever map==0F, W==0, and X==B==0; else 3-byte
+// (C4). Matching that choice is required for byte-identity.
+
+/// Emit a VEX prefix. `r`/`x`/`b` are the *true* (un-inverted) high bits of
+/// ModRM.reg / SIB.index / ModRM.rm-base; `vvvv` is the NDS register (0..15, or
+/// 0 when unused — it encodes as 1111).
+fn vex(e: &mut Encoded, r: bool, x: bool, b: bool, map: u8, w: bool, vvvv: u8, l: bool, pp: u8) {
+    let vvvv_inv = (!vvvv) & 0x0F;
+    if map == 1 && !w && !x && !b {
+        e.b(0xC5);
+        e.b(((!r as u8) << 7) | (vvvv_inv << 3) | ((l as u8) << 2) | (pp & 3));
+    } else {
+        e.b(0xC4);
+        e.b(((!r as u8) << 7) | ((!x as u8) << 6) | ((!b as u8) << 5) | (map & 0x1F));
+        e.b(((w as u8) << 7) | (vvvv_inv << 3) | ((l as u8) << 2) | (pp & 3));
+    }
+}
+
+/// Encode a VEX instruction: prefix + single-byte opcode + ModRM for `rm`.
+/// `reg` is the ModRM.reg register; `vvvv` the NDS register (None = unused).
+fn emit_vex_rm(
+    e: &mut Encoded,
+    map: u8,
+    w: bool,
+    pp: u8,
+    l: bool,
+    opcode: u8,
+    reg: u8,
+    vvvv: Option<u8>,
+    rm: &Operand,
+) -> Result<()> {
+    let (x, b) = match rm {
+        Operand::Reg(r) => (false, r.num >= 8),
+        Operand::Mem(m) => mem_xb(m),
+        other => bail!("expected reg/mem r/m, got {other:?}"),
+    };
+    vex(e, reg >= 8, x, b, map, w, vvvv.unwrap_or(0), l, pp);
+    e.b(opcode);
+    match rm {
+        Operand::Reg(r) => emit_modrm_reg(e, reg, r.num),
+        Operand::Mem(m) => emit_modrm_mem(e, reg, m)?,
+        _ => unreachable!(),
+    }
+    Ok(())
+}
+
+/// Packed VEX ops whose two sources are interchangeable, so LLVM may swap them
+/// to keep a high register out of the `rm` field (shorter 2-byte VEX). Scalar
+/// ops are excluded: their upper lanes come from `vvvv`, so the sources are not
+/// interchangeable even though the arithmetic is commutative.
+fn vex_commutative(m: &str) -> bool {
+    matches!(
+        m,
+        "vaddps" | "vaddpd" | "vmulps" | "vmulpd" | "vandps" | "vandpd" | "vorps" | "vorpd"
+            | "vxorps" | "vxorpd" | "vpaddb" | "vpaddw" | "vpaddd" | "vpaddq" | "vpand" | "vpor"
+            | "vpxor" | "vpcmpeqb" | "vpcmpeqd" | "vpmullw" | "vpmulld"
+    )
+}
+
+/// 3-operand VEX `dest, vvvv(src1), rm(src2)` — packed/scalar arithmetic,
+/// logicals, packed integer. `(pp, map, w, opcode)`.
+fn vex_rvm(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    let (pp, map, w, op): (u8, u8, bool, u8) = match mnemonic {
+        // packed single — none.0F
+        "vaddps" => (0, 1, false, 0x58),
+        "vsubps" => (0, 1, false, 0x5C),
+        "vmulps" => (0, 1, false, 0x59),
+        "vdivps" => (0, 1, false, 0x5E),
+        "vminps" => (0, 1, false, 0x5D),
+        "vmaxps" => (0, 1, false, 0x5F),
+        "vandps" => (0, 1, false, 0x54),
+        "vandnps" => (0, 1, false, 0x55),
+        "vorps" => (0, 1, false, 0x56),
+        "vxorps" => (0, 1, false, 0x57),
+        "vunpcklps" => (0, 1, false, 0x14),
+        "vunpckhps" => (0, 1, false, 0x15),
+        // packed double — 66.0F
+        "vaddpd" => (1, 1, false, 0x58),
+        "vsubpd" => (1, 1, false, 0x5C),
+        "vmulpd" => (1, 1, false, 0x59),
+        "vdivpd" => (1, 1, false, 0x5E),
+        "vminpd" => (1, 1, false, 0x5D),
+        "vmaxpd" => (1, 1, false, 0x5F),
+        "vandpd" => (1, 1, false, 0x54),
+        "vandnpd" => (1, 1, false, 0x55),
+        "vorpd" => (1, 1, false, 0x56),
+        "vxorpd" => (1, 1, false, 0x57),
+        // scalar single — F3.0F
+        "vaddss" => (2, 1, false, 0x58),
+        "vsubss" => (2, 1, false, 0x5C),
+        "vmulss" => (2, 1, false, 0x59),
+        "vdivss" => (2, 1, false, 0x5E),
+        "vminss" => (2, 1, false, 0x5D),
+        "vmaxss" => (2, 1, false, 0x5F),
+        "vsqrtss" => (2, 1, false, 0x51),
+        // scalar double — F2.0F
+        "vaddsd" => (3, 1, false, 0x58),
+        "vsubsd" => (3, 1, false, 0x5C),
+        "vmulsd" => (3, 1, false, 0x59),
+        "vdivsd" => (3, 1, false, 0x5E),
+        "vminsd" => (3, 1, false, 0x5D),
+        "vmaxsd" => (3, 1, false, 0x5F),
+        "vsqrtsd" => (3, 1, false, 0x51),
+        // packed integer — 66.0F (vpmulld is 66.0F38)
+        "vpaddb" => (1, 1, false, 0xFC),
+        "vpaddw" => (1, 1, false, 0xFD),
+        "vpaddd" => (1, 1, false, 0xFE),
+        "vpaddq" => (1, 1, false, 0xD4),
+        "vpsubb" => (1, 1, false, 0xF8),
+        "vpsubw" => (1, 1, false, 0xF9),
+        "vpsubd" => (1, 1, false, 0xFA),
+        "vpsubq" => (1, 1, false, 0xFB),
+        "vpand" => (1, 1, false, 0xDB),
+        "vpandn" => (1, 1, false, 0xDF),
+        "vpor" => (1, 1, false, 0xEB),
+        "vpxor" => (1, 1, false, 0xEF),
+        "vpcmpeqb" => (1, 1, false, 0x74),
+        "vpcmpeqd" => (1, 1, false, 0x76),
+        "vpmullw" => (1, 1, false, 0xD5),
+        "vpmulld" => (1, 2, false, 0x40),
+        _ => return None,
+    };
+    let [Operand::Reg(d), Operand::Reg(v), rm] = ops else { return None };
+    if !is_vec_class(d.class) {
+        return None;
+    }
+    // Commutative-source swap (matches LLVM): if src2 is a high reg and src1 is
+    // low, swap so the high reg lands in vvvv (not rm), enabling the 2-byte form.
+    // Only worth it when 2-byte VEX is reachable (map==0F); LLVM doesn't swap a
+    // 0F38/0F3A op like `vpmulld`, which is always 3-byte.
+    let swap = vex_commutative(mnemonic)
+        && map == 1
+        && matches!(rm, Operand::Reg(r2) if r2.num >= 8)
+        && v.num < 8;
+    let (vvvv, rm_ref): (u8, &Operand) = if swap {
+        let r2 = match rm {
+            Operand::Reg(r) => r.num,
+            _ => unreachable!(),
+        };
+        (r2, &ops[1])
+    } else {
+        (v.num, rm)
+    };
+    let mut e = Encoded::default();
+    match emit_vex_rm(&mut e, map, w, pp, d.class == RegClass::Ymm, op, d.num, Some(vvvv), rm_ref) {
+        Ok(()) => Some(Ok(e)),
+        Err(err) => Some(Err(err)),
+    }
+}
+
+/// 2-operand VEX `dest, rm` (vvvv unused) — packed sqrt and reciprocals, packed
+/// conversions.
+fn vex_rm(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    let (pp, map, w, op): (u8, u8, bool, u8) = match mnemonic {
+        "vsqrtps" => (0, 1, false, 0x51),
+        "vsqrtpd" => (1, 1, false, 0x51),
+        "vrcpps" => (0, 1, false, 0x53),
+        "vrsqrtps" => (0, 1, false, 0x52),
+        "vcvtdq2ps" => (0, 1, false, 0x5B),
+        "vcvtps2dq" => (1, 1, false, 0x5B),
+        "vcvttps2dq" => (2, 1, false, 0x5B),
+        _ => return None,
+    };
+    let [Operand::Reg(d), rm] = ops else { return None };
+    if !is_vec_class(d.class) {
+        return None;
+    }
+    let mut e = Encoded::default();
+    match emit_vex_rm(&mut e, map, w, pp, d.class == RegClass::Ymm, op, d.num, None, rm) {
+        Ok(()) => Some(Ok(e)),
+        Err(err) => Some(Err(err)),
+    }
+}
+
+/// VEX moves with load (`vec ← vec/m`) and store (`m ← vec`) directions.
+fn vex_mov(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    let (pp, load, store): (u8, u8, u8) = match mnemonic {
+        "vmovaps" => (0, 0x28, 0x29),
+        "vmovups" => (0, 0x10, 0x11),
+        "vmovapd" => (1, 0x28, 0x29),
+        "vmovupd" => (1, 0x10, 0x11),
+        "vmovdqa" => (1, 0x6F, 0x7F),
+        "vmovdqu" => (2, 0x6F, 0x7F),
+        _ => return None,
+    };
+    let mut e = Encoded::default();
+    let r = match ops {
+        // reg-reg: LLVM flips to the store opcode when src is a high reg and dest
+        // is low — that puts the high reg in the `reg`/R field (fine for 2-byte
+        // VEX) instead of `rm`/B (which would force 3-byte).
+        [Operand::Reg(d), Operand::Reg(s)] if is_vec_class(d.class) && is_vec_class(s.class) => {
+            let l = d.class == RegClass::Ymm;
+            if s.num >= 8 && d.num < 8 {
+                emit_vex_rm(&mut e, 1, false, pp, l, store, s.num, None, &Operand::Reg(*d))
+            } else {
+                emit_vex_rm(&mut e, 1, false, pp, l, load, d.num, None, &Operand::Reg(*s))
+            }
+        }
+        [Operand::Reg(d), src] if is_vec_class(d.class) => {
+            emit_vex_rm(&mut e, 1, false, pp, d.class == RegClass::Ymm, load, d.num, None, src)
+        }
+        [dst @ Operand::Mem(_), Operand::Reg(s)] if is_vec_class(s.class) => {
+            emit_vex_rm(&mut e, 1, false, pp, s.class == RegClass::Ymm, store, s.num, None, dst)
+        }
+        _ => return None,
+    };
+    match r {
+        Ok(()) => Some(Ok(e)),
+        Err(err) => Some(Err(err)),
+    }
+}
+
+/// VEX shuffles with an imm8: `vshufps`/`vshufpd` (3-op RVMI) and `vpshufd`
+/// (2-op RMI, vvvv unused).
+fn vex_shuffle(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    // RVMI: dest, vvvv, rm, imm8.
+    if let Some((pp, op)) = match mnemonic {
+        "vshufps" => Some((0u8, 0xC6u8)),
+        "vshufpd" => Some((1, 0xC6)),
+        _ => None,
+    } {
+        let [Operand::Reg(d), Operand::Reg(v), rm, Operand::Imm(imm)] = ops else { return None };
+        if !is_vec_class(d.class) {
+            return None;
+        }
+        let mut e = Encoded::default();
+        if let Err(err) = emit_vex_rm(&mut e, 1, false, pp, d.class == RegClass::Ymm, op, d.num, Some(v.num), rm) {
+            return Some(Err(err));
+        }
+        e.b(*imm as u8);
+        return Some(Ok(e));
+    }
+    // RMI: vpshufd dest, rm, imm8.
+    if mnemonic == "vpshufd" {
+        let [Operand::Reg(d), rm, Operand::Imm(imm)] = ops else { return None };
+        if !is_vec_class(d.class) {
+            return None;
+        }
+        let mut e = Encoded::default();
+        if let Err(err) = emit_vex_rm(&mut e, 1, false, 1, d.class == RegClass::Ymm, 0x70, d.num, None, rm) {
+            return Some(Err(err));
+        }
+        e.b(*imm as u8);
+        return Some(Ok(e));
+    }
+    None
+}
+
+/// AVX/AVX2 (VEX-encoded) instructions.
+fn try_vex(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    vex_rvm(mnemonic, ops)
+        .or_else(|| vex_rm(mnemonic, ops))
+        .or_else(|| vex_mov(mnemonic, ops))
+        .or_else(|| vex_shuffle(mnemonic, ops))
+}
+
+/// SSE moves with load (`xmm ← xmm/m`) and store (`m ← xmm`) directions. The
+/// kernel's `movsd`/`movups` keep their inline arms; this covers the rest.
+fn sse_mov(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    // (prefix, load opcode, store opcode) — opcodes follow 0F.
+    let (pfx, load, store): (&[u8], u8, u8) = match mnemonic {
+        "movss" => (&[0xF3], 0x10, 0x11),
+        "movaps" => (&[], 0x28, 0x29),
+        "movapd" => (&[0x66], 0x28, 0x29),
+        "movupd" => (&[0x66], 0x10, 0x11),
+        "movdqa" => (&[0x66], 0x6F, 0x7F),
+        "movdqu" => (&[0xF3], 0x6F, 0x7F),
+        _ => return None,
+    };
+    let mut e = Encoded::default();
+    let r = match ops {
+        [Operand::Reg(d), src] if d.class == RegClass::Xmm => {
+            emit_rm(&mut e, false, pfx, &[0x0F, load], d.num, src)
+        }
+        [Operand::Mem(m), Operand::Reg(s)] if s.class == RegClass::Xmm => {
+            emit_mem_rm(&mut e, false, pfx, &[0x0F, store], s.num, m)
+        }
+        _ => return None,
+    };
+    match r {
+        Ok(()) => Some(Ok(e)),
+        Err(err) => Some(Err(err)),
+    }
+}
+
+/// `movd`/`movq` between xmm and GPR/memory. The `movq` GPR register↔register
+/// forms keep their inline arms (`66 REX.W 0F 6E/7E`); this adds `movd`, the
+/// memory forms, and the xmm↔xmm `movq` (`F3 0F 7E` load / `66 0F D6` store).
+fn sse_movd_q(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    let mut e = Encoded::default();
+    let r = (|| -> Result<bool> {
+        match (mnemonic, ops) {
+            // movd xmm, r/m32 : 66 0F 6E (no REX.W)
+            ("movd", [Operand::Reg(d), src]) if d.class == RegClass::Xmm => {
+                emit_rm(&mut e, false, &[0x66], &[0x0F, 0x6E], d.num, src)?;
+            }
+            // movd r/m32, xmm : 66 0F 7E
+            ("movd", [dst, Operand::Reg(s)]) if s.class == RegClass::Xmm => {
+                emit_rm(&mut e, false, &[0x66], &[0x0F, 0x7E], s.num, dst)?;
+            }
+            // movq xmm, xmm/m64 : F3 0F 7E (load). A GPR source falls through to
+            // the inline `66 REX.W 0F 6E` arm.
+            ("movq", [Operand::Reg(d), src]) if d.class == RegClass::Xmm && !is_gpr_reg(src) => {
+                emit_rm(&mut e, false, &[0xF3], &[0x0F, 0x7E], d.num, src)?;
+            }
+            // movq m64, xmm : 66 0F D6 (store). A GPR dest falls through to inline.
+            ("movq", [Operand::Mem(m), Operand::Reg(s)]) if s.class == RegClass::Xmm => {
+                emit_mem_rm(&mut e, false, &[0x66], &[0x0F, 0xD6], s.num, m)?;
+            }
+            _ => return Ok(false),
+        }
+        Ok(true)
+    })();
+    match r {
+        Ok(true) => Some(Ok(e)),
+        Ok(false) => None,
+        Err(err) => Some(Err(err)),
+    }
+}
+
+/// Conversions that touch a GPR: `cvtsi2ss` (GPR/m → xmm, REX.W per source) and
+/// `cvt(t)sd2si`/`cvt(t)ss2si` (xmm/m → GPR, REX.W per dest). `cvtsi2sd` keeps
+/// its inline arm.
+fn sse_cvt_gpr(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    let mut e = Encoded::default();
+    let r = (|| -> Result<bool> {
+        match (mnemonic, ops) {
+            ("cvtsi2ss", [Operand::Reg(d), src]) if d.class == RegClass::Xmm => {
+                emit_rm(&mut e, operand_w(src), &[0xF3], &[0x0F, 0x2A], d.num, src)?;
+            }
+            ("cvtsd2si" | "cvttsd2si" | "cvtss2si" | "cvttss2si", [Operand::Reg(d), src])
+                if d.class == RegClass::R64 || d.class == RegClass::R32 =>
+            {
+                let (pfx, op): (u8, u8) = match mnemonic {
+                    "cvtsd2si" => (0xF2, 0x2D),
+                    "cvttsd2si" => (0xF2, 0x2C),
+                    "cvtss2si" => (0xF3, 0x2D),
+                    "cvttss2si" => (0xF3, 0x2C),
+                    _ => unreachable!(),
+                };
+                emit_rm(&mut e, is64(*d), &[pfx], &[0x0F, op], d.num, src)?;
+            }
+            _ => return Ok(false),
+        }
+        Ok(true)
+    })();
+    match r {
+        Ok(true) => Some(Ok(e)),
+        Ok(false) => None,
+        Err(err) => Some(Err(err)),
+    }
+}
+
 /// SSE2 scalar-double + the xmm move/convert family (the FTOS/REX.R island).
 fn try_sse(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
+    if let Some(r) = sse_rrm(mnemonic, ops) {
+        return Some(r);
+    }
+    if let Some(r) = sse_shuffle(mnemonic, ops) {
+        return Some(r);
+    }
+    if let Some(r) = sse_mov(mnemonic, ops) {
+        return Some(r);
+    }
+    if let Some(r) = sse_movd_q(mnemonic, ops) {
+        return Some(r);
+    }
+    if let Some(r) = sse_cvt_gpr(mnemonic, ops) {
+        return Some(r);
+    }
     let mut e = Encoded::default();
     let r = (|| -> Result<bool> {
         match (mnemonic, ops) {
@@ -781,13 +1423,11 @@ fn try_sse(mnemonic: &str, ops: &[Operand]) -> Option<Result<Encoded>> {
             {
                 emit_reg_rm(&mut e, true, &[0x66], &[0x0F, 0x7E], s.num, d.num);
             }
-            // cvtsi2sd xmm, r/m64 : F2 REX.W 0F 2A /r
+            // cvtsi2sd xmm, r/m32|64 : F2 0F 2A /r, REX.W set ONLY for a 64-bit
+            // source (r64/qword) — a 32-bit source must NOT carry REX.W, else the
+            // CPU reads 8 bytes instead of 4.
             ("cvtsi2sd", [Operand::Reg(d), src]) if d.class == RegClass::Xmm => {
-                emit_rm(&mut e, true, &[0xF2], &[0x0F, 0x2A], d.num, src)?;
-            }
-            // cvttsd2si r64, xmm/m : F2 REX.W 0F 2C /r (reg field = GPR)
-            ("cvttsd2si", [Operand::Reg(d), src]) if d.class == RegClass::R64 => {
-                emit_rm(&mut e, true, &[0xF2], &[0x0F, 0x2C], d.num, src)?;
+                emit_rm(&mut e, operand_w(src), &[0xF2], &[0x0F, 0x2A], d.num, src)?;
             }
             _ => return Ok(false),
         }

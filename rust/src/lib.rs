@@ -28,6 +28,13 @@ pub mod llvm;
 #[cfg(feature = "llvm")]
 pub mod jit;
 
+/// `LlvmMcEncoder` — the LLVM-MC differential oracle (an `Encoder` impl that
+/// emits a relocatable object and parses it back). Build/test-time only; the
+/// byte-for-byte ground truth rasm is gated against. See
+/// `docs/design/rasm-difftest.md`.
+#[cfg(feature = "llvm")]
+pub mod oracle;
+
 /// Backend seam (Encoder / Loader traits) for the Rasm migration — replacing
 /// LLVM-MC + MCJIT with a native Rust assembler + loader. Always compiled; the
 /// LLVM impls live alongside `Jit`.
@@ -36,6 +43,11 @@ pub mod backend;
 /// Rasm — the native x86-64 encoder (text → machine code) replacing LLVM-MC.
 /// Pure Rust, no LLVM. See WF65 docs/design/rasm-replace-llvm.md.
 pub mod rasm;
+
+/// Differential driver: diff rasm against an oracle `Encoder` (byte + reloc),
+/// with reloc-field masking. Arch/oracle-neutral; gated tests use the LLVM
+/// oracle. See `docs/design/rasm-difftest.md`.
+pub mod difftest;
 
 #[cfg(windows)]
 pub mod win32;
@@ -53,3 +65,5 @@ pub use asm::Assembler;
 pub use backend::{EncodedModule, Encoder, Loader, Reloc, RelocKind};
 #[cfg(feature = "llvm")]
 pub use jit::{Jit, JitError};
+#[cfg(feature = "llvm")]
+pub use oracle::LlvmMcEncoder;

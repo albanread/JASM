@@ -256,6 +256,105 @@ extern "C" {
     );
 }
 
+// ---- TargetMachine + object emission (the rasm differential oracle) ------
+//
+// The `LlvmMcEncoder` oracle (see `src/oracle.rs`) needs LLVM-MC to emit a
+// *relocatable object* — `.text` bytes with zeroed reloc placeholders plus a
+// relocation table — so it produces the same shape as rasm's `EncodedModule`
+// and the two can be diffed byte-for-byte. That object comes from a
+// `TargetMachine.EmitToMemoryBuffer(ObjectFile)`. Signatures transcribed from
+// `llvm-c/TargetMachine.h`, `llvm-c/Target.h`, and `llvm-c/Core.h` (LLVM 22).
+
+pub enum LLVMTarget {}
+pub type LLVMTargetRef = *mut LLVMTarget;
+
+pub enum LLVMOpaqueTargetMachine {}
+pub type LLVMTargetMachineRef = *mut LLVMOpaqueTargetMachine;
+
+pub enum LLVMOpaqueMemoryBuffer {}
+pub type LLVMMemoryBufferRef = *mut LLVMOpaqueMemoryBuffer;
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub enum LLVMCodeGenOptLevel {
+    None = 0,
+    Less,
+    Default,
+    Aggressive,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub enum LLVMRelocMode {
+    Default = 0,
+    Static,
+    PIC,
+    DynamicNoPic,
+    ROPI,
+    RWPI,
+    ROPI_RWPI,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub enum LLVMCodeModel {
+    Default = 0,
+    JITDefault,
+    Tiny,
+    Small,
+    Kernel,
+    Medium,
+    Large,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub enum LLVMCodeGenFileType {
+    AssemblyFile = 0,
+    ObjectFile,
+}
+
+#[link(name = "LLVM-C")]
+extern "C" {
+    /// Look up the registered `LLVMTarget` for a triple. Returns nonzero on
+    /// failure with a message in `ErrorMessage` (free via `LLVMDisposeMessage`).
+    pub fn LLVMGetTargetFromTriple(
+        Triple: *const c_char,
+        T: *mut LLVMTargetRef,
+        ErrorMessage: *mut *mut c_char,
+    ) -> LLVMBool;
+
+    /// Construct a `TargetMachine`. `CPU`/`Features` may be empty C strings —
+    /// they don't affect assembling already-chosen instructions (inline asm),
+    /// only IR codegen. Dispose with `LLVMDisposeTargetMachine`.
+    pub fn LLVMCreateTargetMachine(
+        T: LLVMTargetRef,
+        Triple: *const c_char,
+        CPU: *const c_char,
+        Features: *const c_char,
+        Level: LLVMCodeGenOptLevel,
+        Reloc: LLVMRelocMode,
+        CodeModel: LLVMCodeModel,
+    ) -> LLVMTargetMachineRef;
+
+    pub fn LLVMDisposeTargetMachine(T: LLVMTargetMachineRef);
+
+    /// Run codegen for `M` and write the result (`ObjectFile` for us) into a
+    /// freshly allocated `MemoryBuffer`. Does **not** consume `M`. Returns
+    /// nonzero on failure with a message in `ErrorMessage`.
+    pub fn LLVMTargetMachineEmitToMemoryBuffer(
+        T: LLVMTargetMachineRef,
+        M: LLVMModuleRef,
+        codegen: LLVMCodeGenFileType,
+        ErrorMessage: *mut *mut c_char,
+        OutMemBuf: *mut LLVMMemoryBufferRef,
+    ) -> LLVMBool;
+
+    pub fn LLVMGetBufferStart(MemBuf: LLVMMemoryBufferRef) -> *const c_char;
+    pub fn LLVMGetBufferSize(MemBuf: LLVMMemoryBufferRef) -> usize;
+    pub fn LLVMDisposeMemoryBuffer(MemBuf: LLVMMemoryBufferRef);
+}
+
 // ---- Convenience ---------------------------------------------------------
 
 /// Initialize the X86 backend AND link in MCJIT. Idempotent.

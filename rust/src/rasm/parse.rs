@@ -15,6 +15,7 @@ pub enum RegClass {
     R32,
     R64,
     Xmm,
+    Ymm,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -388,6 +389,13 @@ fn reg_table(s: &str) -> Option<Reg> {
         if let Ok(n) = rest.parse::<u8>() {
             if n < 16 {
                 return Some(Reg { class: RegClass::Xmm, num: n });
+            }
+        }
+    }
+    if let Some(rest) = s.strip_prefix("ymm") {
+        if let Ok(n) = rest.parse::<u8>() {
+            if n < 16 {
+                return Some(Reg { class: RegClass::Ymm, num: n });
             }
         }
     }

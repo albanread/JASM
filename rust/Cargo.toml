@@ -6,6 +6,10 @@ description = "MASM-style x86-64 macro assembler + LLVM ORC JIT for a 64-bit For
 
 [dependencies]
 anyhow = "1"
+# Parses the relocatable object LLVM-MC emits for the differential oracle
+# (`src/oracle.rs`) into an `EncodedModule`. COFF now; elf/macho enabled for the
+# multi-arch story. Optional — pulled in only by the `llvm` feature.
+object = { version = "0.36", optional = true, default-features = false, features = ["read_core", "coff", "elf", "macho", "std"] }
 
 [dev-dependencies]
 # Decoder-only — the differential oracle for the Rasm encoder's unit tests
@@ -21,7 +25,7 @@ iced-x86 = { version = "1", default-features = false, features = ["std", "decode
 # ORACLE role: the only thing that keeps RasmEncoder byte-honest. Enable it for
 # the LLVM build + oracle tests. See WF65 docs/design/rasm-replace-llvm.md.
 default = []
-llvm = []
+llvm = ["dep:object"]
 
 [lib]
 name = "wfasm"
@@ -50,6 +54,16 @@ required-features = ["llvm"]
 [[bin]]
 name = "wf64"
 path = "src/bin/wf64.rs"
+required-features = ["llvm"]
+
+[[bin]]
+name = "rasm-gaps"
+path = "src/bin/rasm_gaps.rs"
+required-features = ["llvm"]
+
+[[bin]]
+name = "rasm-corpus"
+path = "src/bin/rasm_corpus.rs"
 required-features = ["llvm"]
 
 [profile.dev]
