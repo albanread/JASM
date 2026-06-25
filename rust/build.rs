@@ -13,6 +13,15 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 fn main() {
+    // The LLVM-C link is gated on the `llvm` cargo feature (default ON). With
+    // the feature off (Rasm native backend), link nothing and do not require an
+    // LLVM install. See WF65 docs/design/rasm-replace-llvm.md.
+    println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rerun-if-env-changed=LLVM_DIR");
+    if std::env::var_os("CARGO_FEATURE_LLVM").is_none() {
+        return;
+    }
+
     let llvm_dir = env::var("LLVM_DIR")
         .unwrap_or_else(|_| r"C:\Program Files\LLVM".to_string());
     let llvm_dir = PathBuf::from(llvm_dir);

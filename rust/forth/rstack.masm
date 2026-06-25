@@ -1,0 +1,112 @@
+; forth/rstack.masm — ANS Forth return-stack words.
+;
+; In STC (subroutine-threaded code) the return stack IS the native x64 RSP
+; hardware stack. This means that when a return-stack word is called, RSP
+; already has the caller's return address on top. Each word must:
+;
+;   1. Pop the return address into a scratch register.
+;   2. Do its return-stack manipulation.
+;   3. Push the return address back.
+;   4. RET (which pops that address and returns to the caller).
+;
+; Registers used for temporaries: rcx, rdx, r8.
+; None of these are Forth dedicated registers (TOS=rax, DSP=rbp, UP=rbx,
+; return-stack=rsp), so they are free to use within a primitive.
+;
+; Register convention (from macros.masm):
+;   TOS (rax) = top of data stack (register-cached)
+;   DSP (rbp) = data stack pointer, points to NOS
+;   UP  (rbx) = user/task pointer
+;   RSP       = return stack (hardware stack)
+
+@include "forth/macros.masm"
+
+; ── Single-cell return stack words ───────────────────────────────────────────
+
+; >R ( x -- ) ( R: -- x )
+; Move TOS from the data stack to the return stack.
+; After the pop of the return address, RSP layout: [...previous-R-items...]
+; We push TOS there, then restore the return address.
+head(">R", to_r, 0)
+    pop  rcx                    ; rcx = return address (into caller of >R)
+    push TOS                    ; push x onto return stack (below return addr)
+    mov  TOS, [DSP]             ; load new TOS from NOS
+    add  DSP, cell              ; shrink data stack by one cell
+    push rcx                    ; restore return address
+endword()
+
+; R> ( -- x ) ( R: x -- )
+; Move the top of the return stack to the data stack.
+head("R>", r_from, 0)
+    pop  rcx                    ; rcx = return address
+    pop  rdx                    ; rdx = x (was top of return stack)
+    sub  DSP, cell              ; grow data stack by one cell
+    mov  [DSP], TOS             ; push old TOS to NOS
+    mov  TOS, rdx               ; new TOS = x from return stack
+    push rcx                    ; restore return address
+endword()
+
+; R@ ( -- x ) ( R: x -- x )
+; Copy the top of the return stack to the data stack (non-destructive).
+; After popping the return address, [RSP] is the top return-stack item.
+head("R@", r_fetch, 0)
+    pop  rcx                    ; rcx = return address
+    mov  rdx, [rsp]             ; rdx = top of return stack (peek, no pop)
+    push rcx                    ; restore return address
+    sub  DSP, cell              ; grow data stack
+    mov  [DSP], TOS             ; push old TOS to NOS
+    mov  TOS, rdx               ; new TOS = copy of return stack top
+endword()
+
+; RDROP ( -- ) ( R: x -- )
+; Discard the top of the return stack.
+; Pop return addr, pop R-item (discard), push return addr back.
+head("RDROP", rdrop_, 0)
+    pop  rcx                    ; rcx = return address
+    pop  rdx                    ; discard top of return stack
+    push rcx                    ; restore return address
+endword()
+
+; ── Double-cell return stack words ───────────────────────────────────────────
+
+; 2>R ( x1 x2 -- ) ( R: -- x1 x2 )
+; Move two cells from the data stack to the return stack.
+; ANS Forth: ( x1 x2 -- ), with x2 on TOS.
+; After the operation, R@ gives x2 (TOS of return stack), one below gives x1.
+; Stack before: TOS=x2, [DSP]=x1, [DSP+cell]=new-data-TOS
+head("2>R", two_to_r, 0)
+    pop  rcx                    ; rcx = return address
+    push qword ptr [DSP]        ; push x1 (NOS) onto return stack (deepest of pair)
+    push TOS                    ; push x2 (TOS) on top of x1
+    mov  TOS, [DSP+cell]        ; new data TOS = what was below x1
+    add  DSP, 2*cell            ; consumed x1 and the old data slot for x2
+    push rcx                    ; restore return address
+endword()
+
+; 2R> ( -- x1 x2 ) ( R: x1 x2 -- )
+; Move two cells from the return stack to the data stack.
+; Result: TOS=x2, NOS=x1 (matching the order 2>R pushed them).
+head("2R>", two_r_from, 0)
+    pop  rcx                    ; rcx = return address
+    pop  rdx                    ; rdx = x2 (was TOS of return stack)
+    pop  r8                     ; r8  = x1 (was one below x2)
+    push rcx                    ; restore return address
+    sub  DSP, 2*cell            ; grow data stack by two cells
+    mov  [DSP+cell], TOS        ; push old data TOS to new [DSP+cell]
+    mov  [DSP], r8              ; [DSP] = x1 (NOS)
+    mov  TOS, rdx               ; TOS = x2
+endword()
+
+; 2R@ ( -- x1 x2 ) ( R: x1 x2 -- x1 x2 )
+; Copy two cells from the return stack without removing them.
+; After popping the return address, RSP → [x2, x1, ...].
+head("2R@", two_r_fetch, 0)
+    pop  rcx                    ; rcx = return address
+    mov  rdx, [rsp]             ; rdx = x2 (top of return stack)
+    mov  r8, [rsp+cell]         ; r8  = x1 (one below)
+    push rcx                    ; restore return address
+    sub  DSP, 2*cell            ; grow data stack by two cells
+    mov  [DSP+cell], TOS        ; push old data TOS
+    mov  [DSP], r8              ; [DSP] = x1 (NOS)
+    mov  TOS, rdx               ; TOS = x2
+endword()

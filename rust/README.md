@@ -252,12 +252,13 @@ your debugger gets the exception too.
 
 | | |
 |---|---|
-| Library tests | **138** all passing |
+| Library tests | **139** all passing |
 | Smoke binaries | **4** all passing |
+| Forth kernel | **in progress** — `forth/` directory; Phase 1 primitives complete |
 | Win32 functions exposed | **3,757** across 11 DLLs |
 | Win32 functions with `invoke`-style wrappers | **3,177** |
 | Target platform | x86-64 Windows (LLVM 22.x) |
-| Status | The assembler is feature-complete enough to write a Forth kernel against. The actual Forth kernel port is the next project. |
+| Status | Assembler complete. ANS Forth kernel underway in `forth/`. |
 
 Smoke binaries:
 
@@ -266,6 +267,7 @@ $ cargo run --bin hello-jit       # mov rax, 42; ret  →  prints 42
 $ cargo run --bin hello-runtime   # JIT calls a Rust function and back
 $ cargo run --bin hello-win32     # JIT calls GetTickCount64 by name
 $ cargo run --bin hello-seh       # int 3 dumps and continues; segfault dumps and aborts
+$ cargo run --bin wf64            # ANS Forth interpreter (requires forth/kernel.masm)
 ```
 
 ## Quick start
@@ -274,7 +276,7 @@ $ cargo run --bin hello-seh       # int 3 dumps and continues; segfault dumps an
 $ git clone …
 $ cd JASM/rust
 $ cargo build
-$ cargo test               # 138 tests
+$ cargo test               # 139 tests
 $ cargo run --bin hello-jit
 forth_main() = 42
 
@@ -357,6 +359,16 @@ JASM/rust/
 │
 ├── scripts/
 │   └── win32_gen.py            Python generator: WinMD SQLite → .masm files
+│
+├── forth/                      ANS Forth kernel source (STC, 64-bit)
+│   ├── macros.masm             register aliases, head()/endword() macros, win64_call
+│   ├── primitives.masm         ~47 code words: stack, arith, compare, logic
+│   ├── memory.masm             @, !, C@, C!, 2@, 2!, +!, FILL, MOVE, CMOVE, CMOVE>
+│   ├── rstack.masm             >R, R>, R@, RDROP, 2>R, 2R>, 2R@
+│   ├── io.masm                 EMIT, KEY, SPACE, CR, TYPE
+│   ├── user-area.masm          UP offsets + BASE, STATE, >IN, HERE, ALLOT, , etc.
+│   ├── end-of-kernel.masm      forth_last_link sentinel (include last)
+│   └── kernel.masm             top-level @include (TODO: interpreter + compiler)
 │
 └── win32/                      generated bindings, regen via scripts/win32_gen.py
     ├── kernel32.masm           1,048 wrapped, 117 extern-only

@@ -1,0 +1,9 @@
+; forth/end-of-kernel.masm — Dictionary chain terminator.
+; Include this AFTER all word definition files (primitives, control, i-o, etc.)
+; so that PREVIOUS_LINK points to the very last word defined.
+;
+; The Rust harness can look up "forth_last_link" to walk the full dictionary.
+
+    .globl forth_last_link
+forth_last_link:
+    .quad PREVIOUS_LINK

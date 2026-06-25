@@ -67,7 +67,12 @@ pub enum TokenKind {
     /// `.name` — local label reference. Stored without the leading
     /// dot. The parser checks whether it's a definition (followed by
     /// `:`) or a reference, and applies scope/macro mangling.
-    LocalLabel(String),
+    ///
+    /// The `bool` (`outer`) is true for `.^name` — a label reference
+    /// that should resolve in the innermost enclosing `@scope` frame,
+    /// skipping over any macro-invocation frames on top of it. This
+    /// lets a macro body jump to labels defined in the calling proc.
+    LocalLabel(String, bool),
 
     /// Punctuation token. Multi-char punctuation is lexed greedily.
     Punct(Punct),

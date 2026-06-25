@@ -22,9 +22,10 @@
 //! `LLVMAddModule`, but that's not what this layer does today.
 
 use std::ffi::{c_void, CStr, CString};
-use std::os::raw::c_uint;
+use std::os::raw::{c_char, c_uint};
 use std::ptr;
 
+use crate::arena::CodeArena;
 use crate::llvm::*;
 
 #[derive(Debug)]
@@ -75,6 +76,71 @@ pub struct Jit {
     /// existing engine, but we don't materialize the engine until first
     /// lookup. On finalize we apply all queued mappings.
     pending_mappings: Vec<(LLVMValueRef, *mut c_void)>,
+    /// Heap-allocated bag of error messages captured by our LLVM
+    /// diagnostic handler. Boxed so its address is stable across moves —
+    /// we hand the raw pointer to `LLVMContextSetDiagnosticHandler` once
+    /// at construction. Drained by `take_errors()` before each public
+    /// operation reports success.
+    diag_errors: Box<Vec<String>>,
+    /// If set, `finalize()` installs a SimpleMCJITMemoryManager backed by
+    /// this near arena so emitted sections land rel32-reachable. The
+    /// pointer is borrowed from the host, which keeps the arena alive
+    /// longer than this `Jit`.
+    arena: Option<*mut CodeArena>,
+}
+
+/// LLVM diagnostic handler: captures error-severity diagnostics into a
+/// `Vec<String>` whose address LLVM stashed for us via the
+/// `DiagnosticContext` argument to `LLVMContextSetDiagnosticHandler`.
+///
+/// We only capture severity == Error; warnings/remarks/notes are
+/// dropped on the floor for now (we'd otherwise need to plumb them
+/// up through the Result return type, which has no place for them).
+unsafe extern "C" fn diag_handler(diag: LLVMDiagnosticInfoRef, ctx: *mut c_void) {
+    if ctx.is_null() {
+        return;
+    }
+    unsafe {
+        let severity = LLVMGetDiagInfoSeverity(diag);
+        if severity != LLVMDiagnosticSeverity::LLVMDSError {
+            return;
+        }
+        let raw = LLVMGetDiagInfoDescription(diag);
+        if raw.is_null() {
+            return;
+        }
+        let msg = CStr::from_ptr(raw).to_string_lossy().into_owned();
+        LLVMDisposeMessage(raw);
+        let errors = &mut *(ctx as *mut Vec<String>);
+        errors.push(msg);
+    }
+}
+
+unsafe extern "C" fn arena_alloc_code(
+    opaque: *mut c_void, size: usize, align: c_uint,
+    _id: c_uint, _name: *const c_char,
+) -> *mut u8 {
+    if opaque.is_null() { return ptr::null_mut(); }
+    let a = unsafe { &mut *(opaque as *mut CodeArena) };
+    let reserve = a.code_header;
+    a.bump(size, align as usize, reserve)
+}
+
+unsafe extern "C" fn arena_alloc_data(
+    opaque: *mut c_void, size: usize, align: c_uint,
+    _id: c_uint, _name: *const c_char, _read_only: LLVMBool,
+) -> *mut u8 {
+    if opaque.is_null() { return ptr::null_mut(); }
+    let a = unsafe { &mut *(opaque as *mut CodeArena) };
+    a.bump(size, align as usize, 0)
+}
+
+unsafe extern "C" fn arena_finalize(_opaque: *mut c_void, _err: *mut *mut c_char) -> LLVMBool {
+    0 // success — the arena is already executable (RWX)
+}
+
+unsafe extern "C" fn arena_destroy(_opaque: *mut c_void) {
+    // The host owns the arena memory; nothing to free per-engine.
 }
 
 impl Jit {
@@ -96,13 +162,41 @@ impl Jit {
                 LLVMDisposeMessage(triple);
             }
 
+            let mut diag_errors: Box<Vec<String>> = Box::new(Vec::new());
+            // Install the diagnostic handler with our errors box as the
+            // opaque context pointer. The box outlives the LLVMContext
+            // (Drop runs in struct-field order: ctx is disposed before
+            // the box is freed), so LLVM never sees a dangling pointer.
+            let errors_ptr = (&mut *diag_errors as *mut Vec<String>) as *mut c_void;
+            LLVMContextSetDiagnosticHandler(ctx, Some(diag_handler), errors_ptr);
+
             Ok(Jit {
                 ctx,
                 module: Some(module),
                 engine: None,
                 pending_mappings: Vec::new(),
+                diag_errors,
+                arena: None,
             })
         }
+    }
+
+    /// Build a JIT whose emitted code/data go into `arena` — a near,
+    /// RWX, rel32-reachable region the host keeps alive. Use this for
+    /// runtime word compilation (`CODE:` / `LET`) so the result is a real
+    /// near function callable directly, with no far-segment trampoline.
+    pub fn new_in_arena(module_name: &str, arena: *mut CodeArena) -> Result<Self, JitError> {
+        let mut jit = Self::new(module_name)?;
+        jit.arena = Some(arena);
+        Ok(jit)
+    }
+
+    /// Drain and return all error-severity diagnostics LLVM has reported
+    /// since the last call. Callers should invoke this immediately after
+    /// any LLVM operation that might produce errors and short-circuit
+    /// with `JitError::Llvm` when the result is non-empty.
+    fn take_errors(&mut self) -> Vec<String> {
+        std::mem::take(&mut *self.diag_errors)
     }
 
     /// Append a chunk of assembly to the module.
@@ -195,9 +289,22 @@ impl Jit {
     /// allowed.
     pub fn lookup_addr(&mut self, name: &str) -> Result<u64, JitError> {
         let engine = self.finalize()?;
+        // finalize() triggers MCJIT codegen, which is where MC's inline-asm
+        // parser runs.  Errors from that path are captured into
+        // diag_errors via our installed handler — surface them now
+        // instead of returning a misleading NotFound.
+        let errors = self.take_errors();
+        if !errors.is_empty() {
+            return Err(JitError::Llvm(errors.join("\n")));
+        }
         unsafe {
             let cname = c_string(name)?;
             let addr = LLVMGetFunctionAddress(engine, cname.as_ptr());
+            // Codegen of a single symbol can also fire diagnostics.
+            let errors = self.take_errors();
+            if !errors.is_empty() {
+                return Err(JitError::Llvm(errors.join("\n")));
+            }
             if addr == 0 {
                 return Err(JitError::NotFound(name.to_string()));
             }
@@ -246,6 +353,22 @@ impl Jit {
             // (LLVM optimizes IR, not the bodies of inline asm, so this
             // mostly affects helper functions we add later.)
             opts.OptLevel = 0;
+
+            // If a near arena was supplied, route all section allocations
+            // through it so emitted code is rel32-reachable from the kernel
+            // (no far-segment trampoline). MCJIT takes ownership of the
+            // memory manager and calls `arena_destroy` (a no-op) on dispose;
+            // the emitted code outlives the engine because the host owns the
+            // arena.
+            if let Some(arena) = self.arena {
+                opts.MCJMM = LLVMCreateSimpleMCJITMemoryManager(
+                    arena as *mut c_void,
+                    arena_alloc_code,
+                    arena_alloc_data,
+                    arena_finalize,
+                    arena_destroy,
+                );
+            }
 
             let mut engine: LLVMExecutionEngineRef = ptr::null_mut();
             let mut err_msg: *mut std::os::raw::c_char = ptr::null_mut();
@@ -316,4 +439,29 @@ impl Drop for Jit {
 
 fn c_string(s: &str) -> Result<CString, JitError> {
     CString::new(s).map_err(|_| JitError::Nul(s.to_string()))
+}
+
+/// `Jit` is the LLVM/MCJIT [`Loader`](crate::backend::Loader) — the "LlvmJit"
+/// of the Rasm migration. The native loader will implement the same trait.
+impl crate::backend::Loader for Jit {
+    fn add_asm(&mut self, asm_text: &str) -> anyhow::Result<()> {
+        Jit::add_asm(self, asm_text)?;
+        Ok(())
+    }
+    fn declare_fn(&mut self, name: &str, arg_count: usize) -> anyhow::Result<()> {
+        Jit::declare_fn(self, name, arg_count)?;
+        Ok(())
+    }
+    fn define_extern_fn(
+        &mut self,
+        name: &str,
+        arg_count: usize,
+        addr: *mut c_void,
+    ) -> anyhow::Result<()> {
+        Jit::define_extern_fn(self, name, arg_count, addr)?;
+        Ok(())
+    }
+    fn lookup_addr(&mut self, name: &str) -> anyhow::Result<u64> {
+        Ok(Jit::lookup_addr(self, name)?)
+    }
 }

@@ -116,8 +116,11 @@ fn write_token(out: &mut String, kind: &TokenKind) {
         TokenKind::Ident(s) => out.push_str(s),
         TokenKind::Number(n) => out.push_str(&n.raw),
         TokenKind::String(s) => out.push_str(&s.raw),
-        TokenKind::LocalLabel(s) => {
+        TokenKind::LocalLabel(s, outer) => {
             out.push('.');
+            if *outer {
+                out.push('^');
+            }
             out.push_str(s);
         }
         TokenKind::Punct(p) => out.push_str(p.as_str()),

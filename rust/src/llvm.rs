@@ -19,7 +19,7 @@
 #![allow(non_snake_case)]
 #![allow(dead_code)]
 
-use std::os::raw::{c_char, c_int, c_uint};
+use std::os::raw::{c_char, c_int, c_uint, c_void};
 
 // ---- Opaque handle types --------------------------------------------------
 
@@ -52,6 +52,35 @@ pub struct LLVMMCJITCompilerOptions {
     pub EnableFastISel: LLVMBool,
     pub MCJMM: LLVMMCJITMemoryManagerRef,
 }
+
+// ---- MCJIT memory manager callbacks --------------------------------------
+//
+// A `SimpleMCJITMemoryManager` lets us choose where MCJIT places emitted
+// sections. We use it to allocate code/data from a near arena (within
+// ±1.75 GB of the kernel) so runtime-JITed words are rel32-reachable —
+// no far-segment jump trampoline needed.  Signatures from
+// `llvm-c/ExecutionEngine.h`.
+pub type LLVMMemoryManagerAllocateCodeSectionCallback = unsafe extern "C" fn(
+    Opaque: *mut c_void,
+    Size: usize,
+    Alignment: c_uint,
+    SectionID: c_uint,
+    SectionName: *const c_char,
+) -> *mut u8;
+
+pub type LLVMMemoryManagerAllocateDataSectionCallback = unsafe extern "C" fn(
+    Opaque: *mut c_void,
+    Size: usize,
+    Alignment: c_uint,
+    SectionID: c_uint,
+    SectionName: *const c_char,
+    IsReadOnly: LLVMBool,
+) -> *mut u8;
+
+pub type LLVMMemoryManagerFinalizeMemoryCallback =
+    unsafe extern "C" fn(Opaque: *mut c_void, ErrMsg: *mut *mut c_char) -> LLVMBool;
+
+pub type LLVMMemoryManagerDestroyCallback = unsafe extern "C" fn(Opaque: *mut c_void);
 
 // ---- Core ----------------------------------------------------------------
 
@@ -89,6 +118,62 @@ extern "C" {
     pub fn LLVMPointerTypeInContext(C: LLVMContextRef, AddressSpace: c_uint) -> LLVMTypeRef;
 }
 
+// ---- Diagnostics (error capture) ----------------------------------------
+//
+// LLVM-MC reports inline-asm parse errors (and similar non-fatal
+// diagnostics) through the LLVMContext's diagnostic handler. When no
+// handler is installed, LLVM prints to stderr and — for severity
+// `LLVMDSError` — typically calls `report_fatal_error`, which aborts
+// the process. Installing our own handler lets the caller convert
+// those errors into a returnable `Result` and recover.
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum LLVMDiagnosticSeverity {
+    LLVMDSError   = 0,
+    LLVMDSWarning = 1,
+    LLVMDSRemark  = 2,
+    LLVMDSNote    = 3,
+}
+
+pub enum LLVMOpaqueDiagnosticInfo {}
+pub type LLVMDiagnosticInfoRef = *mut LLVMOpaqueDiagnosticInfo;
+
+pub type LLVMDiagnosticHandler =
+    Option<unsafe extern "C" fn(diag: LLVMDiagnosticInfoRef, ctx: *mut std::ffi::c_void)>;
+
+pub type LLVMFatalErrorHandler =
+    Option<unsafe extern "C" fn(reason: *const c_char)>;
+
+#[link(name = "LLVM-C")]
+extern "C" {
+    /// Install a per-context handler called whenever LLVM produces a
+    /// diagnostic (errors, warnings, remarks, notes). The `ctx` pointer
+    /// is opaque to LLVM and gets passed back to the handler verbatim.
+    pub fn LLVMContextSetDiagnosticHandler(
+        C: LLVMContextRef,
+        Handler: LLVMDiagnosticHandler,
+        DiagnosticContext: *mut std::ffi::c_void,
+    );
+
+    /// Returns the diagnostic's message as a newly-allocated string;
+    /// must be freed by the caller with `LLVMDisposeMessage`.
+    pub fn LLVMGetDiagInfoDescription(DI: LLVMDiagnosticInfoRef) -> *mut c_char;
+
+    /// Returns the severity (error / warning / remark / note).
+    pub fn LLVMGetDiagInfoSeverity(DI: LLVMDiagnosticInfoRef) -> LLVMDiagnosticSeverity;
+
+    /// Install a process-wide handler for fatal errors. By default LLVM
+    /// calls `abort()` after printing to stderr; with a handler installed
+    /// it calls our handler instead. The handler is NOT expected to
+    /// return — LLVM considers the program unrecoverable past this point
+    /// — so use with care.
+    pub fn LLVMInstallFatalErrorHandler(Handler: LLVMFatalErrorHandler);
+
+    /// Restore the default fatal-error behaviour (print + abort).
+    pub fn LLVMResetFatalErrorHandler();
+}
+
 // ---- Target init (X86 only) ---------------------------------------------
 
 #[link(name = "LLVM-C")]
@@ -116,6 +201,18 @@ extern "C" {
         Options: *mut LLVMMCJITCompilerOptions,
         SizeOfOptions: usize,
     );
+
+    /// Create a memory manager whose section-allocation decisions are
+    /// delegated to the supplied callbacks. We use this to place runtime
+    /// code in a near arena. Ownership passes to the engine built from the
+    /// options that reference it; the engine calls `Destroy` on dispose.
+    pub fn LLVMCreateSimpleMCJITMemoryManager(
+        Opaque: *mut c_void,
+        AllocateCodeSection: LLVMMemoryManagerAllocateCodeSectionCallback,
+        AllocateDataSection: LLVMMemoryManagerAllocateDataSectionCallback,
+        FinalizeMemory: LLVMMemoryManagerFinalizeMemoryCallback,
+        Destroy: LLVMMemoryManagerDestroyCallback,
+    ) -> LLVMMCJITMemoryManagerRef;
 
     /// Build an MCJIT execution engine that compiles `Module`. **Consumes**
     /// `Module` — do not dispose or reuse it after a successful call. On
@@ -157,6 +254,105 @@ extern "C" {
         Global: LLVMValueRef,
         Addr: *mut std::ffi::c_void,
     );
+}
+
+// ---- TargetMachine + object emission (the rasm differential oracle) ------
+//
+// The `LlvmMcEncoder` oracle (see `src/oracle.rs`) needs LLVM-MC to emit a
+// *relocatable object* — `.text` bytes with zeroed reloc placeholders plus a
+// relocation table — so it produces the same shape as rasm's `EncodedModule`
+// and the two can be diffed byte-for-byte. That object comes from a
+// `TargetMachine.EmitToMemoryBuffer(ObjectFile)`. Signatures transcribed from
+// `llvm-c/TargetMachine.h`, `llvm-c/Target.h`, and `llvm-c/Core.h` (LLVM 22).
+
+pub enum LLVMTarget {}
+pub type LLVMTargetRef = *mut LLVMTarget;
+
+pub enum LLVMOpaqueTargetMachine {}
+pub type LLVMTargetMachineRef = *mut LLVMOpaqueTargetMachine;
+
+pub enum LLVMOpaqueMemoryBuffer {}
+pub type LLVMMemoryBufferRef = *mut LLVMOpaqueMemoryBuffer;
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub enum LLVMCodeGenOptLevel {
+    None = 0,
+    Less,
+    Default,
+    Aggressive,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub enum LLVMRelocMode {
+    Default = 0,
+    Static,
+    PIC,
+    DynamicNoPic,
+    ROPI,
+    RWPI,
+    ROPI_RWPI,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub enum LLVMCodeModel {
+    Default = 0,
+    JITDefault,
+    Tiny,
+    Small,
+    Kernel,
+    Medium,
+    Large,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub enum LLVMCodeGenFileType {
+    AssemblyFile = 0,
+    ObjectFile,
+}
+
+#[link(name = "LLVM-C")]
+extern "C" {
+    /// Look up the registered `LLVMTarget` for a triple. Returns nonzero on
+    /// failure with a message in `ErrorMessage` (free via `LLVMDisposeMessage`).
+    pub fn LLVMGetTargetFromTriple(
+        Triple: *const c_char,
+        T: *mut LLVMTargetRef,
+        ErrorMessage: *mut *mut c_char,
+    ) -> LLVMBool;
+
+    /// Construct a `TargetMachine`. `CPU`/`Features` may be empty C strings —
+    /// they don't affect assembling already-chosen instructions (inline asm),
+    /// only IR codegen. Dispose with `LLVMDisposeTargetMachine`.
+    pub fn LLVMCreateTargetMachine(
+        T: LLVMTargetRef,
+        Triple: *const c_char,
+        CPU: *const c_char,
+        Features: *const c_char,
+        Level: LLVMCodeGenOptLevel,
+        Reloc: LLVMRelocMode,
+        CodeModel: LLVMCodeModel,
+    ) -> LLVMTargetMachineRef;
+
+    pub fn LLVMDisposeTargetMachine(T: LLVMTargetMachineRef);
+
+    /// Run codegen for `M` and write the result (`ObjectFile` for us) into a
+    /// freshly allocated `MemoryBuffer`. Does **not** consume `M`. Returns
+    /// nonzero on failure with a message in `ErrorMessage`.
+    pub fn LLVMTargetMachineEmitToMemoryBuffer(
+        T: LLVMTargetMachineRef,
+        M: LLVMModuleRef,
+        codegen: LLVMCodeGenFileType,
+        ErrorMessage: *mut *mut c_char,
+        OutMemBuf: *mut LLVMMemoryBufferRef,
+    ) -> LLVMBool;
+
+    pub fn LLVMGetBufferStart(MemBuf: LLVMMemoryBufferRef) -> *const c_char;
+    pub fn LLVMGetBufferSize(MemBuf: LLVMMemoryBufferRef) -> usize;
+    pub fn LLVMDisposeMemoryBuffer(MemBuf: LLVMMemoryBufferRef);
 }
 
 // ---- Convenience ---------------------------------------------------------

@@ -6,6 +6,26 @@ description = "MASM-style x86-64 macro assembler + LLVM ORC JIT for a 64-bit For
 
 [dependencies]
 anyhow = "1"
+# Parses the relocatable object LLVM-MC emits for the differential oracle
+# (`src/oracle.rs`) into an `EncodedModule`. COFF now; elf/macho enabled for the
+# multi-arch story. Optional — pulled in only by the `llvm` feature.
+object = { version = "0.36", optional = true, default-features = false, features = ["read_core", "coff", "elf", "macho", "std"] }
+
+[dev-dependencies]
+# Decoder-only — the differential oracle for the Rasm encoder's unit tests
+# (encode -> decode -> assert the intended instruction). NOT a runtime dep.
+iced-x86 = { version = "1", default-features = false, features = ["std", "decoder", "instr_info", "intel"] }
+
+[features]
+# NATIVE IS THE DEFAULT. A plain build compiles the front-end + native
+# RasmEncoder/NativeJit + `backend` trait skeleton + SEH, with NO LLVM-C
+# dependency — the native loader is the working backend.
+# `llvm` (opt-in) links LLVM-C and compiles the MCJIT assembler/loader
+# (`llvm.rs`, `jit.rs`, the `Jit` Loader impl). It now serves the differential
+# ORACLE role: the only thing that keeps RasmEncoder byte-honest. Enable it for
+# the LLVM build + oracle tests. See WF65 docs/design/rasm-replace-llvm.md.
+default = []
+llvm = ["dep:object"]
 
 [lib]
 name = "wfasm"
@@ -14,18 +34,37 @@ path = "src/lib.rs"
 [[bin]]
 name = "hello-jit"
 path = "src/bin/hello_jit.rs"
+required-features = ["llvm"]
 
 [[bin]]
 name = "hello-runtime"
 path = "src/bin/hello_runtime.rs"
+required-features = ["llvm"]
 
 [[bin]]
 name = "hello-win32"
 path = "src/bin/hello_win32.rs"
+required-features = ["llvm"]
 
 [[bin]]
 name = "hello-seh"
 path = "src/bin/hello_seh.rs"
+required-features = ["llvm"]
+
+[[bin]]
+name = "wf64"
+path = "src/bin/wf64.rs"
+required-features = ["llvm"]
+
+[[bin]]
+name = "rasm-gaps"
+path = "src/bin/rasm_gaps.rs"
+required-features = ["llvm"]
+
+[[bin]]
+name = "rasm-corpus"
+path = "src/bin/rasm_corpus.rs"
+required-features = ["llvm"]
 
 [profile.dev]
 # Debuginfo is slow on Windows; keep it small for fast iteration.
