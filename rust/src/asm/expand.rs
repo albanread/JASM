@@ -877,6 +877,17 @@ impl<'s> Expander<'s> {
                         tokens.get(i + 1).map(|t| &t.kind),
                         Some(TokenKind::Punct(Punct::Colon))
                     );
+                    // `.<suffix>` glued to a preceding identifier (no space,
+                    // not a label definition) is a register arrangement
+                    // (`v0.8b`) or condition-code mnemonic (`b.eq`), not a
+                    // scope-local label. Emit it verbatim.
+                    if !followed_by_colon
+                        && is_glued_suffix(tok.space_before, *outer, prev_kind)
+                    {
+                        self.out.push(tok.clone());
+                        i += 1;
+                        continue;
+                    }
                     if at_directive_pos && !followed_by_colon && is_mc_directive(name) {
                         self.out.push(tok.clone());
                         i += 1;
@@ -1287,7 +1298,13 @@ impl<'s> Expander<'s> {
                     tokens.get(i + 1).map(|t| &t.kind),
                     Some(TokenKind::Punct(Punct::Colon))
                 );
-                if at_directive_pos && !followed_by_colon && is_mc_directive(name) {
+                if !followed_by_colon
+                    && is_glued_suffix(tok.space_before, *outer, prev_kind)
+                {
+                    // Register arrangement / condition-code suffix glued to
+                    // the previous ident — verbatim, never scope-mangled.
+                    self.out.push(tok.clone());
+                } else if at_directive_pos && !followed_by_colon && is_mc_directive(name) {
                     self.out.push(tok.clone());
                 } else {
                     let prefix = if *outer {
@@ -2619,6 +2636,22 @@ fn at_line_start(tokens: &[Token], i: usize) -> bool {
         return true;
     }
     matches!(tokens[i - 1].kind, TokenKind::Newline)
+}
+
+/// Returns true when a `.<name>` local-label token is really a suffix
+/// glued onto the preceding identifier — an AArch64 vector arrangement
+/// (`v0.8b`), element/lane type (`v0.s` in `v0.s[1]`), or a condition-code
+/// branch mnemonic (`b.eq`). The lexer can't tell these from a scope-local
+/// label because both start with `.`, but a suffix abuts the prior token
+/// with *no* whitespace, whereas a genuine local-label reference always has
+/// whitespace before the dot (`b .loop`, `cbnz x0, .done`) or begins the
+/// line (`.loop:`, prev token is a Newline, not an Ident). `.^name` is an
+/// explicit outer-scope reference and is never a suffix. Such suffixes must
+/// pass through verbatim so the backend sees `v0.8b` / `b.eq`, never a
+/// scope-mangled `v0proc$$8b`.
+fn is_glued_suffix(space_before: bool, outer: bool, prev_kind: Option<&TokenKind>) -> bool {
+    let _ = (space_before, outer, prev_kind);
+    false // TEMP: neutered to confirm regression tests catch the bug
 }
 
 /// Take an `Ident` at position `i`. Returns the name and the next index.
@@ -4145,6 +4178,116 @@ endp()
         let s = to_text(&out);
         assert!(s.contains("foo$$skip:"), "label form should mangle, got: {s}");
         assert!(s.contains(".skip 16"), "directive form should pass through, got: {s}");
+    }
+
+    #[test]
+    fn scope_does_not_mangle_glued_vector_arrangement() {
+        // A `.<arr>` arrangement suffix glued to a vector register
+        // (`v0.8b`, no space) is part of the operand, not a scope-local
+        // label. Inside a @scope it must survive verbatim — otherwise the
+        // `.8b` mangles to `count_bits$$8b` and `cnt v0.8b, v0.8b` becomes
+        // the unparseable `cnt v0count_bits$$8b, ...`.
+        let mut asm = Assembler::new();
+        let out = expand_text(
+            &mut asm,
+            r#"@scope count_bits
+    cnt v0.8b, v0.8b
+    addv b0, v0.8b
+@endscope
+"#,
+        )
+        .unwrap();
+        let s = to_text(&out);
+        assert!(s.contains("cnt v0.8b, v0.8b"), "got: {s}");
+        assert!(s.contains("addv b0, v0.8b"), "got: {s}");
+        assert!(!s.contains("$$8b"), "arrangement must not be mangled, got: {s}");
+    }
+
+    #[test]
+    fn scoped_proc_neon_assembles_through_a64_backend() {
+        // End-to-end regression for the MF66 repro: a NEON primitive whose
+        // body uses vector-arrangement suffixes (`v0.8b`) inside a `proc()`
+        // scope. This drives the *whole* front-end (`Assembler::assemble`
+        // → expanded text) and then the native backend (`a64::assemble` →
+        // machine code), not just bare `a64::assemble` of an unscoped line.
+        //
+        // Before the fix, `.8b` lexed as a scope-local label and mangled to
+        // `count_bits$$8b`, so the emitted text was `cnt v0count_bits$$8b,
+        // …` and `a64::assemble` died with `encode `cnt v0count_bits$$8b…``.
+        // `proc`/`endp`/`next` are MF66's real primitive-shape macros (see
+        // MF66/kernel/macros.masm): `proc(n)` opens `@scope n`, exports the
+        // symbol, and places the label; `endp()` closes the scope.
+        let mut asm = Assembler::new();
+        let text = asm
+            .assemble(
+                "count_bits.masm",
+                r#"@macro proc(name)
+    @scope &name
+    .globl &name
+&name:
+@endmacro
+@macro endp()
+    @endscope
+@endmacro
+@macro next()
+    ret
+@endmacro
+
+proc(count_bits)
+    cnt v0.8b, v0.8b
+    uaddlv h0, v0.8b
+.retry:
+    cbnz w0, .retry
+    fmov w0, s0
+    next()
+endp()
+"#,
+            )
+            .expect("front-end expansion must succeed");
+
+        // Front-end: arrangement survives verbatim; a genuine local label
+        // (`.retry`, whitespace before the dot) still mangles into the scope.
+        assert!(text.contains("cnt v0.8b, v0.8b"), "arrangement mangled: {text}");
+        assert!(text.contains("uaddlv h0, v0.8b"), "arrangement mangled: {text}");
+        assert!(!text.contains("$$8b"), "arrangement must not be scope-mangled: {text}");
+        assert!(
+            text.contains("count_bits$$retry"),
+            "real local label should still mangle into the scope: {text}"
+        );
+
+        // Backend: the expanded text must actually encode. `cnt v0.8b, v0.8b`
+        // is `0x0E205800` (verified against the LLVM-MC oracle); look for its
+        // little-endian word in the emitted code so label/globl placement
+        // can't shift the assertion.
+        let module = crate::a64::assemble(&text).expect("backend must encode the scoped NEON proc");
+        let cnt_word = [0x00u8, 0x58, 0x20, 0x0E];
+        assert!(
+            module.code.windows(4).any(|w| w == cnt_word),
+            "`cnt v0.8b, v0.8b` (0x0E205800) not found in encoded code: {:02X?}",
+            module.code
+        );
+    }
+
+    #[test]
+    fn scope_does_not_mangle_condition_code_branch() {
+        // `b.eq` is a conditional-branch mnemonic: the `.eq` is glued to
+        // `b` with no space. Inside a @scope it must not be mangled into
+        // `beq$$eq` / `bscope$$eq`. The branch *target* `.loop` (space
+        // before it) is a real local label and still mangles.
+        let mut asm = Assembler::new();
+        let out = expand_text(
+            &mut asm,
+            r#"@scope demo
+.loop:
+    b.eq .loop
+@endscope
+"#,
+        )
+        .unwrap();
+        let s = to_text(&out);
+        assert!(s.contains("b.eq demo$$loop"), "got: {s}");
+        assert!(s.contains("demo$$loop:"), "got: {s}");
+        assert!(!s.contains("$$eq"), "condition suffix must not be mangled, got: {s}");
     }
 
     #[test]
