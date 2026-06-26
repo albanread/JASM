@@ -66,6 +66,16 @@ name = "rasm-corpus"
 path = "src/bin/rasm_corpus.rs"
 required-features = ["llvm"]
 
+[[bin]]
+name = "a64-corpus"
+path = "src/bin/a64_corpus.rs"
+required-features = ["llvm"]
+
+# Native AArch64 end-to-end smoke test — no LLVM (macOS/Apple Silicon).
+[[bin]]
+name = "hello-aarch64"
+path = "src/bin/hello_a64.rs"
+
 [profile.dev]
 # Debuginfo is slow on Windows; keep it small for fast iteration.
 debug = 1

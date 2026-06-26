@@ -174,7 +174,13 @@ extern "C" {
     pub fn LLVMResetFatalErrorHandler();
 }
 
-// ---- Target init (X86 only) ---------------------------------------------
+// ---- Target init (X86 + AArch64) ----------------------------------------
+//
+// The `LLVMInitializeAllTargets*` umbrella functions are inline macros in the
+// C headers, not exported symbols, so each backend must be registered by name.
+// Standard LLVM distributions (Homebrew on macOS, the official Windows package,
+// distro `libLLVM`) build *all* targets, so both X86 and AArch64 init symbols
+// are present in the single `LLVM-C` shared object on every platform we target.
 
 #[link(name = "LLVM-C")]
 extern "C" {
@@ -183,6 +189,12 @@ extern "C" {
     pub fn LLVMInitializeX86TargetMC();
     pub fn LLVMInitializeX86AsmParser();
     pub fn LLVMInitializeX86AsmPrinter();
+
+    pub fn LLVMInitializeAArch64TargetInfo();
+    pub fn LLVMInitializeAArch64Target();
+    pub fn LLVMInitializeAArch64TargetMC();
+    pub fn LLVMInitializeAArch64AsmParser();
+    pub fn LLVMInitializeAArch64AsmPrinter();
 }
 
 // ---- Execution engine (MCJIT) -------------------------------------------
@@ -357,8 +369,12 @@ extern "C" {
 
 // ---- Convenience ---------------------------------------------------------
 
-/// Initialize the X86 backend AND link in MCJIT. Idempotent.
-pub fn init_x86_mcjit() {
+/// Initialize the X86 + AArch64 backends AND link in MCJIT. Idempotent.
+///
+/// Both backends are registered so the oracle ([`crate::oracle`]) can assemble
+/// for either triple regardless of host, and so MCJIT codegen ([`crate::jit`])
+/// targets the host (x86-64 on Windows/Linux, AArch64 on Apple Silicon).
+pub fn init_targets_and_mcjit() {
     use std::sync::Once;
     static ONCE: Once = Once::new();
     ONCE.call_once(|| unsafe {
@@ -367,6 +383,19 @@ pub fn init_x86_mcjit() {
         LLVMInitializeX86TargetMC();
         LLVMInitializeX86AsmParser();
         LLVMInitializeX86AsmPrinter();
+
+        LLVMInitializeAArch64TargetInfo();
+        LLVMInitializeAArch64Target();
+        LLVMInitializeAArch64TargetMC();
+        LLVMInitializeAArch64AsmParser();
+        LLVMInitializeAArch64AsmPrinter();
+
         LLVMLinkInMCJIT();
     });
+}
+
+/// Back-compat alias — callers predating multi-arch init. Registers both
+/// backends (see [`init_targets_and_mcjit`]).
+pub fn init_x86_mcjit() {
+    init_targets_and_mcjit();
 }

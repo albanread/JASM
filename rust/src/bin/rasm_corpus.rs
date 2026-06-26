@@ -14,7 +14,7 @@ use wfasm::oracle::LlvmMcEncoder;
 use wfasm::rasm::RasmEncoder;
 
 fn main() -> std::io::Result<()> {
-    let build = record_corpus(&RasmEncoder, &LlvmMcEncoder::new(), &X86Model);
+    let build = record_corpus(&RasmEncoder, &LlvmMcEncoder::x86_64(), &X86Model);
     let path = Path::new(env!("CARGO_MANIFEST_DIR")).join("corpus").join("x86_64.tsv");
     std::fs::create_dir_all(path.parent().unwrap())?;
     std::fs::write(&path, &build.text)?;

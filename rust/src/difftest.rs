@@ -19,6 +19,7 @@ use crate::backend::{Encoder, EncodedModule, Reloc, RelocKind};
 
 /// Per-arch templated form generators (x86-64 today). See [`IsaModel`].
 pub mod x86;
+pub mod aarch64;
 
 /// The outcome of diffing one assembled form.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -115,6 +116,12 @@ fn reloc_class(k: RelocKind) -> u8 {
     match k {
         RelocKind::BranchRel32 | RelocKind::RipRel32 => 0,
         RelocKind::Abs64 => 1,
+        // AArch64: each field shape is its own class (no aliasing analogous to
+        // x86's rel32/disp32 collision — the object carries distinct reloc
+        // types per the verified Mach-O dump).
+        RelocKind::Branch26 => 2,
+        RelocKind::AdrpPage21 => 3,
+        RelocKind::AddPageOff12 => 4,
     }
 }
 
@@ -324,6 +331,9 @@ fn kind_str(k: RelocKind) -> &'static str {
     match k {
         RelocKind::Abs64 => "abs64",
         RelocKind::BranchRel32 | RelocKind::RipRel32 => "rel32",
+        RelocKind::Branch26 => "branch26",
+        RelocKind::AdrpPage21 => "adrp_page21",
+        RelocKind::AddPageOff12 => "add_pageoff12",
     }
 }
 
@@ -365,6 +375,9 @@ fn parse_corpus_line(line: &str) -> Option<(String, EncodedModule)> {
                 let kind = match p.next()? {
                     "rel32" => RelocKind::BranchRel32,
                     "abs64" => RelocKind::Abs64,
+                    "branch26" => RelocKind::Branch26,
+                    "adrp_page21" => RelocKind::AdrpPage21,
+                    "add_pageoff12" => RelocKind::AddPageOff12,
                     _ => return None,
                 };
                 let target = p.next()?.to_string();
@@ -469,6 +482,30 @@ mod tests {
             n += 1;
         }
         assert!(n > 1000, "corpus suspiciously small ({n} forms) — regenerate with `rasm-corpus`");
+    }
+
+    /// The no-LLVM AArch64 regression gate: the native `A64Encoder` must
+    /// reproduce every committed golden in `corpus/aarch64.tsv` byte-for-byte.
+    /// Runs without the `llvm` feature. Regenerate with `a64-corpus`.
+    #[test]
+    fn corpus_replay_aarch64_matches_golden() {
+        use crate::a64::A64Encoder;
+        let corpus = include_str!("../corpus/aarch64.tsv");
+        let mut n = 0usize;
+        for (i, line) in corpus.lines().enumerate() {
+            if line.is_empty() {
+                continue;
+            }
+            let (asm, golden) = parse_corpus_line(line)
+                .unwrap_or_else(|| panic!("aarch64 corpus line {} malformed: {line:?}", i + 1));
+            let rm = A64Encoder
+                .encode(&asm)
+                .unwrap_or_else(|e| panic!("a64 failed on corpus form `{asm}`: {e:#}"));
+            let v = compare(&asm, &rm, &golden);
+            assert!(v.is_match(), "aarch64 corpus regression on `{asm}`: {v}");
+            n += 1;
+        }
+        assert!(n > 1000, "aarch64 corpus suspiciously small ({n} forms) — regenerate with `a64-corpus`");
     }
 
     // Unit tests for the normalization logic — no oracle needed.
@@ -579,7 +616,7 @@ mod tests {
         ];
 
         let rasm = RasmEncoder;
-        let oracle = LlvmMcEncoder::new();
+        let oracle = LlvmMcEncoder::x86_64();
         let report = diff_all(&rasm, &oracle, FORMS.iter().copied());
 
         eprintln!("{}", report.summary());
@@ -607,7 +644,7 @@ mod tests {
         use crate::oracle::LlvmMcEncoder;
         use crate::rasm::RasmEncoder;
 
-        let oracle = LlvmMcEncoder::new();
+        let oracle = LlvmMcEncoder::x86_64();
         let report = diff_model(&RasmEncoder, &oracle, &x86::X86Model);
         eprintln!("{}", report.summary());
         let bad = report.mismatches();

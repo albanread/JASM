@@ -1,0 +1,1181 @@
+add x0, x1, x2	2000028b	
+add w0, w1, w2	2000020b	
+add x5, x10, x19	4501138b	
+add w5, w10, w19	4501130b	
+add x28, x27, x26	7c031a8b	
+add w28, w27, w26	7c031a0b	
+add x15, x0, x30	0f001e8b	
+add w15, w0, w30	0f001e0b	
+sub x0, x1, x2	200002cb	
+sub w0, w1, w2	2000024b	
+sub x5, x10, x19	450113cb	
+sub w5, w10, w19	4501134b	
+sub x28, x27, x26	7c031acb	
+sub w28, w27, w26	7c031a4b	
+sub x15, x0, x30	0f001ecb	
+sub w15, w0, w30	0f001e4b	
+adds x0, x1, x2	200002ab	
+adds w0, w1, w2	2000022b	
+adds x5, x10, x19	450113ab	
+adds w5, w10, w19	4501132b	
+adds x28, x27, x26	7c031aab	
+adds w28, w27, w26	7c031a2b	
+adds x15, x0, x30	0f001eab	
+adds w15, w0, w30	0f001e2b	
+subs x0, x1, x2	200002eb	
+subs w0, w1, w2	2000026b	
+subs x5, x10, x19	450113eb	
+subs w5, w10, w19	4501136b	
+subs x28, x27, x26	7c031aeb	
+subs w28, w27, w26	7c031a6b	
+subs x15, x0, x30	0f001eeb	
+subs w15, w0, w30	0f001e6b	
+and x0, x1, x2	2000028a	
+and w0, w1, w2	2000020a	
+and x5, x10, x19	4501138a	
+and w5, w10, w19	4501130a	
+and x28, x27, x26	7c031a8a	
+and w28, w27, w26	7c031a0a	
+and x15, x0, x30	0f001e8a	
+and w15, w0, w30	0f001e0a	
+orr x0, x1, x2	200002aa	
+orr w0, w1, w2	2000022a	
+orr x5, x10, x19	450113aa	
+orr w5, w10, w19	4501132a	
+orr x28, x27, x26	7c031aaa	
+orr w28, w27, w26	7c031a2a	
+orr x15, x0, x30	0f001eaa	
+orr w15, w0, w30	0f001e2a	
+eor x0, x1, x2	200002ca	
+eor w0, w1, w2	2000024a	
+eor x5, x10, x19	450113ca	
+eor w5, w10, w19	4501134a	
+eor x28, x27, x26	7c031aca	
+eor w28, w27, w26	7c031a4a	
+eor x15, x0, x30	0f001eca	
+eor w15, w0, w30	0f001e4a	
+ands x0, x1, x2	200002ea	
+ands w0, w1, w2	2000026a	
+ands x5, x10, x19	450113ea	
+ands w5, w10, w19	4501136a	
+ands x28, x27, x26	7c031aea	
+ands w28, w27, w26	7c031a6a	
+ands x15, x0, x30	0f001eea	
+ands w15, w0, w30	0f001e6a	
+bic x0, x1, x2	2000228a	
+bic w0, w1, w2	2000220a	
+bic x5, x10, x19	4501338a	
+bic w5, w10, w19	4501330a	
+bic x28, x27, x26	7c033a8a	
+bic w28, w27, w26	7c033a0a	
+bic x15, x0, x30	0f003e8a	
+bic w15, w0, w30	0f003e0a	
+orn x0, x1, x2	200022aa	
+orn w0, w1, w2	2000222a	
+orn x5, x10, x19	450133aa	
+orn w5, w10, w19	4501332a	
+orn x28, x27, x26	7c033aaa	
+orn w28, w27, w26	7c033a2a	
+orn x15, x0, x30	0f003eaa	
+orn w15, w0, w30	0f003e2a	
+eon x0, x1, x2	200022ca	
+eon w0, w1, w2	2000224a	
+eon x5, x10, x19	450133ca	
+eon w5, w10, w19	4501334a	
+eon x28, x27, x26	7c033aca	
+eon w28, w27, w26	7c033a4a	
+eon x15, x0, x30	0f003eca	
+eon w15, w0, w30	0f003e4a	
+bics x0, x1, x2	200022ea	
+bics w0, w1, w2	2000226a	
+bics x5, x10, x19	450133ea	
+bics w5, w10, w19	4501336a	
+bics x28, x27, x26	7c033aea	
+bics w28, w27, w26	7c033a6a	
+bics x15, x0, x30	0f003eea	
+bics w15, w0, w30	0f003e6a	
+mul x0, x1, x2	207c029b	
+mul w0, w1, w2	207c021b	
+mul x5, x10, x19	457d139b	
+mul w5, w10, w19	457d131b	
+mul x28, x27, x26	7c7f1a9b	
+mul w28, w27, w26	7c7f1a1b	
+mul x15, x0, x30	0f7c1e9b	
+mul w15, w0, w30	0f7c1e1b	
+smulh x0, x1, x2	207c429b	
+smulh x5, x10, x19	457d539b	
+smulh x28, x27, x26	7c7f5a9b	
+smulh x15, x0, x30	0f7c5e9b	
+umulh x0, x1, x2	207cc29b	
+umulh x5, x10, x19	457dd39b	
+umulh x28, x27, x26	7c7fda9b	
+umulh x15, x0, x30	0f7cde9b	
+sdiv x0, x1, x2	200cc29a	
+sdiv w0, w1, w2	200cc21a	
+sdiv x5, x10, x19	450dd39a	
+sdiv w5, w10, w19	450dd31a	
+sdiv x28, x27, x26	7c0fda9a	
+sdiv w28, w27, w26	7c0fda1a	
+sdiv x15, x0, x30	0f0cde9a	
+sdiv w15, w0, w30	0f0cde1a	
+udiv x0, x1, x2	2008c29a	
+udiv w0, w1, w2	2008c21a	
+udiv x5, x10, x19	4509d39a	
+udiv w5, w10, w19	4509d31a	
+udiv x28, x27, x26	7c0bda9a	
+udiv w28, w27, w26	7c0bda1a	
+udiv x15, x0, x30	0f08de9a	
+udiv w15, w0, w30	0f08de1a	
+lslv x0, x1, x2	2020c29a	
+lslv w0, w1, w2	2020c21a	
+lslv x5, x10, x19	4521d39a	
+lslv w5, w10, w19	4521d31a	
+lslv x28, x27, x26	7c23da9a	
+lslv w28, w27, w26	7c23da1a	
+lslv x15, x0, x30	0f20de9a	
+lslv w15, w0, w30	0f20de1a	
+lsrv x0, x1, x2	2024c29a	
+lsrv w0, w1, w2	2024c21a	
+lsrv x5, x10, x19	4525d39a	
+lsrv w5, w10, w19	4525d31a	
+lsrv x28, x27, x26	7c27da9a	
+lsrv w28, w27, w26	7c27da1a	
+lsrv x15, x0, x30	0f24de9a	
+lsrv w15, w0, w30	0f24de1a	
+asrv x0, x1, x2	2028c29a	
+asrv w0, w1, w2	2028c21a	
+asrv x5, x10, x19	4529d39a	
+asrv w5, w10, w19	4529d31a	
+asrv x28, x27, x26	7c2bda9a	
+asrv w28, w27, w26	7c2bda1a	
+asrv x15, x0, x30	0f28de9a	
+asrv w15, w0, w30	0f28de1a	
+rorv x0, x1, x2	202cc29a	
+rorv w0, w1, w2	202cc21a	
+rorv x5, x10, x19	452dd39a	
+rorv w5, w10, w19	452dd31a	
+rorv x28, x27, x26	7c2fda9a	
+rorv w28, w27, w26	7c2fda1a	
+rorv x15, x0, x30	0f2cde9a	
+rorv w15, w0, w30	0f2cde1a	
+adc x0, x1, x2	2000029a	
+adc w0, w1, w2	2000021a	
+adc x5, x10, x19	4501139a	
+adc w5, w10, w19	4501131a	
+adc x28, x27, x26	7c031a9a	
+adc w28, w27, w26	7c031a1a	
+adc x15, x0, x30	0f001e9a	
+adc w15, w0, w30	0f001e1a	
+sbc x0, x1, x2	200002da	
+sbc w0, w1, w2	2000025a	
+sbc x5, x10, x19	450113da	
+sbc w5, w10, w19	4501135a	
+sbc x28, x27, x26	7c031ada	
+sbc w28, w27, w26	7c031a5a	
+sbc x15, x0, x30	0f001eda	
+sbc w15, w0, w30	0f001e5a	
+adcs x0, x1, x2	200002ba	
+adcs w0, w1, w2	2000023a	
+adcs x5, x10, x19	450113ba	
+adcs w5, w10, w19	4501133a	
+adcs x28, x27, x26	7c031aba	
+adcs w28, w27, w26	7c031a3a	
+adcs x15, x0, x30	0f001eba	
+adcs w15, w0, w30	0f001e3a	
+sbcs x0, x1, x2	200002fa	
+sbcs w0, w1, w2	2000027a	
+sbcs x5, x10, x19	450113fa	
+sbcs w5, w10, w19	4501137a	
+sbcs x28, x27, x26	7c031afa	
+sbcs w28, w27, w26	7c031a7a	
+sbcs x15, x0, x30	0f001efa	
+sbcs w15, w0, w30	0f001e7a	
+add x0, x1, #0	20000091	
+add w0, w1, #0	20000011	
+add x0, x1, #1	20040091	
+add w0, w1, #1	20040011	
+add x0, x1, #42	20a80091	
+add w0, w1, #42	20a80011	
+add x0, x1, #4095	20fc3f91	
+add w0, w1, #4095	20fc3f11	
+add x0, x1, #1, lsl #12	20044091	
+add x5, x19, #0	65020091	
+add w5, w19, #0	65020011	
+add x5, x19, #1	65060091	
+add w5, w19, #1	65060011	
+add x5, x19, #42	65aa0091	
+add w5, w19, #42	65aa0011	
+add x5, x19, #4095	65fe3f91	
+add w5, w19, #4095	65fe3f11	
+add x5, x19, #1, lsl #12	65064091	
+add x28, x3, #0	7c000091	
+add w28, w3, #0	7c000011	
+add x28, x3, #1	7c040091	
+add w28, w3, #1	7c040011	
+add x28, x3, #42	7ca80091	
+add w28, w3, #42	7ca80011	
+add x28, x3, #4095	7cfc3f91	
+add w28, w3, #4095	7cfc3f11	
+add x28, x3, #1, lsl #12	7c044091	
+add x15, x30, #0	cf030091	
+add w15, w30, #0	cf030011	
+add x15, x30, #1	cf070091	
+add w15, w30, #1	cf070011	
+add x15, x30, #42	cfab0091	
+add w15, w30, #42	cfab0011	
+add x15, x30, #4095	cfff3f91	
+add w15, w30, #4095	cfff3f11	
+add x15, x30, #1, lsl #12	cf074091	
+sub x0, x1, #0	200000d1	
+sub w0, w1, #0	20000051	
+sub x0, x1, #1	200400d1	
+sub w0, w1, #1	20040051	
+sub x0, x1, #42	20a800d1	
+sub w0, w1, #42	20a80051	
+sub x0, x1, #4095	20fc3fd1	
+sub w0, w1, #4095	20fc3f51	
+sub x0, x1, #1, lsl #12	200440d1	
+sub x5, x19, #0	650200d1	
+sub w5, w19, #0	65020051	
+sub x5, x19, #1	650600d1	
+sub w5, w19, #1	65060051	
+sub x5, x19, #42	65aa00d1	
+sub w5, w19, #42	65aa0051	
+sub x5, x19, #4095	65fe3fd1	
+sub w5, w19, #4095	65fe3f51	
+sub x5, x19, #1, lsl #12	650640d1	
+sub x28, x3, #0	7c0000d1	
+sub w28, w3, #0	7c000051	
+sub x28, x3, #1	7c0400d1	
+sub w28, w3, #1	7c040051	
+sub x28, x3, #42	7ca800d1	
+sub w28, w3, #42	7ca80051	
+sub x28, x3, #4095	7cfc3fd1	
+sub w28, w3, #4095	7cfc3f51	
+sub x28, x3, #1, lsl #12	7c0440d1	
+sub x15, x30, #0	cf0300d1	
+sub w15, w30, #0	cf030051	
+sub x15, x30, #1	cf0700d1	
+sub w15, w30, #1	cf070051	
+sub x15, x30, #42	cfab00d1	
+sub w15, w30, #42	cfab0051	
+sub x15, x30, #4095	cfff3fd1	
+sub w15, w30, #4095	cfff3f51	
+sub x15, x30, #1, lsl #12	cf0740d1	
+adds x0, x1, #0	200000b1	
+adds w0, w1, #0	20000031	
+adds x0, x1, #1	200400b1	
+adds w0, w1, #1	20040031	
+adds x0, x1, #42	20a800b1	
+adds w0, w1, #42	20a80031	
+adds x0, x1, #4095	20fc3fb1	
+adds w0, w1, #4095	20fc3f31	
+adds x0, x1, #1, lsl #12	200440b1	
+adds x5, x19, #0	650200b1	
+adds w5, w19, #0	65020031	
+adds x5, x19, #1	650600b1	
+adds w5, w19, #1	65060031	
+adds x5, x19, #42	65aa00b1	
+adds w5, w19, #42	65aa0031	
+adds x5, x19, #4095	65fe3fb1	
+adds w5, w19, #4095	65fe3f31	
+adds x5, x19, #1, lsl #12	650640b1	
+adds x28, x3, #0	7c0000b1	
+adds w28, w3, #0	7c000031	
+adds x28, x3, #1	7c0400b1	
+adds w28, w3, #1	7c040031	
+adds x28, x3, #42	7ca800b1	
+adds w28, w3, #42	7ca80031	
+adds x28, x3, #4095	7cfc3fb1	
+adds w28, w3, #4095	7cfc3f31	
+adds x28, x3, #1, lsl #12	7c0440b1	
+adds x15, x30, #0	cf0300b1	
+adds w15, w30, #0	cf030031	
+adds x15, x30, #1	cf0700b1	
+adds w15, w30, #1	cf070031	
+adds x15, x30, #42	cfab00b1	
+adds w15, w30, #42	cfab0031	
+adds x15, x30, #4095	cfff3fb1	
+adds w15, w30, #4095	cfff3f31	
+adds x15, x30, #1, lsl #12	cf0740b1	
+subs x0, x1, #0	200000f1	
+subs w0, w1, #0	20000071	
+subs x0, x1, #1	200400f1	
+subs w0, w1, #1	20040071	
+subs x0, x1, #42	20a800f1	
+subs w0, w1, #42	20a80071	
+subs x0, x1, #4095	20fc3ff1	
+subs w0, w1, #4095	20fc3f71	
+subs x0, x1, #1, lsl #12	200440f1	
+subs x5, x19, #0	650200f1	
+subs w5, w19, #0	65020071	
+subs x5, x19, #1	650600f1	
+subs w5, w19, #1	65060071	
+subs x5, x19, #42	65aa00f1	
+subs w5, w19, #42	65aa0071	
+subs x5, x19, #4095	65fe3ff1	
+subs w5, w19, #4095	65fe3f71	
+subs x5, x19, #1, lsl #12	650640f1	
+subs x28, x3, #0	7c0000f1	
+subs w28, w3, #0	7c000071	
+subs x28, x3, #1	7c0400f1	
+subs w28, w3, #1	7c040071	
+subs x28, x3, #42	7ca800f1	
+subs w28, w3, #42	7ca80071	
+subs x28, x3, #4095	7cfc3ff1	
+subs w28, w3, #4095	7cfc3f71	
+subs x28, x3, #1, lsl #12	7c0440f1	
+subs x15, x30, #0	cf0300f1	
+subs w15, w30, #0	cf030071	
+subs x15, x30, #1	cf0700f1	
+subs w15, w30, #1	cf070071	
+subs x15, x30, #42	cfab00f1	
+subs w15, w30, #42	cfab0071	
+subs x15, x30, #4095	cfff3ff1	
+subs w15, w30, #4095	cfff3f71	
+subs x15, x30, #1, lsl #12	cf0740f1	
+and x0, x1, #0xff	201c4092	
+and x0, x1, #0xf	200c4092	
+and x0, x1, #0x1	20004092	
+and x0, x1, #0xfff	202c4092	
+and x0, x1, #0x5555555555555555	20f00092	
+and x0, x1, #0xffff0000	203c7092	
+and w0, w1, #0xff	201c0012	
+and w0, w1, #0xf	200c0012	
+and w0, w1, #0x1	20000012	
+and w0, w1, #0xf0f0f0f0	20cc0412	
+orr x0, x1, #0xff	201c40b2	
+orr x0, x1, #0xf	200c40b2	
+orr x0, x1, #0x1	200040b2	
+orr x0, x1, #0xfff	202c40b2	
+orr x0, x1, #0x5555555555555555	20f000b2	
+orr x0, x1, #0xffff0000	203c70b2	
+orr w0, w1, #0xff	201c0032	
+orr w0, w1, #0xf	200c0032	
+orr w0, w1, #0x1	20000032	
+orr w0, w1, #0xf0f0f0f0	20cc0432	
+eor x0, x1, #0xff	201c40d2	
+eor x0, x1, #0xf	200c40d2	
+eor x0, x1, #0x1	200040d2	
+eor x0, x1, #0xfff	202c40d2	
+eor x0, x1, #0x5555555555555555	20f000d2	
+eor x0, x1, #0xffff0000	203c70d2	
+eor w0, w1, #0xff	201c0052	
+eor w0, w1, #0xf	200c0052	
+eor w0, w1, #0x1	20000052	
+eor w0, w1, #0xf0f0f0f0	20cc0452	
+ands x0, x1, #0xff	201c40f2	
+ands x0, x1, #0xf	200c40f2	
+ands x0, x1, #0x1	200040f2	
+ands x0, x1, #0xfff	202c40f2	
+ands x0, x1, #0x5555555555555555	20f000f2	
+ands x0, x1, #0xffff0000	203c70f2	
+ands w0, w1, #0xff	201c0072	
+ands w0, w1, #0xf	200c0072	
+ands w0, w1, #0x1	20000072	
+ands w0, w1, #0xf0f0f0f0	20cc0472	
+mov x0, #0	000080d2	
+mov x5, #0	050080d2	
+mov x28, #0	1c0080d2	
+mov x0, #1	200080d2	
+mov x5, #1	250080d2	
+mov x28, #1	3c0080d2	
+mov x0, #0x1234	804682d2	
+mov x5, #0x1234	854682d2	
+mov x28, #0x1234	9c4682d2	
+mov x0, #0xffff	e0ff9fd2	
+mov x5, #0xffff	e5ff9fd2	
+mov x28, #0xffff	fcff9fd2	
+mov x0, #-1	00008092	
+mov x5, #-1	05008092	
+mov x28, #-1	1c008092	
+mov x0, #0x10000	2000a0d2	
+mov x5, #0x10000	2500a0d2	
+mov x28, #0x10000	3c00a0d2	
+mov x0, #0x5555555555555555	e0f300b2	
+mov x5, #0x5555555555555555	e5f300b2	
+mov x28, #0x5555555555555555	fcf300b2	
+movz x0, #0x1234	804682d2	
+movz x0, #0x1234, lsl #16	8046a2d2	
+movz x0, #0x1234, lsl #32	8046c2d2	
+movz x0, #0x1234, lsl #48	8046e2d2	
+movz w1, #0x1234	81468252	
+movk x0, #0x1234	804682f2	
+movk x0, #0x1234, lsl #16	8046a2f2	
+movk x0, #0x1234, lsl #32	8046c2f2	
+movk x0, #0x1234, lsl #48	8046e2f2	
+movk w1, #0x1234	81468272	
+movn x0, #0x1234	80468292	
+movn x0, #0x1234, lsl #16	8046a292	
+movn x0, #0x1234, lsl #32	8046c292	
+movn x0, #0x1234, lsl #48	8046e292	
+movn w1, #0x1234	81468212	
+lsl x0, x1, #1	20f87fd3	
+lsl w0, w1, #1	20781f53	
+lsl x0, x1, #3	20f07dd3	
+lsl w0, w1, #3	20701d53	
+lsl x0, x1, #31	208061d3	
+lsl w0, w1, #31	20000153	
+lsr x0, x1, #1	20fc41d3	
+lsr w0, w1, #1	207c0153	
+lsr x0, x1, #3	20fc43d3	
+lsr w0, w1, #3	207c0353	
+lsr x0, x1, #31	20fc5fd3	
+lsr w0, w1, #31	207c1f53	
+asr x0, x1, #1	20fc4193	
+asr w0, w1, #1	207c0113	
+asr x0, x1, #3	20fc4393	
+asr w0, w1, #3	207c0313	
+asr x0, x1, #31	20fc5f93	
+asr w0, w1, #31	207c1f13	
+ubfx x0, x1, #4, #8	202c44d3	
+ubfx w0, w1, #2, #6	201c0253	
+sbfx x0, x1, #4, #8	202c4493	
+sbfx w0, w1, #2, #6	201c0213	
+ubfiz x0, x1, #4, #8	201c7cd3	
+ubfiz w0, w1, #2, #6	20141e53	
+sbfiz x0, x1, #4, #8	201c7c93	
+sbfiz w0, w1, #2, #6	20141e13	
+bfi x0, x1, #4, #8	201c7cb3	
+bfi w0, w1, #2, #6	20141e33	
+bfxil x0, x1, #4, #8	202c44b3	
+bfxil w0, w1, #2, #6	201c0233	
+sxtw x0, w1	207c4093	
+sxtb x0, w1	201c4093	
+sxth x0, w1	203c4093	
+uxtw x0, w1	207c40d3	
+uxtb w0, w1	201c0053	
+uxth w0, w1	203c0053	
+clz x0, x1	2010c0da	
+clz w0, w1	2010c05a	
+cls x0, x1	2014c0da	
+cls w0, w1	2014c05a	
+rbit x0, x1	2000c0da	
+rbit w0, w1	2000c05a	
+rev x0, x1	200cc0da	
+rev w0, w1	2008c05a	
+rev16 x0, x1	2004c0da	
+rev16 w0, w1	2004c05a	
+rev32 x0, x1	2008c0da	
+csel x0, x1, x2, eq	2000829a	
+csel x0, x1, x2, ne	2010829a	
+csel x0, x1, x2, lt	20b0829a	
+csel x0, x1, x2, ge	20a0829a	
+csel x0, x1, x2, hi	2080829a	
+csinc x0, x1, x2, eq	2004829a	
+csinc x0, x1, x2, ne	2014829a	
+csinc x0, x1, x2, lt	20b4829a	
+csinc x0, x1, x2, ge	20a4829a	
+csinc x0, x1, x2, hi	2084829a	
+csinv x0, x1, x2, eq	200082da	
+csinv x0, x1, x2, ne	201082da	
+csinv x0, x1, x2, lt	20b082da	
+csinv x0, x1, x2, ge	20a082da	
+csinv x0, x1, x2, hi	208082da	
+csneg x0, x1, x2, eq	200482da	
+csneg x0, x1, x2, ne	201482da	
+csneg x0, x1, x2, lt	20b482da	
+csneg x0, x1, x2, ge	20a482da	
+csneg x0, x1, x2, hi	208482da	
+cset x0, eq	e0179f9a	
+cset x0, ne	e0079f9a	
+cset x0, lt	e0a79f9a	
+cset x0, gt	e0d79f9a	
+csetm x0, eq	e0139fda	
+csetm x0, ne	e0039fda	
+csetm x0, lt	e0a39fda	
+csetm x0, gt	e0d39fda	
+cmp x1, x2	3f0002eb	
+cmp x1, #42	3fa800f1	
+cmn x1, x2	3f0002ab	
+cmn x1, #42	3fa800b1	
+tst x1, x2	3f0002ea	
+ccmp x0, x1, #0, eq	000041fa	
+ccmp w0, #31, #15, ne	0f185f7a	
+crc32b w0, w1, w2	2040c21a	
+crc32h w0, w1, w2	2044c21a	
+crc32w w0, w1, w2	2048c21a	
+crc32cb w0, w1, w2	2050c21a	
+crc32x w0, w1, x2	204cc29a	
+ldr x0, [x1]	200040f9	
+ldr x0, [x1, #8]	200440f9	
+ldr x0, [x1, #-8]!	208c5ff8	
+ldr x0, [x1], #8	208440f8	
+ldr x0, [x1, x2]	206862f8	
+ldr x0, [x1, x2, lsl #3]	207862f8	
+ldr w0, [x1, #4]	200440b9	
+str x0, [x1]	200000f9	
+str x0, [x1, #8]	200400f9	
+str x0, [x1, #-8]!	208c1ff8	
+str x0, [x1], #8	208400f8	
+str x0, [x1, x2]	206822f8	
+str x0, [x1, x2, lsl #3]	207822f8	
+str w0, [x1, #4]	200400b9	
+ldrb w0, [x1, #4]	20104039	
+strb w0, [x1, #4]	20100039	
+ldrh w0, [x1, #4]	20084079	
+strh w0, [x1, #4]	20080079	
+ldrsb w0, [x1, #4]	2010c039	
+ldrsh w0, [x1, #4]	2008c079	
+ldp x0, x1, [x2]	400440a9	
+ldp x0, x1, [x2, #16]	400441a9	
+ldp x0, x1, [sp, #-16]!	e007ffa9	
+ldp x0, x1, [sp], #16	e007c1a8	
+stp x0, x1, [x2]	400400a9	
+stp x0, x1, [x2, #16]	400401a9	
+stp x0, x1, [sp, #-16]!	e007bfa9	
+stp x0, x1, [sp], #16	e00781a8	
+ldxr x0, [x1]	207c5fc8	
+ldxr w0, [x1]	207c5f88	
+ldaxr x0, [x1]	20fc5fc8	
+ldaxr w0, [x1]	20fc5f88	
+ldar x0, [x1]	20fcdfc8	
+ldar w0, [x1]	20fcdf88	
+stxr w0, x1, [x2]	417c00c8	
+stlxr w0, x1, [x2]	41fc00c8	
+ldadd x0, x1, [x2]	410020f8	
+ldadd w0, w1, [x2]	410020b8	
+ldclr x0, x1, [x2]	411020f8	
+ldclr w0, w1, [x2]	411020b8	
+ldeor x0, x1, [x2]	412020f8	
+ldeor w0, w1, [x2]	412020b8	
+ldset x0, x1, [x2]	413020f8	
+ldset w0, w1, [x2]	413020b8	
+ldsmax x0, x1, [x2]	414020f8	
+ldsmax w0, w1, [x2]	414020b8	
+ldumin x0, x1, [x2]	417020f8	
+ldumin w0, w1, [x2]	417020b8	
+ldadda x0, x1, [x2]	4100a0f8	
+ldadda w0, w1, [x2]	4100a0b8	
+ldaddl x0, x1, [x2]	410060f8	
+ldaddl w0, w1, [x2]	410060b8	
+ldaddal x0, x1, [x2]	4100e0f8	
+ldaddal w0, w1, [x2]	4100e0b8	
+swp x0, x1, [x2]	418020f8	
+swp w0, w1, [x2]	418020b8	
+swpal x0, x1, [x2]	4180e0f8	
+swpal w0, w1, [x2]	4180e0b8	
+cas x0, x1, [x2]	417ca0c8	
+cas w0, w1, [x2]	417ca088	
+casal x0, x1, [x2]	41fce0c8	
+casal w0, w1, [x2]	41fce088	
+nop	1f2003d5	
+yield	3f2003d5	
+wfe	5f2003d5	
+wfi	7f2003d5	
+sev	9f2003d5	
+sevl	bf2003d5	
+dmb sy	bf3f03d5	
+dsb sy	9f3f03d5	
+dmb ish	bf3b03d5	
+dsb ish	9f3b03d5	
+dmb ishst	bf3a03d5	
+dsb ishst	9f3a03d5	
+dmb nsh	bf3703d5	
+dsb nsh	9f3703d5	
+dmb osh	bf3303d5	
+dsb osh	9f3303d5	
+dmb ld	bf3d03d5	
+dsb ld	9f3d03d5	
+dmb st	bf3e03d5	
+dsb st	9f3e03d5	
+isb	df3f03d5	
+svc #0	010000d4	
+brk #0	000020d4	
+mrs x0, nzcv	00423bd5	
+mrs x0, fpcr	00443bd5	
+mrs x0, fpsr	20443bd5	
+mrs x0, tpidr_el0	40d03bd5	
+mrs x0, cntvct_el0	40e03bd5	
+mrs x0, ctr_el0	20003bd5	
+msr nzcv, x0	00421bd5	
+msr daifset, #2	df4203d5	
+fadd s0, s1, s2	2028221e	
+fadd d0, d1, d2	2028621e	
+fsub s0, s1, s2	2038221e	
+fsub d0, d1, d2	2038621e	
+fmul s0, s1, s2	2008221e	
+fmul d0, d1, d2	2008621e	
+fdiv s0, s1, s2	2018221e	
+fdiv d0, d1, d2	2018621e	
+fmax s0, s1, s2	2048221e	
+fmax d0, d1, d2	2048621e	
+fmin s0, s1, s2	2058221e	
+fmin d0, d1, d2	2058621e	
+fnmul s0, s1, s2	2088221e	
+fnmul d0, d1, d2	2088621e	
+fmaxnm s0, s1, s2	2068221e	
+fmaxnm d0, d1, d2	2068621e	
+fminnm s0, s1, s2	2078221e	
+fminnm d0, d1, d2	2078621e	
+fabs s0, s1	20c0201e	
+fabs d0, d1	20c0601e	
+fneg s0, s1	2040211e	
+fneg d0, d1	2040611e	
+fsqrt s0, s1	20c0211e	
+fsqrt d0, d1	20c0611e	
+fmov s0, s1	2040201e	
+fmov d0, d1	2040601e	
+frinta s0, s1	2040261e	
+frinta d0, d1	2040661e	
+frintn s0, s1	2040241e	
+frintn d0, d1	2040641e	
+frintm s0, s1	2040251e	
+frintm d0, d1	2040651e	
+frintz s0, s1	20c0251e	
+frintz d0, d1	20c0651e	
+frintp s0, s1	20c0241e	
+frintp d0, d1	20c0641e	
+fmadd s0, s1, s2, s3	200c021f	
+fmadd d0, d1, d2, d3	200c421f	
+fmsub s0, s1, s2, s3	208c021f	
+fmsub d0, d1, d2, d3	208c421f	
+fnmadd s0, s1, s2, s3	200c221f	
+fnmadd d0, d1, d2, d3	200c621f	
+fnmsub s0, s1, s2, s3	208c221f	
+fnmsub d0, d1, d2, d3	208c621f	
+fcvt d0, s1	20c0221e	
+fcvt s0, d1	2040621e	
+fcvtzs w0, s1	2000381e	
+fcvtzs x0, d1	2000789e	
+fcvtzu w0, s1	2000391e	
+fcvtzu x0, d1	2000799e	
+fcvtns w0, s1	2000201e	
+fcvtns x0, d1	2000609e	
+fcvtms w0, s1	2000301e	
+fcvtms x0, d1	2000709e	
+fcvtps w0, s1	2000281e	
+fcvtps x0, d1	2000689e	
+fcvtas w0, s1	2000241e	
+fcvtas x0, d1	2000649e	
+scvtf s0, w1	2000221e	
+scvtf d0, x1	2000629e	
+ucvtf s0, w1	2000231e	
+ucvtf d0, x1	2000639e	
+fcvtzs w0, s1, #4	20f0181e	
+fcvtzs x0, d1, #16	20c0589e	
+fcvtzu w0, s1, #4	20f0191e	
+fcvtzu x0, d1, #16	20c0599e	
+scvtf s0, w1, #4	20f0021e	
+scvtf d0, x1, #16	20c0429e	
+ucvtf s0, w1, #4	20f0031e	
+ucvtf d0, x1, #16	20c0439e	
+fcmp s0, s1	0020211e	
+fcmp d0, #0.0	0820601e	
+fcsel s0, s1, s2, eq	200c221e	
+fmov w0, s1	2000261e	
+fmov s0, w1	2000271e	
+fmov x0, d1	2000669e	
+fmov d0, x1	2000679e	
+fmov d0, #1.0	00106e1e	
+fmov s0, #1.0	00102e1e	
+fmov d0, #2.0	0010601e	
+fmov s0, #2.0	0010201e	
+fmov d0, #0.5	00106c1e	
+fmov s0, #0.5	00102c1e	
+fmov d0, #-1.0	00107e1e	
+fmov s0, #-1.0	00103e1e	
+fmov d0, #1.9375	00f06f1e	
+fmov s0, #1.9375	00f02f1e	
+add v0.8b, v1.8b, v2.8b	2084220e	
+add v0.16b, v1.16b, v2.16b	2084224e	
+add v0.4h, v1.4h, v2.4h	2084620e	
+add v0.8h, v1.8h, v2.8h	2084624e	
+add v0.2s, v1.2s, v2.2s	2084a20e	
+add v0.4s, v1.4s, v2.4s	2084a24e	
+add v0.2d, v1.2d, v2.2d	2084e24e	
+sub v0.8b, v1.8b, v2.8b	2084222e	
+sub v0.16b, v1.16b, v2.16b	2084226e	
+sub v0.4h, v1.4h, v2.4h	2084622e	
+sub v0.8h, v1.8h, v2.8h	2084626e	
+sub v0.2s, v1.2s, v2.2s	2084a22e	
+sub v0.4s, v1.4s, v2.4s	2084a26e	
+sub v0.2d, v1.2d, v2.2d	2084e26e	
+mul v0.8b, v1.8b, v2.8b	209c220e	
+mul v0.16b, v1.16b, v2.16b	209c224e	
+mul v0.4h, v1.4h, v2.4h	209c620e	
+mul v0.8h, v1.8h, v2.8h	209c624e	
+mul v0.2s, v1.2s, v2.2s	209ca20e	
+mul v0.4s, v1.4s, v2.4s	209ca24e	
+mla v0.8b, v1.8b, v2.8b	2094220e	
+mla v0.16b, v1.16b, v2.16b	2094224e	
+mla v0.4h, v1.4h, v2.4h	2094620e	
+mla v0.8h, v1.8h, v2.8h	2094624e	
+mla v0.2s, v1.2s, v2.2s	2094a20e	
+mla v0.4s, v1.4s, v2.4s	2094a24e	
+mls v0.8b, v1.8b, v2.8b	2094222e	
+mls v0.16b, v1.16b, v2.16b	2094226e	
+mls v0.4h, v1.4h, v2.4h	2094622e	
+mls v0.8h, v1.8h, v2.8h	2094626e	
+mls v0.2s, v1.2s, v2.2s	2094a22e	
+mls v0.4s, v1.4s, v2.4s	2094a26e	
+smax v0.8b, v1.8b, v2.8b	2064220e	
+smax v0.16b, v1.16b, v2.16b	2064224e	
+smax v0.4h, v1.4h, v2.4h	2064620e	
+smax v0.8h, v1.8h, v2.8h	2064624e	
+smax v0.2s, v1.2s, v2.2s	2064a20e	
+smax v0.4s, v1.4s, v2.4s	2064a24e	
+smin v0.8b, v1.8b, v2.8b	206c220e	
+smin v0.16b, v1.16b, v2.16b	206c224e	
+smin v0.4h, v1.4h, v2.4h	206c620e	
+smin v0.8h, v1.8h, v2.8h	206c624e	
+smin v0.2s, v1.2s, v2.2s	206ca20e	
+smin v0.4s, v1.4s, v2.4s	206ca24e	
+umax v0.8b, v1.8b, v2.8b	2064222e	
+umax v0.16b, v1.16b, v2.16b	2064226e	
+umax v0.4h, v1.4h, v2.4h	2064622e	
+umax v0.8h, v1.8h, v2.8h	2064626e	
+umax v0.2s, v1.2s, v2.2s	2064a22e	
+umax v0.4s, v1.4s, v2.4s	2064a26e	
+umin v0.8b, v1.8b, v2.8b	206c222e	
+umin v0.16b, v1.16b, v2.16b	206c226e	
+umin v0.4h, v1.4h, v2.4h	206c622e	
+umin v0.8h, v1.8h, v2.8h	206c626e	
+umin v0.2s, v1.2s, v2.2s	206ca22e	
+umin v0.4s, v1.4s, v2.4s	206ca26e	
+sshl v0.8b, v1.8b, v2.8b	2044220e	
+sshl v0.16b, v1.16b, v2.16b	2044224e	
+sshl v0.4h, v1.4h, v2.4h	2044620e	
+sshl v0.8h, v1.8h, v2.8h	2044624e	
+sshl v0.2s, v1.2s, v2.2s	2044a20e	
+sshl v0.4s, v1.4s, v2.4s	2044a24e	
+sshl v0.2d, v1.2d, v2.2d	2044e24e	
+ushl v0.8b, v1.8b, v2.8b	2044222e	
+ushl v0.16b, v1.16b, v2.16b	2044226e	
+ushl v0.4h, v1.4h, v2.4h	2044622e	
+ushl v0.8h, v1.8h, v2.8h	2044626e	
+ushl v0.2s, v1.2s, v2.2s	2044a22e	
+ushl v0.4s, v1.4s, v2.4s	2044a26e	
+ushl v0.2d, v1.2d, v2.2d	2044e26e	
+sqadd v0.8b, v1.8b, v2.8b	200c220e	
+sqadd v0.16b, v1.16b, v2.16b	200c224e	
+sqadd v0.4h, v1.4h, v2.4h	200c620e	
+sqadd v0.8h, v1.8h, v2.8h	200c624e	
+sqadd v0.2s, v1.2s, v2.2s	200ca20e	
+sqadd v0.4s, v1.4s, v2.4s	200ca24e	
+sqadd v0.2d, v1.2d, v2.2d	200ce24e	
+uqadd v0.8b, v1.8b, v2.8b	200c222e	
+uqadd v0.16b, v1.16b, v2.16b	200c226e	
+uqadd v0.4h, v1.4h, v2.4h	200c622e	
+uqadd v0.8h, v1.8h, v2.8h	200c626e	
+uqadd v0.2s, v1.2s, v2.2s	200ca22e	
+uqadd v0.4s, v1.4s, v2.4s	200ca26e	
+uqadd v0.2d, v1.2d, v2.2d	200ce26e	
+sqsub v0.8b, v1.8b, v2.8b	202c220e	
+sqsub v0.16b, v1.16b, v2.16b	202c224e	
+sqsub v0.4h, v1.4h, v2.4h	202c620e	
+sqsub v0.8h, v1.8h, v2.8h	202c624e	
+sqsub v0.2s, v1.2s, v2.2s	202ca20e	
+sqsub v0.4s, v1.4s, v2.4s	202ca24e	
+sqsub v0.2d, v1.2d, v2.2d	202ce24e	
+uqsub v0.8b, v1.8b, v2.8b	202c222e	
+uqsub v0.16b, v1.16b, v2.16b	202c226e	
+uqsub v0.4h, v1.4h, v2.4h	202c622e	
+uqsub v0.8h, v1.8h, v2.8h	202c626e	
+uqsub v0.2s, v1.2s, v2.2s	202ca22e	
+uqsub v0.4s, v1.4s, v2.4s	202ca26e	
+uqsub v0.2d, v1.2d, v2.2d	202ce26e	
+cmeq v0.8b, v1.8b, v2.8b	208c222e	
+cmeq v0.16b, v1.16b, v2.16b	208c226e	
+cmeq v0.4h, v1.4h, v2.4h	208c622e	
+cmeq v0.8h, v1.8h, v2.8h	208c626e	
+cmeq v0.2s, v1.2s, v2.2s	208ca22e	
+cmeq v0.4s, v1.4s, v2.4s	208ca26e	
+cmeq v0.2d, v1.2d, v2.2d	208ce26e	
+cmgt v0.8b, v1.8b, v2.8b	2034220e	
+cmgt v0.16b, v1.16b, v2.16b	2034224e	
+cmgt v0.4h, v1.4h, v2.4h	2034620e	
+cmgt v0.8h, v1.8h, v2.8h	2034624e	
+cmgt v0.2s, v1.2s, v2.2s	2034a20e	
+cmgt v0.4s, v1.4s, v2.4s	2034a24e	
+cmgt v0.2d, v1.2d, v2.2d	2034e24e	
+cmge v0.8b, v1.8b, v2.8b	203c220e	
+cmge v0.16b, v1.16b, v2.16b	203c224e	
+cmge v0.4h, v1.4h, v2.4h	203c620e	
+cmge v0.8h, v1.8h, v2.8h	203c624e	
+cmge v0.2s, v1.2s, v2.2s	203ca20e	
+cmge v0.4s, v1.4s, v2.4s	203ca24e	
+cmge v0.2d, v1.2d, v2.2d	203ce24e	
+cmhi v0.8b, v1.8b, v2.8b	2034222e	
+cmhi v0.16b, v1.16b, v2.16b	2034226e	
+cmhi v0.4h, v1.4h, v2.4h	2034622e	
+cmhi v0.8h, v1.8h, v2.8h	2034626e	
+cmhi v0.2s, v1.2s, v2.2s	2034a22e	
+cmhi v0.4s, v1.4s, v2.4s	2034a26e	
+cmhi v0.2d, v1.2d, v2.2d	2034e26e	
+cmhs v0.8b, v1.8b, v2.8b	203c222e	
+cmhs v0.16b, v1.16b, v2.16b	203c226e	
+cmhs v0.4h, v1.4h, v2.4h	203c622e	
+cmhs v0.8h, v1.8h, v2.8h	203c626e	
+cmhs v0.2s, v1.2s, v2.2s	203ca22e	
+cmhs v0.4s, v1.4s, v2.4s	203ca26e	
+cmhs v0.2d, v1.2d, v2.2d	203ce26e	
+cmtst v0.8b, v1.8b, v2.8b	208c220e	
+cmtst v0.16b, v1.16b, v2.16b	208c224e	
+cmtst v0.4h, v1.4h, v2.4h	208c620e	
+cmtst v0.8h, v1.8h, v2.8h	208c624e	
+cmtst v0.2s, v1.2s, v2.2s	208ca20e	
+cmtst v0.4s, v1.4s, v2.4s	208ca24e	
+cmtst v0.2d, v1.2d, v2.2d	208ce24e	
+addp v0.8b, v1.8b, v2.8b	20bc220e	
+addp v0.16b, v1.16b, v2.16b	20bc224e	
+addp v0.4h, v1.4h, v2.4h	20bc620e	
+addp v0.8h, v1.8h, v2.8h	20bc624e	
+addp v0.2s, v1.2s, v2.2s	20bca20e	
+addp v0.4s, v1.4s, v2.4s	20bca24e	
+addp v0.2d, v1.2d, v2.2d	20bce24e	
+and v0.8b, v1.8b, v2.8b	201c220e	
+and v0.16b, v1.16b, v2.16b	201c224e	
+orr v0.8b, v1.8b, v2.8b	201ca20e	
+orr v0.16b, v1.16b, v2.16b	201ca24e	
+eor v0.8b, v1.8b, v2.8b	201c222e	
+eor v0.16b, v1.16b, v2.16b	201c226e	
+bic v0.8b, v1.8b, v2.8b	201c620e	
+bic v0.16b, v1.16b, v2.16b	201c624e	
+orn v0.8b, v1.8b, v2.8b	201ce20e	
+orn v0.16b, v1.16b, v2.16b	201ce24e	
+bsl v0.8b, v1.8b, v2.8b	201c622e	
+bsl v0.16b, v1.16b, v2.16b	201c626e	
+fadd v0.2s, v1.2s, v2.2s	20d4220e	
+fadd v0.4s, v1.4s, v2.4s	20d4224e	
+fadd v0.2d, v1.2d, v2.2d	20d4624e	
+fsub v0.2s, v1.2s, v2.2s	20d4a20e	
+fsub v0.4s, v1.4s, v2.4s	20d4a24e	
+fsub v0.2d, v1.2d, v2.2d	20d4e24e	
+fmul v0.2s, v1.2s, v2.2s	20dc222e	
+fmul v0.4s, v1.4s, v2.4s	20dc226e	
+fmul v0.2d, v1.2d, v2.2d	20dc626e	
+fdiv v0.2s, v1.2s, v2.2s	20fc222e	
+fdiv v0.4s, v1.4s, v2.4s	20fc226e	
+fdiv v0.2d, v1.2d, v2.2d	20fc626e	
+fmla v0.2s, v1.2s, v2.2s	20cc220e	
+fmla v0.4s, v1.4s, v2.4s	20cc224e	
+fmla v0.2d, v1.2d, v2.2d	20cc624e	
+fmls v0.2s, v1.2s, v2.2s	20cca20e	
+fmls v0.4s, v1.4s, v2.4s	20cca24e	
+fmls v0.2d, v1.2d, v2.2d	20cce24e	
+fmax v0.2s, v1.2s, v2.2s	20f4220e	
+fmax v0.4s, v1.4s, v2.4s	20f4224e	
+fmax v0.2d, v1.2d, v2.2d	20f4624e	
+fmin v0.2s, v1.2s, v2.2s	20f4a20e	
+fmin v0.4s, v1.4s, v2.4s	20f4a24e	
+fmin v0.2d, v1.2d, v2.2d	20f4e24e	
+fabd v0.2s, v1.2s, v2.2s	20d4a22e	
+fabd v0.4s, v1.4s, v2.4s	20d4a26e	
+fabd v0.2d, v1.2d, v2.2d	20d4e26e	
+fmulx v0.2s, v1.2s, v2.2s	20dc220e	
+fmulx v0.4s, v1.4s, v2.4s	20dc224e	
+fmulx v0.2d, v1.2d, v2.2d	20dc624e	
+fmaxnm v0.2s, v1.2s, v2.2s	20c4220e	
+fmaxnm v0.4s, v1.4s, v2.4s	20c4224e	
+fmaxnm v0.2d, v1.2d, v2.2d	20c4624e	
+fminnm v0.2s, v1.2s, v2.2s	20c4a20e	
+fminnm v0.4s, v1.4s, v2.4s	20c4a24e	
+fminnm v0.2d, v1.2d, v2.2d	20c4e24e	
+faddp v0.2s, v1.2s, v2.2s	20d4222e	
+faddp v0.4s, v1.4s, v2.4s	20d4226e	
+faddp v0.2d, v1.2d, v2.2d	20d4626e	
+fmaxp v0.2s, v1.2s, v2.2s	20f4222e	
+fmaxp v0.4s, v1.4s, v2.4s	20f4226e	
+fmaxp v0.2d, v1.2d, v2.2d	20f4626e	
+fminp v0.2s, v1.2s, v2.2s	20f4a22e	
+fminp v0.4s, v1.4s, v2.4s	20f4a26e	
+fminp v0.2d, v1.2d, v2.2d	20f4e26e	
+fcmeq v0.2s, v1.2s, v2.2s	20e4220e	
+fcmeq v0.4s, v1.4s, v2.4s	20e4224e	
+fcmeq v0.2d, v1.2d, v2.2d	20e4624e	
+fcmge v0.2s, v1.2s, v2.2s	20e4222e	
+fcmge v0.4s, v1.4s, v2.4s	20e4226e	
+fcmge v0.2d, v1.2d, v2.2d	20e4626e	
+fcmgt v0.2s, v1.2s, v2.2s	20e4a22e	
+fcmgt v0.4s, v1.4s, v2.4s	20e4a26e	
+fcmgt v0.2d, v1.2d, v2.2d	20e4e26e	
+neg v0.8b, v1.8b	20b8202e	
+neg v0.16b, v1.16b	20b8206e	
+neg v0.4h, v1.4h	20b8602e	
+neg v0.8h, v1.8h	20b8606e	
+neg v0.2s, v1.2s	20b8a02e	
+neg v0.4s, v1.4s	20b8a06e	
+abs v0.8b, v1.8b	20b8200e	
+abs v0.16b, v1.16b	20b8204e	
+abs v0.4h, v1.4h	20b8600e	
+abs v0.8h, v1.8h	20b8604e	
+abs v0.2s, v1.2s	20b8a00e	
+abs v0.4s, v1.4s	20b8a04e	
+cls v0.8b, v1.8b	2048200e	
+cls v0.16b, v1.16b	2048204e	
+cls v0.4h, v1.4h	2048600e	
+cls v0.8h, v1.8h	2048604e	
+cls v0.2s, v1.2s	2048a00e	
+cls v0.4s, v1.4s	2048a04e	
+clz v0.8b, v1.8b	2048202e	
+clz v0.16b, v1.16b	2048206e	
+clz v0.4h, v1.4h	2048602e	
+clz v0.8h, v1.8h	2048606e	
+clz v0.2s, v1.2s	2048a02e	
+clz v0.4s, v1.4s	2048a06e	
+rev64 v0.8b, v1.8b	2008200e	
+rev64 v0.16b, v1.16b	2008204e	
+rev64 v0.4h, v1.4h	2008600e	
+rev64 v0.8h, v1.8h	2008604e	
+rev64 v0.2s, v1.2s	2008a00e	
+rev64 v0.4s, v1.4s	2008a04e	
+not v0.8b, v1.8b	2058202e	
+cnt v0.8b, v1.8b	2058200e	
+rev16 v0.8b, v1.8b	2018200e	
+not v0.16b, v1.16b	2058206e	
+cnt v0.16b, v1.16b	2058204e	
+rev16 v0.16b, v1.16b	2018204e	
+fneg v0.2s, v1.2s	20f8a02e	
+fneg v0.4s, v1.4s	20f8a06e	
+fneg v0.2d, v1.2d	20f8e06e	
+fabs v0.2s, v1.2s	20f8a00e	
+fabs v0.4s, v1.4s	20f8a04e	
+fabs v0.2d, v1.2d	20f8e04e	
+fsqrt v0.2s, v1.2s	20f8a12e	
+fsqrt v0.4s, v1.4s	20f8a16e	
+fsqrt v0.2d, v1.2d	20f8e16e	
+scvtf v0.2s, v1.2s	20d8210e	
+scvtf v0.4s, v1.4s	20d8214e	
+scvtf v0.2d, v1.2d	20d8614e	
+ucvtf v0.2s, v1.2s	20d8212e	
+ucvtf v0.4s, v1.4s	20d8216e	
+ucvtf v0.2d, v1.2d	20d8616e	
+fcvtzs v0.2s, v1.2s	20b8a10e	
+fcvtzs v0.4s, v1.4s	20b8a14e	
+fcvtzs v0.2d, v1.2d	20b8e14e	
+fcvtzu v0.2s, v1.2s	20b8a12e	
+fcvtzu v0.4s, v1.4s	20b8a16e	
+fcvtzu v0.2d, v1.2d	20b8e16e	
+frintn v0.2s, v1.2s	2088210e	
+frintn v0.4s, v1.4s	2088214e	
+frintn v0.2d, v1.2d	2088614e	
+frintp v0.2s, v1.2s	2088a10e	
+frintp v0.4s, v1.4s	2088a14e	
+frintp v0.2d, v1.2d	2088e14e	
+frintm v0.2s, v1.2s	2098210e	
+frintm v0.4s, v1.4s	2098214e	
+frintm v0.2d, v1.2d	2098614e	
+frintz v0.2s, v1.2s	2098a10e	
+frintz v0.4s, v1.4s	2098a14e	
+frintz v0.2d, v1.2d	2098e14e	
+fcmeq v0.2s, v1.2s, #0.0	20d8a00e	
+fcmeq v0.4s, v1.4s, #0.0	20d8a04e	
+fcmeq v0.2d, v1.2d, #0.0	20d8e04e	
+fcmge v0.2s, v1.2s, #0.0	20c8a02e	
+fcmge v0.4s, v1.4s, #0.0	20c8a06e	
+fcmge v0.2d, v1.2d, #0.0	20c8e06e	
+fcmgt v0.2s, v1.2s, #0.0	20c8a00e	
+fcmgt v0.4s, v1.4s, #0.0	20c8a04e	
+fcmgt v0.2d, v1.2d, #0.0	20c8e04e	
+fcmle v0.2s, v1.2s, #0.0	20d8a02e	
+fcmle v0.4s, v1.4s, #0.0	20d8a06e	
+fcmle v0.2d, v1.2d, #0.0	20d8e06e	
+fcmlt v0.2s, v1.2s, #0.0	20e8a00e	
+fcmlt v0.4s, v1.4s, #0.0	20e8a04e	
+fcmlt v0.2d, v1.2d, #0.0	20e8e04e	
+addv s0, v1.4s	20b8b14e	
+addv b0, v1.8b	20b8310e	
+addv h0, v1.8h	20b8714e	
+smaxv s0, v1.4s	20a8b04e	
+sminv s0, v1.4s	20a8b14e	
+umaxv s0, v1.4s	20a8b06e	
+uminv s0, v1.4s	20a8b16e	
+dup v0.4s, v1.s[1]	20040c4e	
+dup v0.16b, w1	200c014e	
+dup v0.2d, x1	200c084e	
+ins v0.s[1], v1.s[2]	20440c6e	
+ins v0.d[1], x2	401c184e	
+umov w0, v1.s[2]	203c140e	
+smov x0, v1.h[2]	202c0a4e	
+zip1 v0.16b, v1.16b, v2.16b	2038024e	
+zip1 v0.4s, v1.4s, v2.4s	2038824e	
+zip1 v0.2d, v1.2d, v2.2d	2038c24e	
+zip2 v0.16b, v1.16b, v2.16b	2078024e	
+zip2 v0.4s, v1.4s, v2.4s	2078824e	
+zip2 v0.2d, v1.2d, v2.2d	2078c24e	
+uzp1 v0.16b, v1.16b, v2.16b	2018024e	
+uzp1 v0.4s, v1.4s, v2.4s	2018824e	
+uzp1 v0.2d, v1.2d, v2.2d	2018c24e	
+uzp2 v0.16b, v1.16b, v2.16b	2058024e	
+uzp2 v0.4s, v1.4s, v2.4s	2058824e	
+uzp2 v0.2d, v1.2d, v2.2d	2058c24e	
+trn1 v0.16b, v1.16b, v2.16b	2028024e	
+trn1 v0.4s, v1.4s, v2.4s	2028824e	
+trn1 v0.2d, v1.2d, v2.2d	2028c24e	
+trn2 v0.16b, v1.16b, v2.16b	2068024e	
+trn2 v0.4s, v1.4s, v2.4s	2068824e	
+trn2 v0.2d, v1.2d, v2.2d	2068c24e	
+ext v0.16b, v1.16b, v2.16b, #4	2020026e	
+tbl v0.16b, {v1.16b}, v2.16b	2000024e	
+tbl v0.16b, {v1.16b, v2.16b}, v3.16b	2020034e	
+tbx v0.16b, {v1.16b, v2.16b, v3.16b}, v4.16b	2050044e	
+shl v0.16b, v1.16b, #3	20540b4f	
+shl v0.8h, v1.8h, #5	2054154f	
+shl v0.4s, v1.4s, #10	20542a4f	
+shl v0.2d, v1.2d, #40	2054684f	
+sli v0.16b, v1.16b, #3	20540b6f	
+sli v0.8h, v1.8h, #5	2054156f	
+sli v0.4s, v1.4s, #10	20542a6f	
+sli v0.2d, v1.2d, #40	2054686f	
+sshr v0.16b, v1.16b, #3	20040d4f	
+sshr v0.8h, v1.8h, #5	20041b4f	
+sshr v0.4s, v1.4s, #10	2004364f	
+sshr v0.2d, v1.2d, #40	2004584f	
+ushr v0.16b, v1.16b, #3	20040d6f	
+ushr v0.8h, v1.8h, #5	20041b6f	
+ushr v0.4s, v1.4s, #10	2004366f	
+ushr v0.2d, v1.2d, #40	2004586f	
+ssra v0.16b, v1.16b, #3	20140d4f	
+ssra v0.8h, v1.8h, #5	20141b4f	
+ssra v0.4s, v1.4s, #10	2014364f	
+ssra v0.2d, v1.2d, #40	2014584f	
+usra v0.16b, v1.16b, #3	20140d6f	
+usra v0.8h, v1.8h, #5	20141b6f	
+usra v0.4s, v1.4s, #10	2014366f	
+usra v0.2d, v1.2d, #40	2014586f	
+srshr v0.16b, v1.16b, #3	20240d4f	
+srshr v0.8h, v1.8h, #5	20241b4f	
+srshr v0.4s, v1.4s, #10	2024364f	
+srshr v0.2d, v1.2d, #40	2024584f	
+urshr v0.16b, v1.16b, #3	20240d6f	
+urshr v0.8h, v1.8h, #5	20241b6f	
+urshr v0.4s, v1.4s, #10	2024366f	
+urshr v0.2d, v1.2d, #40	2024586f	
+sri v0.16b, v1.16b, #3	20440d6f	
+sri v0.8h, v1.8h, #5	20441b6f	
+sri v0.4s, v1.4s, #10	2044366f	
+sri v0.2d, v1.2d, #40	2044586f	
+saddl v0.8h, v1.8b, v2.8b	2000220e	
+saddl v0.4s, v1.4h, v2.4h	2000620e	
+saddl2 v0.4s, v1.8h, v2.8h	2000624e	
+uaddl v0.8h, v1.8b, v2.8b	2000222e	
+uaddl v0.4s, v1.4h, v2.4h	2000622e	
+uaddl2 v0.4s, v1.8h, v2.8h	2000626e	
+ssubl v0.8h, v1.8b, v2.8b	2020220e	
+ssubl v0.4s, v1.4h, v2.4h	2020620e	
+ssubl2 v0.4s, v1.8h, v2.8h	2020624e	
+usubl v0.8h, v1.8b, v2.8b	2020222e	
+usubl v0.4s, v1.4h, v2.4h	2020622e	
+usubl2 v0.4s, v1.8h, v2.8h	2020626e	
+smull v0.8h, v1.8b, v2.8b	20c0220e	
+smull v0.4s, v1.4h, v2.4h	20c0620e	
+smull2 v0.4s, v1.8h, v2.8h	20c0624e	
+umull v0.8h, v1.8b, v2.8b	20c0222e	
+umull v0.4s, v1.4h, v2.4h	20c0622e	
+umull2 v0.4s, v1.8h, v2.8h	20c0626e	
+smlal v0.8h, v1.8b, v2.8b	2080220e	
+smlal v0.4s, v1.4h, v2.4h	2080620e	
+smlal2 v0.4s, v1.8h, v2.8h	2080624e	
+umlal v0.8h, v1.8b, v2.8b	2080222e	
+umlal v0.4s, v1.4h, v2.4h	2080622e	
+umlal2 v0.4s, v1.8h, v2.8h	2080626e	
+smlsl v0.8h, v1.8b, v2.8b	20a0220e	
+smlsl v0.4s, v1.4h, v2.4h	20a0620e	
+smlsl2 v0.4s, v1.8h, v2.8h	20a0624e	
+umlsl v0.8h, v1.8b, v2.8b	20a0222e	
+umlsl v0.4s, v1.4h, v2.4h	20a0622e	
+umlsl2 v0.4s, v1.8h, v2.8h	20a0626e	
+saddw v0.8h, v1.8h, v2.8b	2010220e	
+uaddw v0.8h, v1.8h, v2.8b	2010222e	
+ssubw v0.8h, v1.8h, v2.8b	2030220e	
+usubw v0.8h, v1.8h, v2.8b	2030222e	
+addhn v0.8b, v1.8h, v2.8h	2040220e	
+addhn2 v0.16b, v1.8h, v2.8h	2040224e	
+raddhn v0.8b, v1.8h, v2.8h	2040222e	
+raddhn2 v0.16b, v1.8h, v2.8h	2040226e	
+subhn v0.8b, v1.8h, v2.8h	2060220e	
+subhn2 v0.16b, v1.8h, v2.8h	2060224e	
+rsubhn v0.8b, v1.8h, v2.8h	2060222e	
+rsubhn2 v0.16b, v1.8h, v2.8h	2060226e	
+xtn v0.8b, v1.8h	2028210e	
+xtn2 v0.16b, v1.8h	2028214e	
+sqxtn v0.8b, v1.8h	2048210e	
+sqxtn2 v0.16b, v1.8h	2048214e	
+uqxtn v0.8b, v1.8h	2048212e	
+uqxtn2 v0.16b, v1.8h	2048216e	
+sqxtun v0.8b, v1.8h	2028212e	
+sqxtun2 v0.16b, v1.8h	2028216e	
+mul v0.4s, v1.4s, v2.s[1]	2080a24f	
+mul v0.8h, v1.8h, v2.h[3]	2080724f	
+mla v0.4s, v1.4s, v2.s[1]	2000a26f	
+mla v0.8h, v1.8h, v2.h[3]	2000726f	
+mls v0.4s, v1.4s, v2.s[1]	2040a26f	
+mls v0.8h, v1.8h, v2.h[3]	2040726f	
+sqdmulh v0.4s, v1.4s, v2.s[1]	20c0a24f	
+sqdmulh v0.8h, v1.8h, v2.h[3]	20c0724f	
+sqrdmulh v0.4s, v1.4s, v2.s[1]	20d0a24f	
+sqrdmulh v0.8h, v1.8h, v2.h[3]	20d0724f	
+fmul v0.4s, v1.4s, v2.s[2]	2098824f	
+fmul v0.2d, v1.2d, v2.d[1]	2098c24f	
+fmla v0.4s, v1.4s, v2.s[2]	2018824f	
+fmla v0.2d, v1.2d, v2.d[1]	2018c24f	
+fmls v0.4s, v1.4s, v2.s[2]	2058824f	
+fmls v0.2d, v1.2d, v2.d[1]	2058c24f	
+fmulx v0.4s, v1.4s, v2.s[2]	2098826f	
+fmulx v0.2d, v1.2d, v2.d[1]	2098c26f	
+smull v0.4s, v1.4h, v2.h[3]	20a0720f	
+umull v0.4s, v1.4h, v2.h[3]	20a0722f	
+smlal v0.4s, v1.4h, v2.h[3]	2020720f	
+umlal v0.4s, v1.4h, v2.h[3]	2020722f	
+movi v0.16b, #0xab	60e5054f	
+movi v0.8b, #0xab	60e5050f	
+movi v0.4s, #0xab	6005054f	
+mvni v0.4s, #0xab	6005056f	
+movi v0.4s, #0xab, lsl #8	6025054f	
+mvni v0.4s, #0xab, lsl #8	6025056f	
+movi v0.4s, #0xab, lsl #16	6045054f	
+mvni v0.4s, #0xab, lsl #16	6045056f	
+movi v0.4s, #0xab, lsl #24	6065054f	
+mvni v0.4s, #0xab, lsl #24	6065056f	
+movi v0.4s, #0xab, msl #8	60c5054f	
+mvni v0.4s, #0xab, msl #8	60c5056f	
+movi v0.4s, #0xab, msl #16	60d5054f	
+mvni v0.4s, #0xab, msl #16	60d5056f	
+movi v0.8h, #0xab	6085054f	
+bic v0.4s, #0xab	6015056f	
+orr v0.4s, #0xab	6015054f	
+movi v0.8h, #0xab, lsl #8	60a5054f	
+bic v0.4s, #0xab, lsl #8	6035056f	
+orr v0.4s, #0xab, lsl #8	6035054f	
+movi v0.2d, #0xff00ff00ff00ff00	40e5056f	
+movi d0, #0xffffffffffffffff	e0e7072f	
+fcvtn v0.4h, v1.4s	2068210e	
+fcvtn2 v0.8h, v1.4s	2068214e	
+fcvtl v0.4s, v1.4h	2078210e	
+fcvtl2 v0.4s, v1.8h	2078214e	
+ld1 {v0.16b}, [x0]	0070404c	
+ld1 {v0.16b, v1.16b}, [x0]	00a0404c	
+ld1 {v0.8h}, [x0]	0074404c	
+ld1 {v0.8h, v1.8h}, [x0]	00a4404c	
+ld1 {v0.4s}, [x0]	0078404c	
+ld1 {v0.4s, v1.4s}, [x0]	00a8404c	
+ld1 {v0.2d}, [x0]	007c404c	
+ld1 {v0.2d, v1.2d}, [x0]	00ac404c	
+st1 {v0.16b}, [x0]	0070004c	
+st1 {v0.16b, v1.16b}, [x0]	00a0004c	
+st1 {v0.8h}, [x0]	0074004c	
+st1 {v0.8h, v1.8h}, [x0]	00a4004c	
+st1 {v0.4s}, [x0]	0078004c	
+st1 {v0.4s, v1.4s}, [x0]	00a8004c	
+st1 {v0.2d}, [x0]	007c004c	
+st1 {v0.2d, v1.2d}, [x0]	00ac004c	
+ld2 {v0.4s, v1.4s}, [x0]	0088404c	
+ld3 {v0.8h, v1.8h, v2.8h}, [x0]	0044404c	
+ld4 {v0.4s, v1.4s, v2.4s, v3.4s}, [x0]	0008404c	
+ld1 {v0.16b}, [x0], #16	0070df4c	
+ld1 {v0.16b}, [x0], x2	0070c24c	
+aese v0.16b, v1.16b	2048284e	
+aesd v0.16b, v1.16b	2058284e	
+aesmc v0.16b, v1.16b	2068284e	
+aesimc v0.16b, v1.16b	2078284e	
+sha1h s0, s1	2008285e	
+sha1su1 v0.4s, v1.4s	2018285e	
+sha256su0 v0.4s, v1.4s	2028285e	
+sha1c q0, s1, v2.4s	2000025e	
+sha1p q0, s1, v2.4s	2010025e	
+sha1m q0, s1, v2.4s	2020025e	
+sha1su0 v0.4s, v1.4s, v2.4s	2030025e	
+sha256h q0, q1, v2.4s	2040025e	
+sha256h2 q0, q1, v2.4s	2050025e	
+sha256su1 v0.4s, v1.4s, v2.4s	2060025e	

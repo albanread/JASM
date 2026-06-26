@@ -37,12 +37,30 @@ pub struct Reloc {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum RelocKind {
+    // ── x86-64 (rel32 family) ────────────────────────────────────────────
     /// `call`/`jmp`/`jcc rel32`: field = target - (field_addr + 4).
     BranchRel32,
     /// `lea reg,[rip+disp32]` and friends: field = target - (field_addr + 4).
     RipRel32,
     /// 64-bit absolute address embedded in a data cell.
+    /// Shared with AArch64 (`.quad sym` → `ARM64_RELOC_UNSIGNED`).
     Abs64,
+
+    // ── AArch64 (fields packed *within* the 32-bit instruction word) ──────
+    // Unlike x86 rel32 (a contiguous little-endian field), these patch a
+    // bit-slice of the 4-byte word, so the loader/encoder must insert the
+    // immediate by masking — not by writing N little-endian bytes. See
+    // docs/design/aarch64-apple-silicon.md.
+    /// `b`/`bl` 26-bit PC-relative branch (±128 MB), `<<2`.
+    /// Mach-O `ARM64_RELOC_BRANCH26`.
+    Branch26,
+    /// `adrp` 21-bit PC-relative *page* address (±4 GB), bits split
+    /// `immlo[30:29]`/`immhi[23:5]`. Mach-O `ARM64_RELOC_PAGE21`.
+    AdrpPage21,
+    /// Low-12 page offset for the `add`/`ldr` that follows an `adrp`
+    /// (`imm[21:10]`, scaled by access size for `ldr`). Mach-O
+    /// `ARM64_RELOC_PAGEOFF12`.
+    AddPageOff12,
 }
 
 /// The product of [`Encoder::encode`]: a position-independent code blob plus
