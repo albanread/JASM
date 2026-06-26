@@ -44,6 +44,11 @@ pub mod backend;
 /// Pure Rust, no LLVM. See WF65 docs/design/rasm-replace-llvm.md.
 pub mod rasm;
 
+/// `a64` — the native AArch64 encoder (text → machine code) for Apple Silicon.
+/// Pure Rust, no LLVM; gated byte-for-byte against the LLVM-MC oracle. See
+/// docs/design/aarch64-apple-silicon.md.
+pub mod a64;
+
 /// Differential driver: diff rasm against an oracle `Encoder` (byte + reloc),
 /// with reloc-field masking. Arch/oracle-neutral; gated tests use the LLVM
 /// oracle. See `docs/design/rasm-difftest.md`.
@@ -59,6 +64,12 @@ pub mod seh;
 /// relocate + protect job. No LLVM; always compiled (Windows).
 #[cfg(windows)]
 pub mod native;
+
+/// macOS / Apple Silicon native loader (`MacJit`) — places `A64Encoder` output
+/// in `MAP_JIT` memory, relocates, and executes. No LLVM. See
+/// docs/design/aarch64-apple-silicon.md.
+#[cfg(target_os = "macos")]
+pub mod native_macos;
 
 pub use arena::CodeArena;
 pub use asm::Assembler;

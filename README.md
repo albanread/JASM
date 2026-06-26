@@ -1,11 +1,15 @@
 # JASM
 
-A JIT macro-assembler for x86-64 Windows. Source in, function pointer
-out.
+A JIT macro-assembler for x86-64 Windows **and Apple Silicon (macOS
+arm64)**. Source in, function pointer out.
 
 Brings MASM32-era ergonomics to a modern LLVM-MC + MCJIT pipeline,
 exposes the entire Win32 API by name, and ships a crash dumper for
-when your hand-written asm goes sideways.
+when your hand-written asm goes sideways. On Apple Silicon it runs
+**LLVM-free**: a from-scratch AArch64 encoder (gated byte-for-byte
+against LLVM-MC) plus a `MAP_JIT` loader. See
+[rust/README.md](rust/README.md#apple-silicon-macos-arm64) and
+[rust/docs/design/aarch64-apple-silicon.md](rust/docs/design/aarch64-apple-silicon.md).
 
 ```masm
 @include "win32/kernel32.masm"

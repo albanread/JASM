@@ -15,7 +15,7 @@ use wfasm::rasm::RasmEncoder;
 fn main() {
     let model = X86Model;
     let rasm = RasmEncoder;
-    let oracle = LlvmMcEncoder::new();
+    let oracle = LlvmMcEncoder::x86_64();
 
     let report = diff_model(&rasm, &oracle, &model);
     println!("{}", report.summary());

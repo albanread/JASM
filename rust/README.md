@@ -257,18 +257,63 @@ your debugger gets the exception too.
 | Forth kernel | **in progress** — `forth/` directory; Phase 1 primitives complete |
 | Win32 functions exposed | **3,757** across 11 DLLs |
 | Win32 functions with `invoke`-style wrappers | **3,177** |
-| Target platform | x86-64 Windows (LLVM 22.x) |
-| Status | Assembler complete. ANS Forth kernel underway in `forth/`. |
+| Target platforms | x86-64 Windows (LLVM 22.x) **and Apple Silicon (macOS arm64, LLVM-free)** |
+| Status | Assembler complete on both targets. ANS Forth kernel underway in `forth/`. |
 
 Smoke binaries:
 
 ```
-$ cargo run --bin hello-jit       # mov rax, 42; ret  →  prints 42
-$ cargo run --bin hello-runtime   # JIT calls a Rust function and back
-$ cargo run --bin hello-win32     # JIT calls GetTickCount64 by name
+$ cargo run --bin hello-jit       # mov rax, 42; ret  →  prints 42  (x86, LLVM)
+$ cargo run --bin hello-runtime   # JIT calls a Rust function and back (x86, LLVM)
+$ cargo run --bin hello-win32     # JIT calls GetTickCount64 by name  (x86, LLVM)
 $ cargo run --bin hello-seh       # int 3 dumps and continues; segfault dumps and aborts
 $ cargo run --bin wf64            # ANS Forth interpreter (requires forth/kernel.masm)
+$ cargo run --bin hello-aarch64   # AArch64 JIT calls a Rust function (Apple Silicon, no LLVM)
 ```
+
+## Apple Silicon (macOS arm64)
+
+JASM runs natively on Apple Silicon with **no LLVM dependency at runtime**. The
+default build (`cargo build`, the `llvm` feature *off*) compiles a from-scratch
+AArch64 assembler + a `MAP_JIT` loader:
+
+```
+.masm source → wfasm::asm (macro engine, arch-neutral)
+     ▼
+wfasm::a64::A64Encoder        ← native AArch64 encoder (text → machine code),
+     │                          byte-identical to LLVM-MC, no LLVM linked
+     ▼
+wfasm::native_macos::MacJit   ← mmap(MAP_JIT) + per-thread W^X toggle
+     │                          + sys_icache_invalidate + far-call veneers
+     ▼
+extern "C" fn pointer         ← call from Rust
+```
+
+```
+$ cargo build                          # native arm64 build, no LLVM
+$ cargo test --lib                     # 182 tests (incl. a 1,181-form corpus replay)
+$ cargo run --bin hello-aarch64
+from JIT: 42
+forth_main() = 84
+```
+
+- **`src/a64/`** — the native AArch64 encoder (parser, encoder, two-pass driver
+  with conditional-branch relaxation). Covers the practical Apple-Silicon
+  user-space ISA: integer (ALU/mul/div/shift/bitfield/csel/ccmp/adc/crc),
+  loads/stores (incl. FP/SIMD, pairs, exclusives, LSE atomics), control flow,
+  scalar FP, the full NEON Advanced-SIMD set, AES/SHA crypto, and system/barriers.
+- **`src/native_macos.rs`** — `MacJit`, the macOS loader (the AArch64 sibling of
+  the Windows `NativeJit`). `MAP_JIT` works in a plain `cargo test` binary; the
+  hardened-runtime `com.apple.security.cs.allow-jit` entitlement is only needed
+  for a signed, distributed binary.
+- **The oracle, kept honest.** Every encoded form is gated byte-for-byte against
+  LLVM-MC (`aarch64-apple-darwin`) via the `difftest` harness, and frozen into
+  `corpus/aarch64.tsv` (1,181 forms). The replay test re-verifies the encoder
+  with **no LLVM installed**; regenerate with `cargo run --bin a64-corpus
+  --features llvm` after extending coverage.
+
+See [docs/design/aarch64-apple-silicon.md](docs/design/aarch64-apple-silicon.md)
+for the full design, phasing, and the verified encoding reference.
 
 ## Quick start
 
@@ -459,10 +504,17 @@ JASM stands on a stack of generous prior work:
 
 ## Limitations
 
-- **Windows x86-64 only.** Linux/macOS aren't blocked structurally —
-  the assembler core is platform-agnostic, the JIT is host-target by
-  default — but `wfasm::win32` and `wfasm::seh` are
-  `#[cfg(windows)]` and the generator is Win32-specific.
+- **Two backends: x86-64 Windows (LLVM) and Apple Silicon (native).**
+  The Windows path uses LLVM-MC + MCJIT and the Win32 bindings; the
+  macOS arm64 path is the LLVM-free `a64` encoder + `MacJit` (see the
+  [Apple Silicon](#apple-silicon-macos-arm64) section). Linux x86-64
+  works as an LLVM oracle target but has no native loader yet. `win32`
+  and `seh` are `#[cfg(windows)]`; `native_macos` is `#[cfg(macos)]`.
+- **AArch64 gaps (deferred, niche).** Single-structure *lane* load/store
+  (`ld1 {v0.s}[2], …`), the SVE/SME vector extensions, and the AArch64
+  crash dumper are not yet implemented. Out-of-range conditional branches
+  are relaxed (inverted + `b`) — a deliberate extension beyond LLVM-MC,
+  which errors on them.
 - **No DWARF or PDB.** Crash dumps resolve to `<proc+offset>`, not to
   source lines. Adding `.cfi_*` macros and proper line directives is
   a future feature.
