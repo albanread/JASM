@@ -542,6 +542,18 @@ impl<'a> Lexer<'a> {
                 // condition-code / arrangement suffix (e.g. `b.ge` -> `b<proc>$$ge`).
                 // x86 has no interior-dot mnemonics/operands, so this is inert there.
                 self.advance();
+            } else if c == b'@'
+                && self
+                    .peek_at(1)
+                    .is_some_and(|n| n == b'_' || n.is_ascii_alphanumeric())
+            {
+                // Interior '@' inside an already-started identifier: an AArch64
+                // relocation specifier (`sym@PAGE`, `sym@PAGEOFF`, `sym@GOTPAGE`,
+                // …). Keep it attached so the whole `sym@RELOC` reaches the a64
+                // encoder as one operand token (a64/parse.rs treats '@' inside a
+                // symbol as a reloc specifier). A '@' at token start is a front-end
+                // directive (`@macro`/`@scope`/…), lexed by `lex_at`, not this.
+                self.advance();
             } else {
                 break;
             }
@@ -758,6 +770,25 @@ mod tests {
     fn local_label_outer_scope() {
         let toks = lex_text(".^done");
         assert!(matches!(toks[0], TokenKind::LocalLabel(ref n, true) if n == "done"));
+    }
+
+    #[test]
+    fn aarch64_reloc_specifier_stays_attached() {
+        // `sym@PAGE` / `sym@PAGEOFF` lex as ONE ident (a reloc specifier), not
+        // `sym` + a `@PAGE` directive — so they reach the a64 encoder whole.
+        let toks = lex_text("adrp x0, foo@PAGE");
+        assert!(
+            toks.iter().any(|k| matches!(k, TokenKind::Ident(n) if n == "foo@PAGE")),
+            "{toks:?}"
+        );
+        let toks = lex_text("add x0, x0, foo@PAGEOFF");
+        assert!(
+            toks.iter().any(|k| matches!(k, TokenKind::Ident(n) if n == "foo@PAGEOFF")),
+            "{toks:?}"
+        );
+        // A '@' at token start is still a directive.
+        let toks = lex_text("@scope foo");
+        assert!(matches!(toks[0], TokenKind::Directive(ref n) if n == "scope"));
     }
 
     #[test]

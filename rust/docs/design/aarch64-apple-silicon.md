@@ -46,7 +46,7 @@ just linking.
 
 | Component | Why it's neutral |
 |---|---|
-| Front-end macro engine `asm/` (lex, expand, expr, emit) | `emit.rs` is a pass-through token→text serializer; the lexer/macro/expr engine never inspects mnemonics. Only the **macro library** (`forth/*.masm`) is x86 (§3.7). |
+| Front-end macro engine `asm/` (lex, expand, expr, emit) | `emit.rs` is a pass-through token→text serializer; the macro/expr engine never inspects mnemonics. The **lexer** keeps AArch64 *compound tokens* whole (`read_ident_chars` consumes an interior `.` for `b.<cond>`/`v0.8b` and an interior `@` for reloc specifiers `sym@PAGE`/`sym@PAGEOFF`), so the `@scope` mangler and the expr evaluator don't mistake a condition-suffix / arrangement / reloc-suffix for a local label or directive. A `.`/`@` at token start is still a local-label / directive. Only the **macro library** (`forth/*.masm`) is x86 (§3.7). |
 | Backend seam `backend.rs` | `Encoder`/`Loader`/`EncodedModule`/`Reloc` are target-agnostic; only `RelocKind` grew variants (§3.3). |
 | Diff driver `difftest.rs` | Compares two `EncodedModule`s; `Verdict`/`Report`/`diff_*` name no arch. One change needed: the field-mask becomes per-kind bitmasks (§3.5.2). |
 | Corpus record/replay | JSONL/TSV of `{asm, masked-code, relocs}`; a new `corpus/aarch64.tsv` is gated by the *same* replay test with **zero driver changes**. |

@@ -2650,8 +2650,7 @@ fn at_line_start(tokens: &[Token], i: usize) -> bool {
 /// pass through verbatim so the backend sees `v0.8b` / `b.eq`, never a
 /// scope-mangled `v0proc$$8b`.
 fn is_glued_suffix(space_before: bool, outer: bool, prev_kind: Option<&TokenKind>) -> bool {
-    let _ = (space_before, outer, prev_kind);
-    false // TEMP: neutered to confirm regression tests catch the bug
+    !outer && !space_before && matches!(prev_kind, Some(TokenKind::Ident(_)))
 }
 
 /// Take an `Ident` at position `i`. Returns the name and the next index.
