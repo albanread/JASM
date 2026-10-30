@@ -68,8 +68,14 @@ pub mod native;
 /// macOS / Apple Silicon native loader (`MacJit`) — places `A64Encoder` output
 /// in `MAP_JIT` memory, relocates, and executes. No LLVM. See
 /// docs/design/aarch64-apple-silicon.md.
-#[cfg(target_os = "macos")]
+#[cfg(any(target_os = "macos", all(target_os = "linux", target_arch = "aarch64")))]
 pub mod native_macos;
+/// The same loader under its platform-neutral name (macOS and Linux AArch64).
+#[cfg(any(target_os = "macos", all(target_os = "linux", target_arch = "aarch64")))]
+pub use native_macos as native_a64;
+/// Executable memory for the AArch64 loaders, per platform.
+#[cfg(any(target_os = "macos", all(target_os = "linux", target_arch = "aarch64")))]
+pub mod jitmem;
 
 pub use arena::CodeArena;
 pub use asm::Assembler;

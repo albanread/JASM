@@ -20,7 +20,7 @@
 //! The executing thread must be the one that flipped to exec mode (the toggle is
 //! per-thread); building + finalizing + calling on one thread satisfies that.
 
-#![cfg(target_os = "macos")]
+#![cfg(any(target_os = "macos", all(target_os = "linux", target_arch = "aarch64")))]
 
 use std::collections::HashMap;
 use std::ffi::c_void;
@@ -30,26 +30,8 @@ use anyhow::{bail, Context, Result};
 
 use crate::backend::{EncodedModule, Reloc, RelocKind};
 
-// ── libSystem FFI (linked by default on macOS) ──────────────────────────────
+use crate::jitmem;
 
-extern "C" {
-    fn mmap(addr: *mut c_void, len: usize, prot: i32, flags: i32, fd: i32, offset: i64) -> *mut c_void;
-    fn munmap(addr: *mut c_void, len: usize) -> i32;
-    /// `<libkern/OSCacheControl.h>` — data-cache clean + instruction-cache
-    /// invalidate over `[start, start+len)`. Public since macOS 10.5.
-    fn sys_icache_invalidate(start: *mut c_void, len: usize);
-    /// `<pthread.h>` — per-thread W^X toggle for `MAP_JIT` pages. `1` =
-    /// write-protected (executable), `0` = writable (non-executable).
-    fn pthread_jit_write_protect_np(enabled: i32);
-}
-
-const PROT_READ: i32 = 0x1;
-const PROT_WRITE: i32 = 0x2;
-const PROT_EXEC: i32 = 0x4;
-const MAP_PRIVATE: i32 = 0x0002;
-const MAP_ANON: i32 = 0x1000;
-const MAP_JIT: i32 = 0x0800;
-const MAP_FAILED: *mut c_void = usize::MAX as *mut c_void;
 const PAGE: usize = 0x4000; // 16 KiB on Apple Silicon
 
 fn round_up(n: usize, to: usize) -> usize {
@@ -94,21 +76,12 @@ impl MacJit {
     /// in the *writable* state for building.
     pub fn with_capacity(cap: usize) -> Result<Self> {
         let cap = round_up(cap.max(PAGE), PAGE);
-        let region = unsafe {
-            mmap(
-                ptr::null_mut(),
-                cap,
-                PROT_READ | PROT_WRITE | PROT_EXEC,
-                MAP_PRIVATE | MAP_ANON | MAP_JIT,
-                -1,
-                0,
-            )
-        };
-        if region == MAP_FAILED || region.is_null() {
+        let region = jitmem::map_rwx(cap);
+        if region.is_null() {
             bail!("mmap(MAP_JIT) failed — JIT memory unavailable");
         }
         // Enter write mode for this thread so we can populate the region.
-        unsafe { pthread_jit_write_protect_np(0) };
+        jitmem::write_protect(false);
         Ok(MacJit {
             region: region as *mut u8,
             cap,
@@ -242,10 +215,8 @@ impl MacJit {
         self.used = veneer_off;
 
         // Flip this thread to exec mode, then invalidate the icache.
-        unsafe {
-            pthread_jit_write_protect_np(1);
-            sys_icache_invalidate(self.region as *mut c_void, self.cap);
-        }
+        jitmem::write_protect(true);
+        jitmem::icache_invalidate(self.region, self.cap);
         self.writable = false;
         self.finalized = true;
         Ok(())
@@ -328,12 +299,10 @@ impl Drop for MacJit {
         if !self.region.is_null() {
             // Return to write mode so a subsequent builder on this thread starts
             // clean, then release the mapping.
-            unsafe {
-                if !self.writable {
-                    pthread_jit_write_protect_np(0);
-                }
-                munmap(self.region as *mut c_void, self.cap);
+            if !self.writable {
+                jitmem::write_protect(false);
             }
+            jitmem::unmap(self.region, self.cap);
             self.region = ptr::null_mut();
         }
     }
