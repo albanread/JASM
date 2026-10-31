@@ -529,6 +529,31 @@ impl<'a> Lexer<'a> {
             let c = self.peek();
             if c == b'_' || c.is_ascii_alphanumeric() {
                 self.advance();
+            } else if c == b'.'
+                && self
+                    .peek_at(1)
+                    .is_some_and(|n| n == b'_' || n.is_ascii_alphanumeric())
+            {
+                // Interior dot inside an already-started identifier: part of a
+                // compound AArch64 token (`b.ge` condition suffix, `v0.8b` NEON
+                // arrangement), NOT a local label — those start with `.` and are
+                // lexed at token start by `lex_dot_or_local`. Keeping such tokens
+                // whole stops the @scope local-label mangler from corrupting the
+                // condition-code / arrangement suffix (e.g. `b.ge` -> `b<proc>$$ge`).
+                // x86 has no interior-dot mnemonics/operands, so this is inert there.
+                self.advance();
+            } else if c == b'@'
+                && self
+                    .peek_at(1)
+                    .is_some_and(|n| n == b'_' || n.is_ascii_alphanumeric())
+            {
+                // Interior '@' inside an already-started identifier: an AArch64
+                // relocation specifier (`sym@PAGE`, `sym@PAGEOFF`, `sym@GOTPAGE`,
+                // …). Keep it attached so the whole `sym@RELOC` reaches the a64
+                // encoder as one operand token (a64/parse.rs treats '@' inside a
+                // symbol as a reloc specifier). A '@' at token start is a front-end
+                // directive (`@macro`/`@scope`/…), lexed by `lex_at`, not this.
+                self.advance();
             } else {
                 break;
             }
@@ -745,6 +770,39 @@ mod tests {
     fn local_label_outer_scope() {
         let toks = lex_text(".^done");
         assert!(matches!(toks[0], TokenKind::LocalLabel(ref n, true) if n == "done"));
+    }
+
+    #[test]
+    fn aarch64_reloc_specifier_stays_attached() {
+        // `sym@PAGE` / `sym@PAGEOFF` lex as ONE ident (a reloc specifier), not
+        // `sym` + a `@PAGE` directive — so they reach the a64 encoder whole.
+        let toks = lex_text("adrp x0, foo@PAGE");
+        assert!(
+            toks.iter().any(|k| matches!(k, TokenKind::Ident(n) if n == "foo@PAGE")),
+            "{toks:?}"
+        );
+        let toks = lex_text("add x0, x0, foo@PAGEOFF");
+        assert!(
+            toks.iter().any(|k| matches!(k, TokenKind::Ident(n) if n == "foo@PAGEOFF")),
+            "{toks:?}"
+        );
+        // A '@' at token start is still a directive.
+        let toks = lex_text("@scope foo");
+        assert!(matches!(toks[0], TokenKind::Directive(ref n) if n == "scope"));
+    }
+
+    #[test]
+    fn aarch64_compound_dotted_tokens() {
+        // `b.ge` is ONE mnemonic (interior dot), not `b` + local-label `.ge`;
+        // a `.done` after whitespace is still a local label. Without this the
+        // @scope mangler would corrupt the condition suffix (`b.ge` -> `b<proc>$$ge`).
+        let toks = lex_text("b.ge .done");
+        assert!(matches!(toks[0], TokenKind::Ident(ref n) if n == "b.ge"), "{:?}", toks[0]);
+        assert!(matches!(toks[1], TokenKind::LocalLabel(ref n, false) if n == "done"));
+        // NEON arrangement specifier stays attached to its register operand.
+        let toks = lex_text("cnt v0.8b, v0.8b");
+        assert!(matches!(toks[0], TokenKind::Ident(ref n) if n == "cnt"));
+        assert!(matches!(toks[1], TokenKind::Ident(ref n) if n == "v0.8b"), "{:?}", toks[1]);
     }
 
     #[test]
