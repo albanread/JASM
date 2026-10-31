@@ -12,8 +12,12 @@
 //! anchor address (so `call rel32` reaches host `rt_*` externs), mapped
 //! **RW** while we copy + relocate, then flipped to **RX** (never RWX) on
 //! [`NativeJit::finalize`].
+//!
+//! On Linux x86-64 (the BOX's /init) the same loader maps its region with
+//! `mmap` and protects it with `mprotect` ([`crate::jitmem`]); there is no SEH
+//! there, and nothing else differs.
 
-#![cfg(windows)]
+#![cfg(any(windows, all(target_os = "linux", target_arch = "x86_64")))]
 
 use std::collections::HashMap;
 use std::ffi::c_void;
@@ -23,119 +27,172 @@ use anyhow::{bail, Context, Result};
 
 use crate::backend::{EncodedModule, Reloc, RelocKind};
 
+#[cfg(windows)]
+mod plat {
+    use super::*;
+
 // ── Win32 FFI (VirtualAlloc2 windowed alloc + VirtualProtect) ───────────────
-
-#[repr(C)]
-struct MemAddressRequirements {
-    lowest_starting_address: *mut c_void,
-    highest_ending_address: *mut c_void,
-    alignment: usize,
-}
-const MEM_EXTENDED_PARAMETER_ADDRESS_REQUIREMENTS: u64 = 1;
-
-#[repr(C)]
-struct MemExtendedParameter {
-    type_and_reserved: u64,
-    pointer: *mut c_void,
-}
-
-const MEM_RESERVE: u32 = 0x0000_2000;
-const MEM_COMMIT: u32 = 0x0000_1000;
-const MEM_RELEASE: u32 = 0x0000_8000;
-const PAGE_READWRITE: u32 = 0x04;
-const PAGE_EXECUTE_READ: u32 = 0x20;
-
-type VirtualAlloc2Fn = unsafe extern "system" fn(
-    *mut c_void,
-    *mut c_void,
-    usize,
-    u32,
-    u32,
-    *mut MemExtendedParameter,
-    u32,
-) -> *mut c_void;
-
-#[link(name = "kernel32")]
-extern "system" {
-    fn LoadLibraryA(name: *const i8) -> *mut c_void;
-    fn GetProcAddress(module: *mut c_void, name: *const i8) -> *mut c_void;
-    fn GetLastError() -> u32;
-    fn VirtualFree(addr: *mut c_void, size: usize, free_type: u32) -> i32;
-    fn VirtualProtect(addr: *mut c_void, size: usize, new: u32, old: *mut u32) -> i32;
-}
-
-fn virtual_alloc2() -> Result<VirtualAlloc2Fn> {
-    unsafe {
-        let lib = LoadLibraryA(b"kernelbase.dll\0".as_ptr() as *const i8);
-        let lib = if lib.is_null() {
-            LoadLibraryA(b"kernel32.dll\0".as_ptr() as *const i8)
-        } else {
-            lib
+    
+    #[repr(C)]
+    struct MemAddressRequirements {
+        lowest_starting_address: *mut c_void,
+        highest_ending_address: *mut c_void,
+        alignment: usize,
+    }
+    const MEM_EXTENDED_PARAMETER_ADDRESS_REQUIREMENTS: u64 = 1;
+    
+    #[repr(C)]
+    struct MemExtendedParameter {
+        type_and_reserved: u64,
+        pointer: *mut c_void,
+    }
+    
+    const MEM_RESERVE: u32 = 0x0000_2000;
+    const MEM_COMMIT: u32 = 0x0000_1000;
+    const MEM_RELEASE: u32 = 0x0000_8000;
+    const PAGE_READWRITE: u32 = 0x04;
+    const PAGE_EXECUTE_READ: u32 = 0x20;
+    
+    type VirtualAlloc2Fn = unsafe extern "system" fn(
+        *mut c_void,
+        *mut c_void,
+        usize,
+        u32,
+        u32,
+        *mut MemExtendedParameter,
+        u32,
+    ) -> *mut c_void;
+    
+    #[link(name = "kernel32")]
+    extern "system" {
+        fn LoadLibraryA(name: *const i8) -> *mut c_void;
+        fn GetProcAddress(module: *mut c_void, name: *const i8) -> *mut c_void;
+        fn GetLastError() -> u32;
+        fn VirtualFree(addr: *mut c_void, size: usize, free_type: u32) -> i32;
+        fn VirtualProtect(addr: *mut c_void, size: usize, new: u32, old: *mut u32) -> i32;
+    }
+    
+    fn virtual_alloc2() -> Result<VirtualAlloc2Fn> {
+        unsafe {
+            let lib = LoadLibraryA(b"kernelbase.dll\0".as_ptr() as *const i8);
+            let lib = if lib.is_null() {
+                LoadLibraryA(b"kernel32.dll\0".as_ptr() as *const i8)
+            } else {
+                lib
+            };
+            if lib.is_null() {
+                bail!("LoadLibraryA(kernelbase/kernel32) failed");
+            }
+            let p = GetProcAddress(lib, b"VirtualAlloc2\0".as_ptr() as *const i8);
+            if p.is_null() {
+                bail!("GetProcAddress(VirtualAlloc2) failed — needs Windows 10+");
+            }
+            Ok(std::mem::transmute::<*mut c_void, VirtualAlloc2Fn>(p))
+        }
+    }
+    
+    /// Allocate `size` bytes of RW memory anywhere the OS picks (a roomy spot, not
+    /// crowded against the host image). Far externs are reached via stubs, so the
+    /// code region has no rel32 constraint to the host.
+    pub(super) fn alloc_anywhere(size: usize) -> Result<*mut u8> {
+        let va2 = virtual_alloc2().context("locate VirtualAlloc2")?;
+        let base = unsafe {
+            va2(ptr::null_mut(), ptr::null_mut(), size, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE, ptr::null_mut(), 0)
         };
-        if lib.is_null() {
-            bail!("LoadLibraryA(kernelbase/kernel32) failed");
+        if base.is_null() {
+            bail!("VirtualAlloc2 (anywhere) returned null (GetLastError = {})", unsafe { GetLastError() });
         }
-        let p = GetProcAddress(lib, b"VirtualAlloc2\0".as_ptr() as *const i8);
+        Ok(base as *mut u8)
+    }
+    
+    /// Allocate `size` bytes of RW memory within ±window of `anchor` so emitted
+    /// code reaches host externs by `call rel32`.
+    #[allow(dead_code)]
+    pub(super) fn alloc_near(anchor: u64, size: usize) -> Result<*mut u8> {
+        let va2 = virtual_alloc2().context("locate VirtualAlloc2")?;
+        const GRANULARITY: u64 = 0x10000;
+        const WINDOW: u64 = 0x7000_0000; // ~1.75 GB, comfortably inside rel32 (±2 GB)
+        let low = (anchor.saturating_sub(WINDOW) + GRANULARITY - 1) & !(GRANULARITY - 1);
+        let low = low.max(GRANULARITY);
+        let high = (anchor.saturating_add(WINDOW) & !(GRANULARITY - 1)).saturating_sub(1);
+    
+        let mut req = MemAddressRequirements {
+            lowest_starting_address: low as *mut c_void,
+            highest_ending_address: high as *mut c_void,
+            alignment: 0,
+        };
+        let mut param = MemExtendedParameter {
+            type_and_reserved: MEM_EXTENDED_PARAMETER_ADDRESS_REQUIREMENTS,
+            pointer: &mut req as *mut _ as *mut c_void,
+        };
+        let base = unsafe {
+            va2(
+                ptr::null_mut(),
+                ptr::null_mut(),
+                size,
+                MEM_RESERVE | MEM_COMMIT,
+                PAGE_READWRITE,
+                &mut param,
+                1,
+            )
+        };
+        if base.is_null() {
+            bail!(
+                "VirtualAlloc2 near {anchor:#018x} returned null (GetLastError = {})",
+                unsafe { GetLastError() }
+            );
+        }
+        Ok(base as *mut u8)
+    }
+
+    /// Make the region read-execute.
+    pub(super) fn protect_rx(p: *mut u8, len: usize) -> Result<()> {
+        let mut old = 0u32;
+        if unsafe { VirtualProtect(p as *mut c_void, len, PAGE_EXECUTE_READ, &mut old) } == 0 {
+            bail!("VirtualProtect RX failed (GetLastError = {})", unsafe { GetLastError() });
+        }
+        Ok(())
+    }
+
+    pub(super) fn release(p: *mut u8, _len: usize) {
+        unsafe { VirtualFree(p as *mut c_void, 0, MEM_RELEASE) };
+    }
+}
+
+#[cfg(target_os = "linux")]
+mod plat {
+    use super::*;
+    use crate::jitmem;
+
+    pub(super) fn alloc_anywhere(size: usize) -> Result<*mut u8> {
+        let p = jitmem::map_rw(size);
         if p.is_null() {
-            bail!("GetProcAddress(VirtualAlloc2) failed — needs Windows 10+");
+            bail!("mmap of {size} bytes for JIT code failed");
         }
-        Ok(std::mem::transmute::<*mut c_void, VirtualAlloc2Fn>(p))
+        Ok(p)
+    }
+
+    #[allow(dead_code)]
+    pub(super) fn alloc_near(anchor: u64, size: usize) -> Result<*mut u8> {
+        let p = jitmem::map_near(anchor, size, false);
+        if p.is_null() {
+            bail!("no room for {size} bytes of JIT code near {anchor:#018x}");
+        }
+        Ok(p)
+    }
+
+    pub(super) fn protect_rx(p: *mut u8, len: usize) -> Result<()> {
+        if !jitmem::protect_rx(p, len) {
+            bail!("mprotect RX failed");
+        }
+        Ok(())
+    }
+
+    pub(super) fn release(p: *mut u8, len: usize) {
+        jitmem::unmap(p, len);
     }
 }
-
-/// Allocate `size` bytes of RW memory anywhere the OS picks (a roomy spot, not
-/// crowded against the host image). Far externs are reached via stubs, so the
-/// code region has no rel32 constraint to the host.
-fn alloc_anywhere(size: usize) -> Result<*mut u8> {
-    let va2 = virtual_alloc2().context("locate VirtualAlloc2")?;
-    let base = unsafe {
-        va2(ptr::null_mut(), ptr::null_mut(), size, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE, ptr::null_mut(), 0)
-    };
-    if base.is_null() {
-        bail!("VirtualAlloc2 (anywhere) returned null (GetLastError = {})", unsafe { GetLastError() });
-    }
-    Ok(base as *mut u8)
-}
-
-/// Allocate `size` bytes of RW memory within ±window of `anchor` so emitted
-/// code reaches host externs by `call rel32`.
-#[allow(dead_code)]
-fn alloc_near(anchor: u64, size: usize) -> Result<*mut u8> {
-    let va2 = virtual_alloc2().context("locate VirtualAlloc2")?;
-    const GRANULARITY: u64 = 0x10000;
-    const WINDOW: u64 = 0x7000_0000; // ~1.75 GB, comfortably inside rel32 (±2 GB)
-    let low = (anchor.saturating_sub(WINDOW) + GRANULARITY - 1) & !(GRANULARITY - 1);
-    let low = low.max(GRANULARITY);
-    let high = (anchor.saturating_add(WINDOW) & !(GRANULARITY - 1)).saturating_sub(1);
-
-    let mut req = MemAddressRequirements {
-        lowest_starting_address: low as *mut c_void,
-        highest_ending_address: high as *mut c_void,
-        alignment: 0,
-    };
-    let mut param = MemExtendedParameter {
-        type_and_reserved: MEM_EXTENDED_PARAMETER_ADDRESS_REQUIREMENTS,
-        pointer: &mut req as *mut _ as *mut c_void,
-    };
-    let base = unsafe {
-        va2(
-            ptr::null_mut(),
-            ptr::null_mut(),
-            size,
-            MEM_RESERVE | MEM_COMMIT,
-            PAGE_READWRITE,
-            &mut param,
-            1,
-        )
-    };
-    if base.is_null() {
-        bail!(
-            "VirtualAlloc2 near {anchor:#018x} returned null (GetLastError = {})",
-            unsafe { GetLastError() }
-        );
-    }
-    Ok(base as *mut u8)
-}
+use plat::*;
 
 // ── NativeJit ───────────────────────────────────────────────────────────────
 
@@ -308,17 +365,12 @@ impl NativeJit {
                     let val = (target as i64 + r.addend) as u64;
                     unsafe { ptr::copy_nonoverlapping(val.to_le_bytes().as_ptr(), field as *mut u8, 8); }
                 }
+                _ => bail!("AArch64 relocation `{:?}` in x86-64 code", r.kind),
             }
         }
         self.used = stub_off;
 
-        let mut old = 0u32;
-        let ok = unsafe {
-            VirtualProtect(self.region as *mut c_void, self.cap, PAGE_EXECUTE_READ, &mut old)
-        };
-        if ok == 0 {
-            bail!("VirtualProtect RX failed (GetLastError = {})", unsafe { GetLastError() });
-        }
+        protect_rx(self.region, self.cap)?;
         self.finalized = true;
         Ok(())
     }
@@ -371,9 +423,7 @@ impl crate::backend::Loader for NativeJit {
 impl Drop for NativeJit {
     fn drop(&mut self) {
         if !self.region.is_null() {
-            unsafe {
-                VirtualFree(self.region as *mut c_void, 0, MEM_RELEASE);
-            }
+            release(self.region, self.cap);
             self.region = ptr::null_mut();
         }
     }
